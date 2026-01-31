@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend SDE | Sai Teja Srivillibhutturu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #06b6d4; --border-color: #e5e7eb; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--text-primary); }
+        .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
+        .hero { padding: 8rem 0 4rem; text-align: center; }
+        .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .stat-item { text-align: center; }
+        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+        .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+        .skill-card { padding: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
+        .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
+        .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
+        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+        .project-title { font-weight: 600; font-size: 1.1rem; }
+        .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
+        .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .experience-item { margin-bottom: 2rem; position: relative; }
+        .experience-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
+        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-icon { font-size: 1.5rem; }
+        .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
+        .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
+        .cta-section { padding: 4rem 0; border-top: 1px solid var(--border-color); text-align: center; }
+        .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
+        .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
+        .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
+        .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
+        .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
+        footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
+        footer p { font-size: 0.85rem; color: var(--text-secondary); }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+    <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend SDE</span></div></nav>
+
+    <section class="hero"><div class="container">
+        <div class="role-badge"><span>💻</span><span>Backend SDE</span></div>
+        <h1>Distributed Systems & Backend Engineering</h1>
+        <p class="hero-description">Building high-performance backend systems, distributed architectures, and scalable microservices with 4+ years of industry experience.</p>
+        <div class="stats-row">
+            <div class="stat-item"><div class="stat-value">4+</div><div class="stat-label">Years Experience</div></div>
+            <div class="stat-item"><div class="stat-value">10K+</div><div class="stat-label">Daily Transactions</div></div>
+            <div class="stat-item"><div class="stat-value">25%</div><div class="stat-label">Latency Reduction</div></div>
+            <div class="stat-item"><div class="stat-value">94%</div><div class="stat-label">Availability</div></div>
+        </div>
+    </div></section>
+
+    <section class="section"><div class="container">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card"><div class="skill-name">Python</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">Java</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">Go</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">FastAPI/Flask</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">PostgreSQL</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">Redis</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">System Design</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+            <div class="skill-card"><div class="skill-name">DSA</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+        </div>
+    </div></section>
+
+    <section class="section"><div class="container">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed and owned Java-based distributed data processing services across 10+ production systems, each handling 10K+ daily transactions. Improved data processing throughput by 45% by optimizing SQL queries. Reduced incident recovery time by 35% through structured logging and root-cause analysis. Built fault-tolerant backend services with 94% service availability. Led system design for data-intensive services applying OOP patterns for scalability.</p></div>
+    </div></section>
+
+    <section class="section"><div class="container">
+        <h2 class="section-title">Backend Projects</h2>
+        <div class="project-item"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div><p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms for fault tolerance. Built from scratch in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></div>
+        <div class="project-item"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis with async processing and queue management. Handles concurrent requests with Celery workers.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></div>
+        <div class="project-item"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">10K+ req/day</span></div><p class="project-description">High-throughput inference server handling 10K+ daily requests with P95 latency under 25ms. Built for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></div>
+        <div class="project-item"><div class="project-header"><h3 class="project-title">Recommender API</h3><span class="project-impact">Scalable</span></div><p class="project-description">Backend API for real-time recommendations with Redis caching and batch processing for low-latency responses.</p><div class="project-tech"><span class="tech-tag">Flask</span><span class="tech-tag">Redis</span><span class="tech-tag">PostgreSQL</span></div></div>
+    </div></section>
+
+    <section class="section"><div class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-item"><span class="cert-icon">💻</span><div class="cert-content"><h4>CodePath Technical Interview Prep</h4><p>CodePath • May 2025</p></div></div>
+        <div class="cert-item"><span class="cert-icon">🔶</span><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
+        <div class="cert-item"><span class="cert-icon">🔵</span><div class="cert-content"><h4>Neo4j Certified Professional</h4><p>Neo4j • Jul 2024</p></div></div>
+    </div></section>
+
+    <section class="cta-section"><div class="container">
+        <h2 class="cta-title">Looking for Backend Expertise?</h2>
+        <p class="cta-description">Let's discuss how I can help build robust, scalable backend systems.</p>
+        <div class="cta-buttons"><a href="mailto:saiteja.srivilli@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+    </div></section>
+
+    <footer><p>© 2026 Sai Teja Srivillibhutturu. Backend SDE.</p></footer>
+</body>
+</html>

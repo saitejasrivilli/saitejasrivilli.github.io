@@ -3,35 +3,587 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .project { margin-bottom: 20px; }
-        .project a { text-decoration: none; color: blue; }
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --accent: #2563eb;
+            --border-color: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 4px solid #f0f0f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        .btn:hover {
+            border-color: var(--text-primary);
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator:hover { border-color: var(--text-primary); }
+        .scroll-indicator svg { width: 16px; height: 16px; color: var(--text-secondary); }
+
+        /* Section Styles */
+        .section { padding: 5rem 0; border-top: 1px solid var(--border-color); }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: var(--text-primary);
+            margin-top: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        /* About Section */
+        .about-content { color: var(--text-secondary); font-size: 1rem; line-height: 1.9; }
+        .about-content p { margin-bottom: 1.5rem; }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item { text-align: center; }
+        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--text-primary); }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        /* Experience Section */
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '•';
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .timeline-logo {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-content { flex: 1; }
+        .timeline-company { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .timeline-role { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        /* Education Section */
+        .education-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; position: relative; }
+        .education-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); line-height: 1; }
+
+        .education-logo {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: white;
+            border: 1px solid var(--border-color);
+        }
+
+        .education-logo.uta { background: #0064b1; }
+        .education-logo.au { background: #8b0000; }
+
+        .education-content h3 { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .education-content p { font-size: 0.95rem; color: var(--text-secondary); }
+
+        /* Projects Section */
+        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
+        .project-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); line-height: 1; }
+
+        .project-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+
+        .project-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .project-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* Certifications Section */
+        .cert-item { display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem; position: relative; }
+        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); line-height: 1; }
+
+        .cert-image {
+            width: 100px;
+            height: 70px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .cert-content h4 { font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
+        .cert-content .cert-date { font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; }
+
+        /* Role Pages Section */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .role-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .role-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .role-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .role-description { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .role-link { font-size: 0.9rem; color: var(--text-primary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .role-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+        .role-card:hover .role-link svg { transform: translateX(4px); }
+
+        /* Contact Section */
+        .contact-section { padding: 5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
+
+        .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
+        .contact-link svg { width: 18px; height: 18px; }
+
+        /* Footer */
+        footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
+        footer p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .timeline-item, .education-item, .cert-item { flex-direction: column; gap: 1rem; }
+            .roles-grid { grid-template-columns: 1fr; }
+        }
+
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
-    <h1>My GitHub Projects</h1>
-    <div id="projects"></div>
-    <script>
-        async function fetchProjects() {
-            const username = "saitejasrivilli"; // Replace with your GitHub username
-            const response = await fetch(`https://api.github.com/users/${username}/repos`);
-            const repos = await response.json();
-            const projectsDiv = document.getElementById("projects");
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image">
+        <h1>Sai Teja<br>Srivillibhutturu</h1>
+        <p class="hero-subtitle">
+            ML & Deep Learning Research Engineer @ DentalScan & UTA(IEEE ICC CQRM - Accepted) | GPU Optimization & LLM Inference | 12.3× Throughput, 4× Memory Reduction | PyTorch, CUDA, C++, vLLM, AWS
+        </p>
+        <div class="hero-buttons">
+            <a href="#experience" class="btn">Experience</a>
+            <a href="#education" class="btn">Education</a>
+            <a href="#projects" class="btn">Projects</a>
+            <a href="#roles" class="btn">More</a>
+        </div>
+        <a href="#about" class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </a>
+    </section>
 
-            repos.forEach(repo => {
-                const project = document.createElement("div");
-                project.className = "project";
-                project.innerHTML = `
-                    <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-                    <p>${repo.description || "No description available."}</p>
-                `;
-                projectsDiv.appendChild(project);
-            });
-        }
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <p>Deep Learning Engineer | GPU Optimization | LLM Inference | MS CS @ UTA (4.0 GPA) I optimize ML systems for speed, memory, and cost. Results I've Delivered: 12.3× inference throughput improvement (574K → 7.06M tokens/sec) 4× memory reduction (14.4GB → 3.6GB) 2.8× inference speedup with &lt;0.1% accuracy loss 68% → 91% GPU utilization through kernel profiling 3× throughput gain using vLLM over Hugging Face $3.6M annual cost savings (86% reduction) 10K+ daily inference requests at P95 &lt;25ms with 99% uptime</p>
+                <p>What I Work On: GPU Optimization: CUDA kernels, FlashAttention-2, quantization (INT4/NF4, GPTQ, AWQ), speculative decoding, roofline analysis LLM Systems: PyTorch, vLLM, RAG pipelines, fine-tuning, multi-GPU training Production ML: AWS, Docker, SageMaker, CI/CD, MLflow, Airflow</p>
+                <p>Current Roles: ML Engineer Intern @ DentalScan — Building computer vision pipelines for medical imaging (50K+ images) Graduate Research Assistant @ UTA — CTMap (IEEE ICC 2026) — LLM-enabled path planning for autonomous systems</p>
+                <p>Background: 4+ years as SDE @ TCS — Designed distributed Java microservices handling 10K+ daily transactions with 25% latency improvement</p>
+                <p>Open to: ML Engineer, Deep Learning Engineer, LLM/GenAI Engineer, Applied ML, ML Systems, Backend SDE roles</p>
+                <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7506141c01101f145b06071c031c19191c351218141c195b161a18">[email&#160;protected]</a> 🔗 github.com/saitejasrivilli 🎓 Google Scholar: scholar.google.com/citations?user=StKZohYAAAAJ</p>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value">12.3×</div>
+                    <div class="stat-label">Throughput Gain</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4×</div>
+                    <div class="stat-label">Memory Reduction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$3.6M</div>
+                    <div class="stat-label">Cost Savings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        fetchProjects();
-    </script>
-</body>
-</html>
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #0ea5e9; color: white;">DSn</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">ReplyQuickAI</h3>
+                    <p class="timeline-role">Machine Learning Engineer Intern</p>
+                    <p class="timeline-date">Dec 2025 - Present • United States</p>
+                    <p class="timeline-description">Built and trained supervised computer vision models for intra-oral medical image analysis across 6+ clinical categories, including gum inflammation, plaque detection, and orthodontic tracking Worked with a 50K+ labeled image dataset (scaling toward 100K+), improving data quality through preprocessing, augmentation, and class balancing, leading to 10–15% gains in class-level recall on underrepresented categories Designed scalable ingestion and preprocessing pipelines processing 500–700 images per day, expanding effective dataset coverage by 40% Performed model evaluation and error analysis using precision, recall, and confusion matrices, reducing dominant error modes by 20% across successive iterations Implemented continuous retraining workflows using dentist-corrected labels, enabling weekly model refresh cycles without manual intervention Orchestrated ingestion, training, and evaluation workflows using Apache Airflow across 10+ DAGs, improving pipeline reliability and recovery from transient failures Tracked 30+ training runs and model artifacts using MLflow, enabling reproducible experiments and systematic model comparisons Deployed and monitored ML inference endpoints on AWS SageMaker, serving 1K+ inference requests per day with sub-second p95 latency Containerized training and inference workflows using Docker, reducing environment-related failures by 50%</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #0064b1; color: white;">UTA</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">The University of Texas at Arlington</h3>
+                    <p class="timeline-role">Graduate Research Assistant</p>
+                    <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
+                    <p class="timeline-description">Led ML systems work on CTMap, an LLM-enabled connectivity-aware path planning system for mmWave networks, accepted at IEEE ICC 2026 Designed end-to-end LLM inference and decision pipelines integrating OpenStreetMap data across 3+ urban regions with Sionna 6G digital twin simulations Built scalable feature pipelines over 100+ dimensional simulation state, supporting path feasibility and connectivity scoring Fine-tuned LLMs in PyTorch using 10K+ Dijkstra-generated paths as supervision to enforce coordinate consistency and valid routing Ran multi-GPU training workflows (2–4 GPUs), optimizing batch size and memory usage to reduce training time by 30% Conducted ablation studies across 8+ model and supervision variants, identifying tradeoffs between path optimality and inference latency Tracked 25+ experimental runs using experiment logging tools to compare model performance under dynamic network conditions Profiled GPU memory and inference performance, reducing p95 inference latency by 20% Deployed batch and API-based inference pipelines on AWS, containerized with Docker, supporting 1K+ simulation evaluations per run</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #f8f9fa; color: #1a1a2e; border: 1px solid #e5e7eb;">UTA</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">Computer Science and Engineering at UT Arlington</h3>
+                    <p class="timeline-role">Graduate Teaching Assistant</p>
+                    <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
+                    <p class="timeline-description">Supported graduate courses in Numerical Methods, assisting 100+ students across 2 semesters with algorithmic problem solving, optimization, and computational modeling Contributed as second author to CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks, accepted at IEEE ICC 2026 Designed and implemented LLM inference and decision pipelines integrating OpenStreetMap data with Sionna 6G digital twin simulations Built scalable feature pipelines over 100+ dimensional simulation state and fine-tuned LLMs in PyTorch using 10K+ Dijkstra-generated paths to enforce path feasibility and coordinate consistency Evaluated ML components under production-style constraints such as latency, robustness, and reliability, contributing to reproducible training and benchmarking workflows Led weekly review sessions and office hours, resolving 20+ student questions related to numerical algorithms, debugging, and performance analysis</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #1a1a2e; color: white;">TCS</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">Tata Consultancy Services</h3>
+                    <p class="timeline-role">Senior Software Engineer → Software Engineer</p>
+                    <p class="timeline-date">Jun 2019 - May 2023 • 4 years • Chennai</p>
+                    <p class="timeline-description">Designed and owned Java-based distributed data processing services across 10+ production systems, each handling 10K+ daily transactions Led system design and architecture for data-intensive services, applying object-oriented design patterns to improve scalability and fault isolation Improved data processing throughput by 45% by optimizing SQL queries and tuning concurrency controls in multi-threaded services Owned data quality and production reliability for business-critical pipelines, ensuring SLA compliance for downstream analytics systems Served as Designated Responsible Individual (DRI) for multiple services, restoring service during SEV-1/SEV-2 incidents Reduced incident recovery time by 35% by introducing structured logging, metrics, and root-cause analysis workflows Built operational dashboards from service logs and metrics, reducing recurring production outages by 30% Built and maintained fault-tolerant Java backend services supporting data ingestion and processing pipelines with 94% service availability</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="section" id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            
+            <div class="education-item">
+                <div class="education-logo uta">UTA</div>
+                <div class="education-content">
+                    <h3>The University of Texas at Arlington</h3>
+                    <p>Master of Science - MS</p>
+                    <p>2023 - 2025</p>
+                    <p>Computer Science</p>
+                </div>
+            </div>
+
+            <div class="education-item">
+                <div class="education-logo au">AU</div>
+                <div class="education-content">
+                    <h3>Andhra University</h3>
+                    <p>Bachelors of Technology</p>
+                    <p>2015 - 2019</p>
+                    <p>Computer Science</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            
+            <div class="project-item">
+                <h3 class="project-title">Attention Mechanism Optimization</h3>
+                <p class="project-description">🎯 Built attention benchmarking framework achieving 12.3× throughput improvement and 99.7% memory reduction. <strong>Problem:</strong> Vanilla attention consumes O(n²) memory, limiting sequence length and batch size <strong>Solution:</strong> → Benchmarked 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers) → Built batch size auto-tuner for throughput-latency optimization → Profiled memory bandwidth bottlenecks using torch.profiler <strong>Results:</strong> → 12.3× throughput improvement (574K → 7.06M tokens/sec) → 99.7% memory reduction (12.5GB → 38MB) → 1.75× larger batch sizes (32 → 56) → Identified memory bandwidth as key bottleneck <strong>Tech:</strong> PyTorch, FlashAttention-2, xFormers, SDPA, torch.profiler, CUDA</p>
+                <div class="project-meta">
+                    <span class="project-tag">PyTorch</span>
+                    <span class="project-tag">FlashAttention-2</span>
+                    <span class="project-tag">xFormers</span>
+                    <span class="project-tag">CUDA</span>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <h3 class="project-title">GPU Optimization & Profiling System</h3>
+                <p class="project-description">🎯 Built integrated GPU optimization system achieving 2.8× inference speedup and 4× memory reduction on Mistral-7B. <strong>Problem:</strong> LLM inference bottlenecked by memory bandwidth and low GPU utilization <strong>Solution:</strong> → Built kernel profiling system with roofline analysis → Implemented C++/CUDA fused kernels → Applied INT4-NF4 quantization with gradient checkpointing <strong>Results:</strong> → 2.8× inference speedup → 4× memory reduction (14.4GB → 3.6GB) → GPU utilization: 68% → 91% → &lt;0.1% accuracy loss → 2.1× batch scaling for production <strong>Tech:</strong> PyTorch, CUDA, C++, bitsandbytes INT4-NF4, torch.profiler</p>
+                <div class="project-meta">
+                    <span class="project-tag">PyTorch</span>
+                    <span class="project-tag">CUDA</span>
+                    <span class="project-tag">C++</span>
+                    <span class="project-tag">INT4-NF4</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section" id="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            
+            <div class="cert-item">
+                <div class="cert-image">Certificate</div>
+                <div class="cert-content">
+                    <h4>AI Evals for Everyone</h4>
+                    <p>Aishwarya Naresh Reganti & Kiriti Badam</p>
+                    <p class="cert-date">📅 Issued: 12/2025</p>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-image">Certificate</div>
+                <div class="cert-content">
+                    <h4>Microsoft Certified: Fabric Data Engineer Associate</h4>
+                    <p>Microsoft</p>
+                    <p class="cert-date">📅 Issued: 8/2025</p>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-image">Certificate</div>
+                <div class="cert-content">
+                    <h4>Advanced Large Language Model Agents</h4>
+                    <p>UC Berkeley EECS</p>
+                    <p class="cert-date">📅 Issued: Jul 2025</p>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-image">Certificate</div>
+                <div class="cert-content">
+                    <h4>AWS Data Engineer Associate</h4>
+                    <p>Amazon Web Services</p>
+                    <p class="cert-date">📅 Dec 2024 - Dec 2027</p>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-image">Certificate</div>
+                <div class="cert-content">
+                    <h4>Oracle GenAI Professional</h4>
+                    <p>Oracle Cloud</p>
+                    <p class="cert-date">📅 Jun 2024 - Jun 2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Role Pages Section -->
+    <section class="section" id="roles">
+        <div class="container">
+            <h2 class="section-title">Explore by Role</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click on any role to see relevant projects, certifications, and experience tailored to that position.</p>
+            <div class="roles-grid">
+                <a href="DeepLearning.html" class="role-card">
+                    <div class="role-icon">🧠</div>
+                    <h3 class="role-title">Deep Learning Engineer</h3>
+                    <p class="role-description">GPU optimization, CUDA kernels, FlashAttention, quantization, neural architecture.</p>
+                    <span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+
+                <a href="MLEngineer.html" class="role-card">
+                    <div class="role-icon">⚙️</div>
+                    <h3 class="role-title">ML Engineer</h3>
+                    <p class="role-description">Production ML systems, MLOps pipelines, model deployment, inference infrastructure.</p>
+                    <span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+
+                <a href="LLMGenAI.html" class="role-card">
+                    <div class="role-icon">🤖</div>
+                    <h3 class="role-title">LLM/GenAI Engineer</h3>
+                    <p class="role-description">LLM fine-tuning, RAG systems, multi-agent architectures, generative AI.</p>
+                    <span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+
+                <a href="CloudData.html" class="role-card">
+                    <div class="role-icon">☁️</div>
+                    <h3 class="role-title">Cloud & Data Engineer</h3>
+                    <p class="role-description">AWS architecture, data pipelines, distributed systems, cloud-native solutions.</p>
+                    <span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+
+                <a href="BackendSDE.html" class="role-card">
+                    <div class="role-icon">💻</div>
+                    <h3 class="role-title">Backend SDE</h3>
+                    <p class="role-description">Distributed systems, microservices, APIs, high-performance backend development.</p>
+                    <span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="display: inline-block;">Let's Connect</h2>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 1rem auto 0;">I'm actively seeking opportunities in ML Engineering, Deep Learning, LLM/GenAI, and Cloud Architecture roles.</p>
+            <div class="contact-links">
+                <a href="/cdn-cgi/l/email-protection#d3a0b2baa7b6b9b2fda0a1baa5babfbfba93b4beb2babffdb0bcbe" class="contact-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Email
+                </a>
+                <a href="https://linkedin.com/in/saitejasrivilli" class="contact-link" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/saitejasrivilli" class="contact-link" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="contact-link" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+                    Scholar
+                </a>
+            </div

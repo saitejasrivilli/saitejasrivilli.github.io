@@ -33,23 +33,20 @@
         .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
         .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
-        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
+        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .experience-item { margin-bottom: 2rem; position: relative; }
-        .experience-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
-        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -60,11 +57,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
-        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -98,16 +93,42 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">ML Engineering Projects</h2>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">vLLM Production Benchmark</h3><span class="project-impact">$3.6M saved</span></div><p class="project-description">Production benchmarking suite for LLM inference. Achieved 86% cost reduction through systematic optimization. Deployed inference endpoints serving 10K+ daily requests with P95 latency under 25ms.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">Docker</span><span class="tech-tag">Monitoring</span><span class="tech-tag">AWS</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Video Analysis Pipeline</h3><span class="project-impact">Production ML</span></div><p class="project-description">End-to-end video analysis pipeline with CV models, real-time processing, and scalable deployment. Built with FastAPI, deployed on AWS with auto-scaling.</p><div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FastAPI</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">PySpark ML</span></div><p class="project-description">Customer churn prediction with feature engineering, model training, and serving infrastructure. Orchestrated with Airflow and tracked with MLflow.</p><div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">MLflow</span><span class="tech-tag">Airflow</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Scalable</span></div><p class="project-description">Collaborative filtering recommendation engine with distributed training and real-time serving. Redis caching for low-latency recommendations.</p><div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">Redis</span><span class="tech-tag">API</span></div></div>
+        
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">vLLM Production Benchmark</h3><span class="project-impact">$3.6M saved</span></div>
+            <p class="project-description">Production benchmarking suite for LLM inference. Achieved 86% cost reduction. Deployed inference endpoints serving 10K+ daily requests with P95 latency under 25ms.</p>
+            <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">Docker</span><span class="tech-tag">Monitoring</span><span class="tech-tag">AWS</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Video Analysis Pipeline</h3><span class="project-impact">Production ML</span></div>
+            <p class="project-description">End-to-end video analysis pipeline with CV models, real-time processing, and scalable deployment. Built with FastAPI, deployed on AWS.</p>
+            <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FastAPI</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">PySpark ML</span></div>
+            <p class="project-description">Customer churn prediction with feature engineering, model training, and serving infrastructure. Orchestrated with Airflow, tracked with MLflow.</p>
+            <div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">MLflow</span><span class="tech-tag">Airflow</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Scalable</span></div>
+            <p class="project-description">Collaborative filtering recommendation engine with distributed training and real-time serving. Redis caching for low-latency.</p>
+            <div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">Redis</span><span class="tech-tag">API</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/Lightweight-Profiling-Pipeline" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Lightweight Profiling Pipeline</h3><span class="project-impact">MLOps</span></div>
+            <p class="project-description">Lightweight profiling pipeline for ML model performance monitoring and optimization.</p>
+            <div class="project-tech"><span class="tech-tag">Profiling</span><span class="tech-tag">MLOps</span><span class="tech-tag">Python</span></div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Orchestrated ingestion, training, and evaluation workflows using Apache Airflow across 10+ DAGs. Tracked 30+ training runs with MLflow. Deployed ML inference endpoints on AWS SageMaker serving 1K+ requests/day.</p></div>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Deployed batch and API-based inference pipelines on AWS, containerized with Docker. Profiled GPU memory and inference performance, reducing p95 latency by 20%.</p></div>
+        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Orchestrated workflows with Airflow (10+ DAGs). Tracked 30+ training runs with MLflow. Deployed ML inference on AWS SageMaker serving 1K+ requests/day.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Deployed batch and API-based inference pipelines on AWS, containerized with Docker. Reduced p95 latency by 20%.</p></div>
     </div></section>
 
     <section class="section"><div class="container">

@@ -33,23 +33,20 @@
         .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
         .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
-        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
+        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .experience-item { margin-bottom: 2rem; position: relative; }
-        .experience-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
-        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -98,16 +95,42 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Deep Learning Projects</h2>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">12.3× faster</span></div><p class="project-description">Built attention benchmarking framework achieving 12.3× throughput improvement and 99.7% memory reduction. Benchmarked 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Built batch size auto-tuner for throughput-latency optimization.</p><div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">4× memory ↓</span></div><p class="project-description">Built integrated GPU optimization system achieving 2.8× inference speedup and 4× memory reduction on Mistral-7B. Implemented kernel profiling with roofline analysis, C++/CUDA fused kernels, and INT4-NF4 quantization.</p><div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">7M tokens/sec</span></div><p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Achieved 12.3× throughput improvement (574K → 7.06M tokens/sec) and 4× memory reduction through systematic optimization.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">Parameter Efficient</span></div><p class="project-description">Low-Rank Adaptation implementation for efficient fine-tuning. Enables training large models with minimal memory overhead through parameter-efficient techniques.</p><div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div></div>
+        
+        <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">12.3× faster</span></div>
+            <p class="project-description">Built attention benchmarking framework achieving 12.3× throughput improvement and 99.7% memory reduction. Benchmarked 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers).</p>
+            <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">4× memory ↓</span></div>
+            <p class="project-description">Built GPU optimization system achieving 2.8× inference speedup and 4× memory reduction on Mistral-7B. Implemented kernel profiling with roofline analysis, C++/CUDA fused kernels.</p>
+            <div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">7M tokens/sec</span></div>
+            <p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Achieved 12.3× throughput improvement (574K → 7.06M tokens/sec).</p>
+            <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Speculative Decoding Benchmark</h3><span class="project-impact">Inference</span></div>
+            <p class="project-description">Benchmarking speculative decoding techniques for faster LLM inference with draft models.</p>
+            <div class="project-tech"><span class="tech-tag">Speculative Decoding</span><span class="tech-tag">PyTorch</span><span class="tech-tag">LLM</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">PEFT</span></div>
+            <p class="project-description">Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.</p>
+            <div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
         <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Building computer vision pipelines for medical imaging with 50K+ images. Optimizing deep learning models for real-time inference.</p></div>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Research in neural architecture optimization and efficient inference. MS CS with 4.0 GPA.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Research in neural architecture optimization. MS CS with 4.0 GPA.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
@@ -119,7 +142,7 @@
 
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Interested in Deep Learning Excellence?</h2>
-        <p class="cta-description">Let's discuss how I can help optimize your ML systems for maximum performance.</p>
+        <p class="cta-description">Let's discuss how I can help optimize your ML systems.</p>
         <div class="cta-buttons"><a href="mailto:saiteja.srivilli@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 

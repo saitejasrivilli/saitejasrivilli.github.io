@@ -33,23 +33,20 @@
         .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
         .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
-        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
+        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .experience-item { margin-bottom: 2rem; position: relative; }
-        .experience-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
-        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -60,11 +57,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
-        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -98,15 +93,53 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Professional Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed and owned Java-based distributed data processing services across 10+ production systems, each handling 10K+ daily transactions. Improved data processing throughput by 45% by optimizing SQL queries. Reduced incident recovery time by 35% through structured logging and root-cause analysis. Built fault-tolerant backend services with 94% service availability. Led system design for data-intensive services applying OOP patterns for scalability.</p></div>
+        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services (10+ systems, 10K+ daily transactions). Improved throughput by 45% via SQL optimization. Reduced incident recovery time by 35%. Built fault-tolerant backend services with 94% availability. Led system design for data-intensive services using OOP patterns.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Backend Projects</h2>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div><p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms for fault tolerance. Built from scratch in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis with async processing and queue management. Handles concurrent requests with Celery workers.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">10K+ req/day</span></div><p class="project-description">High-throughput inference server handling 10K+ daily requests with P95 latency under 25ms. Built for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Recommender API</h3><span class="project-impact">Scalable</span></div><p class="project-description">Backend API for real-time recommendations with Redis caching and batch processing for low-latency responses.</p><div class="project-tech"><span class="tech-tag">Flask</span><span class="tech-tag">Redis</span><span class="tech-tag">PostgreSQL</span></div></div>
+        
+        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div>
+            <p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms. Built from scratch in Go.</p>
+            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div>
+            <p class="project-description">RESTful API backend for video analysis with async processing and queue management. Handles concurrent requests with Celery workers.</p>
+            <div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">10K+ req/day</span></div>
+            <p class="project-description">High-throughput inference server handling 10K+ daily requests with P95 latency under 25ms.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Recommender API</h3><span class="project-impact">Scalable</span></div>
+            <p class="project-description">Backend API for real-time recommendations with Redis caching and batch processing.</p>
+            <div class="project-tech"><span class="tech-tag">Flask</span><span class="tech-tag">Redis</span><span class="tech-tag">PostgreSQL</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">High Throughput</span></div>
+            <p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p>
+            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Algorithms</span></div>
+            <p class="project-description">Comparison of job scheduling algorithms for distributed systems and resource management.</p>
+            <div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span><span class="tech-tag">Systems</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/buyer-seller-mt" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Buyer-Seller Marketplace</h3><span class="project-impact">Full Stack</span></div>
+            <p class="project-description">Multi-tenant marketplace backend with user management, listings, and transactions.</p>
+            <div class="project-tech"><span class="tech-tag">Backend</span><span class="tech-tag">API</span><span class="tech-tag">Database</span></div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">

@@ -33,17 +33,15 @@
         .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
         .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
-        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
+        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
-        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -54,11 +52,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
-        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -92,10 +88,42 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Cloud & Data Projects</h2>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">End-to-End Data Pipeline</h3><span class="project-impact">Full Stack</span></div><p class="project-description">Complete data pipeline from ingestion to analytics with ETL, data warehousing, and visualization. Built with Airflow for orchestration and deployed on AWS.</p><div class="project-tech"><span class="tech-tag">Airflow</span><span class="tech-tag">AWS</span><span class="tech-tag">ETL</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Distributed</span></div><p class="project-description">High-performance distributed key-value store with replication and partitioning. Built in Go with consensus algorithms for fault tolerance.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Consensus</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">Big Data</span></div><p class="project-description">Customer churn prediction with PySpark for large-scale data processing. Full ML pipeline with feature engineering and model serving.</p><div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">ML</span><span class="tech-tag">ETL</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Spark ML</span></div><p class="project-description">Scalable recommendation engine built on Apache Spark with collaborative filtering. Redis caching for real-time recommendations.</p><div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">ALS</span><span class="tech-tag">Redis</span></div></div>
+        
+        <a href="https://github.com/saitejasrivilli/end-to-end-data-engineering-project" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">End-to-End Data Pipeline</h3><span class="project-impact">Full Stack</span></div>
+            <p class="project-description">Complete data pipeline from ingestion to analytics with ETL, data warehousing, and visualization. Built with Airflow, deployed on AWS.</p>
+            <div class="project-tech"><span class="tech-tag">Airflow</span><span class="tech-tag">AWS</span><span class="tech-tag">ETL</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Distributed</span></div>
+            <p class="project-description">High-performance distributed key-value store with replication and partitioning. Built in Go with consensus algorithms.</p>
+            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Consensus</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">Big Data</span></div>
+            <p class="project-description">Customer churn prediction with PySpark for large-scale data processing. Full ML pipeline with feature engineering.</p>
+            <div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">ML</span><span class="tech-tag">ETL</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Spark ML</span></div>
+            <p class="project-description">Scalable recommendation engine on Apache Spark with collaborative filtering. Redis caching for real-time serving.</p>
+            <div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">ALS</span><span class="tech-tag">Redis</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div>
+            <p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p>
+            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/data-engineer-handbook" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Data Engineer Handbook</h3><span class="project-impact">Reference</span></div>
+            <p class="project-description">Comprehensive handbook covering data engineering best practices, tools, and architectures.</p>
+            <div class="project-tech"><span class="tech-tag">Data Engineering</span><span class="tech-tag">Best Practices</span></div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">

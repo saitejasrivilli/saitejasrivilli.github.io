@@ -33,23 +33,20 @@
         .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
         .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .project-item { padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; }
-        .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .project-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
+        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .experience-item { margin-bottom: 2rem; position: relative; }
-        .experience-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
-        .cert-item::before { content: '•'; position: absolute; left: -1rem; top: 0; font-size: 1.5rem; color: var(--text-primary); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -60,11 +57,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
-        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -98,17 +93,59 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">LLM/GenAI Projects</h2>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">vLLM Optimization</h3><span class="project-impact">7M tokens/sec</span></div><p class="project-description">Comprehensive LLM inference optimization achieving 12.3× throughput improvement with vLLM. Systematic benchmarking and optimization of inference pipelines.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Inference</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Tool Use</span></div><p class="project-description">Sophisticated LLM agent with tool use capabilities, planning, and multi-step reasoning. Built with LangChain and RAG pipelines for enhanced knowledge retrieval.</p><div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Multi-Agent Workflow Automator</h3><span class="project-impact">Orchestration</span></div><p class="project-description">Multi-agent orchestration system for complex workflow automation with LLMs. Coordinating multiple specialized agents for task completion.</p><div class="project-tech"><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Workflows</span><span class="tech-tag">LLM</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">Privacy-First</span></div><p class="project-description">Privacy-focused RAG system for offline deployment with local embeddings and vector search. No data leaves the local environment.</p><div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">VectorDB</span><span class="tech-tag">Embeddings</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">TeluguGPT</h3><span class="project-impact">Language Model</span></div><p class="project-description">Custom language model for Telugu with fine-tuning and domain adaptation. Bringing LLM capabilities to regional languages.</p><div class="project-tech"><span class="tech-tag">Transformers</span><span class="tech-tag">NLP</span><span class="tech-tag">Fine-tuning</span></div></div>
-        <div class="project-item"><div class="project-header"><h3 class="project-title">TelecomGPT</h3><span class="project-impact">Domain LLM</span></div><p class="project-description">Domain-specific LLM for telecom industry with specialized fine-tuning using LoRA for parameter efficiency.</p><div class="project-tech"><span class="tech-tag">Domain</span><span class="tech-tag">Fine-tuning</span><span class="tech-tag">LoRA</span></div></div>
+        
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">vLLM Optimization</h3><span class="project-impact">7M tokens/sec</span></div>
+            <p class="project-description">Comprehensive LLM inference optimization achieving 12.3× throughput improvement with vLLM.</p>
+            <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Inference</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Tool Use</span></div>
+            <p class="project-description">Sophisticated LLM agent with tool use capabilities, planning, and multi-step reasoning.</p>
+            <div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/Multi_Agent_Workflow_Automator" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Multi-Agent Workflow Automator</h3><span class="project-impact">Orchestration</span></div>
+            <p class="project-description">Multi-agent orchestration system for complex workflow automation with LLMs.</p>
+            <div class="project-tech"><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Workflows</span><span class="tech-tag">LLM</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">Privacy-First</span></div>
+            <p class="project-description">Privacy-focused RAG system for offline deployment with local embeddings.</p>
+            <div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">VectorDB</span><span class="tech-tag">Embeddings</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">TeluguGPT</h3><span class="project-impact">Language Model</span></div>
+            <p class="project-description">Custom language model for Telugu with fine-tuning and domain adaptation.</p>
+            <div class="project-tech"><span class="tech-tag">Transformers</span><span class="tech-tag">NLP</span><span class="tech-tag">Fine-tuning</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/TelecomGPT" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">TelecomGPT</h3><span class="project-impact">Domain LLM</span></div>
+            <p class="project-description">Domain-specific LLM for telecom industry with LoRA fine-tuning.</p>
+            <div class="project-tech"><span class="tech-tag">Domain</span><span class="tech-tag">Fine-tuning</span><span class="tech-tag">LoRA</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">PEFT</span></div>
+            <p class="project-description">Low-Rank Adaptation for parameter-efficient fine-tuning.</p>
+            <div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div>
+        </a>
+
+        <a href="https://github.com/saitejasrivilli/foundation-model-finetuning" class="project-item" target="_blank">
+            <div class="project-header"><h3 class="project-title">Foundation Model Fine-tuning</h3><span class="project-impact">Training</span></div>
+            <p class="project-description">Framework for fine-tuning foundation models on custom datasets.</p>
+            <div class="project-tech"><span class="tech-tag">Fine-tuning</span><span class="tech-tag">PyTorch</span><span class="tech-tag">LLM</span></div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Led ML systems work on CTMap, an LLM-enabled connectivity-aware path planning system for mmWave networks (IEEE ICC 2026). Designed end-to-end LLM inference pipelines. Fine-tuned LLMs in PyTorch using 10K+ supervision examples.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Led CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Fine-tuned LLMs in PyTorch using 10K+ supervision examples.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
@@ -121,7 +158,7 @@
 
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Building with LLMs?</h2>
-        <p class="cta-description">Let's discuss how I can help build intelligent AI systems for your use case.</p>
+        <p class="cta-description">Let's discuss how I can help build intelligent AI systems.</p>
         <div class="cta-buttons"><a href="mailto:saiteja.srivilli@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 

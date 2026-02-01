@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
-        // Focus Areas Interactive Chart - Define early so inline handlers work
+        // Focus Areas Interactive Chart - Works on both mobile and desktop
         const focusData = {
             1: { percent: '35%', label: 'Deep Learning', color: '#0ea5e9' },
             2: { percent: '25%', label: 'LLM & GenAI', color: '#f59e0b' },
@@ -17,7 +17,11 @@
             5: { percent: '8%', label: 'Research', color: '#06b6d4' }
         };
         
+        let currentSegment = null;
+        let lastInteractionWasTouch = false;
+        
         function highlightSegment(num) {
+            currentSegment = num;
             const percentEl = document.getElementById('donut-percent');
             const labelEl = document.getElementById('donut-label');
             
@@ -51,6 +55,7 @@
         }
         
         function resetSegment() {
+            currentSegment = null;
             const percentEl = document.getElementById('donut-percent');
             const labelEl = document.getElementById('donut-label');
             
@@ -68,6 +73,80 @@
                 if (label) label.classList.remove('active');
             }
         }
+        
+        // Toggle for tap
+        function toggleSegment(num) {
+            if (currentSegment === num) {
+                resetSegment();
+            } else {
+                highlightSegment(num);
+            }
+        }
+        
+        // Initialize after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add events to focus labels
+            document.querySelectorAll('.focus-label').forEach(function(label) {
+                const segNum = parseInt(label.getAttribute('data-segment'));
+                if (!isNaN(segNum)) {
+                    // Touch events - tap to toggle
+                    label.addEventListener('touchstart', function(e) {
+                        lastInteractionWasTouch = true;
+                        e.preventDefault();
+                        toggleSegment(segNum);
+                    }, { passive: false });
+                    
+                    // Mouse events - hover behavior (only if not touch)
+                    label.addEventListener('mouseenter', function() {
+                        if (!lastInteractionWasTouch) {
+                            highlightSegment(segNum);
+                        }
+                    });
+                    label.addEventListener('mouseleave', function() {
+                        if (!lastInteractionWasTouch) {
+                            resetSegment();
+                        }
+                    });
+                }
+            });
+            
+            // Add events to donut segments
+            document.querySelectorAll('.donut-segment').forEach(function(segment) {
+                const segNum = parseInt(segment.id.replace('segment-', ''));
+                if (!isNaN(segNum)) {
+                    // Touch events
+                    segment.addEventListener('touchstart', function(e) {
+                        lastInteractionWasTouch = true;
+                        e.preventDefault();
+                        toggleSegment(segNum);
+                    }, { passive: false });
+                    
+                    // Mouse events
+                    segment.addEventListener('mouseenter', function() {
+                        if (!lastInteractionWasTouch) {
+                            highlightSegment(segNum);
+                        }
+                    });
+                    segment.addEventListener('mouseleave', function() {
+                        if (!lastInteractionWasTouch) {
+                            resetSegment();
+                        }
+                    });
+                }
+            });
+            
+            // Reset touch flag when mouse moves (for hybrid devices switching back to mouse)
+            document.addEventListener('mousemove', function() {
+                lastInteractionWasTouch = false;
+            }, { passive: true });
+            
+            // Reset when tapping outside (touch only)
+            document.addEventListener('touchstart', function(e) {
+                if (!e.target.closest('.focus-container')) {
+                    resetSegment();
+                }
+            }, { passive: true });
+        });
     </script>
     <style>
         :root {
@@ -412,7 +491,7 @@
         .donut-chart-container { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .donut-chart { position: relative; width: 280px; height: 280px; }
         .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .donut-segment { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; transform-origin: center; }
+        .donut-segment { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; transform-origin: center; pointer-events: stroke; }
         .donut-segment.highlighted { stroke-width: 48 !important; filter: brightness(1.15) drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
         .donut-segment.dimmed { opacity: 0.25; }
         .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; transition: all 0.3s ease; }
@@ -626,7 +705,7 @@
             <h2 class="section-title">My Focus Areas</h2>
             <div class="focus-container">
                 <div class="focus-labels">
-                    <div class="focus-label" data-segment="1" onmouseenter="highlightSegment(1)" onmouseleave="resetSegment()">
+                    <div class="focus-label" data-segment="1">
                         <span class="focus-number" style="background: #0ea5e9;">1</span>
                         <div class="focus-info">
                             <span class="focus-text">Deep Learning & GPU Optimization</span>
@@ -634,7 +713,7 @@
                         </div>
                         <div class="focus-details">CUDA, FlashAttention, Quantization, PyTorch, Triton</div>
                     </div>
-                    <div class="focus-label" data-segment="2" onmouseenter="highlightSegment(2)" onmouseleave="resetSegment()">
+                    <div class="focus-label" data-segment="2">
                         <span class="focus-number" style="background: #f59e0b;">2</span>
                         <div class="focus-info">
                             <span class="focus-text">LLM & GenAI Systems</span>
@@ -642,7 +721,7 @@
                         </div>
                         <div class="focus-details">vLLM, RAG, Fine-tuning, Multi-Agent, LangChain</div>
                     </div>
-                    <div class="focus-label" data-segment="3" onmouseenter="highlightSegment(3)" onmouseleave="resetSegment()">
+                    <div class="focus-label" data-segment="3">
                         <span class="focus-number" style="background: #10b981;">3</span>
                         <div class="focus-info">
                             <span class="focus-text">ML Infrastructure & MLOps</span>
@@ -650,7 +729,7 @@
                         </div>
                         <div class="focus-details">AWS SageMaker, Docker, Airflow, MLflow, CI/CD</div>
                     </div>
-                    <div class="focus-label" data-segment="4" onmouseenter="highlightSegment(4)" onmouseleave="resetSegment()">
+                    <div class="focus-label" data-segment="4">
                         <span class="focus-number" style="background: #8b5cf6;">4</span>
                         <div class="focus-info">
                             <span class="focus-text">Backend & Distributed Systems</span>
@@ -658,7 +737,7 @@
                         </div>
                         <div class="focus-details">Go, Java, Microservices, Kafka, Redis, PostgreSQL</div>
                     </div>
-                    <div class="focus-label" data-segment="5" onmouseenter="highlightSegment(5)" onmouseleave="resetSegment()">
+                    <div class="focus-label" data-segment="5">
                         <span class="focus-number" style="background: #06b6d4;">5</span>
                         <div class="focus-info">
                             <span class="focus-text">Research & Publications</span>
@@ -670,11 +749,11 @@
                 <div class="donut-chart-container">
                     <div class="donut-chart">
                         <svg viewBox="0 0 200 200" class="donut-svg" style="overflow: visible;">
-                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none" onmouseenter="highlightSegment(1)" onmouseleave="resetSegment()"/>
-                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none" onmouseenter="highlightSegment(2)" onmouseleave="resetSegment()"/>
-                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none" onmouseenter="highlightSegment(3)" onmouseleave="resetSegment()"/>
-                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none" onmouseenter="highlightSegment(4)" onmouseleave="resetSegment()"/>
-                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none" onmouseenter="highlightSegment(5)" onmouseleave="resetSegment()"/>
+                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none"/>
+                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none"/>
+                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none"/>
+                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none"/>
+                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none"/>
                             <circle cx="100" cy="100" r="50" fill="var(--bg-primary)" style="pointer-events: none;"/>
                         </svg>
                         <div class="donut-center" id="donut-center">
@@ -973,7 +1052,7 @@
                             <span class="avail-icon">📍</span>
                             <div class="avail-info">
                                 <span class="avail-label">Location</span>
-                                <span class="avail-value">Arlington, TX (Open to Relocation)</span>
+                                <span class="avail-value">Dallas, TX (Open to Relocation)</span>
                             </div>
                         </div>
                         <div class="availability-item">

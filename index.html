@@ -11,7 +11,7 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #2563eb; --border-color: #e5e7eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 2rem; position: relative; }
         .profile-image { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 2rem; border: 4px solid #f0f0f0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; }
@@ -19,27 +19,28 @@
         .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
-        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border: 1.5px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
-        .scroll-indicator:hover { border-color: var(--text-primary); }
+        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border: 1.5px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .scroll-indicator svg { width: 16px; height: 16px; color: var(--text-secondary); }
         .section { padding: 5rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
-        .about-content { color: var(--text-secondary); font-size: 1rem; line-height: 1.9; }
-        .about-content p { margin-bottom: 1.5rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--text-primary); }
-        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); text-align: center; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .about-content { color: var(--text-secondary); font-size: 1rem; line-height: 1.9; max-width: 700px; margin: 0 auto; text-align: center; }
+        .about-content p { margin-bottom: 1rem; }
+        .skills-category { margin-bottom: 3rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         .timeline-item { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .timeline-logo { width: 55px; height: 55px; border-radius: 12px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .timeline-logo { width: 55px; height: 55px; border-radius: 12px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 0.75rem; border: 1px solid var(--border-color); }
         .timeline-content { flex: 1; }
         .timeline-company { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
         .timeline-role { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
-        .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
         .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
         .education-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
-        .education-logo { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.7rem; color: white; border: 1px solid var(--border-color); }
+        .education-logo { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.7rem; color: white; }
         .education-logo.uta { background: #0064b1; }
         .education-logo.au { background: #8b0000; }
         .education-content h3 { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
@@ -53,19 +54,17 @@
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
         .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
-        .cert-image { width: 100px; height: 70px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.7rem; color: var(--text-secondary); }
+        .cert-image { width: 100px; height: 70px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text-secondary); }
         .cert-content h4 { font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
-        .cert-content .cert-date { font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; }
-        .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
         .role-card { padding: 2rem; border: 1px solid var(--border-color); border-radius: 16px; text-decoration: none; color: inherit; transition: all 0.3s ease; }
         .role-card:hover { border-color: var(--text-primary); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .role-icon { font-size: 2rem; margin-bottom: 1rem; }
         .role-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.5rem; }
         .role-description { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
         .role-link { font-size: 0.9rem; color: var(--text-primary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
-        .role-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
-        .role-card:hover .role-link svg { transform: translateX(4px); }
+        .role-link svg { width: 16px; height: 16px; }
         .contact-section { padding: 5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
         .contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: 50px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; transition: all 0.3s ease; }
@@ -73,7 +72,7 @@
         .contact-link svg { width: 18px; height: 18px; }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2.25rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } .timeline-item, .education-item, .cert-item { flex-direction: column; gap: 1rem; } .roles-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.25rem; } .timeline-item, .education-item, .cert-item { flex-direction: column; gap: 1rem; } .roles-grid { grid-template-columns: 1fr; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } }
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -81,7 +80,7 @@
     <section class="hero">
         <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image">
         <h1>Sai Teja<br>Srivillibhutturu</h1>
-        <p class="hero-subtitle">ML & Deep Learning Research Engineer @ DentalScan & UTA(IEEE ICC CQRM - Accepted) | GPU Optimization & LLM Inference | 12.3× Throughput, 4× Memory Reduction | PyTorch, CUDA, C++, vLLM, AWS</p>
+        <p class="hero-subtitle">ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS</p>
         <div class="hero-buttons">
             <a href="#experience" class="btn">Experience</a>
             <a href="#education" class="btn">Education</a>
@@ -96,16 +95,82 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <p>Deep Learning Engineer | GPU Optimization | LLM Inference | MS CS @ UTA (4.0 GPA). I optimize ML systems for speed, memory, and cost.</p>
-                <p><strong>Results:</strong> 12.3× inference throughput (574K → 7.06M tokens/sec) • 4× memory reduction (14.4GB → 3.6GB) • 2.8× inference speedup • 68% → 91% GPU utilization • $3.6M annual cost savings • 10K+ daily requests at P95 &lt;25ms</p>
-                <p><strong>Skills:</strong> GPU Optimization (CUDA, FlashAttention-2, INT4/NF4, GPTQ, AWQ) • LLM Systems (PyTorch, vLLM, RAG, fine-tuning) • Production ML (AWS, Docker, SageMaker, MLflow, Airflow)</p>
-                <p><strong>Open to:</strong> ML Engineer, Deep Learning Engineer, LLM/GenAI Engineer, Applied ML, Backend SDE roles</p>
+                <p>Deep Learning Engineer specializing in GPU Optimization and LLM Inference. Currently pursuing MS in Computer Science at UT Arlington.</p>
+                <p>I optimize ML systems for speed, memory, and cost. My work focuses on CUDA kernels, FlashAttention, quantization techniques, and building production-grade inference infrastructure.</p>
+                <p>Open to ML Engineer, Deep Learning Engineer, LLM/GenAI Engineer, Applied ML, and Backend SDE roles.</p>
             </div>
-            <div class="stats-row">
-                <div class="stat-item"><div class="stat-value">12.3×</div><div class="stat-label">Throughput Gain</div></div>
-                <div class="stat-item"><div class="stat-value">4×</div><div class="stat-label">Memory Reduction</div></div>
-                <div class="stat-item"><div class="stat-value">$3.6M</div><div class="stat-label">Cost Savings</div></div>
-                <div class="stat-item"><div class="stat-value">4+</div><div class="stat-label">Years Experience</div></div>
+        </div>
+    </section>
+
+    <section class="section" id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            
+            <div class="skills-category">
+                <h3 class="skills-category-title">Programming</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+                    <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
+                    <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
+                    <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
+                    <div class="skill-icon" title="JavaScript"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div>
+                    <div class="skill-icon" title="Bash"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash"></div>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <h3 class="skills-category-title">ML / Deep Learning</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+                    <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
+                    <div class="skill-icon" title="CUDA"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA/NVIDIA"></div>
+                    <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
+                    <div class="skill-icon" title="scikit-learn"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit-learn"></div>
+                    <div class="skill-icon" title="NumPy"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"></div>
+                    <div class="skill-icon" title="Pandas"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"></div>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <h3 class="skills-category-title">Cloud & Infrastructure</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+                    <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+                    <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
+                    <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
+                    <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
+                    <div class="skill-icon" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></div>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <h3 class="skills-category-title">Databases</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+                    <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
+                    <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
+                    <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
+                    <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <h3 class="skills-category-title">MLOps & Data Engineering</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="Apache Airflow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"></div>
+                    <div class="skill-icon" title="Apache Spark"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"></div>
+                    <div class="skill-icon" title="Apache Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"></div>
+                    <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
+                    <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <h3 class="skills-category-title">AI Tools</h3>
+                <div class="skills-icons">
+                    <div class="skill-icon" title="OpenAI"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI"></div>
+                    <div class="skill-icon" title="LangChain"><img src="https://avatars.githubusercontent.com/u/126733545?s=200&v=4" alt="LangChain"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -119,7 +184,7 @@
                     <h3 class="timeline-company">ReplyQuickAI (DentalScan)</h3>
                     <p class="timeline-role">Machine Learning Engineer Intern</p>
                     <p class="timeline-date">Dec 2025 - Present • United States</p>
-                    <p class="timeline-description">Built CV models for medical image analysis (50K+ images, 6+ clinical categories). Designed pipelines processing 500-700 images/day. Orchestrated workflows with Airflow (10+ DAGs). Deployed on AWS SageMaker with sub-second p95 latency.</p>
+                    <p class="timeline-description">Building computer vision pipelines for medical imaging. Training supervised models for intra-oral image analysis across clinical categories. Deploying ML inference endpoints on AWS SageMaker.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -128,7 +193,16 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant</p>
                     <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
-                    <p class="timeline-description">Led CTMap project (IEEE ICC 2026) - LLM-enabled path planning for mmWave networks. Fine-tuned LLMs with 10K+ supervision examples. Multi-GPU training (2-4 GPUs), reduced training time by 30%.</p>
+                    <p class="timeline-description">Leading ML systems work on CTMap, an LLM-enabled connectivity-aware path planning system for mmWave networks, accepted at IEEE ICC 2026. Designing end-to-end LLM inference pipelines and fine-tuning models in PyTorch.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #0064b1; color: white;">UTA</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">The University of Texas at Arlington</h3>
+                    <p class="timeline-role">Graduate Teaching Assistant</p>
+                    <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
+                    <p class="timeline-description">Supported graduate courses in Numerical Methods, assisting students with algorithmic problem solving, optimization, and computational modeling. Led weekly review sessions and office hours.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -137,7 +211,7 @@
                     <h3 class="timeline-company">Tata Consultancy Services</h3>
                     <p class="timeline-role">Senior Software Engineer → Software Engineer</p>
                     <p class="timeline-date">Jun 2019 - May 2023 • 4 years • Chennai</p>
-                    <p class="timeline-description">Designed distributed Java services (10+ systems, 10K+ daily transactions). Improved throughput by 45%. Reduced incident recovery time by 35%. Achieved 94% service availability.</p>
+                    <p class="timeline-description">Designed and owned Java-based distributed data processing services across production systems. Led system design and architecture for data-intensive services. Built fault-tolerant backend services with high availability.</p>
                 </div>
             </div>
         </div>
@@ -148,7 +222,7 @@
             <h2 class="section-title">Education</h2>
             <div class="education-item">
                 <div class="education-logo uta">UTA</div>
-                <div class="education-content"><h3>The University of Texas at Arlington</h3><p>Master of Science - MS, Computer Science</p><p>2023 - 2025 • 4.0 GPA</p></div>
+                <div class="education-content"><h3>The University of Texas at Arlington</h3><p>Master of Science - MS, Computer Science</p><p>2023 - 2025</p></div>
             </div>
             <div class="education-item">
                 <div class="education-logo au">AU</div>
@@ -162,37 +236,37 @@
             <h2 class="section-title">Projects</h2>
             
             <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">12.3× faster</span></div>
-                <p class="project-description">Built attention benchmarking framework achieving 12.3× throughput improvement and 99.7% memory reduction. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers implementations.</p>
+                <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">Deep Learning</span></div>
+                <p class="project-description">Built attention benchmarking framework. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers implementations for throughput and memory optimization.</p>
                 <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">4× memory ↓</span></div>
-                <p class="project-description">Built GPU optimization system achieving 2.8× inference speedup and 4× memory reduction on Mistral-7B. Implemented C++/CUDA fused kernels, INT4-NF4 quantization.</p>
+                <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">CUDA</span></div>
+                <p class="project-description">Built GPU optimization system for Mistral-7B. Implemented kernel profiling with roofline analysis, C++/CUDA fused kernels, and INT4-NF4 quantization.</p>
                 <div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">7M tokens/sec</span></div>
-                <p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Achieved 12.3× throughput improvement (574K → 7.06M tokens/sec).</p>
+                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">LLM Inference</span></div>
+                <p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Systematic optimization of inference pipelines.</p>
                 <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Multi-Agent</span></div>
+                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
                 <p class="project-description">Sophisticated LLM agent with tool use capabilities, planning, and multi-step reasoning. Built with LangChain and RAG pipelines.</p>
                 <div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div>
+                <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Systems</span></div>
                 <p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms.</p>
                 <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">PEFT</span></div>
+                <div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">Fine-tuning</span></div>
                 <p class="project-description">Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.</p>
                 <div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div>
             </a>
@@ -202,17 +276,17 @@
     <section class="section" id="certifications">
         <div class="container">
             <h2 class="section-title">Certifications</h2>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS</p><p class="cert-date">📅 Jul 2025</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services</p><p class="cert-date">📅 Dec 2024 - Dec 2027</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft</p><p class="cert-date">📅 Aug 2025</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud</p><p class="cert-date">📅 Jun 2024 - Jun 2026</p></div></div>
+            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
+            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
+            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft • Aug 2025</p></div></div>
+            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
         </div>
     </section>
 
     <section class="section" id="roles">
         <div class="container">
             <h2 class="section-title">Explore by Role</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">View role-specific projects, skills, and experience.</p>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem; text-align: center;">View role-specific projects, skills, and experience.</p>
             <div class="roles-grid">
                 <a href="DeepLearning.html" class="role-card"><div class="role-icon">🧠</div><h3 class="role-title">Deep Learning Engineer</h3><p class="role-description">GPU optimization, CUDA kernels, FlashAttention, quantization.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
                 <a href="MLEngineer.html" class="role-card"><div class="role-icon">⚙️</div><h3 class="role-title">ML Engineer</h3><p class="role-description">Production ML systems, MLOps, model deployment.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
@@ -225,8 +299,8 @@
 
     <section class="contact-section" id="contact">
         <div class="container">
-            <h2 class="section-title" style="display: inline-block;">Let's Connect</h2>
-            <p style="color: var(--text-secondary); max-width: 500px; margin: 1rem auto 0;">Open to ML Engineering, Deep Learning, LLM/GenAI, and Backend roles.</p>
+            <h2 class="section-title">Let's Connect</h2>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to ML Engineering, Deep Learning, LLM/GenAI, and Backend roles.</p>
             <div class="contact-links">
                 <a href="mailto:saiteja.srivilli@gmail.com" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
                 <a href="https://linkedin.com/in/saitejasrivilli" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>

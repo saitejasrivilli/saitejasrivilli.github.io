@@ -264,14 +264,14 @@
         .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
         .contact-link svg { width: 18px; height: 18px; }
         
-        /* Roadmap Styles - Extended and Visually Enhanced */
-        .roadmap-wrapper { padding: 2rem 0; }
+        /* Roadmap Styles - Full Width Timeline */
+        .roadmap-wrapper { padding: 2rem 0; width: 100%; }
         .roadmap-container { position: relative; padding: 6rem 0; width: 100%; }
-        .roadmap-line { position: absolute; top: 50%; left: 8%; right: 8%; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
+        .roadmap-line { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
         .roadmap-line::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #cbd5e1; border-radius: 50%; }
         .roadmap-line::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 12px solid #10b981; }
-        .roadmap-items { display: flex; justify-content: space-between; position: relative; padding: 0 8%; }
-        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.3s ease; width: 120px; flex-shrink: 0; }
+        .roadmap-items { display: flex; justify-content: space-between; position: relative; width: 100%; }
+        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.3s ease; flex: 1; max-width: 150px; }
         .roadmap-item:hover { transform: scale(1.05); z-index: 10; }
         .roadmap-diamond { width: 24px; height: 24px; background: var(--bg-primary); border: 3px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .roadmap-item:hover .roadmap-diamond { transform: rotate(45deg) scale(1.2); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25); }
@@ -296,9 +296,7 @@
         .current-year { color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }
         
         @media (max-width: 1000px) {
-            .roadmap-items { padding: 0 5%; }
-            .roadmap-line { left: 5%; right: 5%; }
-            .roadmap-item { width: 100px; }
+            .roadmap-item { max-width: 130px; }
             .roadmap-logo { width: 46px; height: 46px; }
             .roadmap-title { font-size: 0.78rem; }
             .roadmap-subtitle { font-size: 0.68rem; }
@@ -306,9 +304,7 @@
         
         @media (max-width: 800px) {
             .roadmap-container { padding: 5rem 0; }
-            .roadmap-items { padding: 0 3%; }
-            .roadmap-line { left: 3%; right: 3%; }
-            .roadmap-item { width: 85px; }
+            .roadmap-item { max-width: 110px; }
             .roadmap-logo { width: 40px; height: 40px; }
             .roadmap-title { font-size: 0.7rem; }
             .roadmap-subtitle { font-size: 0.6rem; min-height: 2em; }
@@ -318,9 +314,8 @@
         
         @media (max-width: 600px) {
             .roadmap-container { padding: 4rem 0; }
-            .roadmap-items { padding: 0 2%; }
-            .roadmap-line { left: 2%; right: 2%; height: 4px; }
-            .roadmap-item { width: 70px; }
+            .roadmap-item { max-width: 90px; }
+            .roadmap-line { height: 4px; }
             .roadmap-logo { width: 34px; height: 34px; font-size: 0.55rem; border-radius: 8px; }
             .roadmap-title { font-size: 0.6rem; }
             .roadmap-subtitle { display: none; }
@@ -463,74 +458,74 @@
     <section class="section" id="journey">
         <div class="container">
             <h2 class="section-title">My Journey</h2>
-            <div class="roadmap-wrapper">
-                <div class="roadmap-container">
-                    <div class="roadmap-line"></div>
-                    <div class="roadmap-items">
-                        <!-- Andhra University -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-top">
-                                <div class="roadmap-logo au-logo">AU</div>
-                                <div class="roadmap-title">Andhra University</div>
-                                <div class="roadmap-subtitle">B.Tech Computer Science</div>
-                            </div>
-                            <div class="roadmap-diamond"></div>
-                            <div class="roadmap-year">2015 - 19</div>
+        </div>
+        <div class="roadmap-wrapper">
+            <div class="roadmap-container">
+                <div class="roadmap-line"></div>
+                <div class="roadmap-items">
+                    <!-- Andhra University -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-content roadmap-top">
+                            <div class="roadmap-logo au-logo">AU</div>
+                            <div class="roadmap-title">Andhra University</div>
+                            <div class="roadmap-subtitle">B.Tech Computer Science</div>
                         </div>
-                        <!-- TCS Software Engineer -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-bottom">
-                                <div class="roadmap-year-bottom">2019 - 21</div>
-                                <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                                <div class="roadmap-title">TCS</div>
-                                <div class="roadmap-subtitle">Software Engineer</div>
-                            </div>
-                            <div class="roadmap-diamond filled"></div>
-                        </div>
-                        <!-- TCS Senior Software Engineer -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-top">
-                                <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                                <div class="roadmap-title">TCS</div>
-                                <div class="roadmap-subtitle">Senior Software Engineer</div>
-                            </div>
-                            <div class="roadmap-diamond filled-dark"></div>
-                            <div class="roadmap-year">2021 - 23</div>
-                        </div>
-                        <!-- UTA MS -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-bottom">
-                                <div class="roadmap-year-bottom">2023 - 25</div>
-                                <div class="roadmap-logo uta-logo">UTA</div>
-                                <div class="roadmap-title">UT Arlington</div>
-                                <div class="roadmap-subtitle">MS CS (Graduated)</div>
-                            </div>
-                            <div class="roadmap-diamond"></div>
-                        </div>
-                        <!-- UTA GRA -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-top">
-                                <div class="roadmap-logo uta-logo">UTA</div>
-                                <div class="roadmap-title">UTA Research</div>
-                                <div class="roadmap-subtitle">Graduate Research Asst.</div>
-                            </div>
-                            <div class="roadmap-diamond filled-dark"></div>
-                            <div class="roadmap-year">2025</div>
-                        </div>
-                        <!-- DentalScan -->
-                        <div class="roadmap-item">
-                            <div class="roadmap-content roadmap-bottom">
-                                <div class="roadmap-year-bottom current-year">Present</div>
-                                <div class="roadmap-logo dsn-logo"><img src="dentalscan-logo.png" alt="DentalScan"></div>
-                                <div class="roadmap-title">DentalScan</div>
-                                <div class="roadmap-subtitle">ML Engineer Intern</div>
-                            </div>
-                            <div class="roadmap-diamond current"></div>
-                        </div>
+                        <div class="roadmap-diamond"></div>
+                        <div class="roadmap-year">2015 - 19</div>
                     </div>
+                    <!-- TCS Software Engineer -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-content roadmap-bottom">
+                            <div class="roadmap-year-bottom">2019 - 21</div>
+                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
+                            <div class="roadmap-title">TCS</div>
+                            <div class="roadmap-subtitle">Software Engineer</div>
+                        </div>
+                        <div class="roadmap-diamond filled"></div>
+                    </div>
+                    <!-- TCS Senior Software Engineer -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-content roadmap-top">
+                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
+                            <div class="roadmap-title">TCS</div>
+                            <div class="roadmap-subtitle">Senior Software Engineer</div>
+                        </div>
+                        <div class="roadmap-diamond filled-dark"></div>
+                        <div class="roadmap-year">2021 - 23</div>
+                    </div>
+                    <!-- UTA MS -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-content roadmap-bottom">
+                            <div class="roadmap-year-bottom">2023 - 25</div>
+                            <div class="roadmap-logo uta-logo">UTA</div>
+                            <div class="roadmap-title">UT Arlington</div>
+                            <div class="roadmap-subtitle">MS CS (Graduated)</div>
+                        </div>
+                        <div class="roadmap-diamond"></div>
+                </div>
+                <!-- UTA GRA -->
+                <div class="roadmap-item">
+                    <div class="roadmap-content roadmap-top">
+                        <div class="roadmap-logo uta-logo">UTA</div>
+                        <div class="roadmap-title">UTA Research</div>
+                        <div class="roadmap-subtitle">Graduate Research Asst.</div>
+                    </div>
+                    <div class="roadmap-diamond filled-dark"></div>
+                    <div class="roadmap-year">2025</div>
+                </div>
+                <!-- DentalScan -->
+                <div class="roadmap-item">
+                    <div class="roadmap-content roadmap-bottom">
+                        <div class="roadmap-year-bottom current-year">Present</div>
+                        <div class="roadmap-logo dsn-logo"><img src="dentalscan-logo.png" alt="DentalScan"></div>
+                        <div class="roadmap-title">DentalScan</div>
+                        <div class="roadmap-subtitle">ML Engineer Intern</div>
+                    </div>
+                    <div class="roadmap-diamond current"></div>
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
     <!-- Focus Areas Section - Interactive -->

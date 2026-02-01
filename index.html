@@ -137,19 +137,21 @@
         .accordion-item { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
         .accordion-item:hover { border-color: var(--accent); }
         .accordion-item.active { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .accordion-header { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.3s ease; }
+        .accordion-header { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.3s ease; user-select: none; }
         .accordion-header:hover { background: var(--bg-secondary); }
         .accordion-title { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
         .accordion-icon { font-size: 1.1rem; flex-shrink: 0; }
         .accordion-name { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .accordion-level { font-size: 0.7rem; padding: 0.2rem 0.5rem; background: var(--bg-secondary); border-radius: 10px; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; }
         .progress-bar { flex: 0 0 120px; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-        .accordion-arrow { font-size: 0.7rem; color: var(--text-secondary); transition: transform 0.3s ease; flex-shrink: 0; }
-        .accordion-item.active .accordion-arrow { transform: rotate(180deg); }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
-        .accordion-item.active .accordion-content { max-height: 200px; padding: 0 1rem 1rem 2.75rem; }
-        .accordion-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+        .accordion-arrow { font-size: 0.7rem; color: var(--text-secondary); transition: transform 0.3s ease; flex-shrink: 0; width: 20px; text-align: center; }
+        .accordion-item.active .accordion-arrow { transform: rotate(180deg); color: var(--accent); }
+        .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease, padding 0.4s ease; }
+        .accordion-content-inner { overflow: hidden; }
+        .accordion-item.active .accordion-content { grid-template-rows: 1fr; }
+        .accordion-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; padding: 0 1rem 1rem 2.75rem; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; }
+        .accordion-item.active .accordion-content p { opacity: 1; transform: translateY(0); }
         
         /* Simple Course Tags */
         .education-courses { border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 0.5rem; }
@@ -363,7 +365,10 @@
     </button>
 
     <section class="hero">
-        <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image animate-fade-in-up" onerror="this.style.display='none'; document.getElementById('profile-fallback').style.display='flex';">
+        <img src="./me.jpeg" 
+             alt="Sai Teja Srivillibhutturu" 
+             class="profile-image animate-fade-in-up"
+             loading="eager">
         <div id="profile-fallback" class="profile-fallback animate-fade-in-up" style="display:none;">ST</div>
         
         <div class="status-badge animate-fade-in-up delay-1">
@@ -719,7 +724,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Hands-on with deep architectures: CNN, RNN, Transformers, Auto-encoders, GAN, LSTM, and explored ChatGPT & Stable Diffusion architectures.</p>
+                            <div class="accordion-content-inner">
+                                <p>Hands-on with deep architectures: CNN, RNN, Transformers, Auto-encoders, GAN, LSTM, and explored ChatGPT & Stable Diffusion architectures.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -735,7 +742,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Intelligent agents and reasoning systems — search algorithms, planning, FOL inference, Bayesian networks, and decision trees.</p>
+                            <div class="accordion-content-inner">
+                                <p>Intelligent agents and reasoning systems — search algorithms, planning, FOL inference, Bayesian networks, and decision trees.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -751,7 +760,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Classical & DL-based vision techniques: edge detection, template matching, gesture recognition, stereo vision, and CNN-driven object detection.</p>
+                            <div class="accordion-content-inner">
+                                <p>Classical & DL-based vision techniques: edge detection, template matching, gesture recognition, stereo vision, and CNN-driven object detection.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -767,7 +778,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Probability, distributions, CLT, hypothesis testing, Bayesian inference, Markov chains, and Monte Carlo simulations.</p>
+                            <div class="accordion-content-inner">
+                                <p>Probability, distributions, CLT, hypothesis testing, Bayesian inference, Markov chains, and Monte Carlo simulations.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -783,7 +796,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Decision trees, SVMs, clustering, ensemble methods, cross-validation, and evaluation metrics — bridging theory and applied ML.</p>
+                            <div class="accordion-content-inner">
+                                <p>Decision trees, SVMs, clustering, ensemble methods, cross-validation, and evaluation metrics — bridging theory and applied ML.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -799,7 +814,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Pattern extraction from large datasets through clustering, association rule mining, and dimensionality reduction.</p>
+                            <div class="accordion-content-inner">
+                                <p>Pattern extraction from large datasets through clustering, association rule mining, and dimensionality reduction.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -815,7 +832,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Computational methods for ML: matrix operations, eigenvalue problems, root-finding, and error control in iterative algorithms.</p>
+                            <div class="accordion-content-inner">
+                                <p>Computational methods for ML: matrix operations, eigenvalue problems, root-finding, and error control in iterative algorithms.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -831,7 +850,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>DP, greedy methods, graph theory, and complexity analysis — foundation for performance-first engineering.</p>
+                            <div class="accordion-content-inner">
+                                <p>DP, greedy methods, graph theory, and complexity analysis — foundation for performance-first engineering.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -847,7 +868,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Agile workflows, SDLC, testing, quality assurance, and team collaboration for real-world software projects.</p>
+                            <div class="accordion-content-inner">
+                                <p>Agile workflows, SDLC, testing, quality assurance, and team collaboration for real-world software projects.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -863,7 +886,9 @@
                             <span class="accordion-arrow">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p>Weekly paper presentations, deep dives into current research, big data learning algorithms, and state-of-the-art vision systems.</p>
+                            <div class="accordion-content-inner">
+                                <p>Weekly paper presentations, deep dives into current research, big data learning algorithms, and state-of-the-art vision systems.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

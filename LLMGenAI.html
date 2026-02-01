@@ -11,9 +11,9 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #10b981; --border-color: #e5e7eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--text-primary); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
@@ -21,18 +21,15 @@
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; }
-        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
-        .skill-card { padding: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
-        .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
-        .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .skills-category { margin-bottom: 2.5rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
         .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -59,7 +56,7 @@
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } }
     </style>
 </head>
 <body>
@@ -69,25 +66,55 @@
         <div class="role-badge"><span>🤖</span><span>LLM/GenAI Engineer</span></div>
         <h1>Large Language Models & Generative AI</h1>
         <p class="hero-description">Building intelligent AI systems with LLM fine-tuning, RAG pipelines, multi-agent architectures, and cutting-edge generative AI applications.</p>
-        <div class="stats-row">
-            <div class="stat-item"><div class="stat-value">7M+</div><div class="stat-label">Tokens/sec</div></div>
-            <div class="stat-item"><div class="stat-value">3×</div><div class="stat-label">vLLM vs HF</div></div>
-            <div class="stat-item"><div class="stat-value">RAG</div><div class="stat-label">Systems Built</div></div>
-            <div class="stat-item"><div class="stat-value">Multi</div><div class="stat-label">Agent Systems</div></div>
-        </div>
     </div></section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Core Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><div class="skill-name">vLLM</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">LangChain</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">RAG Pipelines</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">LoRA/QLoRA</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Vector Databases</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Prompt Engineering</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Multi-Agent Systems</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Transformers</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="skills-category">
+            <h3 class="skills-category-title">LLM Frameworks</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
+                <div class="skill-icon" title="LangChain"><img src="https://avatars.githubusercontent.com/u/126733545?s=200&v=4" alt="LangChain"></div>
+                <div class="skill-icon" title="vLLM"><img src="https://avatars.githubusercontent.com/u/124825026?s=200&v=4" alt="vLLM"></div>
+                <div class="skill-icon" title="OpenAI"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Deep Learning</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+                <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
+                <div class="skill-icon" title="CUDA/NVIDIA"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Vector Databases & RAG</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
+                <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+                <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Infrastructure</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+                <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+                <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+                <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">AI Tools</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Claude"><img src="https://www.anthropic.com/images/icons/apple-touch-icon.png" alt="Claude"></div>
+                <div class="skill-icon" title="GitHub Copilot"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></div>
+            </div>
         </div>
     </div></section>
 
@@ -95,31 +122,31 @@
         <h2 class="section-title">LLM/GenAI Projects</h2>
         
         <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">vLLM Optimization</h3><span class="project-impact">7M tokens/sec</span></div>
-            <p class="project-description">Comprehensive LLM inference optimization achieving 12.3× throughput improvement with vLLM.</p>
+            <div class="project-header"><h3 class="project-title">vLLM Optimization</h3><span class="project-impact">Inference</span></div>
+            <p class="project-description">Comprehensive LLM inference optimization with vLLM. Systematic benchmarking and optimization.</p>
             <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Inference</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Tool Use</span></div>
+            <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Agents</span></div>
             <p class="project-description">Sophisticated LLM agent with tool use capabilities, planning, and multi-step reasoning.</p>
             <div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/Multi_Agent_Workflow_Automator" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Multi-Agent Workflow Automator</h3><span class="project-impact">Orchestration</span></div>
+            <div class="project-header"><h3 class="project-title">Multi-Agent Workflow Automator</h3><span class="project-impact">Multi-Agent</span></div>
             <p class="project-description">Multi-agent orchestration system for complex workflow automation with LLMs.</p>
             <div class="project-tech"><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Workflows</span><span class="tech-tag">LLM</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">Privacy-First</span></div>
+            <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">RAG</span></div>
             <p class="project-description">Privacy-focused RAG system for offline deployment with local embeddings.</p>
             <div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">VectorDB</span><span class="tech-tag">Embeddings</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">TeluguGPT</h3><span class="project-impact">Language Model</span></div>
+            <div class="project-header"><h3 class="project-title">TeluguGPT</h3><span class="project-impact">NLP</span></div>
             <p class="project-description">Custom language model for Telugu with fine-tuning and domain adaptation.</p>
             <div class="project-tech"><span class="tech-tag">Transformers</span><span class="tech-tag">NLP</span><span class="tech-tag">Fine-tuning</span></div>
         </a>
@@ -145,7 +172,7 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Led CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Fine-tuned LLMs in PyTorch using 10K+ supervision examples.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Led CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Fine-tuned LLMs in PyTorch. Designed end-to-end LLM inference pipelines.</p></div>
     </div></section>
 
     <section class="section"><div class="container">

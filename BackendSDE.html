@@ -11,9 +11,9 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #06b6d4; --border-color: #e5e7eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--text-primary); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
@@ -21,18 +21,15 @@
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; }
-        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
-        .skill-card { padding: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
-        .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
-        .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .skills-category { margin-bottom: 2.5rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
         .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -54,12 +51,11 @@
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
         .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -69,77 +65,48 @@
         <div class="role-badge"><span>💻</span><span>Backend SDE</span></div>
         <h1>Distributed Systems & Backend Engineering</h1>
         <p class="hero-description">Building high-performance backend systems, distributed architectures, and scalable microservices with 4+ years of industry experience.</p>
-        <div class="stats-row">
-            <div class="stat-item"><div class="stat-value">4+</div><div class="stat-label">Years Experience</div></div>
-            <div class="stat-item"><div class="stat-value">10K+</div><div class="stat-label">Daily Transactions</div></div>
-            <div class="stat-item"><div class="stat-value">25%</div><div class="stat-label">Latency Reduction</div></div>
-            <div class="stat-item"><div class="stat-value">94%</div><div class="stat-label">Availability</div></div>
-        </div>
     </div></section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Core Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><div class="skill-name">Python</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Java</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Go</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">FastAPI/Flask</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">PostgreSQL</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Redis</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">System Design</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">DSA</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-        </div>
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-category"><h3 class="skills-category-title">Programming Languages</h3><div class="skills-icons">
+            <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+            <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
+            <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
+            <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Frameworks & APIs</h3><div class="skills-icons">
+            <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
+            <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
+            <div class="skill-icon" title="Spring"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Databases</h3><div class="skills-icons">
+            <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+            <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
+            <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
+            <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
+            <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+            <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
+            <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
+            <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+            <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
+        </div></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Professional Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services (10+ systems, 10K+ daily transactions). Improved throughput by 45% via SQL optimization. Reduced incident recovery time by 35%. Built fault-tolerant backend services with 94% availability. Led system design for data-intensive services using OOP patterns.</p></div>
+        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services across production systems. Led system design and architecture for data-intensive services. Built fault-tolerant backend services with high availability.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Backend Projects</h2>
-        
-        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div>
-            <p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms. Built from scratch in Go.</p>
-            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div>
-            <p class="project-description">RESTful API backend for video analysis with async processing and queue management. Handles concurrent requests with Celery workers.</p>
-            <div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">10K+ req/day</span></div>
-            <p class="project-description">High-throughput inference server handling 10K+ daily requests with P95 latency under 25ms.</p>
-            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Recommender API</h3><span class="project-impact">Scalable</span></div>
-            <p class="project-description">Backend API for real-time recommendations with Redis caching and batch processing.</p>
-            <div class="project-tech"><span class="tech-tag">Flask</span><span class="tech-tag">Redis</span><span class="tech-tag">PostgreSQL</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">High Throughput</span></div>
-            <p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p>
-            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Algorithms</span></div>
-            <p class="project-description">Comparison of job scheduling algorithms for distributed systems and resource management.</p>
-            <div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span><span class="tech-tag">Systems</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/buyer-seller-mt" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Buyer-Seller Marketplace</h3><span class="project-impact">Full Stack</span></div>
-            <p class="project-description">Multi-tenant marketplace backend with user management, listings, and transactions.</p>
-            <div class="project-tech"><span class="tech-tag">Backend</span><span class="tech-tag">API</span><span class="tech-tag">Database</span></div>
-        </a>
+        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div><p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></a>
+        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis with async processing and queue management.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></a>
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">High Throughput</span></div><p class="project-description">High-throughput inference server with optimized latency for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></a>
+        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div><p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div></a>
+        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Systems</span></div><p class="project-description">Comparison of job scheduling algorithms for distributed systems.</p><div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span></div></a>
     </div></section>
 
     <section class="section"><div class="container">

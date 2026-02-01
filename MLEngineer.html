@@ -11,9 +11,9 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #14b8a6; --border-color: #e5e7eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--text-primary); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
@@ -21,18 +21,15 @@
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; }
-        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
-        .skill-card { padding: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
-        .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
-        .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .skills-category { margin-bottom: 2.5rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
         .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -59,7 +56,7 @@
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } }
     </style>
 </head>
 <body>
@@ -69,25 +66,59 @@
         <div class="role-badge"><span>⚙️</span><span>ML Engineer</span></div>
         <h1>Production ML & MLOps Infrastructure</h1>
         <p class="hero-description">Building scalable ML systems, robust pipelines, and production-grade inference infrastructure that delivers real business value.</p>
-        <div class="stats-row">
-            <div class="stat-item"><div class="stat-value">$3.6M</div><div class="stat-label">Cost Savings</div></div>
-            <div class="stat-item"><div class="stat-value">10K+</div><div class="stat-label">Daily Requests</div></div>
-            <div class="stat-item"><div class="stat-value">99%</div><div class="stat-label">Uptime</div></div>
-            <div class="stat-item"><div class="stat-value">&lt;25ms</div><div class="stat-label">P95 Latency</div></div>
-        </div>
     </div></section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Core Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><div class="skill-name">MLflow</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">AWS SageMaker</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Docker/Kubernetes</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">CI/CD Pipelines</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Apache Airflow</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">PyTorch</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Model Serving</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Feature Stores</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="skills-category">
+            <h3 class="skills-category-title">ML Frameworks</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+                <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
+                <div class="skill-icon" title="scikit-learn"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit-learn"></div>
+                <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">MLOps & Orchestration</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Apache Airflow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"></div>
+                <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+                <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
+                <div class="skill-icon" title="GitHub Actions"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Cloud & Deployment</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+                <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
+                <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
+                <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Data & Databases</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+                <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
+                <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
+                <div class="skill-icon" title="Apache Spark"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Programming</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+                <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
+                <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
+                <div class="skill-icon" title="Bash"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash"></div>
+            </div>
         </div>
     </div></section>
 
@@ -95,31 +126,31 @@
         <h2 class="section-title">ML Engineering Projects</h2>
         
         <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">vLLM Production Benchmark</h3><span class="project-impact">$3.6M saved</span></div>
-            <p class="project-description">Production benchmarking suite for LLM inference. Achieved 86% cost reduction. Deployed inference endpoints serving 10K+ daily requests with P95 latency under 25ms.</p>
+            <div class="project-header"><h3 class="project-title">vLLM Production Benchmark</h3><span class="project-impact">Production</span></div>
+            <p class="project-description">Production benchmarking suite for LLM inference. Deployed inference endpoints serving requests with optimized latency.</p>
             <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">Docker</span><span class="tech-tag">Monitoring</span><span class="tech-tag">AWS</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Video Analysis Pipeline</h3><span class="project-impact">Production ML</span></div>
-            <p class="project-description">End-to-end video analysis pipeline with CV models, real-time processing, and scalable deployment. Built with FastAPI, deployed on AWS.</p>
+            <div class="project-header"><h3 class="project-title">Video Analysis Pipeline</h3><span class="project-impact">MLOps</span></div>
+            <p class="project-description">End-to-end video analysis pipeline with CV models, real-time processing, and scalable deployment on AWS.</p>
             <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FastAPI</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">PySpark ML</span></div>
-            <p class="project-description">Customer churn prediction with feature engineering, model training, and serving infrastructure. Orchestrated with Airflow, tracked with MLflow.</p>
+            <div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">PySpark</span></div>
+            <p class="project-description">Customer churn prediction with feature engineering, model training, and serving infrastructure.</p>
             <div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">MLflow</span><span class="tech-tag">Airflow</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
             <div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Scalable</span></div>
-            <p class="project-description">Collaborative filtering recommendation engine with distributed training and real-time serving. Redis caching for low-latency.</p>
+            <p class="project-description">Collaborative filtering recommendation engine with distributed training and real-time serving.</p>
             <div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">Redis</span><span class="tech-tag">API</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/Lightweight-Profiling-Pipeline" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Lightweight Profiling Pipeline</h3><span class="project-impact">MLOps</span></div>
+            <div class="project-header"><h3 class="project-title">Lightweight Profiling Pipeline</h3><span class="project-impact">Monitoring</span></div>
             <p class="project-description">Lightweight profiling pipeline for ML model performance monitoring and optimization.</p>
             <div class="project-tech"><span class="tech-tag">Profiling</span><span class="tech-tag">MLOps</span><span class="tech-tag">Python</span></div>
         </a>
@@ -127,8 +158,8 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Orchestrated workflows with Airflow (10+ DAGs). Tracked 30+ training runs with MLflow. Deployed ML inference on AWS SageMaker serving 1K+ requests/day.</p></div>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Deployed batch and API-based inference pipelines on AWS, containerized with Docker. Reduced p95 latency by 20%.</p></div>
+        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Orchestrated workflows with Airflow. Tracked training runs with MLflow. Deployed ML inference on AWS SageMaker.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Deployed batch and API-based inference pipelines on AWS, containerized with Docker.</p></div>
     </div></section>
 
     <section class="section"><div class="container">

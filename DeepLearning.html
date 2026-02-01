@@ -11,9 +11,9 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #3b82f6; --border-color: #e5e7eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--text-primary); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
@@ -21,18 +21,15 @@
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; }
-        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin-top: 0.75rem; margin-bottom: 2rem; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
-        .skill-card { padding: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
-        .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .skill-bar { height: 4px; background: var(--border-color); border-radius: 2px; }
-        .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .skills-category { margin-bottom: 2.5rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
         .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -57,10 +54,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
         .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
-        .btn-primary:hover { background: var(--bg-primary); color: var(--text-primary); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } }
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -71,25 +67,47 @@
         <div class="role-badge"><span>🧠</span><span>Deep Learning Engineer</span></div>
         <h1>GPU Optimization & Neural Architecture</h1>
         <p class="hero-description">Specializing in CUDA kernels, FlashAttention, quantization techniques, and building high-performance deep learning systems.</p>
-        <div class="stats-row">
-            <div class="stat-item"><div class="stat-value">12.3×</div><div class="stat-label">Throughput Gain</div></div>
-            <div class="stat-item"><div class="stat-value">4×</div><div class="stat-label">Memory Reduction</div></div>
-            <div class="stat-item"><div class="stat-value">91%</div><div class="stat-label">GPU Utilization</div></div>
-            <div class="stat-item"><div class="stat-value">2.8×</div><div class="stat-label">Inference Speedup</div></div>
-        </div>
     </div></section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Core Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><div class="skill-name">PyTorch</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">CUDA Programming</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">FlashAttention-2</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Quantization (INT4/NF4)</div><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Speculative Decoding</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Roofline Analysis</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">TensorFlow/JAX</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
-            <div class="skill-card"><div class="skill-name">Triton</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="skills-category">
+            <h3 class="skills-category-title">Deep Learning Frameworks</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
+                <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
+                <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
+                <div class="skill-icon" title="NumPy"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">GPU & Low-Level Optimization</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="CUDA/NVIDIA"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"></div>
+                <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
+                <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Optimization Techniques</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="FlashAttention"><img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt="FlashAttention"></div>
+                <div class="skill-icon" title="vLLM"><img src="https://avatars.githubusercontent.com/u/124825026?s=200&v=4" alt="vLLM"></div>
+                <div class="skill-icon" title="Triton"><img src="https://avatars.githubusercontent.com/u/50278539?s=200&v=4" alt="Triton"></div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3 class="skills-category-title">Infrastructure</h3>
+            <div class="skills-icons">
+                <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+                <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
+                <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
+                <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+            </div>
         </div>
     </div></section>
 
@@ -97,25 +115,25 @@
         <h2 class="section-title">Deep Learning Projects</h2>
         
         <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">12.3× faster</span></div>
-            <p class="project-description">Built attention benchmarking framework achieving 12.3× throughput improvement and 99.7% memory reduction. Benchmarked 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers).</p>
+            <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">Deep Learning</span></div>
+            <p class="project-description">Built attention benchmarking framework. Benchmarked 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers) for throughput and memory optimization.</p>
             <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">4× memory ↓</span></div>
-            <p class="project-description">Built GPU optimization system achieving 2.8× inference speedup and 4× memory reduction on Mistral-7B. Implemented kernel profiling with roofline analysis, C++/CUDA fused kernels.</p>
+            <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">CUDA</span></div>
+            <p class="project-description">Built GPU optimization system for Mistral-7B. Implemented kernel profiling with roofline analysis, C++/CUDA fused kernels, and INT4-NF4 quantization.</p>
             <div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">7M tokens/sec</span></div>
-            <p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Achieved 12.3× throughput improvement (574K → 7.06M tokens/sec).</p>
+            <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">Inference</span></div>
+            <p class="project-description">Comprehensive benchmarking suite for vLLM inference optimization. Systematic optimization of inference pipelines.</p>
             <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div>
         </a>
 
         <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Speculative Decoding Benchmark</h3><span class="project-impact">Inference</span></div>
+            <div class="project-header"><h3 class="project-title">Speculative Decoding Benchmark</h3><span class="project-impact">Optimization</span></div>
             <p class="project-description">Benchmarking speculative decoding techniques for faster LLM inference with draft models.</p>
             <div class="project-tech"><span class="tech-tag">Speculative Decoding</span><span class="tech-tag">PyTorch</span><span class="tech-tag">LLM</span></div>
         </a>
@@ -129,8 +147,8 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Building computer vision pipelines for medical imaging with 50K+ images. Optimizing deep learning models for real-time inference.</p></div>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Research in neural architecture optimization. MS CS with 4.0 GPA.</p></div>
+        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Building computer vision pipelines for medical imaging. Optimizing deep learning models for real-time inference.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Research in neural architecture optimization.</p></div>
     </div></section>
 
     <section class="section"><div class="container">

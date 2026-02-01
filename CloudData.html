@@ -8,14 +8,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #f59e0b; --border-color: #e5e7eb; }
+        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #f59e0b; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
+        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { color: var(--text-primary); }
+        .back-link:hover { color: var(--accent); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
         .hero { padding: 8rem 0 4rem; text-align: center; }
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
@@ -23,22 +29,23 @@
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
         .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
         .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
-        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
+        .project-item:hover { border-color: var(--accent); box-shadow: var(--card-shadow); transform: translateY(-3px); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -47,119 +54,60 @@
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
         .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
-        .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
-        .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+        .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
+        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Cloud & Data Engineer</span></div></nav>
 
     <section class="hero"><div class="container">
-        <div class="role-badge"><span>☁️</span><span>Cloud & Data Engineer</span></div>
-        <h1>Cloud Architecture & Data Pipelines</h1>
-        <p class="hero-description">Designing scalable cloud infrastructure, building robust data pipelines, and architecting distributed systems on AWS and other cloud platforms.</p>
+        <div class="role-badge animate-fade-in-up"><span>☁️</span><span>Cloud & Data Engineer</span></div>
+        <h1 class="animate-fade-in-up delay-1">Cloud Architecture & Data Pipelines</h1>
+        <p class="hero-description animate-fade-in-up delay-2">Designing scalable cloud infrastructure, building robust data pipelines, and architecting distributed systems on AWS and other cloud platforms.</p>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Technical Skills</h2>
-        
-        <div class="skills-category">
-            <h3 class="skills-category-title">Cloud Platforms</h3>
-            <div class="skills-icons">
-                <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
-                <div class="skill-icon" title="Azure"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure"></div>
-            </div>
-        </div>
-
-        <div class="skills-category">
-            <h3 class="skills-category-title">Data Engineering</h3>
-            <div class="skills-icons">
-                <div class="skill-icon" title="Apache Airflow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"></div>
-                <div class="skill-icon" title="Apache Spark"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"></div>
-                <div class="skill-icon" title="Apache Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"></div>
-            </div>
-        </div>
-
-        <div class="skills-category">
-            <h3 class="skills-category-title">Databases</h3>
-            <div class="skills-icons">
-                <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
-                <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
-                <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
-                <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
-                <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
-            </div>
-        </div>
-
-        <div class="skills-category">
-            <h3 class="skills-category-title">Infrastructure</h3>
-            <div class="skills-icons">
-                <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
-                <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
-                <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
-                <div class="skill-icon" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"></div>
-            </div>
-        </div>
-
-        <div class="skills-category">
-            <h3 class="skills-category-title">Programming</h3>
-            <div class="skills-icons">
-                <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
-                <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
-                <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
-                <div class="skill-icon" title="Bash"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash"></div>
-            </div>
-        </div>
+        <div class="skills-category"><h3 class="skills-category-title">Cloud Platforms</h3><div class="skills-icons">
+            <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
+            <div class="skill-icon" title="Azure"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Data Engineering</h3><div class="skills-icons">
+            <div class="skill-icon" title="Apache Airflow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"></div>
+            <div class="skill-icon" title="Apache Spark"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"></div>
+            <div class="skill-icon" title="Apache Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Databases</h3><div class="skills-icons">
+            <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+            <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
+            <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
+            <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
+        </div></div>
+        <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
+            <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
+            <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
+            <div class="skill-icon" title="Terraform"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"></div>
+            <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
+        </div></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Cloud & Data Projects</h2>
-        
-        <a href="https://github.com/saitejasrivilli/end-to-end-data-engineering-project" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">End-to-End Data Pipeline</h3><span class="project-impact">ETL</span></div>
-            <p class="project-description">Complete data pipeline from ingestion to analytics with ETL, data warehousing, and visualization. Built with Airflow, deployed on AWS.</p>
-            <div class="project-tech"><span class="tech-tag">Airflow</span><span class="tech-tag">AWS</span><span class="tech-tag">ETL</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Distributed</span></div>
-            <p class="project-description">High-performance distributed key-value store with replication and partitioning. Built in Go with consensus algorithms.</p>
-            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Consensus</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">Big Data</span></div>
-            <p class="project-description">Customer churn prediction with PySpark for large-scale data processing. Full ML pipeline with feature engineering.</p>
-            <div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">ML</span><span class="tech-tag">ETL</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Spark</span></div>
-            <p class="project-description">Scalable recommendation engine on Apache Spark with collaborative filtering. Redis caching for real-time serving.</p>
-            <div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">ALS</span><span class="tech-tag">Redis</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div>
-            <p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p>
-            <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div>
-        </a>
-
-        <a href="https://github.com/saitejasrivilli/data-engineer-handbook" class="project-item" target="_blank">
-            <div class="project-header"><h3 class="project-title">Data Engineer Handbook</h3><span class="project-impact">Reference</span></div>
-            <p class="project-description">Comprehensive handbook covering data engineering best practices, tools, and architectures.</p>
-            <div class="project-tech"><span class="tech-tag">Data Engineering</span><span class="tech-tag">Best Practices</span></div>
-        </a>
+        <a href="https://github.com/saitejasrivilli/end-to-end-data-engineering-project" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">End-to-End Data Pipeline</h3><span class="project-impact">Full Stack</span></div><p class="project-description">Complete data pipeline from ingestion to analytics → ETL, data warehousing, and visualization with Airflow on AWS.</p><div class="project-tech"><span class="tech-tag">Airflow</span><span class="tech-tag">AWS</span><span class="tech-tag">ETL</span></div></a>
+        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Distributed</span></div><p class="project-description">High-performance distributed key-value store → Replication, partitioning, and Raft consensus in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></a>
+        <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">Big Data</span></div><p class="project-description">Customer churn prediction with PySpark → Large-scale data processing with full ML pipeline.</p><div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">ML</span><span class="tech-tag">ETL</span></div></a>
+        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div><p class="project-description">High-throughput event ingestion service → Real-time data processing built in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div></a>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Cloud Certifications</h2>
         <div class="cert-item"><span class="cert-icon">🔶</span><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
-        <div class="cert-item"><span class="cert-icon">🔷</span><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft • Aug 2025 - Aug 2026</p></div></div>
-        <div class="cert-item"><span class="cert-icon">🔴</span><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
+        <div class="cert-item"><span class="cert-icon">🔷</span><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft • Aug 2025</p></div></div>
         <div class="cert-item"><span class="cert-icon">🔵</span><div class="cert-content"><h4>Neo4j Certified Professional</h4><p>Neo4j • Jul 2024</p></div></div>
     </div></section>
 
@@ -170,5 +118,15 @@
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Cloud & Data Engineer.</p></footer>
+
+    <script>
+        function getTimeBasedTheme() { const hour = new Date().getHours(); return (hour >= 18 || hour < 6) ? 'dark' : 'light'; }
+        function toggleTheme() { const html = document.documentElement; const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); localStorage.setItem('themeManualOverride', 'true'); updateThemeIcon(newTheme); }
+        function updateThemeIcon(theme) { document.querySelector('.theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙'; }
+        function applyTheme() { const manual = localStorage.getItem('themeManualOverride'); const saved = localStorage.getItem('theme'); const theme = (manual === 'true' && saved) ? saved : getTimeBasedTheme(); document.documentElement.setAttribute('data-theme', theme); updateThemeIcon(theme); }
+        applyTheme();
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.project-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease'; observer.observe(el); });
+    </script>
 </body>
 </html>

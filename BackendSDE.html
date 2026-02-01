@@ -8,14 +8,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #06b6d4; --border-color: #e5e7eb; }
+        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #06b6d4; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
+        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { color: var(--text-primary); }
+        .back-link:hover { color: var(--accent); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
         .hero { padding: 8rem 0 4rem; text-align: center; }
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
@@ -23,27 +29,29 @@
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--text-primary); margin: 0.75rem auto 2rem; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
         .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-        .skill-icon:hover { transform: scale(1.15); }
+        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
         .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; }
-        .project-item:hover { border-color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
+        .project-item:hover { border-color: var(--accent); box-shadow: var(--card-shadow); transform: translateY(-3px); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
         .project-title { font-weight: 600; font-size: 1.1rem; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; }
+        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
@@ -51,20 +59,22 @@
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
         .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
-        .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: white; }
-        .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
+        .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
+        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend SDE</span></div></nav>
 
     <section class="hero"><div class="container">
-        <div class="role-badge"><span>💻</span><span>Backend SDE</span></div>
-        <h1>Distributed Systems & Backend Engineering</h1>
-        <p class="hero-description">Building high-performance backend systems, distributed architectures, and scalable microservices with 4+ years of industry experience.</p>
+        <div class="role-badge animate-fade-in-up"><span>💻</span><span>Backend SDE</span></div>
+        <h1 class="animate-fade-in-up delay-1">Distributed Systems & Backend Engineering</h1>
+        <p class="hero-description animate-fade-in-up delay-2">Building high-performance backend systems, distributed architectures, and scalable microservices with 4+ years of industry experience.</p>
     </div></section>
 
     <section class="section"><div class="container">
@@ -89,24 +99,23 @@
         <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
             <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
             <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
-            <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
             <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
-            <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
+            <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
         </div></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Professional Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services across production systems. Led system design and architecture for data-intensive services. Built fault-tolerant backend services with high availability.</p></div>
+        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services across production systems. Led system design for data-intensive services. Built fault-tolerant backend with high availability. Mentored junior engineers on best practices.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Backend Projects</h2>
-        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go</span></div><p class="project-description">High-performance distributed key-value store with replication, partitioning, and consensus algorithms.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></a>
-        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis with async processing and queue management.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></a>
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">High Throughput</span></div><p class="project-description">High-throughput inference server with optimized latency for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></a>
-        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div><p class="project-description">High-throughput event ingestion service built in Go for real-time data processing.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div></a>
-        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Systems</span></div><p class="project-description">Comparison of job scheduling algorithms for distributed systems.</p><div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span></div></a>
+        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go + Raft</span></div><p class="project-description">High-performance distributed key-value store → Replication, partitioning, and Raft consensus algorithm implementation.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></a>
+        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis → Async processing, queue management, P95 &lt;25ms latency.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></a>
+        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">High Throughput</span></div><p class="project-description">High-throughput inference server → 10K+ daily requests with optimized latency for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></a>
+        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div><p class="project-description">High-throughput event ingestion service → Real-time data processing built in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div></a>
+        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Systems</span></div><p class="project-description">Comparison of job scheduling algorithms → Benchmarking for distributed systems optimization.</p><div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span></div></a>
     </div></section>
 
     <section class="section"><div class="container">
@@ -123,5 +132,15 @@
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Backend SDE.</p></footer>
+
+    <script>
+        function getTimeBasedTheme() { const hour = new Date().getHours(); return (hour >= 18 || hour < 6) ? 'dark' : 'light'; }
+        function toggleTheme() { const html = document.documentElement; const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); localStorage.setItem('themeManualOverride', 'true'); updateThemeIcon(newTheme); }
+        function updateThemeIcon(theme) { document.querySelector('.theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙'; }
+        function applyTheme() { const manual = localStorage.getItem('themeManualOverride'); const saved = localStorage.getItem('theme'); const theme = (manual === 'true' && saved) ? saved : getTimeBasedTheme(); document.documentElement.setAttribute('data-theme', theme); updateThemeIcon(theme); }
+        applyTheme();
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease'; observer.observe(el); });
+    </script>
 </body>
 </html>

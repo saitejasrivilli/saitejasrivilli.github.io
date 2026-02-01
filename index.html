@@ -265,20 +265,20 @@
         .contact-link svg { width: 18px; height: 18px; }
         
         /* Roadmap Styles - Full Width Timeline */
-        .roadmap-wrapper { padding: 2rem 0; width: 100%; }
-        .roadmap-container { position: relative; padding: 6rem 0; width: 100%; }
-        .roadmap-line { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
+        .roadmap-wrapper { padding: 2rem 0; width: 100%; display: flex; justify-content: center; }
+        .roadmap-container { position: relative; padding: 6rem 2rem; width: 100%; max-width: 1200px; }
+        .roadmap-line { position: absolute; top: 50%; left: 2rem; right: 2rem; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
         .roadmap-line::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #cbd5e1; border-radius: 50%; }
         .roadmap-line::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 12px solid #10b981; }
         .roadmap-items { display: flex; justify-content: space-between; position: relative; width: 100%; }
-        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.3s ease; flex: 1; max-width: 150px; }
+        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.3s ease; flex: 1; max-width: 160px; }
         .roadmap-item:hover { transform: scale(1.05); z-index: 10; }
         .roadmap-diamond { width: 24px; height: 24px; background: var(--bg-primary); border: 3px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .roadmap-item:hover .roadmap-diamond { transform: rotate(45deg) scale(1.2); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25); }
         .roadmap-diamond.filled { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-color: #0ea5e9; }
         .roadmap-diamond.filled-dark { background: linear-gradient(135deg, #0ea5e9, #0284c7); border-color: #0369a1; }
         .roadmap-diamond.current { background: linear-gradient(135deg, #10b981, #059669); border-color: #047857; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2), 0 4px 20px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
-        .roadmap-content { text-align: center; width: 100%; padding: 0 0.25rem; }
+        .roadmap-content { text-align: center; width: 100%; padding: 0 0.5rem; }
         .roadmap-top { margin-bottom: 1.25rem; }
         .roadmap-bottom { margin-top: 1.25rem; }
         .roadmap-logo { width: 52px; height: 52px; border-radius: 12px; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; color: white; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-secondary); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
@@ -288,9 +288,9 @@
         .uta-logo { background: linear-gradient(135deg, #0077cc, #0064b1) !important; border-color: #0064b1 !important; }
         .tcs-logo { background: white !important; border-color: #e5e7eb !important; }
         .dsn-logo { background: white !important; border-color: #e5e7eb !important; }
-        .roadmap-title { font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.2rem; transition: color 0.3s ease; }
+        .roadmap-title { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.25rem; transition: color 0.3s ease; }
         .roadmap-item:hover .roadmap-title { color: var(--accent); }
-        .roadmap-subtitle { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.35; min-height: 2.4em; }
+        .roadmap-subtitle { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; min-height: 2.4em; }
         .roadmap-year { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-top: 0.75rem; padding: 0.3rem 0.6rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
         .roadmap-year-bottom { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; padding: 0.3rem 0.6rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
         .current-year { color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }

@@ -217,12 +217,16 @@
         .accordion-item.active .accordion-content p { opacity: 1; transform: translateY(0); }
         
         /* Simple Course Tags */
-        .education-courses { border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 0.5rem; }
-        .courses-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .education-courses { border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 1rem; }
+        .courses-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .courses-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .course-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.8rem; color: var(--text-primary); transition: all 0.3s ease; }
-        .course-tag:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
-        .course-icon { font-size: 0.9rem; }
+        .course-tag { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.85rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.82rem; color: var(--text-primary); transition: all 0.3s ease; cursor: default; }
+        .course-tag:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.08); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .course-icon { font-size: 1rem; }
+        
+        /* Masters card specific styling */
+        .masters-card .courses-grid { gap: 0.6rem; }
+        .masters-card .course-tag { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary)); font-weight: 500; }
         
         @media (max-width: 768px) {
             .education-header { flex-wrap: wrap; }
@@ -793,185 +797,19 @@
                 </div>
                 <p class="education-summary">Completed 10+ rigorous graduate-level courses, building a solid foundation in advanced computing and ML systems. Graduated May 2025 with 4.0 GPA.</p>
                 
-                <div class="courses-accordion">
-                    <!-- Neural Networks -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">🧠</span>
-                                <span class="accordion-name">Neural Networks</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, #0ea5e9, #06b6d4);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Hands-on with deep architectures: CNN, RNN, Transformers, Auto-encoders, GAN, LSTM, and explored ChatGPT & Stable Diffusion architectures.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- AI -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">🤖</span>
-                                <span class="accordion-name">Artificial Intelligence</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, #f59e0b, #f97316);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Intelligent agents and reasoning systems — search algorithms, planning, FOL inference, Bayesian networks, and decision trees.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Computer Vision -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">👁️</span>
-                                <span class="accordion-name">Computer Vision</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 88%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Classical & DL-based vision techniques: edge detection, template matching, gesture recognition, stereo vision, and CNN-driven object detection.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Data Analysis -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">📊</span>
-                                <span class="accordion-name">Data Analysis & Modeling</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 92%; background: linear-gradient(90deg, #8b5cf6, #a855f7);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Probability, distributions, CLT, hypothesis testing, Bayesian inference, Markov chains, and Monte Carlo simulations.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Machine Learning -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">📈</span>
-                                <span class="accordion-name">Machine Learning</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, #ec4899, #f43f5e);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Decision trees, SVMs, clustering, ensemble methods, cross-validation, and evaluation metrics — bridging theory and applied ML.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Data Mining -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">⛏️</span>
-                                <span class="accordion-name">Data Mining</span>
-                                <span class="accordion-level">Proficient</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #06b6d4, #0ea5e9);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Pattern extraction from large datasets through clustering, association rule mining, and dimensionality reduction.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Numerical Methods -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">🧮</span>
-                                <span class="accordion-name">Numerical Methods</span>
-                                <span class="accordion-level">Proficient</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 82%; background: linear-gradient(90deg, #f59e0b, #eab308);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Computational methods for ML: matrix operations, eigenvalue problems, root-finding, and error control in iterative algorithms.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Algorithms -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">⚙️</span>
-                                <span class="accordion-name">Design & Analysis of Algorithms</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, #10b981, #22c55e);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>DP, greedy methods, graph theory, and complexity analysis — foundation for performance-first engineering.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Software Engineering -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">💻</span>
-                                <span class="accordion-name">Software Engineering & QA</span>
-                                <span class="accordion-level">Proficient</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Agile workflows, SDLC, testing, quality assurance, and team collaboration for real-world software projects.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Scalable Search -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="accordion-title">
-                                <span class="accordion-icon">🚀</span>
-                                <span class="accordion-name">Scalable Search & Optimization</span>
-                                <span class="accordion-level">Advanced</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 88%; background: linear-gradient(90deg, #ef4444, #f97316);"></div></div>
-                            <span class="accordion-arrow">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Weekly paper presentations, deep dives into current research, big data learning algorithms, and state-of-the-art vision systems.</p>
-                            </div>
-                        </div>
+                <div class="education-courses">
+                    <p class="courses-label">Graduate Coursework</p>
+                    <div class="courses-grid">
+                        <div class="course-tag"><span class="course-icon">🧠</span>Neural Networks</div>
+                        <div class="course-tag"><span class="course-icon">🤖</span>Artificial Intelligence</div>
+                        <div class="course-tag"><span class="course-icon">👁️</span>Computer Vision</div>
+                        <div class="course-tag"><span class="course-icon">📈</span>Machine Learning</div>
+                        <div class="course-tag"><span class="course-icon">📊</span>Data Analysis & Modeling</div>
+                        <div class="course-tag"><span class="course-icon">⛏️</span>Data Mining</div>
+                        <div class="course-tag"><span class="course-icon">⚙️</span>Design & Analysis of Algorithms</div>
+                        <div class="course-tag"><span class="course-icon">🧮</span>Numerical Methods</div>
+                        <div class="course-tag"><span class="course-icon">💻</span>Software Engineering & QA</div>
+                        <div class="course-tag"><span class="course-icon">🚀</span>Scalable Search & Optimization</div>
                     </div>
                 </div>
                 

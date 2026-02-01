@@ -53,9 +53,10 @@
         
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; }
-        .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; }
-        .hero-subtitle { font-size: 1.05rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.8; }
+        .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); }
+        .profile-placeholder { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
+        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; }
         
         /* Status Badge */
         .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
@@ -147,54 +148,126 @@
         .role-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
         .role-card:hover .role-link svg { transform: translateX(5px); }
         
-        /* Contact */
+        /* GitHub Contributions */
+        .github-contrib-container { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+        .github-chart { width: 100%; max-width: 800px; border-radius: 12px; border: 1px solid var(--border-color); padding: 1rem; background: var(--bg-secondary); }
+        .github-stats { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .github-stat-card img { height: 28px; transition: transform 0.3s ease; }
+        .github-stat-card:hover img { transform: scale(1.05); }
+        
+        /* Availability Widget */
+        .availability-container { display: flex; gap: 2rem; justify-content: center; align-items: stretch; flex-wrap: wrap; }
+        .availability-card { flex: 1; min-width: 320px; max-width: 500px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; }
+        .availability-status { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .status-dot-large { width: 14px; height: 14px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+        .status-text-large { font-weight: 700; font-size: 1.1rem; color: #10b981; }
+        .availability-details { display: flex; flex-direction: column; gap: 1rem; }
+        .availability-item { display: flex; align-items: flex-start; gap: 1rem; }
+        .avail-icon { font-size: 1.25rem; }
+        .avail-info { display: flex; flex-direction: column; gap: 0.15rem; }
+        .avail-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .avail-value { font-weight: 500; color: var(--text-primary); font-size: 0.95rem; }
+        
+        /* QR Code */
+        .qr-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .qr-code { background: white; padding: 1rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .qr-code img { width: 150px; height: 150px; display: block; }
+        .qr-label { font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .qr-url { font-size: 0.85rem; color: var(--accent); }
+        
+        /* Resume Preview */
+        .resume-preview-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .resume-frame { position: relative; width: 100%; max-width: 700px; height: 500px; border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden; background: var(--bg-secondary); }
+        .resume-frame iframe { width: 100%; height: 100%; border: none; }
+        .resume-frame .resume-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, var(--bg-primary)); padding: 2rem; text-align: center; pointer-events: none; }
+        .resume-frame .resume-overlay p { color: var(--text-secondary); font-size: 0.9rem; }
+        .resume-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .resume-download-btn { display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Contact Form */
+        .contact-form-container { max-width: 700px; margin: 0 auto; }
+        .contact-form { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+        .form-group input, .form-group select, .form-group textarea { padding: 0.85rem 1rem; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 0.95rem; background: var(--bg-primary); color: var(--text-primary); transition: all 0.3s ease; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-secondary); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-submit-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; font-size: 1rem; margin-top: 0.5rem; }
+        .contact-alternatives { text-align: center; }
+        .contact-alternatives p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem; }
+        .alt-contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+        .alt-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .alt-link:hover { color: var(--accent); }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .availability-container { flex-direction: column; align-items: center; }
+            .availability-card { min-width: 100%; }
+            .resume-frame { height: 400px; }
+        }
+        
+        /* Contact Section */
         .contact-section { padding: 5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
         .contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: 50px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; transition: all 0.3s ease; background: var(--bg-primary); }
         .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
         .contact-link svg { width: 18px; height: 18px; }
         
-        /* Roadmap Styles */
-        .roadmap-container { position: relative; padding: 3rem 0; overflow-x: auto; }
-        .roadmap-line { position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: var(--border-color); transform: translateY(-50%); }
-        .roadmap-items { display: flex; justify-content: space-between; position: relative; min-width: 900px; padding: 0 1rem; }
-        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; width: 120px; }
-        .roadmap-diamond { width: 20px; height: 20px; background: var(--bg-primary); border: 3px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.3s ease; }
-        .roadmap-diamond.filled { background: #a5d8ff; border-color: #0ea5e9; }
-        .roadmap-diamond.filled-dark { background: #0ea5e9; border-color: #0ea5e9; }
-        .roadmap-diamond.current { background: #10b981; border-color: #10b981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3); animation: pulse 2s infinite; }
-        .roadmap-content { position: absolute; text-align: center; width: 130px; }
-        .roadmap-top { bottom: 45px; }
-        .roadmap-bottom { top: 45px; }
-        .roadmap-logo { width: 45px; height: 45px; border-radius: 8px; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.65rem; color: white; overflow: hidden; border: 1px solid var(--border-color); }
+        /* Roadmap Styles - Larger & Better */
+        .roadmap-wrapper { overflow-x: auto; padding: 2rem 0; }
+        .roadmap-container { position: relative; padding: 6rem 0; min-width: 950px; }
+        .roadmap-line { position: absolute; top: 50%; left: 3%; right: 3%; height: 5px; background: linear-gradient(90deg, var(--border-color), var(--accent), #10b981); transform: translateY(-50%); border-radius: 3px; }
+        .roadmap-items { display: flex; justify-content: space-between; position: relative; padding: 0 3%; }
+        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; max-width: 160px; }
+        .roadmap-diamond { width: 28px; height: 28px; background: var(--bg-primary); border: 4px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.3s ease; flex-shrink: 0; }
+        .roadmap-diamond.filled { background: #bae6fd; border-color: #0ea5e9; }
+        .roadmap-diamond.filled-dark { background: #0ea5e9; border-color: #0284c7; }
+        .roadmap-diamond.current { background: #10b981; border-color: #059669; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.25); animation: pulse 2s infinite; }
+        .roadmap-content { text-align: center; width: 150px; }
+        .roadmap-top { margin-bottom: 2rem; }
+        .roadmap-bottom { margin-top: 2rem; }
+        .roadmap-logo { width: 60px; height: 60px; border-radius: 12px; margin: 0 auto 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-secondary); transition: transform 0.3s ease; }
+        .roadmap-item:hover .roadmap-logo { transform: scale(1.1); }
         .roadmap-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .au-logo { background: #8b0000; }
-        .uta-logo { background: #0064b1; }
-        .tcs-logo { background: white; }
-        .dsn-logo { background: white; }
-        .roadmap-title { font-weight: 600; font-size: 0.8rem; color: var(--text-primary); margin-bottom: 0.15rem; }
-        .roadmap-subtitle { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.3; }
-        .roadmap-year { position: absolute; top: 50%; transform: translateY(-50%); font-weight: 600; font-size: 0.75rem; color: var(--accent); margin-top: 45px; }
-        .roadmap-item:nth-child(odd) .roadmap-year { margin-top: -45px; }
+        .au-logo { background: #8b0000 !important; border-color: #8b0000 !important; }
+        .uta-logo { background: #0064b1 !important; border-color: #0064b1 !important; }
+        .tcs-logo { background: white !important; }
+        .dsn-logo { background: white !important; }
+        .roadmap-title { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.3rem; }
+        .roadmap-subtitle { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+        .roadmap-year { font-weight: 700; font-size: 0.9rem; color: var(--accent); margin-top: 1rem; }
+        .roadmap-year-bottom { font-weight: 700; font-size: 0.9rem; color: var(--accent); margin-bottom: 1rem; }
+        .current-year { color: #10b981 !important; font-size: 1rem !important; }
         
-        /* Focus Areas / Donut Chart Styles */
-        .focus-container { display: flex; align-items: center; justify-content: center; gap: 4rem; flex-wrap: wrap; }
-        .focus-labels { display: flex; flex-direction: column; gap: 1rem; }
-        .focus-label { display: flex; align-items: center; gap: 0.75rem; }
-        .focus-number { width: 28px; height: 28px; border-radius: 50%; color: white; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
-        .focus-text { font-size: 0.95rem; color: var(--text-primary); font-weight: 500; }
-        .donut-chart { position: relative; width: 220px; height: 220px; }
+        /* Focus Areas / Interactive Donut Chart Styles */
+        .focus-container { display: flex; align-items: center; justify-content: center; gap: 5rem; flex-wrap: wrap; }
+        .focus-labels { display: flex; flex-direction: column; gap: 1.25rem; }
+        .focus-label { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.25rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; }
+        .focus-label:hover, .focus-label.active { background: var(--bg-secondary); border-color: var(--border-color); transform: translateX(5px); }
+        .focus-number { width: 32px; height: 32px; border-radius: 50%; color: white; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .focus-info { display: flex; flex-direction: column; gap: 0.2rem; }
+        .focus-text { font-size: 1rem; color: var(--text-primary); font-weight: 600; }
+        .focus-percent { font-size: 0.85rem; color: var(--accent); font-weight: 700; }
+        .focus-details { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.3rem; max-width: 280px; line-height: 1.4; }
+        .donut-chart-container { display: flex; flex-direction: column; align-items: center; }
+        .donut-chart { position: relative; width: 280px; height: 280px; }
         .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .donut-segment { transition: all 0.3s ease; cursor: pointer; }
-        .donut-segment:hover { opacity: 0.8; filter: brightness(1.1); }
-        .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        .donut-percent { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text-primary); }
-        .donut-label { font-size: 0.8rem; color: var(--text-secondary); }
+        .donut-segment { transition: all 0.4s ease; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .donut-segment:hover, .donut-segment.highlighted { opacity: 1; filter: brightness(1.15) drop-shadow(0 4px 8px rgba(0,0,0,0.2)); stroke-width: 45; }
+        .donut-segment.dimmed { opacity: 0.4; }
+        .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; transition: all 0.3s ease; }
+        .donut-percent { font-family: 'Playfair Display', serif; font-size: 2.75rem; font-weight: 700; color: var(--text-primary); line-height: 1; }
+        .donut-label { font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.25rem; }
+        .donut-hint { font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center; }
         
         @media (max-width: 768px) { 
-            .roadmap-container { padding: 2rem 0; }
+            .roadmap-container { padding: 5rem 0; min-width: 800px; }
+            .roadmap-logo { width: 50px; height: 50px; }
             .focus-container { flex-direction: column; gap: 2rem; }
-            .donut-chart { width: 180px; height: 180px; }
+            .donut-chart { width: 220px; height: 220px; }
+            .focus-details { display: none; }
         }
         
         /* Footer */
@@ -244,9 +317,10 @@
         </a>
         
         <div class="hero-buttons animate-fade-in-up delay-5">
+            <a href="#journey" class="btn">Journey</a>
             <a href="#experience" class="btn">Experience</a>
-            <a href="#skills" class="btn">Skills</a>
             <a href="#projects" class="btn">Projects</a>
+            <a href="#contact-form" class="btn">Contact</a>
             <a href="#roles" class="btn">Explore Roles</a>
         </div>
         
@@ -296,123 +370,139 @@
     <section class="section" id="journey">
         <div class="container">
             <h2 class="section-title">My Journey</h2>
-            <div class="roadmap-container">
-                <div class="roadmap-line"></div>
-                <div class="roadmap-items">
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond"></div>
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-logo au-logo">AU</div>
-                            <div class="roadmap-title">Andhra University</div>
-                            <div class="roadmap-subtitle">B.Tech - Computer Science</div>
+            <div class="roadmap-wrapper">
+                <div class="roadmap-container">
+                    <div class="roadmap-line"></div>
+                    <div class="roadmap-items">
+                        <!-- Andhra University -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-top">
+                                <div class="roadmap-logo au-logo">AU</div>
+                                <div class="roadmap-title">Andhra University</div>
+                                <div class="roadmap-subtitle">B.Tech Computer Science</div>
+                            </div>
+                            <div class="roadmap-diamond"></div>
+                            <div class="roadmap-year">2015 - 19</div>
                         </div>
-                        <div class="roadmap-year">2015 - 19</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond filled"></div>
-                        <div class="roadmap-content roadmap-top">
-                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                            <div class="roadmap-title">TCS</div>
-                            <div class="roadmap-subtitle">Software Engineer</div>
+                        <!-- TCS Software Engineer -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-bottom">
+                                <div class="roadmap-year-bottom">2019 - 21</div>
+                                <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
+                                <div class="roadmap-title">TCS</div>
+                                <div class="roadmap-subtitle">Software Engineer</div>
+                            </div>
+                            <div class="roadmap-diamond filled"></div>
                         </div>
-                        <div class="roadmap-year">2019 - 21</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond filled-dark"></div>
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                            <div class="roadmap-title">TCS</div>
-                            <div class="roadmap-subtitle">Senior Software Engineer</div>
+                        <!-- TCS Senior Software Engineer -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-top">
+                                <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
+                                <div class="roadmap-title">TCS</div>
+                                <div class="roadmap-subtitle">Senior Software Engineer</div>
+                            </div>
+                            <div class="roadmap-diamond filled-dark"></div>
+                            <div class="roadmap-year">2021 - 23</div>
                         </div>
-                        <div class="roadmap-year">2021 - 23</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond"></div>
-                        <div class="roadmap-content roadmap-top">
-                            <div class="roadmap-logo uta-logo">UTA</div>
-                            <div class="roadmap-title">UT Arlington</div>
-                            <div class="roadmap-subtitle">MS Computer Science</div>
+                        <!-- UTA MS -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-bottom">
+                                <div class="roadmap-year-bottom">2023 - 25</div>
+                                <div class="roadmap-logo uta-logo">UTA</div>
+                                <div class="roadmap-title">UT Arlington</div>
+                                <div class="roadmap-subtitle">MS Computer Science</div>
+                            </div>
+                            <div class="roadmap-diamond"></div>
                         </div>
-                        <div class="roadmap-year">2023 - 25</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond filled"></div>
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-logo uta-logo">UTA</div>
-                            <div class="roadmap-title">UTA</div>
-                            <div class="roadmap-subtitle">Teaching Assistant</div>
+                        <!-- UTA GRA -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-top">
+                                <div class="roadmap-logo uta-logo">UTA</div>
+                                <div class="roadmap-title">UTA Research</div>
+                                <div class="roadmap-subtitle">Graduate Research Asst.</div>
+                            </div>
+                            <div class="roadmap-diamond filled-dark"></div>
+                            <div class="roadmap-year">2025</div>
                         </div>
-                        <div class="roadmap-year">2024 - 25</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond filled-dark"></div>
-                        <div class="roadmap-content roadmap-top">
-                            <div class="roadmap-logo uta-logo">UTA</div>
-                            <div class="roadmap-title">UTA Research</div>
-                            <div class="roadmap-subtitle">Graduate Research Assistant</div>
+                        <!-- DentalScan -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-content roadmap-bottom">
+                                <div class="roadmap-year-bottom current-year">Present</div>
+                                <div class="roadmap-logo dsn-logo"><img src="dentalscan-logo.png" alt="DentalScan"></div>
+                                <div class="roadmap-title">DentalScan</div>
+                                <div class="roadmap-subtitle">ML Engineer Intern</div>
+                            </div>
+                            <div class="roadmap-diamond current"></div>
                         </div>
-                        <div class="roadmap-year">2025</div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-diamond current"></div>
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-logo dsn-logo"><img src="dentalscan-logo.png" alt="DentalScan"></div>
-                            <div class="roadmap-title">DentalScan</div>
-                            <div class="roadmap-subtitle">ML Engineer Intern</div>
-                        </div>
-                        <div class="roadmap-year">Now</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Focus Areas Section -->
+    <!-- Focus Areas Section - Interactive -->
     <section class="section" id="focus">
         <div class="container">
             <h2 class="section-title">My Focus Areas</h2>
             <div class="focus-container">
                 <div class="focus-labels">
-                    <div class="focus-label">
+                    <div class="focus-label" data-segment="1" onmouseenter="highlightSegment(1)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #0ea5e9;">1</span>
-                        <span class="focus-text">Deep Learning & GPU Optimization</span>
+                        <div class="focus-info">
+                            <span class="focus-text">Deep Learning & GPU Optimization</span>
+                            <span class="focus-percent">35%</span>
+                        </div>
+                        <div class="focus-details">CUDA, FlashAttention, Quantization, PyTorch, Triton Kernels</div>
                     </div>
-                    <div class="focus-label">
+                    <div class="focus-label" data-segment="2" onmouseenter="highlightSegment(2)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #f59e0b;">2</span>
-                        <span class="focus-text">LLM & GenAI Systems</span>
+                        <div class="focus-info">
+                            <span class="focus-text">LLM & GenAI Systems</span>
+                            <span class="focus-percent">25%</span>
+                        </div>
+                        <div class="focus-details">vLLM, RAG, Fine-tuning, Multi-Agent, LangChain</div>
                     </div>
-                    <div class="focus-label">
+                    <div class="focus-label" data-segment="3" onmouseenter="highlightSegment(3)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #10b981;">3</span>
-                        <span class="focus-text">ML Infrastructure & MLOps</span>
+                        <div class="focus-info">
+                            <span class="focus-text">ML Infrastructure & MLOps</span>
+                            <span class="focus-percent">20%</span>
+                        </div>
+                        <div class="focus-details">AWS SageMaker, Docker, Airflow, MLflow, CI/CD</div>
                     </div>
-                    <div class="focus-label">
+                    <div class="focus-label" data-segment="4" onmouseenter="highlightSegment(4)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #8b5cf6;">4</span>
-                        <span class="focus-text">Backend & Distributed Systems</span>
+                        <div class="focus-info">
+                            <span class="focus-text">Backend & Distributed Systems</span>
+                            <span class="focus-percent">12%</span>
+                        </div>
+                        <div class="focus-details">Go, Java, Microservices, Kafka, Redis, PostgreSQL</div>
                     </div>
-                    <div class="focus-label">
+                    <div class="focus-label" data-segment="5" onmouseenter="highlightSegment(5)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #06b6d4;">5</span>
-                        <span class="focus-text">Research & Publications</span>
+                        <div class="focus-info">
+                            <span class="focus-text">Research & Publications</span>
+                            <span class="focus-percent">8%</span>
+                        </div>
+                        <div class="focus-details">IEEE ICC 2026, LLMs for Wireless, 6G Networks</div>
                     </div>
                 </div>
-                <div class="donut-chart">
-                    <svg viewBox="0 0 200 200" class="donut-svg">
-                        <!-- Deep Learning - 35% -->
-                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="35" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none"/>
-                        <!-- LLM & GenAI - 25% -->
-                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="35" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none"/>
-                        <!-- MLOps - 20% -->
-                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="35" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none"/>
-                        <!-- Backend - 12% -->
-                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="35" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none"/>
-                        <!-- Research - 8% -->
-                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="35" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none"/>
-                        <!-- Center circle -->
-                        <circle cx="100" cy="100" r="52" fill="var(--bg-primary)"/>
-                    </svg>
-                    <div class="donut-center">
-                        <div class="donut-percent">35%</div>
-                        <div class="donut-label">Deep Learning</div>
+                <div class="donut-chart-container">
+                    <div class="donut-chart">
+                        <svg viewBox="0 0 200 200" class="donut-svg">
+                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none"/>
+                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none"/>
+                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none"/>
+                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none"/>
+                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none"/>
+                            <circle cx="100" cy="100" r="50" fill="var(--bg-primary)"/>
+                        </svg>
+                        <div class="donut-center" id="donut-center">
+                            <div class="donut-percent" id="donut-percent">35%</div>
+                            <div class="donut-label" id="donut-label">Deep Learning</div>
+                        </div>
                     </div>
+                    <p class="donut-hint">👆 Hover over labels to explore</p>
                 </div>
             </div>
         </div>
@@ -614,6 +704,184 @@
         </div>
     </section>
 
+    <!-- GitHub Contributions Section -->
+    <section class="section" id="github-activity">
+        <div class="container">
+            <h2 class="section-title">GitHub Activity</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Actively building and contributing to open source</p>
+            <div class="github-contrib-container">
+                <img src="https://ghchart.rshah.org/2563eb/saitejasrivilli" alt="GitHub Contributions" class="github-chart" />
+                <div class="github-stats">
+                    <a href="https://github.com/saitejasrivilli" target="_blank" class="github-stat-card">
+                        <img src="https://img.shields.io/github/followers/saitejasrivilli?style=for-the-badge&logo=github&label=Followers&color=2563eb" alt="Followers">
+                    </a>
+                    <a href="https://github.com/saitejasrivilli?tab=repositories" target="_blank" class="github-stat-card">
+                        <img src="https://img.shields.io/badge/Public%20Repos-25+-2563eb?style=for-the-badge&logo=github" alt="Repos">
+                    </a>
+                    <a href="https://github.com/saitejasrivilli" target="_blank" class="github-stat-card">
+                        <img src="https://img.shields.io/badge/Contributions-500+-10b981?style=for-the-badge&logo=github" alt="Contributions">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability Widget Section -->
+    <section class="section" id="availability">
+        <div class="container">
+            <h2 class="section-title">Availability</h2>
+            <div class="availability-container">
+                <div class="availability-card">
+                    <div class="availability-status">
+                        <span class="status-dot-large"></span>
+                        <span class="status-text-large">Available for Opportunities</span>
+                    </div>
+                    <div class="availability-details">
+                        <div class="availability-item">
+                            <span class="avail-icon">📍</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Location</span>
+                                <span class="avail-value">Arlington, TX (Open to Relocation)</span>
+                            </div>
+                        </div>
+                        <div class="availability-item">
+                            <span class="avail-icon">🌍</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Work Preference</span>
+                                <span class="avail-value">Remote, Hybrid, or On-site</span>
+                            </div>
+                        </div>
+                        <div class="availability-item">
+                            <span class="avail-icon">🕐</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Timezone</span>
+                                <span class="avail-value">CST (UTC-6) • Flexible hours</span>
+                            </div>
+                        </div>
+                        <div class="availability-item">
+                            <span class="avail-icon">🗓️</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Start Date</span>
+                                <span class="avail-value">Immediately Available</span>
+                            </div>
+                        </div>
+                        <div class="availability-item">
+                            <span class="avail-icon">🎯</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Target Roles</span>
+                                <span class="avail-value">ML Engineer, Deep Learning, LLM/GenAI, Backend SDE</span>
+                            </div>
+                        </div>
+                        <div class="availability-item">
+                            <span class="avail-icon">🏢</span>
+                            <div class="avail-info">
+                                <span class="avail-label">Preferred Locations</span>
+                                <span class="avail-value">TX, CA, WA, NY, Remote</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- QR Code -->
+                <div class="qr-card">
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://saitejasrivilli.github.io&bgcolor=ffffff&color=1a1a2e" alt="Portfolio QR Code">
+                    </div>
+                    <p class="qr-label">Scan to view portfolio</p>
+                    <p class="qr-url">saitejasrivilli.github.io</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Preview Section -->
+    <section class="section" id="resume-preview">
+        <div class="container">
+            <h2 class="section-title">Resume Preview</h2>
+            <div class="resume-preview-container">
+                <div class="resume-frame">
+                    <iframe src="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" title="Resume Preview"></iframe>
+                    <div class="resume-overlay">
+                        <p>📄 Click to view full resume</p>
+                    </div>
+                </div>
+                <div class="resume-actions">
+                    <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn btn-primary resume-download-btn" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Resume (PDF)
+                    </a>
+                    <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Open in New Tab
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section" id="contact-form">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">Have an opportunity or want to collaborate? Send me a message and I'll get back to you within 24 hours.</p>
+            
+            <div class="contact-form-container">
+                <form class="contact-form" action="https://formspree.io/f/xpwzgkvq" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email *</label>
+                            <input type="email" id="email" name="email" placeholder="john@company.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company" placeholder="Google, Meta, Startup...">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role Type</label>
+                            <select id="role" name="role">
+                                <option value="">Select role type</option>
+                                <option value="ML Engineer">ML Engineer</option>
+                                <option value="Deep Learning Engineer">Deep Learning Engineer</option>
+                                <option value="LLM/GenAI Engineer">LLM/GenAI Engineer</option>
+                                <option value="Backend SDE">Backend SDE</option>
+                                <option value="Research">Research Position</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell me about the opportunity, project, or how I can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary form-submit-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        Send Message
+                    </button>
+                </form>
+                
+                <div class="contact-alternatives">
+                    <p>Or reach out directly:</p>
+                    <div class="alt-contact-links">
+                        <a href="mailto:saiteja.srivilli@gmail.com" class="alt-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            saiteja.srivilli@gmail.com
+                        </a>
+                        <a href="https://linkedin.com/in/saitejasrivilli" target="_blank" class="alt-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
@@ -730,6 +998,50 @@
             }
         }
         setInterval(checkResetOverride, 60000);
+        
+        // Interactive Donut Chart
+        const focusData = {
+            1: { percent: '35%', label: 'Deep Learning', color: '#0ea5e9' },
+            2: { percent: '25%', label: 'LLM & GenAI', color: '#f59e0b' },
+            3: { percent: '20%', label: 'MLOps', color: '#10b981' },
+            4: { percent: '12%', label: 'Backend', color: '#8b5cf6' },
+            5: { percent: '8%', label: 'Research', color: '#06b6d4' }
+        };
+        
+        function highlightSegment(num) {
+            // Update center text
+            document.getElementById('donut-percent').textContent = focusData[num].percent;
+            document.getElementById('donut-label').textContent = focusData[num].label;
+            document.getElementById('donut-percent').style.color = focusData[num].color;
+            
+            // Highlight segment, dim others
+            for (let i = 1; i <= 5; i++) {
+                const segment = document.getElementById('segment-' + i);
+                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
+                if (i === num) {
+                    segment.classList.add('highlighted');
+                    segment.classList.remove('dimmed');
+                    label.classList.add('active');
+                } else {
+                    segment.classList.add('dimmed');
+                    segment.classList.remove('highlighted');
+                    label.classList.remove('active');
+                }
+            }
+        }
+        
+        function resetSegment() {
+            document.getElementById('donut-percent').textContent = '35%';
+            document.getElementById('donut-label').textContent = 'Deep Learning';
+            document.getElementById('donut-percent').style.color = 'var(--text-primary)';
+            
+            for (let i = 1; i <= 5; i++) {
+                const segment = document.getElementById('segment-' + i);
+                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
+                segment.classList.remove('highlighted', 'dimmed');
+                label.classList.remove('active');
+            }
+        }
         
         // Intersection Observer for scroll animations
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };

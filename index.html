@@ -7,6 +7,68 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        // Focus Areas Interactive Chart - Define early so inline handlers work
+        const focusData = {
+            1: { percent: '35%', label: 'Deep Learning', color: '#0ea5e9' },
+            2: { percent: '25%', label: 'LLM & GenAI', color: '#f59e0b' },
+            3: { percent: '20%', label: 'MLOps', color: '#10b981' },
+            4: { percent: '12%', label: 'Backend', color: '#8b5cf6' },
+            5: { percent: '8%', label: 'Research', color: '#06b6d4' }
+        };
+        
+        function highlightSegment(num) {
+            const percentEl = document.getElementById('donut-percent');
+            const labelEl = document.getElementById('donut-label');
+            
+            if (percentEl && labelEl && focusData[num]) {
+                percentEl.textContent = focusData[num].percent;
+                labelEl.textContent = focusData[num].label;
+                percentEl.style.color = focusData[num].color;
+                labelEl.style.color = focusData[num].color;
+            }
+            
+            for (let i = 1; i <= 5; i++) {
+                const segment = document.getElementById('segment-' + i);
+                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
+                if (segment) {
+                    if (i === num) {
+                        segment.classList.add('highlighted');
+                        segment.classList.remove('dimmed');
+                    } else {
+                        segment.classList.add('dimmed');
+                        segment.classList.remove('highlighted');
+                    }
+                }
+                if (label) {
+                    if (i === num) {
+                        label.classList.add('active');
+                    } else {
+                        label.classList.remove('active');
+                    }
+                }
+            }
+        }
+        
+        function resetSegment() {
+            const percentEl = document.getElementById('donut-percent');
+            const labelEl = document.getElementById('donut-label');
+            
+            if (percentEl && labelEl) {
+                percentEl.textContent = '35%';
+                labelEl.textContent = 'Deep Learning';
+                percentEl.style.color = '';
+                labelEl.style.color = '';
+            }
+            
+            for (let i = 1; i <= 5; i++) {
+                const segment = document.getElementById('segment-' + i);
+                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
+                if (segment) segment.classList.remove('highlighted', 'dimmed');
+                if (label) label.classList.remove('active');
+            }
+        }
+    </script>
     <style>
         :root {
             --bg-primary: #ffffff;
@@ -534,7 +596,7 @@
             <h2 class="section-title">My Focus Areas</h2>
             <div class="focus-container">
                 <div class="focus-labels">
-                    <div class="focus-label" data-segment="1">
+                    <div class="focus-label" data-segment="1" onmouseenter="highlightSegment(1)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #0ea5e9;">1</span>
                         <div class="focus-info">
                             <span class="focus-text">Deep Learning & GPU Optimization</span>
@@ -542,7 +604,7 @@
                         </div>
                         <div class="focus-details">CUDA, FlashAttention, Quantization, PyTorch, Triton</div>
                     </div>
-                    <div class="focus-label" data-segment="2">
+                    <div class="focus-label" data-segment="2" onmouseenter="highlightSegment(2)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #f59e0b;">2</span>
                         <div class="focus-info">
                             <span class="focus-text">LLM & GenAI Systems</span>
@@ -550,7 +612,7 @@
                         </div>
                         <div class="focus-details">vLLM, RAG, Fine-tuning, Multi-Agent, LangChain</div>
                     </div>
-                    <div class="focus-label" data-segment="3">
+                    <div class="focus-label" data-segment="3" onmouseenter="highlightSegment(3)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #10b981;">3</span>
                         <div class="focus-info">
                             <span class="focus-text">ML Infrastructure & MLOps</span>
@@ -558,7 +620,7 @@
                         </div>
                         <div class="focus-details">AWS SageMaker, Docker, Airflow, MLflow, CI/CD</div>
                     </div>
-                    <div class="focus-label" data-segment="4">
+                    <div class="focus-label" data-segment="4" onmouseenter="highlightSegment(4)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #8b5cf6;">4</span>
                         <div class="focus-info">
                             <span class="focus-text">Backend & Distributed Systems</span>
@@ -566,7 +628,7 @@
                         </div>
                         <div class="focus-details">Go, Java, Microservices, Kafka, Redis, PostgreSQL</div>
                     </div>
-                    <div class="focus-label" data-segment="5">
+                    <div class="focus-label" data-segment="5" onmouseenter="highlightSegment(5)" onmouseleave="resetSegment()">
                         <span class="focus-number" style="background: #06b6d4;">5</span>
                         <div class="focus-info">
                             <span class="focus-text">Research & Publications</span>
@@ -578,11 +640,11 @@
                 <div class="donut-chart-container">
                     <div class="donut-chart">
                         <svg viewBox="0 0 200 200" class="donut-svg" style="overflow: visible;">
-                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none" style="pointer-events: stroke;"/>
-                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none" style="pointer-events: stroke;"/>
-                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none" style="pointer-events: stroke;"/>
-                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none" style="pointer-events: stroke;"/>
-                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none" style="pointer-events: stroke;"/>
+                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none" onmouseenter="highlightSegment(1)" onmouseleave="resetSegment()"/>
+                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none" onmouseenter="highlightSegment(2)" onmouseleave="resetSegment()"/>
+                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none" onmouseenter="highlightSegment(3)" onmouseleave="resetSegment()"/>
+                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none" onmouseenter="highlightSegment(4)" onmouseleave="resetSegment()"/>
+                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none" onmouseenter="highlightSegment(5)" onmouseleave="resetSegment()"/>
                             <circle cx="100" cy="100" r="50" fill="var(--bg-primary)" style="pointer-events: none;"/>
                         </svg>
                         <div class="donut-center" id="donut-center">
@@ -1319,119 +1381,6 @@
             if (!isActive) {
                 item.classList.add('active');
             }
-        }
-        
-        // Interactive Donut Chart
-        const focusData = {
-            1: { percent: '35%', label: 'Deep Learning', color: '#0ea5e9' },
-            2: { percent: '25%', label: 'LLM & GenAI', color: '#f59e0b' },
-            3: { percent: '20%', label: 'MLOps', color: '#10b981' },
-            4: { percent: '12%', label: 'Backend', color: '#8b5cf6' },
-            5: { percent: '8%', label: 'Research', color: '#06b6d4' }
-        };
-        
-        let activeSegment = null;
-        
-        function highlightSegment(num) {
-            activeSegment = num;
-            const percentEl = document.getElementById('donut-percent');
-            const labelEl = document.getElementById('donut-label');
-            
-            if (percentEl && labelEl) {
-                percentEl.textContent = focusData[num].percent;
-                labelEl.textContent = focusData[num].label;
-                percentEl.style.color = focusData[num].color;
-                labelEl.style.color = focusData[num].color;
-            }
-            
-            // Highlight segment, dim others
-            for (let i = 1; i <= 5; i++) {
-                const segment = document.getElementById('segment-' + i);
-                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
-                if (segment) {
-                    if (i === num) {
-                        segment.classList.add('highlighted');
-                        segment.classList.remove('dimmed');
-                    } else {
-                        segment.classList.add('dimmed');
-                        segment.classList.remove('highlighted');
-                    }
-                }
-                if (label) {
-                    if (i === num) {
-                        label.classList.add('active');
-                    } else {
-                        label.classList.remove('active');
-                    }
-                }
-            }
-        }
-        
-        function resetSegment() {
-            activeSegment = null;
-            const percentEl = document.getElementById('donut-percent');
-            const labelEl = document.getElementById('donut-label');
-            
-            if (percentEl && labelEl) {
-                percentEl.textContent = '35%';
-                labelEl.textContent = 'Deep Learning';
-                percentEl.style.color = '';
-                labelEl.style.color = '';
-            }
-            
-            for (let i = 1; i <= 5; i++) {
-                const segment = document.getElementById('segment-' + i);
-                const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
-                if (segment) segment.classList.remove('highlighted', 'dimmed');
-                if (label) label.classList.remove('active');
-            }
-        }
-        
-        // Initialize event listeners when DOM is ready
-        function initFocusAreaInteractions() {
-            // Add event listeners to labels
-            document.querySelectorAll('.focus-label').forEach(label => {
-                const segNum = parseInt(label.getAttribute('data-segment'));
-                if (!isNaN(segNum)) {
-                    label.addEventListener('mouseenter', function(e) {
-                        e.preventDefault();
-                        highlightSegment(segNum);
-                    });
-                    label.addEventListener('mouseleave', function(e) {
-                        e.preventDefault();
-                        resetSegment();
-                    });
-                    // Touch support
-                    label.addEventListener('touchstart', function(e) {
-                        highlightSegment(segNum);
-                    }, { passive: true });
-                }
-            });
-            
-            // Add event listeners to chart segments with pointer events fix
-            document.querySelectorAll('.donut-segment').forEach(segment => {
-                const segNum = parseInt(segment.id.replace('segment-', ''));
-                if (!isNaN(segNum)) {
-                    segment.style.pointerEvents = 'auto';
-                    segment.addEventListener('mouseenter', function(e) {
-                        highlightSegment(segNum);
-                    });
-                    segment.addEventListener('mouseleave', function(e) {
-                        resetSegment();
-                    });
-                    // Touch support
-                    segment.addEventListener('touchstart', function(e) {
-                        highlightSegment(segNum);
-                    }, { passive: true });
-                }
-            });
-        }
-        
-        // Run initialization after DOM is loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initFocusAreaInteractions);
-        } else {
-            initFocusAreaInteractions();
         }
         
         // Intersection Observer for scroll animations

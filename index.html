@@ -53,9 +53,9 @@
         
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; }
-        .profile-container { width: 150px; height: 150px; margin-bottom: 1.5rem; }
+        .profile-container { width: 150px; height: 150px; margin-bottom: 1.5rem; position: relative; }
         .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; display: block; }
-        .profile-fallback { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; }
+        .profile-fallback { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
         .profile-placeholder { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
         .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; }
@@ -264,56 +264,66 @@
         .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
         .contact-link svg { width: 18px; height: 18px; }
         
-        /* Roadmap Styles - Fit All Without Scrolling */
-        .roadmap-wrapper { padding: 1rem 0; }
-        .roadmap-container { position: relative; padding: 5rem 0; }
-        .roadmap-line { position: absolute; top: 50%; left: 2%; right: 2%; height: 4px; background: linear-gradient(90deg, var(--border-color), var(--accent), #10b981); transform: translateY(-50%); border-radius: 3px; }
-        .roadmap-items { display: flex; justify-content: space-between; position: relative; padding: 0 1%; }
-        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; min-width: 0; }
-        .roadmap-diamond { width: 24px; height: 24px; background: var(--bg-primary); border: 3px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.3s ease; flex-shrink: 0; }
-        .roadmap-diamond.filled { background: #bae6fd; border-color: #0ea5e9; }
-        .roadmap-diamond.filled-dark { background: #0ea5e9; border-color: #0284c7; }
-        .roadmap-diamond.current { background: #10b981; border-color: #059669; box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.25); animation: pulse 2s infinite; }
-        .roadmap-content { text-align: center; width: 100%; padding: 0 0.25rem; }
-        .roadmap-top { margin-bottom: 1.25rem; }
-        .roadmap-bottom { margin-top: 1.25rem; }
-        .roadmap-logo { width: 50px; height: 50px; border-radius: 10px; margin: 0 auto 0.4rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; color: white; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-secondary); transition: transform 0.3s ease; }
-        .roadmap-item:hover .roadmap-logo { transform: scale(1.1); }
+        /* Roadmap Styles - Extended and Visually Enhanced */
+        .roadmap-wrapper { padding: 2rem 0; overflow-x: auto; }
+        .roadmap-container { position: relative; padding: 6rem 0; min-width: 950px; }
+        .roadmap-line { position: absolute; top: 50%; left: 3%; right: 3%; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
+        .roadmap-line::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #cbd5e1; border-radius: 50%; }
+        .roadmap-line::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 12px solid #10b981; }
+        .roadmap-items { display: flex; justify-content: space-between; position: relative; padding: 0 2%; }
+        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; min-width: 130px; max-width: 160px; transition: all 0.3s ease; }
+        .roadmap-item:hover { transform: scale(1.05); z-index: 10; }
+        .roadmap-diamond { width: 28px; height: 28px; background: var(--bg-primary); border: 4px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .roadmap-item:hover .roadmap-diamond { transform: rotate(45deg) scale(1.2); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25); }
+        .roadmap-diamond.filled { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-color: #0ea5e9; }
+        .roadmap-diamond.filled-dark { background: linear-gradient(135deg, #0ea5e9, #0284c7); border-color: #0369a1; }
+        .roadmap-diamond.current { background: linear-gradient(135deg, #10b981, #059669); border-color: #047857; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2), 0 4px 20px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
+        .roadmap-content { text-align: center; width: 100%; padding: 0 0.5rem; }
+        .roadmap-top { margin-bottom: 1.5rem; }
+        .roadmap-bottom { margin-top: 1.5rem; }
+        .roadmap-logo { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; color: white; overflow: hidden; border: 3px solid var(--border-color); background: var(--bg-secondary); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .roadmap-item:hover .roadmap-logo { transform: scale(1.15) translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: var(--accent); }
         .roadmap-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .au-logo { background: #8b0000 !important; border-color: #8b0000 !important; }
-        .uta-logo { background: #0064b1 !important; border-color: #0064b1 !important; }
-        .tcs-logo { background: white !important; }
-        .dsn-logo { background: white !important; }
-        .roadmap-title { font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.2rem; white-space: nowrap; }
-        .roadmap-subtitle { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3; }
-        .roadmap-year { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-top: 0.75rem; }
-        .roadmap-year-bottom { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; }
-        .current-year { color: #10b981 !important; }
+        .au-logo { background: linear-gradient(135deg, #991b1b, #7f1d1d) !important; border-color: #991b1b !important; }
+        .uta-logo { background: linear-gradient(135deg, #0077cc, #0064b1) !important; border-color: #0064b1 !important; }
+        .tcs-logo { background: white !important; border-color: #e5e7eb !important; }
+        .dsn-logo { background: white !important; border-color: #e5e7eb !important; }
+        .roadmap-title { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.25rem; white-space: nowrap; transition: color 0.3s ease; }
+        .roadmap-item:hover .roadmap-title { color: var(--accent); }
+        .roadmap-subtitle { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; min-height: 2.5em; }
+        .roadmap-year { font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-top: 1rem; padding: 0.35rem 0.75rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
+        .roadmap-year-bottom { font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-bottom: 1rem; padding: 0.35rem 0.75rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
+        .current-year { color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }
         
         @media (max-width: 900px) {
-            .roadmap-logo { width: 40px; height: 40px; }
-            .roadmap-title { font-size: 0.75rem; }
-            .roadmap-subtitle { font-size: 0.65rem; }
-            .roadmap-diamond { width: 20px; height: 20px; }
-            .roadmap-year, .roadmap-year-bottom { font-size: 0.7rem; }
+            .roadmap-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 1rem; }
+            .roadmap-container { min-width: 800px; }
+            .roadmap-logo { width: 48px; height: 48px; }
+            .roadmap-title { font-size: 0.8rem; }
+            .roadmap-subtitle { font-size: 0.7rem; }
+            .roadmap-diamond { width: 24px; height: 24px; }
+            .roadmap-year, .roadmap-year-bottom { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
         }
         
         @media (max-width: 600px) {
-            .roadmap-container { padding: 4rem 0; }
-            .roadmap-logo { width: 35px; height: 35px; font-size: 0.6rem; }
-            .roadmap-title { font-size: 0.65rem; }
-            .roadmap-subtitle { font-size: 0.55rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-            .roadmap-diamond { width: 16px; height: 16px; border-width: 2px; }
-            .roadmap-top { margin-bottom: 1rem; }
-            .roadmap-bottom { margin-top: 1rem; }
+            .roadmap-container { padding: 5rem 0; min-width: 700px; }
+            .roadmap-logo { width: 42px; height: 42px; font-size: 0.65rem; border-radius: 10px; }
+            .roadmap-title { font-size: 0.7rem; }
+            .roadmap-subtitle { font-size: 0.6rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            .roadmap-diamond { width: 20px; height: 20px; border-width: 3px; }
+            .roadmap-top { margin-bottom: 1.25rem; }
+            .roadmap-bottom { margin-top: 1.25rem; }
         }
         
         /* Focus Areas / Interactive Donut Chart Styles */
         .focus-container { display: flex; align-items: center; justify-content: center; gap: 4rem; }
         .focus-labels { display: flex; flex-direction: column; gap: 0.75rem; flex: 1; max-width: 420px; }
-        .focus-label { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; background: var(--bg-secondary); }
-        .focus-label:hover, .focus-label.active { border-color: var(--accent); transform: translateX(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .focus-number { width: 30px; height: 30px; border-radius: 50%; color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .focus-label { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; background: var(--bg-secondary); position: relative; }
+        .focus-label:hover, .focus-label.active { border-color: var(--accent); transform: translateX(8px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); background: var(--bg-primary); }
+        .focus-label::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: transparent; border-radius: 12px 0 0 12px; transition: all 0.3s ease; }
+        .focus-label:hover::before, .focus-label.active::before { background: var(--accent); }
+        .focus-number { width: 32px; height: 32px; border-radius: 50%; color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s ease; }
+        .focus-label:hover .focus-number, .focus-label.active .focus-number { transform: scale(1.1); }
         .focus-info { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; }
         .focus-text { font-size: 0.9rem; color: var(--text-primary); font-weight: 600; }
         .focus-percent-label { font-size: 0.8rem; color: var(--accent); font-weight: 700; }
@@ -321,12 +331,12 @@
         .donut-chart-container { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .donut-chart { position: relative; width: 280px; height: 280px; }
         .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .donut-segment { transition: all 0.4s ease; cursor: pointer; }
-        .donut-segment.highlighted { stroke-width: 48 !important; filter: brightness(1.1); }
-        .donut-segment.dimmed { opacity: 0.3; }
+        .donut-segment { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; transform-origin: center; }
+        .donut-segment.highlighted { stroke-width: 48 !important; filter: brightness(1.15) drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
+        .donut-segment.dimmed { opacity: 0.25; }
         .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; transition: all 0.3s ease; }
-        .donut-percent { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; transition: color 0.3s ease; }
-        .donut-label { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem; transition: color 0.3s ease; }
+        .donut-percent { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; transition: all 0.3s ease; }
+        .donut-label { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem; transition: all 0.3s ease; }
         
         @media (max-width: 768px) { 
             .focus-container { flex-direction: column; gap: 2rem; }
@@ -366,8 +376,9 @@
     </button>
 
     <section class="hero">
-        <div class="profile-container">
-            <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image animate-fade-in-up">
+        <div class="profile-container animate-fade-in-up">
+            <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="profile-fallback" style="display: none;">ST</div>
         </div>
         
         <div class="status-badge animate-fade-in-up delay-1">
@@ -556,13 +567,13 @@
                 </div>
                 <div class="donut-chart-container">
                     <div class="donut-chart">
-                        <svg viewBox="0 0 200 200" class="donut-svg">
-                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none"/>
-                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none"/>
-                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none"/>
-                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none"/>
-                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none"/>
-                            <circle cx="100" cy="100" r="50" fill="var(--bg-primary)"/>
+                        <svg viewBox="0 0 200 200" class="donut-svg" style="overflow: visible;">
+                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none" style="pointer-events: stroke;"/>
+                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none" style="pointer-events: stroke;"/>
+                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none" style="pointer-events: stroke;"/>
+                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none" style="pointer-events: stroke;"/>
+                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none" style="pointer-events: stroke;"/>
+                            <circle cx="100" cy="100" r="50" fill="var(--bg-primary)" style="pointer-events: none;"/>
                         </svg>
                         <div class="donut-center" id="donut-center">
                             <div class="donut-percent" id="donut-percent">35%</div>
@@ -1309,56 +1320,109 @@
             5: { percent: '8%', label: 'Research', color: '#06b6d4' }
         };
         
+        let activeSegment = null;
+        
         function highlightSegment(num) {
-            // Update center text with color
-            document.getElementById('donut-percent').textContent = focusData[num].percent;
-            document.getElementById('donut-label').textContent = focusData[num].label;
-            document.getElementById('donut-percent').style.color = focusData[num].color;
-            document.getElementById('donut-label').style.color = focusData[num].color;
+            activeSegment = num;
+            const percentEl = document.getElementById('donut-percent');
+            const labelEl = document.getElementById('donut-label');
+            
+            if (percentEl && labelEl) {
+                percentEl.textContent = focusData[num].percent;
+                labelEl.textContent = focusData[num].label;
+                percentEl.style.color = focusData[num].color;
+                labelEl.style.color = focusData[num].color;
+            }
             
             // Highlight segment, dim others
             for (let i = 1; i <= 5; i++) {
                 const segment = document.getElementById('segment-' + i);
                 const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
-                if (i === num) {
-                    segment.classList.add('highlighted');
-                    segment.classList.remove('dimmed');
-                    if (label) label.classList.add('active');
-                } else {
-                    segment.classList.add('dimmed');
-                    segment.classList.remove('highlighted');
-                    if (label) label.classList.remove('active');
+                if (segment) {
+                    if (i === num) {
+                        segment.classList.add('highlighted');
+                        segment.classList.remove('dimmed');
+                    } else {
+                        segment.classList.add('dimmed');
+                        segment.classList.remove('highlighted');
+                    }
+                }
+                if (label) {
+                    if (i === num) {
+                        label.classList.add('active');
+                    } else {
+                        label.classList.remove('active');
+                    }
                 }
             }
         }
         
         function resetSegment() {
-            document.getElementById('donut-percent').textContent = '35%';
-            document.getElementById('donut-label').textContent = 'Deep Learning';
-            document.getElementById('donut-percent').style.color = '';
-            document.getElementById('donut-label').style.color = '';
+            activeSegment = null;
+            const percentEl = document.getElementById('donut-percent');
+            const labelEl = document.getElementById('donut-label');
+            
+            if (percentEl && labelEl) {
+                percentEl.textContent = '35%';
+                labelEl.textContent = 'Deep Learning';
+                percentEl.style.color = '';
+                labelEl.style.color = '';
+            }
             
             for (let i = 1; i <= 5; i++) {
                 const segment = document.getElementById('segment-' + i);
                 const label = document.querySelector('.focus-label[data-segment="' + i + '"]');
-                segment.classList.remove('highlighted', 'dimmed');
+                if (segment) segment.classList.remove('highlighted', 'dimmed');
                 if (label) label.classList.remove('active');
             }
         }
         
-        // Add event listeners to labels
-        document.querySelectorAll('.focus-label').forEach(label => {
-            const segNum = parseInt(label.getAttribute('data-segment'));
-            label.addEventListener('mouseenter', () => highlightSegment(segNum));
-            label.addEventListener('mouseleave', resetSegment);
-        });
+        // Initialize event listeners when DOM is ready
+        function initFocusAreaInteractions() {
+            // Add event listeners to labels
+            document.querySelectorAll('.focus-label').forEach(label => {
+                const segNum = parseInt(label.getAttribute('data-segment'));
+                if (!isNaN(segNum)) {
+                    label.addEventListener('mouseenter', function(e) {
+                        e.preventDefault();
+                        highlightSegment(segNum);
+                    });
+                    label.addEventListener('mouseleave', function(e) {
+                        e.preventDefault();
+                        resetSegment();
+                    });
+                    // Touch support
+                    label.addEventListener('touchstart', function(e) {
+                        highlightSegment(segNum);
+                    }, { passive: true });
+                }
+            });
+            
+            // Add event listeners to chart segments with pointer events fix
+            document.querySelectorAll('.donut-segment').forEach(segment => {
+                const segNum = parseInt(segment.id.replace('segment-', ''));
+                if (!isNaN(segNum)) {
+                    segment.style.pointerEvents = 'auto';
+                    segment.addEventListener('mouseenter', function(e) {
+                        highlightSegment(segNum);
+                    });
+                    segment.addEventListener('mouseleave', function(e) {
+                        resetSegment();
+                    });
+                    // Touch support
+                    segment.addEventListener('touchstart', function(e) {
+                        highlightSegment(segNum);
+                    }, { passive: true });
+                }
+            });
+        }
         
-        // Add event listeners to chart segments
-        document.querySelectorAll('.donut-segment').forEach(segment => {
-            const segNum = parseInt(segment.id.replace('segment-', ''));
-            segment.addEventListener('mouseenter', () => highlightSegment(segNum));
-            segment.addEventListener('mouseleave', resetSegment);
-        });
+        // Run initialization after DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initFocusAreaInteractions);
+        } else {
+            initFocusAreaInteractions();
+        }
         
         // Intersection Observer for scroll animations
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };

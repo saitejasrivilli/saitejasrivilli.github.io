@@ -114,13 +114,18 @@
         .delay-5 { animation-delay: 0.5s; }
         
         /* Hero */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
+        .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .hero-background canvas { width: 100%; height: 100%; }
+        .hero > *:not(.hero-background) { position: relative; z-index: 1; }
         .profile-container { width: 150px; height: 150px; margin-bottom: 1.5rem; position: relative; }
         .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; display: block; }
         .profile-fallback { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
         .profile-placeholder { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
-        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; }
+        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; }
+        .word-fade { display: inline; animation: wordFadeIn 0.3s ease forwards; opacity: 0; }
+        @keyframes wordFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Status Badge */
         .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
@@ -452,6 +457,9 @@
     </button>
 
     <section class="hero">
+        <div class="hero-background">
+            <canvas id="network-canvas"></canvas>
+        </div>
         <div class="profile-container animate-fade-in-up">
             <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="profile-fallback" style="display: none;">ST</div>
@@ -463,7 +471,25 @@
         </div>
         
         <h1 class="animate-fade-in-up delay-2">Sai Teja<br>Srivillibhutturu</h1>
-        <p class="hero-subtitle animate-fade-in-up delay-3">ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS</p>
+        <p class="hero-subtitle animate-fade-in-up delay-3" id="typewriter-text"></p>
+        <script>
+            (function() {
+                const text = "ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS";
+                const element = document.getElementById('typewriter-text');
+                let charIndex = 0;
+                
+                function typeChar() {
+                    if (charIndex < text.length) {
+                        element.textContent += text.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, 30);
+                    }
+                }
+                
+                // Start after a small delay for the fade-in animation
+                setTimeout(typeChar, 600);
+            })();
+        </script>
         
         <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1234,3 +1260,91 @@
         
         // Observe all project items and cards
         document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item')
+        
+        // ==================== NETWORK ANIMATION ====================
+        ;(function() {
+            const canvas = document.getElementById('network-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationId;
+            
+            function resize() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            
+            function createParticles() {
+                particles = [];
+                const numParticles = Math.floor((canvas.width * canvas.height) / 15000);
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 2 + 1
+                    });
+                }
+            }
+            
+            function draw() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const lineColor = isDark ? 'rgba(148, 163, 184, ' : 'rgba(156, 163, 175, ';
+                const dotColor = isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(156, 163, 175, 0.5)';
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = lineColor + (1 - dist / 150) * 0.3 + ')';
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                // Draw particles
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = dotColor;
+                    ctx.fill();
+                });
+            }
+            
+            function update() {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                });
+            }
+            
+            function animate() {
+                update();
+                draw();
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            resize();
+            createParticles();
+            animate();
+            
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles();
+            });
+        })();

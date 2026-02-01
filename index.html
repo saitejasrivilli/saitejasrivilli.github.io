@@ -54,6 +54,7 @@
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; }
         .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); }
+        .profile-fallback { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; }
         .profile-placeholder { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
         .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; }
@@ -111,14 +112,59 @@
         .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
         .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
         
-        /* Education */
-        .education-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; transition: all 0.3s ease; }
-        .education-item:hover { transform: translateX(5px); }
-        .education-logo { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.7rem; color: white; }
+        /* Education Cards */
+        .education-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
+        .education-card:hover { border-color: var(--accent); box-shadow: var(--card-shadow); }
+        .masters-card { border: 2px solid var(--accent); background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(16, 185, 129, 0.03)); }
+        .education-header { display: flex; align-items: flex-start; gap: 1.25rem; margin-bottom: 1rem; }
+        .education-logo { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.8rem; color: white; }
         .education-logo.uta { background: #0064b1; }
         .education-logo.au { background: #8b0000; }
-        .education-content h3 { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
-        .education-content p { font-size: 0.95rem; color: var(--text-secondary); }
+        .education-info { flex: 1; }
+        .education-info h3 { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .education-degree { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.15rem; }
+        .education-specialization { font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.15rem; }
+        .education-specialization strong { color: var(--accent); }
+        .education-date { font-size: 0.85rem; color: var(--text-secondary); }
+        .education-gpa { text-align: right; flex-shrink: 0; }
+        .gpa-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--accent); }
+        .gpa-scale { font-size: 0.9rem; color: var(--text-secondary); }
+        .education-summary { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-primary); border-radius: 8px; border-left: 3px solid var(--accent); }
+        .education-conclusion { font-size: 0.85rem; color: var(--text-secondary); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+        
+        /* Accordion Styles */
+        .courses-accordion { display: flex; flex-direction: column; gap: 0.5rem; }
+        .accordion-item { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
+        .accordion-item:hover { border-color: var(--accent); }
+        .accordion-item.active { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .accordion-header { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.3s ease; }
+        .accordion-header:hover { background: var(--bg-secondary); }
+        .accordion-title { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
+        .accordion-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .accordion-name { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .accordion-level { font-size: 0.7rem; padding: 0.2rem 0.5rem; background: var(--bg-secondary); border-radius: 10px; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; }
+        .progress-bar { flex: 0 0 120px; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+        .accordion-arrow { font-size: 0.7rem; color: var(--text-secondary); transition: transform 0.3s ease; flex-shrink: 0; }
+        .accordion-item.active .accordion-arrow { transform: rotate(180deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+        .accordion-item.active .accordion-content { max-height: 200px; padding: 0 1rem 1rem 2.75rem; }
+        .accordion-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+        
+        /* Simple Course Tags */
+        .education-courses { border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 0.5rem; }
+        .courses-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .courses-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .course-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.8rem; color: var(--text-primary); transition: all 0.3s ease; }
+        .course-tag:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
+        .course-icon { font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            .education-header { flex-wrap: wrap; }
+            .education-gpa { width: 100%; text-align: left; margin-top: 0.5rem; }
+            .progress-bar { flex: 0 0 80px; }
+            .accordion-name { font-size: 0.8rem; }
+        }
         
         /* Projects */
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
@@ -317,7 +363,8 @@
     </button>
 
     <section class="hero">
-        <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image animate-fade-in-up">
+        <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image animate-fade-in-up" onerror="this.style.display='none'; document.getElementById('profile-fallback').style.display='flex';">
+        <div id="profile-fallback" class="profile-fallback animate-fade-in-up" style="display:none;">ST</div>
         
         <div class="status-badge animate-fade-in-up delay-1">
             <span class="status-dot"></span>
@@ -325,7 +372,7 @@
         </div>
         
         <h1 class="animate-fade-in-up delay-2">Sai Teja<br>Srivillibhutturu</h1>
-        <p class="hero-subtitle animate-fade-in-up delay-3">ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS</p>
+        <p class="hero-subtitle animate-fade-in-up delay-3">ML & Deep Learning Engineer @ DentalScan | MS CS from UTA (4.0 GPA) | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS</p>
         
         <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -347,7 +394,7 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <p>Deep Learning Engineer specializing in GPU Optimization and LLM Inference. Currently pursuing MS in Computer Science at UT Arlington.</p>
+                <p>Deep Learning Engineer specializing in GPU Optimization and LLM Inference. MS in Computer Science from UT Arlington (May 2025).</p>
                 <p>I optimize ML systems for speed, memory, and cost. My work focuses on CUDA kernels, FlashAttention, quantization techniques, and building production-grade inference infrastructure.</p>
                 <p>Published researcher with work accepted at <strong>IEEE ICC 2026</strong> on LLM-enabled path planning for wireless networks.</p>
             </div>
@@ -426,7 +473,7 @@
                                 <div class="roadmap-year-bottom">2023 - 25</div>
                                 <div class="roadmap-logo uta-logo">UTA</div>
                                 <div class="roadmap-title">UT Arlington</div>
-                                <div class="roadmap-subtitle">MS Computer Science</div>
+                                <div class="roadmap-subtitle">MS CS (Graduated)</div>
                             </div>
                             <div class="roadmap-diamond"></div>
                         </div>
@@ -641,13 +688,212 @@
     <section class="section" id="education">
         <div class="container">
             <h2 class="section-title">Education</h2>
-            <div class="education-item">
-                <div class="education-logo uta">UTA</div>
-                <div class="education-content"><h3>The University of Texas at Arlington</h3><p>Master of Science - MS, Computer Science</p><p>2023 - 2025</p></div>
+            
+            <!-- Masters -->
+            <div class="education-card masters-card">
+                <div class="education-header">
+                    <div class="education-logo uta">UTA</div>
+                    <div class="education-info">
+                        <h3>The University of Texas at Arlington</h3>
+                        <p class="education-degree">Master of Science - Computer Science & Engineering</p>
+                        <p class="education-specialization">📜 Specialization in <strong>Deep Learning</strong></p>
+                        <p class="education-date">Aug 2023 - May 2025</p>
+                    </div>
+                    <div class="education-gpa">
+                        <span class="gpa-value">4.0</span>
+                        <span class="gpa-scale">/ 4.0</span>
+                    </div>
+                </div>
+                <p class="education-summary">Completed 10+ rigorous graduate-level courses, building a solid foundation in advanced computing and ML systems. Graduated May 2025 with 4.0 GPA.</p>
+                
+                <div class="courses-accordion">
+                    <!-- Neural Networks -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">🧠</span>
+                                <span class="accordion-name">Neural Networks</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, #0ea5e9, #06b6d4);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Hands-on with deep architectures: CNN, RNN, Transformers, Auto-encoders, GAN, LSTM, and explored ChatGPT & Stable Diffusion architectures.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">🤖</span>
+                                <span class="accordion-name">Artificial Intelligence</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, #f59e0b, #f97316);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Intelligent agents and reasoning systems — search algorithms, planning, FOL inference, Bayesian networks, and decision trees.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Computer Vision -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">👁️</span>
+                                <span class="accordion-name">Computer Vision</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 88%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Classical & DL-based vision techniques: edge detection, template matching, gesture recognition, stereo vision, and CNN-driven object detection.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Analysis -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">📊</span>
+                                <span class="accordion-name">Data Analysis & Modeling</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 92%; background: linear-gradient(90deg, #8b5cf6, #a855f7);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Probability, distributions, CLT, hypothesis testing, Bayesian inference, Markov chains, and Monte Carlo simulations.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Machine Learning -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">📈</span>
+                                <span class="accordion-name">Machine Learning</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, #ec4899, #f43f5e);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Decision trees, SVMs, clustering, ensemble methods, cross-validation, and evaluation metrics — bridging theory and applied ML.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Mining -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">⛏️</span>
+                                <span class="accordion-name">Data Mining</span>
+                                <span class="accordion-level">Proficient</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #06b6d4, #0ea5e9);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Pattern extraction from large datasets through clustering, association rule mining, and dimensionality reduction.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Numerical Methods -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">🧮</span>
+                                <span class="accordion-name">Numerical Methods</span>
+                                <span class="accordion-level">Proficient</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 82%; background: linear-gradient(90deg, #f59e0b, #eab308);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Computational methods for ML: matrix operations, eigenvalue problems, root-finding, and error control in iterative algorithms.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Algorithms -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">⚙️</span>
+                                <span class="accordion-name">Design & Analysis of Algorithms</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, #10b981, #22c55e);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>DP, greedy methods, graph theory, and complexity analysis — foundation for performance-first engineering.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Software Engineering -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">💻</span>
+                                <span class="accordion-name">Software Engineering & QA</span>
+                                <span class="accordion-level">Proficient</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Agile workflows, SDLC, testing, quality assurance, and team collaboration for real-world software projects.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Scalable Search -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title">
+                                <span class="accordion-icon">🚀</span>
+                                <span class="accordion-name">Scalable Search & Optimization</span>
+                                <span class="accordion-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 88%; background: linear-gradient(90deg, #ef4444, #f97316);"></div></div>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Weekly paper presentations, deep dives into current research, big data learning algorithms, and state-of-the-art vision systems.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="education-conclusion">💡 Each course strengthened my ability to design robust software systems, build data-driven architectures, and develop scalable ML solutions.</p>
             </div>
-            <div class="education-item">
-                <div class="education-logo au">AU</div>
-                <div class="education-content"><h3>Andhra University</h3><p>Bachelors of Technology, Computer Science</p><p>2015 - 2019</p></div>
+            
+            <!-- Bachelors -->
+            <div class="education-card">
+                <div class="education-header">
+                    <div class="education-logo au">AU</div>
+                    <div class="education-info">
+                        <h3>Andhra University</h3>
+                        <p class="education-degree">Bachelor of Technology - Computer Science Engineering</p>
+                        <p class="education-date">2015 - 2019</p>
+                    </div>
+                    <div class="education-gpa">
+                        <span class="gpa-value">8.2</span>
+                        <span class="gpa-scale">/ 10.0</span>
+                    </div>
+                </div>
+                <div class="education-courses">
+                    <p class="courses-label">Relevant Coursework:</p>
+                    <div class="courses-grid">
+                        <div class="course-tag"><span class="course-icon">🤖</span>Artificial Intelligence</div>
+                        <div class="course-tag"><span class="course-icon">📈</span>Big Data Analytics</div>
+                        <div class="course-tag"><span class="course-icon">🗄️</span>Database Systems</div>
+                        <div class="course-tag"><span class="course-icon">📐</span>Data Structures & Algorithms</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -883,9 +1129,9 @@
                 <div class="contact-alternatives">
                     <p>Or reach out directly:</p>
                     <div class="alt-contact-links">
-                        <a href="mailto:saiteja.srivilli@gmail.com" class="alt-link">
+                        <a href="/cdn-cgi/l/email-protection#c8bba9a1bcada2a9e6bbbaa1bea1a4a4a188afa5a9a1a4e6aba7a5" class="alt-link">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            saiteja.srivilli@gmail.com
+                            <span class="__cf_email__" data-cfemail="92e1f3fbe6f7f8f3bce1e0fbe4fbfefefbd2f5fff3fbfebcf1fdff">[email&#160;protected]</span>
                         </a>
                         <a href="https://linkedin.com/in/saitejasrivilli" target="_blank" class="alt-link">
                             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -913,7 +1159,7 @@
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Auto Theme based on Time of Day
         function getTimeBasedTheme() {
             const hour = new Date().getHours();
@@ -1014,6 +1260,22 @@
         }
         setInterval(checkResetOverride, 60000);
         
+        // Accordion Toggle for Education
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all other accordions
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            // Toggle current one
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+        
         // Interactive Donut Chart
         const focusData = {
             1: { percent: '35%', label: 'Deep Learning', color: '#0ea5e9' },
@@ -1086,12 +1348,4 @@
         }, observerOptions);
         
         // Observe all project items and cards
-        document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+        document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item')

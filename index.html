@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
+    <script>
+        // Apply theme IMMEDIATELY to prevent flash
+        (function() {
+            function getTimeBasedTheme() {
+                const hour = new Date().getHours();
+                return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+            }
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            const savedTheme = localStorage.getItem('theme');
+            const theme = (manualOverride === 'true' && savedTheme) ? savedTheme : getTimeBasedTheme();
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

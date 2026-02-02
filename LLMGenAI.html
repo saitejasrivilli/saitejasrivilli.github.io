@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM/GenAI Engineer | Sai Teja Srivillibhutturu</title>
+    <script>
+        // Apply theme IMMEDIATELY to prevent flash
+        (function() {
+            function getTimeBasedTheme() {
+                const hour = new Date().getHours();
+                return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+            }
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            const savedTheme = localStorage.getItem('theme');
+            const theme = (manualOverride === 'true' && savedTheme) ? savedTheme : getTimeBasedTheme();
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -129,11 +142,120 @@
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        function getTimeBasedTheme() { const hour = new Date().getHours(); return (hour >= 18 || hour < 6) ? 'dark' : 'light'; }
-        function toggleTheme() { const html = document.documentElement; const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); localStorage.setItem('themeManualOverride', 'true'); updateThemeIcon(newTheme); }
-        function updateThemeIcon(theme) { document.querySelector('.theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙'; }
-        function applyTheme() { const manual = localStorage.getItem('themeManualOverride'); const saved = localStorage.getItem('theme'); const theme = (manual === 'true' && saved) ? saved : getTimeBasedTheme(); document.documentElement.setAttribute('data-theme', theme); updateThemeIcon(theme); }
+    <script>
+        // Time-based automatic theme detection
+        function getTimeBasedTheme() {
+            const hour = new Date().getHours();
+            // Dark mode from 6 PM (18:00) to 6 AM (06:00)
+            return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+        }
+        
+        // Manual theme toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            localStorage.setItem('themeManualOverride', 'true');
+            updateThemeIcon(newTheme);
+            showThemeToast(newTheme);
+        }
+        
+        // Update the toggle button icon
+        function updateThemeIcon(theme) {
+            const icon = document.querySelector('.theme-icon');
+            if (icon) {
+                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
+        }
+        
+        // Show toast notification on theme change
+        function showThemeToast(theme) {
+            const existingToast = document.querySelector('.theme-toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'theme-toast';
+            toast.innerHTML = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 80px;
+                right: 2rem;
+                background: var(--text-primary);
+                color: var(--bg-primary);
+                padding: 0.75rem 1.25rem;
+                border-radius: 50px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                z-index: 1001;
+                animation: fadeInUp 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+        
+        // Apply theme based on manual override or time
+        function applyTheme() {
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            const savedTheme = localStorage.getItem('theme');
+            
+            let theme;
+            if (manualOverride === 'true' && savedTheme) {
+                theme = savedTheme;
+            } else {
+                theme = getTimeBasedTheme();
+                localStorage.removeItem('themeManualOverride');
+            }
+            
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+        
+        // Apply theme immediately on page load
         applyTheme();
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
-        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => { el.
+        
+        // Check and update theme every minute for auto-switching
+        setInterval(() => {
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            if (manualOverride !== 'true') {
+                applyTheme();
+            }
+        }, 60000);
+        
+        // Reset manual override at 6 AM and 6 PM to re-enable auto-switching
+        setInterval(() => {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            if ((hour === 6 || hour === 18) && minute === 0) {
+                localStorage.removeItem('themeManualOverride');
+                applyTheme();
+            }
+        }, 60000);
+        
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

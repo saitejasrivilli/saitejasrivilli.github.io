@@ -1,31 +1,16 @@
-// Subtle Mouse-Follow Gradient Effect
-// Colors appear only around the cursor in a limited radius
+// Simple Mouse-Follow Gradient Effect
+// Clean pastel colors that follow the cursor
 
 (function() {
     'use strict';
 
-    // Pastel color palette
-    const colors = [
-        'rgba(255, 182, 193, 0.6)',  // Pink
-        'rgba(221, 160, 221, 0.6)',  // Plum
-        'rgba(186, 85, 211, 0.5)',   // Purple
-        'rgba(135, 206, 250, 0.6)',  // Sky blue
-        'rgba(127, 255, 212, 0.5)',  // Aquamarine
-        'rgba(144, 238, 144, 0.5)',  // Light green
-        'rgba(255, 255, 150, 0.5)',  // Yellow
-        'rgba(255, 218, 185, 0.5)',  // Peach
-        'rgba(255, 160, 122, 0.5)',  // Salmon
-    ];
-
     let canvas, ctx;
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let trails = [];
-    let colorIndex = 0;
-    let lastTrailTime = 0;
+    let particles = [];
+    let hue = 0;
 
     function init() {
-        // Create canvas
         canvas = document.createElement('canvas');
         canvas.id = 'gradient-canvas';
         canvas.style.cssText = `
@@ -42,17 +27,14 @@
         ctx = canvas.getContext('2d');
         resizeCanvas();
 
-        // Event listeners
         document.addEventListener('mousemove', onMouseMove);
         window.addEventListener('resize', resizeCanvas);
-
-        // Start animation
-        animate();
 
         // Hide old gradient
         const oldGradient = document.querySelector('.mouse-gradient');
         if (oldGradient) oldGradient.style.display = 'none';
 
+        animate();
         return true;
     }
 
@@ -65,100 +47,73 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
 
-        const now = Date.now();
-        // Add trail point every 30ms
-        if (now - lastTrailTime > 30) {
-            addTrail(mouseX, mouseY);
-            lastTrailTime = now;
-        }
-    }
-
-    function addTrail(x, y) {
-        // Add multiple colored circles at slightly offset positions
-        const numCircles = 3;
-        for (let i = 0; i < numCircles; i++) {
-            const offset = 15;
-            const ox = x + (Math.random() - 0.5) * offset;
-            const oy = y + (Math.random() - 0.5) * offset;
-            const color = colors[(colorIndex + i) % colors.length];
-            const size = 80 + Math.random() * 60; // 80-140px radius
-
-            trails.push({
-                x: ox,
-                y: oy,
-                color: color,
-                size: size,
-                alpha: 0.7,
-                life: 1.0
+        // Add new particles on mouse move
+        for (let i = 0; i < 2; i++) {
+            particles.push({
+                x: mouseX + (Math.random() - 0.5) * 20,
+                y: mouseY + (Math.random() - 0.5) * 20,
+                size: 60 + Math.random() * 80,
+                hue: hue + Math.random() * 60,
+                life: 1,
+                decay: 0.01 + Math.random() * 0.01
             });
         }
-        colorIndex = (colorIndex + 1) % colors.length;
+        
+        hue = (hue + 2) % 360;
 
-        // Limit trail length
-        if (trails.length > 50) {
-            trails = trails.slice(-50);
+        // Limit particles
+        if (particles.length > 40) {
+            particles = particles.slice(-40);
         }
     }
 
     function animate() {
-        // Clear with slight fade for trail effect
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Clear canvas completely each frame
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Check for dark mode
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.08)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // Draw trails
-        for (let i = trails.length - 1; i >= 0; i--) {
-            const trail = trails[i];
+        // Draw particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
             
-            // Fade out
-            trail.life -= 0.015;
-            trail.alpha = trail.life * 0.6;
-
-            if (trail.life <= 0) {
-                trails.splice(i, 1);
+            p.life -= p.decay;
+            
+            if (p.life <= 0) {
+                particles.splice(i, 1);
                 continue;
             }
 
-            // Draw soft gradient circle
+            // Create soft gradient
             const gradient = ctx.createRadialGradient(
-                trail.x, trail.y, 0,
-                trail.x, trail.y, trail.size
+                p.x, p.y, 0,
+                p.x, p.y, p.size
             );
 
-            // Parse color and apply alpha
-            const baseColor = trail.color.replace(/[\d.]+\)$/, `${trail.alpha})`);
-            gradient.addColorStop(0, baseColor);
-            gradient.addColorStop(0.5, baseColor.replace(/[\d.]+\)$/, `${trail.alpha * 0.5})`));
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            const alpha = p.life * 0.4;
+            const color = `hsla(${p.hue}, 70%, 75%, ${alpha})`;
+            
+            gradient.addColorStop(0, color);
+            gradient.addColorStop(0.5, `hsla(${p.hue}, 70%, 75%, ${alpha * 0.4})`);
+            gradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
 
             ctx.fillStyle = gradient;
             ctx.beginPath();
-            ctx.arc(trail.x, trail.y, trail.size, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             ctx.fill();
         }
 
-        // Draw current position highlight
-        if (trails.length > 0) {
-            const currentColor = colors[colorIndex % colors.length];
-            const gradient = ctx.createRadialGradient(
-                mouseX, mouseY, 0,
-                mouseX, mouseY, 100
-            );
-            gradient.addColorStop(0, currentColor);
-            gradient.addColorStop(0.6, currentColor.replace(/[\d.]+\)$/, '0.2)'));
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        // Draw glow at current mouse position
+        const glowGradient = ctx.createRadialGradient(
+            mouseX, mouseY, 0,
+            mouseX, mouseY, 120
+        );
+        glowGradient.addColorStop(0, `hsla(${hue}, 70%, 80%, 0.3)`);
+        glowGradient.addColorStop(0.5, `hsla(${(hue + 40) % 360}, 70%, 80%, 0.15)`);
+        glowGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+        
+        ctx.fillStyle = glowGradient;
+        ctx.beginPath();
+        ctx.arc(mouseX, mouseY, 120, 0, Math.PI * 2);
+        ctx.fill();
 
         requestAnimationFrame(animate);
     }
@@ -234,9 +189,7 @@
                 right: -6px;
                 opacity: 0.5;
             }
-            .eye.blink {
-                animation: blink 0.15s ease-in-out;
-            }
+            .eye.blink { animation: blink 0.15s ease-in-out; }
             @keyframes blink {
                 0%, 100% { transform: scaleY(1); }
                 50% { transform: scaleY(0.1); }
@@ -257,35 +210,29 @@
         const leftEye = container.querySelector('.left-eye');
         const rightEye = container.querySelector('.right-eye');
 
-        // Smooth eye tracking
-        let targetX = 0, targetY = 0;
-        let currentX = 0, currentY = 0;
+        let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
 
         document.addEventListener('mousemove', (e) => {
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
             const dx = e.clientX - cx;
             const dy = e.clientY - cy;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
             const maxOffset = 15;
             const ratio = Math.min(dist / 300, 1);
-            
-            targetX = (dx / (dist || 1)) * maxOffset * ratio;
-            targetY = (dy / (dist || 1)) * maxOffset * ratio;
+            targetX = (dx / dist) * maxOffset * ratio;
+            targetY = (dy / dist) * maxOffset * ratio;
         });
 
         function animateEyes() {
             currentX += (targetX - currentX) * 0.12;
             currentY += (targetY - currentY) * 0.12;
-            
             leftPupil.style.transform = `translate(${currentX}px, ${currentY}px)`;
             rightPupil.style.transform = `translate(${currentX}px, ${currentY}px)`;
-            
             requestAnimationFrame(animateEyes);
         }
         animateEyes();
 
-        // Natural blinking
         function blink() {
             leftEye.classList.add('blink');
             rightEye.classList.add('blink');
@@ -298,9 +245,6 @@
         function scheduleBlink() {
             setTimeout(() => {
                 blink();
-                if (Math.random() < 0.25) {
-                    setTimeout(blink, 180);
-                }
                 scheduleBlink();
             }, 2500 + Math.random() * 4000);
         }
@@ -309,15 +253,11 @@
         setTimeout(() => container.classList.add('visible'), 400);
     }
 
-    // Initialize
-    function start() {
+    // Start
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { init(); initEyes(); });
+    } else {
         init();
         initEyes();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', start);
-    } else {
-        start();
     }
 })();

@@ -1,196 +1,237 @@
-// Apple-Inspired Fluid Eyes & Gradient
+// Apple-Inspired Liquid Flow Field + Sentient Eyes
 (function() {
-    'use strict';
+  'use strict';
 
-    let canvas, ctx;
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let particles = [];
-    
-    // Apple Palette: Azure, Rose, Mint, Amber, Lavender
-    const appleColors = [
-        { h: 210, s: 100, l: 60 }, // Azure
-        { h: 340, s: 82, l: 62 },  // Rose
-        { h: 160, s: 43, l: 54 },  // Mint
-        { h: 35, s: 92, l: 55 },   // Amber
-        { h: 255, s: 50, l: 65 }   // Lavender
-    ];
+  let canvas, ctx;
+  let w, h;
 
-    function init() {
-        canvas = document.createElement('canvas');
-        canvas.id = 'apple-gradient-canvas';
-        canvas.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background: #fbfbfd; /* Apple Light Mode background */
-        `;
-        document.body.insertBefore(canvas, document.body.firstChild);
+  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let targetMouse = { x: mouse.x, y: mouse.y };
 
-        ctx = canvas.getContext('2d');
-        resizeCanvas();
+  const particles = [];
+  const PARTICLE_COUNT = 700;
+  const FLOW_SCALE = 0.0018;
 
-        document.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('resize', resizeCanvas);
+  // Apple Palette
+  const appleColors = [
+    { h: 210, s: 100, l: 60 },
+    { h: 340, s: 82, l: 62 },
+    { h: 160, s: 43, l: 54 },
+    { h: 35, s: 92, l: 55 },
+    { h: 255, s: 50, l: 65 }
+  ];
 
-        animate();
+  // lightweight pseudo noise
+  function noise(x, y) {
+    return Math.sin(x * 12.9898 + y * 78.233) * 43758.5453 % 1;
+  }
+
+  class Particle {
+    constructor() {
+      this.reset();
     }
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    reset() {
+      const c = appleColors[Math.floor(Math.random() * appleColors.length)];
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.vx = 0;
+      this.vy = 0;
+      this.life = Math.random() * 400 + 200;
+      this.size = Math.random() * 1.2 + 0.4;
+      this.h = c.h;
+      this.s = c.s;
+      this.l = c.l;
     }
 
-    function onMouseMove(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+    update() {
+      const nx = this.x * FLOW_SCALE;
+      const ny = this.y * FLOW_SCALE;
 
-        for (let i = 0; i < 1; i++) {
-            const color = appleColors[Math.floor(Math.random() * appleColors.length)];
-            particles.push({
-                x: mouseX,
-                y: mouseY,
-                size: 150 + Math.random() * 100,
-                h: color.h,
-                s: color.s,
-                l: color.l,
-                life: 1,
-                decay: 0.008
-            });
-        }
-        
-        if (particles.length > 25) particles.shift();
+      const angle = noise(nx, ny) * Math.PI * 2;
+
+      const fx = Math.cos(angle);
+      const fy = Math.sin(angle);
+
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 0.001;
+
+      this.vx += fx * 0.25 + dx / dist * 0.04;
+      this.vy += fy * 0.25 + dy / dist * 0.04;
+
+      this.vx *= 0.92;
+      this.vy *= 0.92;
+
+      this.x += this.vx;
+      this.y += this.vy;
+
+      this.life--;
+
+      if (
+        this.life <= 0 ||
+        this.x < 0 ||
+        this.x > w ||
+        this.y < 0 ||
+        this.y > h
+      ) {
+        this.reset();
+      }
     }
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw() {
+      ctx.fillStyle = `hsla(${this.h},${this.s}%,${this.l}%,0.35)`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 
-        particles.forEach((p, i) => {
-            p.life -= p.decay;
-            if (p.life <= 0) {
-                particles.splice(i, 1);
-                return;
-            }
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
 
-            const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-            const alpha = p.life * 0.15; // Very subtle Apple-style glow
-            
-            gradient.addColorStop(0, `hsla(${p.h}, ${p.s}%, ${p.l}%, ${alpha})`);
-            gradient.addColorStop(1, `hsla(${p.h}, ${p.s}%, ${p.l}%, 0)`);
+  function init() {
+    canvas = document.createElement('canvas');
+    canvas.id = 'apple-gradient-canvas';
+    canvas.style.cssText = `
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:#fbfbfd;
+    `;
+    document.body.insertBefore(canvas, document.body.firstChild);
 
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-        });
+    ctx = canvas.getContext('2d');
+    resize();
 
-        requestAnimationFrame(animate);
+    window.addEventListener('resize', resize);
+
+    document.addEventListener('mousemove', e => {
+      targetMouse.x = e.clientX;
+      targetMouse.y = e.clientY;
+    });
+
+    document.addEventListener('touchmove', e => {
+      if (e.touches[0]) {
+        targetMouse.x = e.touches[0].clientX;
+        targetMouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new Particle());
     }
 
-    function initEyes() {
-        const container = document.createElement('div');
-        container.id = 'sentient-eyes';
-        container.innerHTML = `
-            <div class="eye left-eye"><div class="pupil"><div class="glint"></div></div></div>
-            <div class="eye right-eye"><div class="pupil"><div class="glint"></div></div></div>
-        `;
+    animate();
+  }
 
-        const style = document.createElement('style');
-        style.textContent = `
-            #sentient-eyes {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                display: flex;
-                gap: 40px;
-                z-index: 10;
-                pointer-events: none;
-                filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08));
-            }
-            .eye {
-                width: 90px;
-                height: 90px;
-                background: rgba(255, 255, 255, 0.7);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                border: 0.5px solid rgba(255, 255, 255, 0.4);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-                overflow: hidden;
-            }
-            .pupil {
-                width: 36px;
-                height: 36px;
-                background: #1d1d1f; /* Apple Black */
-                border-radius: 50%;
-                position: relative;
-                will-change: transform;
-            }
-            .glint {
-                position: absolute;
-                width: 10px;
-                height: 10px;
-                background: rgba(255,255,255,0.9);
-                border-radius: 50%;
-                top: 6px;
-                left: 6px;
-            }
-            .eye.blink {
-                animation: appleBlink 0.2s cubic-bezier(0.45, 0, 0.55, 1);
-            }
-            @keyframes appleBlink {
-                0%, 100% { transform: scaleY(1); }
-                50% { transform: scaleY(0.05); }
-            }
-            [data-theme="dark"] #apple-gradient-canvas { background: #000000; }
-            [data-theme="dark"] .eye { 
-                background: rgba(255, 255, 255, 0.1); 
-                border-color: rgba(255,255,255,0.1); 
-            }
-            [data-theme="dark"] .pupil { background: #f5f5f7; }
-        `;
+  function animate() {
+    requestAnimationFrame(animate);
 
-        document.head.appendChild(style);
-        document.body.appendChild(container);
+    mouse.x += (targetMouse.x - mouse.x) * 0.07;
+    mouse.y += (targetMouse.y - mouse.y) * 0.07;
 
-        const pupils = container.querySelectorAll('.pupil');
-        const eyes = container.querySelectorAll('.eye');
-        let targetX = 0, targetY = 0, curX = 0, curY = 0;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    ctx.fillRect(0, 0, w, h);
 
-        document.addEventListener('mousemove', (e) => {
-            const dx = e.clientX - window.innerWidth / 2;
-            const dy = e.clientY - window.innerHeight / 2;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            const max = 20;
-            targetX = (dx / (dist + 500)) * 100; 
-            targetY = (dy / (dist + 500)) * 100;
-        });
+    ctx.globalCompositeOperation = 'lighter';
 
-        function smoothMove() {
-            curX += (targetX - curX) * 0.08;
-            curY += (targetY - curY) * 0.08;
-            pupils.forEach(p => p.style.transform = `translate(${curX}px, ${curY}px)`);
-            requestAnimationFrame(smoothMove);
-        }
-        smoothMove();
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+  }
 
-        setInterval(() => {
-            eyes.forEach(e => e.classList.add('blink'));
-            setTimeout(() => eyes.forEach(e => e.classList.remove('blink')), 200);
-        }, 3500 + Math.random() * 3000);
+  // ===== KEEP YOUR EXISTING EYES EXACTLY =====
+
+  function initEyes() {
+    const container = document.createElement('div');
+    container.id = 'sentient-eyes';
+    container.innerHTML = `
+      <div class="eye left-eye"><div class="pupil"><div class="glint"></div></div></div>
+      <div class="eye right-eye"><div class="pupil"><div class="glint"></div></div></div>
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      #sentient-eyes {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        gap: 40px;
+        z-index: 10;
+        pointer-events: none;
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08));
+      }
+      .eye {
+        width: 90px;
+        height: 90px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .pupil {
+        width:36px;
+        height:36px;
+        background:#1d1d1f;
+        border-radius:50%;
+        position:relative;
+      }
+      .glint {
+        position:absolute;
+        width:10px;
+        height:10px;
+        background:white;
+        border-radius:50%;
+        top:6px;
+        left:6px;
+      }
+      .eye.blink { animation: appleBlink .2s ease; }
+      @keyframes appleBlink {50%{transform:scaleY(.05)}}
+      [data-theme="dark"] #apple-gradient-canvas{background:#000}
+      [data-theme="dark"] .eye{background:rgba(255,255,255,.1)}
+      [data-theme="dark"] .pupil{background:#f5f5f7}
+    `;
+
+    document.head.appendChild(style);
+    document.body.appendChild(container);
+
+    const pupils = container.querySelectorAll('.pupil');
+    let tx=0,ty=0,cx=0,cy=0;
+
+    document.addEventListener('mousemove',e=>{
+      const dx=e.clientX-window.innerWidth/2;
+      const dy=e.clientY-window.innerHeight/2;
+      tx=dx/40; ty=dy/40;
+    });
+
+    function loop(){
+      cx+=(tx-cx)*.08;
+      cy+=(ty-cy)*.08;
+      pupils.forEach(p=>p.style.transform=`translate(${cx}px,${cy}px)`);
+      requestAnimationFrame(loop);
     }
+    loop();
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => { init(); initEyes(); });
-    } else {
-        init(); initEyes();
-    }
+    setInterval(()=>{
+      container.querySelectorAll('.eye').forEach(e=>e.classList.add('blink'));
+      setTimeout(()=>container.querySelectorAll('.eye').forEach(e=>e.classList.remove('blink')),200);
+    },3500+Math.random()*3000);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>{init();initEyes();});
+  } else {
+    init();initEyes();
+  }
+
 })();

@@ -952,47 +952,143 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-            
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Built attention benchmarking framework → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers implementations.</p>
-                <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div>
+
+            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Multi Lora Rag Assistant</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
             </a>
 
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">CUDA</span></div>
-                <p class="project-description">Built GPU optimization system for Mistral-7B → 2.8× inference speedup, 4× memory reduction. Implemented C++/CUDA fused kernels, INT4-NF4 quantization.</p>
-                <div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">LLM Inference</span></div>
-                <p class="project-description">Comprehensive benchmarking suite for vLLM → 7M+ tokens/sec throughput. Systematic optimization of inference pipelines.</p>
-                <div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Sophisticated LLM agent with tool use capabilities, planning, and multi-step reasoning. Built with LangChain and RAG pipelines.</p>
-                <div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div>
+            <a href="https://github.com/saitejasrivilli/saitejasrivilli" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Saitejasrivilli</h3><span class="project-impact">Project</span></div>
+                <p class="project-description">Updated README file</p>
+                <div class="project-tech"></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent System</h3><span class="project-impact">AI Agents</span></div>
-                <p class="project-description">AI Agent that auto-selects optimal reasoning strategy → Implements Chain-of-Thought, Tree-of-Thoughts, ReAct, and Multi-Agent collaboration with LLM-based task classification.</p>
-                <div class="project-tech"><span class="tech-tag">Groq</span><span class="tech-tag">Tavily</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div>
+                <div class="project-header"><h3 class="project-title">Ai Agent</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Quantization Speculative Decoding Benchmark</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Gpu Optimization Mistral</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/buyer-seller-mt" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Buyer Seller Mt</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">built and evaluated a conversational machine translation system for buyer–seller chat and exposed it as a live demo so recruiters can test real inputs without running notebooks.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/SentimentAnalysis" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Sentimentanalysis</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">Sentiment Analysis Web App: This project predicts sentiment (Positive/Negative) from user-provided text using a PyTorch LSTM model with attention and negation handling. Built with FastAPI for the backend and a simple HTML interface, it's scalable, deployable with Docker, and ideal for analyzing reviews or feedback.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Llm Long Context Stress Test</h3><span class="project-impact">Project</span></div>
+                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
+                <div class="project-tech"></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Vllm Throughput Benchmark</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Offline Rag Assistant</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">Creating an Offline RAG Assistant</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
             </a>
 
             <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Systems</span></div>
-                <p class="project-description">High-performance distributed key-value store with replication, partitioning, and Raft consensus.</p>
-                <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div>
+                <div class="project-header"><h3 class="project-title">Distributedkvstore</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">Built a distributed KV Store</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
             </a>
 
-            <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">Fine-tuning</span></div>
-                <p class="project-description">Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.</p>
-                <div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div>
+            <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Ai Video Analysis System</h3><span class="project-impact">Project</span></div>
+                <p class="project-description">Production-ready AI system for video content analysis and personalized recommendations. Built with PyTorch, Transformers, FastAPI, and modern ML techniques.</p>
+                <div class="project-tech"></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Advancedllmagent</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Jobschedulingalgoscompa</h3><span class="project-impact">Backend</span></div>
+                <p class="project-description">Comparing different job scheduling algorithms using Neural Networks to predict the job completion time</p>
+                <div class="project-tech"><span class="tech-tag">Java</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/ComputerVision" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Computervision</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Computer Vision Projects</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Telecomchurnpredictor</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">Churn Predictor exploring all the process End-to-End</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Youtube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
+                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/ABTesting" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Abtesting</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">A/B Testing analysis using T-Test and Chi-Square Test to evaluate e-commerce conversion rates.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Telugugpt</h3><span class="project-impact">Python</span></div>
+                <p class="project-description">LLM's output in Telugu</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/DataScienceMasters" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Datasciencemasters</h3><span class="project-impact">Jupyter Notebook</span></div>
+                <p class="project-description">PWSkills-DataScienceMasters</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
             </a>
         </div>
     </section>

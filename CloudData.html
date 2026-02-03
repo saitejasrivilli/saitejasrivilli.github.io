@@ -202,5 +202,9 @@
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
         document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
     </script>
+    <script src="https://unpkg.com/@studio-freight/lenis"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="motion.js"></script>
 </body>
 </html>

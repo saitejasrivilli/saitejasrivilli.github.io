@@ -14,13 +14,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
-        /* Mouse Gradient Effect */
+        /* Mouse Gradient Effect - Pastel Swirl */
         .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(60px); opacity: 0.7; transition: transform 0.3s ease-out; }
-        .blob-1 { background: radial-gradient(circle, rgba(251, 146, 60, 0.7) 0%, transparent 70%); }
-        .blob-2 { background: radial-gradient(circle, rgba(147, 197, 253, 0.7) 0%, transparent 70%); }
-        .blob-3 { background: radial-gradient(circle, rgba(134, 239, 172, 0.6) 0%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; }
+        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
+        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
+        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
+        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
+        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
+        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
+        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
@@ -128,11 +130,13 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient -->
+    <!-- Mouse Following Gradient - Pastel Swirl -->
     <div class="mouse-gradient">
         <div class="gradient-blob blob-1" id="blob1"></div>
         <div class="gradient-blob blob-2" id="blob2"></div>
         <div class="gradient-blob blob-3" id="blob3"></div>
+        <div class="gradient-blob blob-4" id="blob4"></div>
+        <div class="gradient-blob blob-5" id="blob5"></div>
     </div>
 
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
@@ -270,16 +274,23 @@
         }
         document.addEventListener('DOMContentLoaded', loadProjects);
         
-        // Mouse gradient effect
+        // Mouse gradient effect - Pastel Swirl
         const blob1 = document.getElementById('blob1');
         const blob2 = document.getElementById('blob2');
         const blob3 = document.getElementById('blob3');
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX; const y = e.clientY + window.scrollY;
-            if (blob1) blob1.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
-            if (blob2) blob2.style.transform = `translate(${x - 400}px, ${y - 200}px)`;
-            if (blob3) blob3.style.transform = `translate(${x - 200}px, ${y - 400}px)`;
-        });
+        const blob4 = document.getElementById('blob4');
+        const blob5 = document.getElementById('blob5');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY + window.scrollY; });
+        function animateBlobs() {
+            if (blob1) blob1.style.transform = `translate(${mouseX - 250}px, ${mouseY - 250}px)`;
+            if (blob2) blob2.style.transform = `translate(${mouseX - 400}px, ${mouseY - 200}px)`;
+            if (blob3) blob3.style.transform = `translate(${mouseX - 100}px, ${mouseY - 350}px)`;
+            if (blob4) blob4.style.transform = `translate(${mouseX - 350}px, ${mouseY - 100}px)`;
+            if (blob5) blob5.style.transform = `translate(${mouseX - 150}px, ${mouseY - 450}px)`;
+            requestAnimationFrame(animateBlobs);
+        }
+        animateBlobs();
         
         function toggleChat() { document.getElementById('chatPopup').classList.toggle('active'); }
         document.addEventListener('click', function(e) { const w = document.getElementById('chatWidget'); const p = document.getElementById('chatPopup'); if (w && !w.contains(e.target) && p.classList.contains('active')) p.classList.remove('active'); });

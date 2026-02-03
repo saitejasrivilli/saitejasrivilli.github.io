@@ -1,95 +1,100 @@
-(function () {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend SDE | Sai Teja Srivillibhutturu</title>
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+<script src="theme.js"></script>
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  renderer.domElement.style.position = "fixed";
-  renderer.domElement.style.inset = "0";
-  renderer.domElement.style.zIndex = "0";
-  renderer.domElement.style.pointerEvents = "none";
-  renderer.domElement.style.filter = "blur(40px)";
+<style>
+:root{--bg-primary:#ffffff;--bg-secondary:#f8f9fa;--text-primary:#1a1a2e;--text-secondary:#6b7280;--accent:#6366f1;--border-color:#e5e7eb;--card-shadow:0 4px 12px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg-primary:#0f172a;--bg-secondary:#1e293b;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--border-color:#334155;--card-shadow:0 4px 12px rgba(0,0,0,.3)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.7;overflow-x:hidden}
 
-  document.body.prepend(renderer.domElement);
+canvas{opacity:.85}
 
-  const uniforms = {
-    uTime: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0.5, 0.5) }
-  };
+.container{max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+.theme-toggle{position:fixed;top:1.5rem;right:2rem;z-index:1000;width:45px;height:45px;border-radius:50%;border:2px solid var(--border-color);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
 
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position,1.0);
-      }
-    `,
-    fragmentShader: `
-      precision highp float;
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;background:var(--bg-primary);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color)}
+.nav-content{max-width:900px;margin:0 auto;display:flex;justify-content:space-between}
 
-      uniform float uTime;
-      uniform vec2 uMouse;
-      varying vec2 vUv;
+.hero{padding:8rem 0 4rem;text-align:center}
+.section{padding:4rem 0;border-top:1px solid var(--border-color)}
 
-      void main() {
-        vec2 uv = vUv;
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.project-item{padding:1.5rem;border:1px solid var(--border-color);border-radius:16px;background:rgba(248,249,250,.6);backdrop-filter:blur(10px)}
 
-        uv += (uMouse - 0.5) * 0.3;
+.chat-widget{position:fixed;bottom:2rem;right:2rem;z-index:1000}
 
-        float t = uTime * 0.15;
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border-color)}
+</style>
+</head>
 
-        float n =
-          sin((uv.x+t)*3.0) +
-          sin((uv.y-t)*4.0) +
-          sin((uv.x+uv.y+t)*2.0);
+<body>
 
-        n *= 0.25;
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
 
-        vec3 pink = vec3(1.0,0.6,0.75);
-        vec3 orange = vec3(1.0,0.75,0.45);
-        vec3 yellow = vec3(1.0,0.9,0.6);
+<nav>
+<div class="nav-content">
+<a href="index.html">Back</a>
+<span>Backend SDE</span>
+</div>
+</nav>
 
-        float m1 = smoothstep(-0.3,0.6,uv.x+n);
-        float m2 = smoothstep(-0.2,0.8,uv.y-n);
+<section class="hero">
+<div class="container">
+<h1>Distributed Systems & High-Performance APIs</h1>
+<p>Building scalable backend services and high-throughput pipelines.</p>
+</div>
+</section>
 
-        vec3 col = mix(pink,orange,m1);
-        col = mix(col,yellow,m2);
+<section class="section">
+<div class="container">
+<h2>Backend Projects</h2>
+<div id="projects-container"></div>
+</div>
+</section>
 
-        gl_FragColor = vec4(col,1.0);
-      }
-    `
-  });
+<footer>
+<p>© 2026 Sai Teja Srivillibhutturu</p>
+</footer>
 
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2,2), material);
-  scene.add(mesh);
+<script>
+const projects=[
+{repo:'DistributedKVStore',title:'Distributed Key-Value Store'},
+{repo:'vllm-throughput-benchmark',title:'High-Throughput Benchmarking'},
+{repo:'RAG-Application',title:'Backend API Service'}
+];
 
-  let mouseTarget = new THREE.Vector2(.5,.5);
-  let mouseCurrent = new THREE.Vector2(.5,.5);
+async function fetchRepo(name){
+const r=await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`);
+return r.ok?await r.json():null;
+}
 
-  window.addEventListener("mousemove", e => {
-    mouseTarget.x = e.clientX / innerWidth;
-    mouseTarget.y = 1 - e.clientY / innerHeight;
-  });
+async function loadProjects(){
+const c=document.getElementById("projects-container");
+const data=await Promise.all(projects.map(p=>fetchRepo(p.repo)));
+c.innerHTML='<div class="projects-grid">'+data.map((d,i)=>`
+<div class="project-item">
+<h3>${projects[i].title}</h3>
+<p>${d?.description||''}</p>
+<a href="${d?.html_url}" target="_blank">Code</a>
+</div>`).join('')+'</div>';
+}
 
-  function animate(t){
-    requestAnimationFrame(animate);
+document.addEventListener("DOMContentLoaded",loadProjects);
+</script>
 
-    mouseCurrent.lerp(mouseTarget,0.05);
-    uniforms.uMouse.value.copy(mouseCurrent);
-    uniforms.uTime.value = t * 0.001;
+<!-- Mesh Gradient -->
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+<script src="mesh-gradient.js"></script>
 
-    renderer.render(scene,camera);
-  }
-
-  animate(0);
-
-  window.addEventListener("resize",()=>{
-    renderer.setSize(innerWidth,innerHeight);
-  });
-
-})();
+</body>
+</html>

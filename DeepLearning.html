@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Learning Engineer | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-eyes.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,15 +15,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
+        .container { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
@@ -121,7 +114,9 @@
         .chat-name { display: block; font-weight: 600; font-size: 0.95rem; color: var(--text-primary); }
         .chat-status { font-size: 0.75rem; color: #22c55e; }
         .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; padding: 0; line-height: 1; }
-        .chat-body { padding: 1.25rem; }
+        .chat-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
+        .container { padding: 1.25rem; }
         .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
         .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
         .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
@@ -131,10 +126,8 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
+
+    <div class="gradient-blob blob-2" id="blob2"></div>
         <div class="gradient-blob blob-3" id="blob3"></div>
         <div class="gradient-blob blob-4" id="blob4"></div>
         <div class="gradient-blob blob-5" id="blob5"></div>
@@ -155,7 +148,7 @@
             </div>
             <div class="chat-body"><p>Hey! 👋 Interested in my deep learning work? Feel free to reach out about GPU optimization, attention mechanisms, or any ML projects!</p></div>
             <div class="chat-actions">
-                <a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Email</a>
+                <a href="/cdn-cgi/l/email-protection#c7b4a6aeb3a2ada6e9b4b5aeb1aeababaea5afb2b3b3b3b2b5b287a0aaa6aeabe9a4a8aa" class="chat-btn chat-btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Email</a>
                 <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
             </div>
         </div>
@@ -220,12 +213,12 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Interested in Deep Learning Excellence?</h2>
         <p class="cta-description">Let's discuss how I can help optimize your ML systems.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#6714060e13020d064914150e110e0b0b0e050f1213131312151227000a060e0b4904080a" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Deep Learning Engineer.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const projects = [
             { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'Built attention benchmarking framework → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.', impact: '12.3× faster' },
             { repo: 'gpu-optimization-mistral', title: 'GPU Optimization & Profiling System', description: 'Built GPU optimization for Mistral-7B → 2.8× inference speedup, 4× memory reduction. C++/CUDA fused kernels, INT4-NF4 quantization.', impact: '4× memory ↓' },
@@ -296,11 +289,4 @@
         function toggleChat() { document.getElementById('chatPopup').classList.toggle('active'); }
         document.addEventListener('click', function(e) { const w = document.getElementById('chatWidget'); const p = document.getElementById('chatPopup'); if (w && !w.contains(e.target) && p.classList.contains('active')) p.classList.remove('active'); });
         const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-        document.querySelectorAll('.experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
-    </script>
-    <script src="https://unpkg.com/@studio-freight/lenis"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="motion.js"></script>
-</body>
-</html>
+        document.querySelect

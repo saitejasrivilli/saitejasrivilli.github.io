@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
     <script src="theme.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -170,16 +171,6 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         
@@ -402,14 +393,6 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
-        <div class="gradient-blob blob-3" id="blob3"></div>
-        <div class="gradient-blob blob-4" id="blob4"></div>
-        <div class="gradient-blob blob-5" id="blob5"></div>
-    </div>
 
     <!-- Open to Work Banner -->
     <div class="open-to-work-banner">
@@ -442,7 +425,7 @@
                 <p>Hey! 👋 If you have any questions about my work or want to discuss opportunities, feel free to reach out. I usually respond within 24 hours.</p>
             </div>
             <div class="chat-actions">
-                <a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">
+                <a href="/cdn-cgi/l/email-protection#4a392b233e2f202b643938233c2326262328223f3e3e3e3f383f0a2d272b232664292527" class="chat-btn chat-btn-primary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     Send Email
                 </a>
@@ -473,7 +456,7 @@
         
         <h1 class="animate-fade-in-up delay-2">Sai Teja<br>Srivillibhutturu</h1>
         <p class="hero-subtitle animate-fade-in-up delay-3" id="typewriter-text"></p>
-        <script>
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
             (function() {
                 const text = "ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS";
                 const element = document.getElementById('typewriter-text');
@@ -675,36 +658,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -761,7 +722,7 @@
             <h2 class="section-title">Let's Connect</h2>
             <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to ML Engineering, Deep Learning, LLM/GenAI, and Backend roles.</p>
             <div class="contact-links">
-                <a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+                <a href="/cdn-cgi/l/email-protection#6013010914050a014e13120916090c0c0902081514141415121520070d01090c4e030f0d" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
                 <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
                 <a href="https://github.com/saitejasrivilli" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
                 <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>Scholar</a>
@@ -772,7 +733,7 @@
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         /**
          * Time-Based Theme Management
          */
@@ -1076,31 +1037,6 @@
         
         document.addEventListener('DOMContentLoaded', loadProjects);
 
-        // Mouse gradient effect - Pastel Swirl
-        const blob1 = document.getElementById('blob1');
-        const blob2 = document.getElementById('blob2');
-        const blob3 = document.getElementById('blob3');
-        const blob4 = document.getElementById('blob4');
-        const blob5 = document.getElementById('blob5');
-        
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY + window.scrollY;
-        });
-        
-        function animateBlobs() {
-            if (blob1) blob1.style.transform = `translate(${mouseX - 250}px, ${mouseY - 250}px)`;
-            if (blob2) blob2.style.transform = `translate(${mouseX - 400}px, ${mouseY - 200}px)`;
-            if (blob3) blob3.style.transform = `translate(${mouseX - 100}px, ${mouseY - 350}px)`;
-            if (blob4) blob4.style.transform = `translate(${mouseX - 350}px, ${mouseY - 100}px)`;
-            if (blob5) blob5.style.transform = `translate(${mouseX - 150}px, ${mouseY - 450}px)`;
-            requestAnimationFrame(animateBlobs);
-        }
-        animateBlobs();
-
         // Chat Widget Toggle
         function toggleChat() {
             const popup = document.getElementById('chatPopup');
@@ -1108,13 +1044,4 @@
         }
         
         // Close chat when clicking outside
-        document.addEventListener('click', function(e) {
-            const widget = document.getElementById('chatWidget');
-            const popup = document.getElementById('chatPopup');
-            if (widget && !widget.contains(e.target) && popup.classList.contains('active')) {
-                popup.classList.remove('active');
-            }
-        });
-    </script>
-</body>
-</html>
+        document.addEventListener('click', function(e) 

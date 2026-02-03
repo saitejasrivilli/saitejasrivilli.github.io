@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud & Data Engineer | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-eyes.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,16 +14,6 @@
         [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
-        
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
@@ -99,14 +89,6 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
-        <div class="gradient-blob blob-3" id="blob3"></div>
-        <div class="gradient-blob blob-4" id="blob4"></div>
-        <div class="gradient-blob blob-5" id="blob5"></div>
-    </div>
 
     <button class="theme-toggle" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
     <div class="chat-widget" id="chatWidget">
@@ -114,7 +96,7 @@
         <div class="chat-popup" id="chatPopup">
             <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><br><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
             <div class="chat-body"><p>Hey! 👋 Need help with cloud architecture or data pipelines? Let's discuss AWS, ETL, or data engineering!</p></div>
-            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+            <div class="chat-actions"><a href="/cdn-cgi/l/email-protection#c9baa8a0bdaca3a8e7babba0bfa0a5a5a0aba1bcbdbdbdbcbbbc89aea4a8a0a5e7aaa6a4" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
         </div>
     </div>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</a><span class="nav-role">Cloud & Data Engineer</span></div></nav>
@@ -148,9 +130,9 @@
         <div class="cert-item"><span class="cert-icon">☁️</span><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024</p></div></div>
         <div class="cert-item"><span class="cert-icon">🔷</span><div class="cert-content"><h4>Microsoft Fabric Data Engineer</h4><p>Microsoft • Aug 2025</p></div></div>
     </div></section>
-    <section class="cta-section"><div class="container"><h2 class="cta-title">Need Cloud & Data Expertise?</h2><p class="cta-description">Let's discuss AWS and data engineering solutions.</p><div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">GitHub</a></div></div></section>
+    <section class="cta-section"><div class="container"><h2 class="cta-title">Need Cloud & Data Expertise?</h2><p class="cta-description">Let's discuss AWS and data engineering solutions.</p><div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#97e4f6fee3f2fdf6b9e4e5fee1fefbfbfef5ffe2e3e3e3e2e5e2d7f0faf6fefbb9f4f8fa" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">GitHub</a></div></div></section>
     <footer><p>© 2026 Sai Teja Srivillibhutturu</p></footer>
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const projects = [
             { repo: 'DistributedKVStore', title: 'Distributed Data Store', description: 'Distributed key-value store with replication and fault tolerance.', impact: 'Data' },
             { repo: 'RAG-Application', title: 'Data Pipeline', description: 'End-to-end data pipeline for document processing.', impact: 'ETL' }
@@ -200,11 +182,4 @@
         animateBlobs();
         
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
-        document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
-    </script>
-    <script src="https://unpkg.com/@studio-freight/lenis"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="motion.js"></script>
-</body>
-</html>
+        document.addEventListener('click', function(e) { const widget = document.getElementById(

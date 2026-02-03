@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM/GenAI Engineer | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-eyes.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,15 +15,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
+        .container { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
@@ -134,7 +127,9 @@
         .chat-avatar-placeholder { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
         .chat-header-text { flex: 1; } .chat-name { display: block; font-weight: 600; color: var(--text-primary); } .chat-status { font-size: 0.75rem; color: #22c55e; }
         .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
-        .chat-body { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
+        .chat-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
+        .container { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
         .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
         .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; }
         .chat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
@@ -157,10 +152,8 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
+
+    <div class="gradient-blob blob-2" id="blob2"></div>
         <div class="gradient-blob blob-3" id="blob3"></div>
         <div class="gradient-blob blob-4" id="blob4"></div>
         <div class="gradient-blob blob-5" id="blob5"></div>
@@ -173,7 +166,7 @@
         <div class="chat-popup" id="chatPopup">
             <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
             <div class="chat-body"><p>Hey! 👋 Interested in LLMs or GenAI? Let's chat about agents, RAG, or fine-tuning!</p></div>
-            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+            <div class="chat-actions"><a href="/cdn-cgi/l/email-protection#5122303825343b307f22233827383d3d3833392425252524232411363c30383d7f323e3c" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
         </div>
     </div>
 
@@ -253,72 +246,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -342,13 +271,13 @@
         <div class="container">
             <h2 class="cta-title">Building with LLMs?</h2>
             <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
-            <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+            <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#6b180a021f0e010a451819021d0207070209031e1f1f1f1e191e2b0c060a020745080406" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
         </div>
     </section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const projects = [
             { repo: 'vllm-throughput-benchmark', title: 'vLLM Optimization', description: 'Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM.', impact: '7M tokens/sec' },
             { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use → Planning, multi-step reasoning, RAG integration.', impact: 'Multi-Agent' },
@@ -460,15 +389,4 @@
 
         document.addEventListener('click', function(e) {
             const widget = document.getElementById('chatWidget');
-            const popup = document.getElementById('chatPopup');
-            if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) {
-                popup.classList.remove('active');
-            }
-        });
-    </script>
-    <script src="https://unpkg.com/@studio-freight/lenis"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="motion.js"></script>
-</body>
-</html>
+            const popup = document.getElementById

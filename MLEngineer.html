@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML Engineer | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-eyes.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,15 +15,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
+        .container { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
@@ -102,7 +95,9 @@
         .chat-avatar-placeholder { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
         .chat-header-text { flex: 1; } .chat-name { display: block; font-weight: 600; color: var(--text-primary); } .chat-status { font-size: 0.75rem; color: #22c55e; }
         .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
-        .chat-body { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
+        .chat-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
+        .container { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
         .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
         .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; }
         .chat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
@@ -111,10 +106,8 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
+
+    <div class="gradient-blob blob-2" id="blob2"></div>
         <div class="gradient-blob blob-3" id="blob3"></div>
         <div class="gradient-blob blob-4" id="blob4"></div>
         <div class="gradient-blob blob-5" id="blob5"></div>
@@ -126,7 +119,7 @@
         <div class="chat-popup" id="chatPopup">
             <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
             <div class="chat-body"><p>Hey! 👋 Looking for ML engineering expertise? Let's discuss MLOps, pipelines, or production systems!</p></div>
-            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+            <div class="chat-actions"><a href="/cdn-cgi/l/email-protection#1f6c7e766b7a757e316c6d7669767373767d776a6b6b6b6a6d6a5f78727e7673317c7072" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
         </div>
     </div>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">ML Engineer</span></div></nav>
@@ -187,12 +180,12 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Need Production ML Expertise?</h2>
         <p class="cta-description">Let's discuss how I can help build scalable ML systems.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#7f0c1e160b1a151e510c0d1609161313161d170a0b0b0b0a0d0a3f18121e1613511c1012" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. ML Engineer.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const projects = [
             { repo: 'vllm-throughput-benchmark', title: 'vLLM Production Benchmark', description: 'Production-grade LLM inference benchmarking → Systematic optimization achieving 7M+ tokens/sec throughput.', impact: 'MLOps' },
             { repo: 'attention-optimization', title: 'ML System Optimization', description: 'ML systems performance engineering → Memory profiling, throughput optimization, production deployment patterns.', impact: 'Systems' },
@@ -253,11 +246,4 @@
         animateBlobs();
         
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
-        document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
-    </script>
-    <script src="https://unpkg.com/@studio-freight/lenis"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="motion.js"></script>
-</body>
-</html>
+        document.addEventListener('click', function(e) { const widget = document.getElementById(

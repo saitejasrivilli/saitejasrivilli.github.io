@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backend SDE | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-eyes.js"></script>
+    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,16 +14,6 @@
         [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        
-        /* Mouse Gradient Effect - Pastel Swirl */
-        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .gradient-blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.8; transition: transform 0.2s ease-out; }
-        .blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(254, 240, 138, 0.4) 50%, transparent 70%); }
-        .blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(196, 181, 253, 0.6) 0%, rgba(221, 214, 254, 0.4) 50%, transparent 70%); }
-        .blob-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(134, 239, 172, 0.5) 0%, rgba(187, 247, 208, 0.3) 50%, transparent 70%); }
-        .blob-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(252, 165, 165, 0.5) 0%, rgba(254, 202, 202, 0.3) 50%, transparent 70%); }
-        .blob-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, rgba(191, 219, 254, 0.3) 50%, transparent 70%); }
-        [data-theme="dark"] .gradient-blob { opacity: 0.4; filter: blur(50px); }
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
@@ -113,15 +103,7 @@
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .chat-widget { bottom: 1.5rem; right: 1rem; } .chat-popup { width: 290px; } .chat-bubble { width: 55px; height: 55px; } }
     </style>
 </head>
-
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <div class="mouse-gradient">
-        <div class="gradient-blob blob-1" id="blob1"></div>
-        <div class="gradient-blob blob-2" id="blob2"></div>
-        <div class="gradient-blob blob-3" id="blob3"></div>
-        <div class="gradient-blob blob-4" id="blob4"></div>
-        <div class="gradient-blob blob-5" id="blob5"></div>
-    </div>
+<body>
 
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     <div class="chat-widget" id="chatWidget">
@@ -129,7 +111,7 @@
         <div class="chat-popup" id="chatPopup">
             <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
             <div class="chat-body"><p>Hey! 👋 Need backend expertise? Let's talk about distributed systems, APIs, or scalable architectures!</p></div>
-            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+            <div class="chat-actions"><a href="/cdn-cgi/l/email-protection#7c0f1d150819161d520f0e150a151010151e1409080808090e093c1b111d1510521f1311" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
         </div>
     </div>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend SDE</span></div></nav>
@@ -192,12 +174,12 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Need Backend Engineering?</h2>
         <p class="cta-description">Let's discuss scalable systems and distributed architectures.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#9ceffdf5e8f9f6fdb2efeef5eaf5f0f0f5fef4e9e8e8e8e9eee9dcfbf1fdf5f0b2fff3f1" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Backend SDE.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const projects = [
             { repo: 'DistributedKVStore', title: 'Distributed Key-Value Store', description: 'High-performance distributed KV store → Replication, partitioning, consensus protocols for fault tolerance.', impact: 'Distributed' },
             { repo: 'vllm-throughput-benchmark', title: 'High-Throughput Benchmarking', description: 'Production benchmarking system → Systematic performance testing achieving 7M+ ops/sec.', impact: 'Performance' },
@@ -257,13 +239,4 @@
         animateBlobs();
         
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
-        document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
-    </script>
-    <!-- Smooth scroll + animations -->
-<!-- Mesh Gradient Background -->
-<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
-<script src="mesh-gradient.js"></script>
-
-
-</body>
-</html>
+        document.addEventListener('click', function(e) { const widget = document.getElementById(

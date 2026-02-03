@@ -12,8 +12,17 @@
         :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #14b8a6; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
+        /* Mouse Gradient Effect */
+        .mouse-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .gradient-blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(80px); opacity: 0.5; transition: transform 0.3s ease-out; }
+        .blob-1 { background: radial-gradient(circle, rgba(249, 115, 22, 0.4) 0%, transparent 70%); }
+        .blob-2 { background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%); }
+        .blob-3 { background: radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, transparent 70%); }
+        [data-theme="dark"] .gradient-blob { opacity: 0.25; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -99,6 +108,13 @@
     </style>
 </head>
 <body>
+    <!-- Mouse Following Gradient -->
+    <div class="mouse-gradient">
+        <div class="gradient-blob blob-1" id="blob1"></div>
+        <div class="gradient-blob blob-2" id="blob2"></div>
+        <div class="gradient-blob blob-3" id="blob3"></div>
+    </div>
+
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     <div class="chat-widget" id="chatWidget">
         <div class="chat-bubble" onclick="toggleChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
@@ -212,6 +228,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadProjects);
+        
+        // Mouse gradient effect
+        const blob1 = document.getElementById('blob1');
+        const blob2 = document.getElementById('blob2');
+        const blob3 = document.getElementById('blob3');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX; const y = e.clientY + window.scrollY;
+            if (blob1) blob1.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
+            if (blob2) blob2.style.transform = `translate(${x - 400}px, ${y - 200}px)`;
+            if (blob3) blob3.style.transform = `translate(${x - 200}px, ${y - 400}px)`;
+        });
+        
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
         document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
     </script>

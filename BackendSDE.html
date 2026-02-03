@@ -113,7 +113,7 @@
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .chat-widget { bottom: 1.5rem; right: 1rem; } .chat-popup { width: 290px; } .chat-bubble { width: 55px; height: 55px; } }
     </style>
 </head>
-<body>
+
     <!-- Mouse Following Gradient - Pastel Swirl -->
     <div class="mouse-gradient">
         <div class="gradient-blob blob-1" id="blob1"></div>
@@ -259,5 +259,11 @@
         function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
         document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
     </script>
+    <!-- Smooth scroll + animations -->
+<script src="https://unpkg.com/@studio-freight/lenis"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="motion.js"></script>
+
 </body>
 </html>

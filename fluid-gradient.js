@@ -1,5 +1,5 @@
 // Enhanced Fluid Mesh Gradient Background with Mouse Interaction
-// BRIGHT, VIVID sunset colors: vibrant pinks, oranges, yellows, greens - ONLY around mouse cursor
+// BRIGHT, VIVID colors with speed-based intensity and flowing design
 
 (function() {
     'use strict';
@@ -9,19 +9,22 @@
     let mouseY = window.innerHeight / 2;
     let targetMouseX = mouseX;
     let targetMouseY = mouseY;
-    let particles = [];
+    let prevMouseX = mouseX;
+    let prevMouseY = mouseY;
+    let mouseSpeed = 0;
+    let trail = [];
     let animationTime = 0;
 
-    // BRIGHT, VIVID color palette - like the reference image
+    // VERY BRIGHT color palette - lighter tones
     const colorPalette = [
-        { h: 340, s: 100, l: 50 }, // Bright magenta/pink
-        { h: 20, s: 100, l: 50 },  // Vivid orange
-        { h: 50, s: 100, l: 50 },  // Bright yellow
-        { h: 120, s: 100, l: 50 }, // Vibrant green
-        { h: 10, s: 100, l: 45 },  // Deep orange-red
-        { h: 330, s: 100, l: 55 }, // Hot pink
-        { h: 140, s: 100, l: 45 }, // Bright lime green
-        { h: 60, s: 100, l: 55 }   // Golden yellow
+        { h: 340, s: 100, l: 65 }, // Bright pink
+        { h: 20, s: 100, l: 60 },  // Bright orange
+        { h: 50, s: 100, l: 65 },  // Bright yellow
+        { h: 120, s: 100, l: 60 }, // Bright green
+        { h: 330, s: 100, l: 70 }, // Light pink
+        { h: 60, s: 100, l: 65 },  // Golden yellow
+        { h: 140, s: 100, l: 55 }, // Lime green
+        { h: 10, s: 100, l: 60 }   // Orange-red
     ];
 
     function init() {
@@ -40,9 +43,6 @@
 
         ctx = canvas.getContext('2d', { alpha: false });
         resizeCanvas();
-
-        // Initialize floating particles around mouse
-        createParticles();
 
         document.addEventListener('mousemove', onMouseMove);
         window.addEventListener('resize', onResize);
@@ -68,167 +68,151 @@
         targetMouseX = e.clientX;
         targetMouseY = e.clientY;
         
-        // Add particles on mouse move - more frequently
-        if (Math.random() < 0.5) {
-            particles.push({
-                x: targetMouseX + (Math.random() - 0.5) * 30,
-                y: targetMouseY + (Math.random() - 0.5) * 30,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                size: 60 + Math.random() * 100,
-                color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
-                life: 1,
-                decay: 0.008 + Math.random() * 0.012
-            });
-        }
+        // Calculate mouse speed
+        const dx = targetMouseX - prevMouseX;
+        const dy = targetMouseY - prevMouseY;
+        mouseSpeed = Math.sqrt(dx * dx + dy * dy);
         
-        // Limit particle count
-        if (particles.length > 35) {
-            particles = particles.slice(-35);
-        }
-    }
-
-    function createParticles() {
-        particles = [];
-        // Start with a few particles at initial mouse position
-        for (let i = 0; i < 8; i++) {
-            particles.push({
-                x: mouseX + (Math.random() - 0.5) * 80,
-                y: mouseY + (Math.random() - 0.5) * 80,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                size: 70 + Math.random() * 110,
-                color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
-                life: 1,
-                decay: 0.008 + Math.random() * 0.012
-            });
-        }
-    }
-
-    function updateParticles() {
-        const mouseInfluence = 100;
-        const mouseForce = 0.025;
-
-        particles.forEach((p, index) => {
-            // Fade out
-            p.life -= p.decay;
-            
-            if (p.life <= 0) {
-                particles.splice(index, 1);
-                return;
-            }
-
-            // Mouse interaction - gentle push
-            const dx = mouseX - p.x;
-            const dy = mouseY - p.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < mouseInfluence && distance > 0) {
-                const force = (1 - distance / mouseInfluence) * mouseForce;
-                p.vx -= (dx / distance) * force * 60;
-                p.vy -= (dy / distance) * force * 60;
-            }
-
-            // Apply velocity with damping
-            p.vx *= 0.93;
-            p.vy *= 0.93;
-            p.x += p.vx;
-            p.y += p.vy;
+        prevMouseX = targetMouseX;
+        prevMouseY = targetMouseY;
+        
+        // Add trail points
+        trail.push({
+            x: targetMouseX,
+            y: targetMouseY,
+            life: 1,
+            color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
+            speed: mouseSpeed
         });
+        
+        // Limit trail length
+        if (trail.length > 25) {
+            trail.shift();
+        }
     }
 
-    function drawParticles() {
-        particles.forEach(p => {
-            const gradient = ctx.createRadialGradient(
-                p.x, p.y, 0,
-                p.x, p.y, p.size
+    function updateTrail() {
+        // Decay trail points
+        for (let i = trail.length - 1; i >= 0; i--) {
+            trail[i].life -= 0.03;
+            if (trail[i].life <= 0) {
+                trail.splice(i, 1);
+            }
+        }
+    }
+
+    function drawFlowingGradient() {
+        // Calculate speed-based intensity (slow = bright, fast = dim)
+        const speedFactor = Math.min(mouseSpeed / 20, 1);
+        const baseIntensity = 1 - (speedFactor * 0.5); // Slow = 1.0, Fast = 0.5
+        
+        // Smooth mouse position
+        mouseX += (targetMouseX - mouseX) * 0.15;
+        mouseY += (targetMouseY - mouseY) * 0.15;
+
+        // Draw flowing trail with smooth blending
+        for (let i = 0; i < trail.length - 1; i++) {
+            const current = trail[i];
+            const next = trail[i + 1];
+            
+            // Create flowing gradient between points
+            const gradient = ctx.createLinearGradient(
+                current.x, current.y,
+                next.x, next.y
             );
-
-            // MUCH HIGHER OPACITY for visibility
-            const alpha = p.life * 0.7;
-            gradient.addColorStop(0, `hsla(${p.color.h}, ${p.color.s}%, ${p.color.l}%, ${alpha})`);
-            gradient.addColorStop(0.3, `hsla(${p.color.h}, ${p.color.s}%, ${p.color.l + 10}%, ${alpha * 0.75})`);
-            gradient.addColorStop(0.6, `hsla(${p.color.h}, ${p.color.s}%, ${p.color.l + 5}%, ${alpha * 0.4})`);
-            gradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
-
+            
+            const alpha = current.life * baseIntensity * 0.6;
+            gradient.addColorStop(0, `hsla(${current.color.h}, ${current.color.s}%, ${current.color.l}%, ${alpha})`);
+            gradient.addColorStop(1, `hsla(${next.color.h}, ${next.color.s}%, ${next.color.l}%, ${alpha * 0.8})`);
+            
+            // Draw flowing blob between points
+            const distance = Math.sqrt((next.x - current.x) ** 2 + (next.y - current.y) ** 2);
+            const size = 40 + (current.life * 40);
+            
             ctx.fillStyle = gradient;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.ellipse(
+                (current.x + next.x) / 2,
+                (current.y + next.y) / 2,
+                size,
+                size * 0.8,
+                Math.atan2(next.y - current.y, next.x - current.x),
+                0,
+                Math.PI * 2
+            );
             ctx.fill();
-        });
-    }
+        }
 
-    function drawMouseGlow() {
-        // Main bright glow at mouse position
-        const gradient = ctx.createRadialGradient(
-            mouseX, mouseY, 0,
-            mouseX, mouseY, 180
-        );
-
-        const glowColor = colorPalette[Math.floor((animationTime * 0.02) % colorPalette.length)];
-        // VERY HIGH OPACITY for bright, visible effect
-        gradient.addColorStop(0, `hsla(${glowColor.h}, ${glowColor.s}%, ${glowColor.l + 10}%, 0.75)`);
-        gradient.addColorStop(0.25, `hsla(${glowColor.h + 20}, ${glowColor.s}%, ${glowColor.l + 15}%, 0.6)`);
-        gradient.addColorStop(0.5, `hsla(${glowColor.h}, ${glowColor.s}%, ${glowColor.l}%, 0.4)`);
-        gradient.addColorStop(0.75, `hsla(${glowColor.h - 20}, ${glowColor.s - 10}%, ${glowColor.l - 5}%, 0.2)`);
-        gradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
-
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 180, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Secondary brighter core glow
-        const gradient2 = ctx.createRadialGradient(
+        // Main flowing glow at mouse position - SMALLER SIZE
+        const mainGradient = ctx.createRadialGradient(
             mouseX, mouseY, 0,
             mouseX, mouseY, 100
         );
 
-        const glowColor2 = colorPalette[(Math.floor((animationTime * 0.02) % colorPalette.length) + 4) % colorPalette.length];
-        gradient2.addColorStop(0, `hsla(${glowColor2.h}, ${glowColor2.s}%, ${glowColor2.l + 15}%, 0.8)`);
-        gradient2.addColorStop(0.4, `hsla(${glowColor2.h}, ${glowColor2.s}%, ${glowColor2.l + 10}%, 0.6)`);
-        gradient2.addColorStop(0.7, `hsla(${glowColor2.h}, ${glowColor2.s}%, ${glowColor2.l}%, 0.3)`);
-        gradient2.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+        const currentColor = colorPalette[Math.floor((animationTime * 0.03) % colorPalette.length)];
+        const mainAlpha = baseIntensity * 0.85; // Bright when slow
+        
+        mainGradient.addColorStop(0, `hsla(${currentColor.h}, ${currentColor.s}%, ${currentColor.l + 15}%, ${mainAlpha})`);
+        mainGradient.addColorStop(0.3, `hsla(${currentColor.h + 20}, ${currentColor.s}%, ${currentColor.l + 10}%, ${mainAlpha * 0.75})`);
+        mainGradient.addColorStop(0.6, `hsla(${currentColor.h}, ${currentColor.s}%, ${currentColor.l}%, ${mainAlpha * 0.5})`);
+        mainGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
 
-        ctx.fillStyle = gradient2;
+        ctx.fillStyle = mainGradient;
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
         ctx.fill();
 
-        // Third layer - even brighter center
-        const gradient3 = ctx.createRadialGradient(
+        // Secondary bright core - SMALLER
+        const coreGradient = ctx.createRadialGradient(
             mouseX, mouseY, 0,
             mouseX, mouseY, 50
         );
 
-        const glowColor3 = colorPalette[(Math.floor((animationTime * 0.02) % colorPalette.length) + 2) % colorPalette.length];
-        gradient3.addColorStop(0, `hsla(${glowColor3.h}, ${glowColor3.s}%, ${glowColor3.l + 20}%, 0.85)`);
-        gradient3.addColorStop(0.5, `hsla(${glowColor3.h}, ${glowColor3.s}%, ${glowColor3.l + 10}%, 0.5)`);
-        gradient3.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+        const coreColor = colorPalette[(Math.floor((animationTime * 0.03) % colorPalette.length) + 4) % colorPalette.length];
+        const coreAlpha = baseIntensity * 0.9;
+        
+        coreGradient.addColorStop(0, `hsla(${coreColor.h}, ${coreColor.s}%, ${coreColor.l + 20}%, ${coreAlpha})`);
+        coreGradient.addColorStop(0.5, `hsla(${coreColor.h}, ${coreColor.s}%, ${coreColor.l + 10}%, ${coreAlpha * 0.6})`);
+        coreGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
 
-        ctx.fillStyle = gradient3;
+        ctx.fillStyle = coreGradient;
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Ultra-bright center point
+        const centerGradient = ctx.createRadialGradient(
+            mouseX, mouseY, 0,
+            mouseX, mouseY, 25
+        );
+
+        const centerColor = colorPalette[(Math.floor((animationTime * 0.03) % colorPalette.length) + 2) % colorPalette.length];
+        const centerAlpha = baseIntensity * 0.95;
+        
+        centerGradient.addColorStop(0, `hsla(${centerColor.h}, ${centerColor.s}%, ${centerColor.l + 25}%, ${centerAlpha})`);
+        centerGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+
+        ctx.fillStyle = centerGradient;
+        ctx.beginPath();
+        ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2);
         ctx.fill();
     }
 
     function animate() {
-        // Smooth mouse movement with inertia
-        mouseX += (targetMouseX - mouseX) * 0.12;
-        mouseY += (targetMouseY - mouseY) * 0.12;
-
         animationTime++;
+
+        // Decay mouse speed
+        mouseSpeed *= 0.95;
 
         // Clear with WHITE background
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw mouse glow first (layered approach)
-        drawMouseGlow();
+        // Update trail
+        updateTrail();
 
-        // Update and draw particles
-        updateParticles();
-        drawParticles();
+        // Draw flowing gradient
+        drawFlowingGradient();
 
         requestAnimationFrame(animate);
     }

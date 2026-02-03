@@ -297,10 +297,11 @@ def main():
     
     print(f"✨ Processing {len(repos)} eligible repositories\n")
     
-    # Update index.html with ALL projects
-    print("📝 Updating index.html (all projects)...")
+    # Update index.html with TOP 5 latest projects only
+    print("📝 Updating index.html (top 5 latest projects)...")
     index_path = os.path.join(PORTFOLIO_ROOT, "index.html")
-    update_html_file(index_path, repos)
+    top_5_repos = repos[:5]  # Already sorted by date, take first 5
+    update_html_file(index_path, top_5_repos)
     
     # Update each role-specific page
     print("\n📝 Updating role-specific pages...")
@@ -319,7 +320,7 @@ def main():
     
     # Summary
     print("\n📊 Summary:")
-    print(f"   index.html: {len(repos)} projects")
+    print(f"   index.html: {len(top_5_repos)} projects (top 5 latest)")
     for role_file in ROLE_CATEGORIES.keys():
         role_repos = [r for r in repos if classify_repo_for_role(r, role_file)]
         print(f"   {role_file}: {len(role_repos)} projects")

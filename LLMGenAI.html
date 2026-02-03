@@ -4,19 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM/GenAI Engineer | Sai Teja Srivillibhutturu</title>
-    <script>
-        // Apply theme IMMEDIATELY to prevent flash
-        (function() {
-            function getTimeBasedTheme() {
-                const hour = new Date().getHours();
-                return (hour >= 18 || hour < 6) ? 'dark' : 'light';
-            }
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            const savedTheme = localStorage.getItem('theme');
-            const theme = (manualOverride === 'true' && savedTheme) ? savedTheme : getTimeBasedTheme();
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
+    <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -137,12 +125,12 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Building with LLMs?</h2>
         <p class="cta-description">Let's discuss how I can help build intelligent AI systems.</p>
-        <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#a4d7c5cdd0c1cec58ad7d6cdd2cdc8c8cdc6ccd1d0d0d0d1d6d1e4c3c9c5cdc88ac7cbc9" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Time-based automatic theme detection
         function getTimeBasedTheme() {
             const hour = new Date().getHours();

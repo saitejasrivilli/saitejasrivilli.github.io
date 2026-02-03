@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research | Sai Teja Srivillibhutturu</title>
+    <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -134,19 +135,28 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Interested in Collaboration?</h2>
         <p class="cta-description">I'm open to research collaborations in LLMs, wireless networks, and ML systems.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivilli@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="btn" target="_blank">Google Scholar</a><a href="https://arxiv.org/html/2601.00110v1" class="btn" target="_blank">Read CTMap Paper</a></div>
+        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="btn" target="_blank">Google Scholar</a><a href="https://arxiv.org/html/2601.00110v1" class="btn" target="_blank">Read CTMap Paper</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Research & Publications.</p></footer>
 
     <script>
-        function getTimeBasedTheme() { const hour = new Date().getHours(); return (hour >= 18 || hour < 6) ? 'dark' : 'light'; }
-        function toggleTheme() { const html = document.documentElement; const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); localStorage.setItem('themeManualOverride', 'true'); updateThemeIcon(newTheme); }
-        function updateThemeIcon(theme) { document.querySelector('.theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙'; }
-        function applyTheme() { const manual = localStorage.getItem('themeManualOverride'); const saved = localStorage.getItem('theme'); const theme = (manual === 'true' && saved) ? saved : getTimeBasedTheme(); document.documentElement.setAttribute('data-theme', theme); updateThemeIcon(theme); }
-        applyTheme();
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
-        document.querySelectorAll('.publication-card, .interest-card, .stat-card, .experience-card').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease'; observer.observe(el); });
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>

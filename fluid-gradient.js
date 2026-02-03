@@ -1,3 +1,6 @@
+if (typeof window === "undefined") return;
+document.addEventListener("DOMContentLoaded",()=>{
+
 
 // fluid-gradient.js
 // Luxury Nebula Fluid with GSAP easing, edge curl distortion, touch splats, slow idle drift
@@ -138,3 +141,5 @@ void main(){
     loop();
   }
 })();
+
+});

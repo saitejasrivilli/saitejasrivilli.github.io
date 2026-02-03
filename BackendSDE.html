@@ -31,6 +31,7 @@
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
@@ -45,6 +46,10 @@
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
         .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
@@ -65,8 +70,6 @@
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .leetcode-stats { flex-direction: column; } .leetcode-main { flex-direction: column; align-items: center; } }
-        
         /* LeetCode Card Styles */
         .leetcode-card { display: block; padding: 2rem; border: 1px solid var(--border-color); border-radius: 16px; background: var(--bg-primary); text-decoration: none; color: inherit; transition: all 0.3s ease; }
         .leetcode-card:hover { border-color: #ffa116; box-shadow: 0 8px 30px rgba(255, 161, 22, 0.15); transform: translateY(-3px); }
@@ -76,21 +79,19 @@
         .solved-number { display: block; font-size: 3rem; font-weight: 700; color: #ffa116; line-height: 1; }
         .solved-label { font-size: 0.85rem; color: var(--text-secondary); }
         .leetcode-breakdown { display: flex; flex-direction: column; gap: 0.5rem; }
-        .difficulty { display: flex; justify-content: space-between; gap: 1rem; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; }
-        .difficulty.easy { background: rgba(0, 175, 155, 0.1); }
-        .difficulty.easy .diff-label { color: #00af9b; font-weight: 600; }
-        .difficulty.medium { background: rgba(255, 192, 30, 0.1); }
-        .difficulty.medium .diff-label { color: #ffc01e; font-weight: 600; }
-        .difficulty.hard { background: rgba(255, 55, 95, 0.1); }
-        .difficulty.hard .diff-label { color: #ff375f; font-weight: 600; }
+        .difficulty { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.85rem; }
+        .difficulty.easy .diff-label { color: #00b8a3; }
+        .difficulty.medium .diff-label { color: #ffc01e; }
+        .difficulty.hard .diff-label { color: #ff375f; }
         .diff-count { color: var(--text-secondary); }
-        .leetcode-streak { display: flex; gap: 1.5rem; }
-        .streak-item { text-align: center; }
-        .streak-value { display: block; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+        .leetcode-streak { display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }
+        .streak-item { display: flex; flex-direction: column; }
+        .streak-value { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
         .streak-label { font-size: 0.75rem; color: var(--text-secondary); }
-        .leetcode-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .leetcode-badges .badge { padding: 0.4rem 0.8rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .leetcode-link { text-align: center; color: #ffa116; font-weight: 500; font-size: 0.9rem; }
+        .leetcode-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .badge { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .leetcode-link { color: #ffa116; font-weight: 500; font-size: 0.9rem; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .leetcode-stats { flex-direction: column; } .leetcode-main { flex-direction: column; align-items: center; } }
     </style>
 </head>
 <body>
@@ -99,27 +100,27 @@
 
     <section class="hero"><div class="container">
         <div class="role-badge animate-fade-in-up"><span>💻</span><span>Backend SDE</span></div>
-        <h1 class="animate-fade-in-up delay-1">Distributed Systems & Backend Engineering</h1>
-        <p class="hero-description animate-fade-in-up delay-2">Building high-performance backend systems, distributed architectures, and scalable microservices with 4+ years of industry experience.</p>
+        <h1 class="animate-fade-in-up delay-1">Scalable Backend Systems & APIs</h1>
+        <p class="hero-description animate-fade-in-up delay-2">Building high-performance distributed systems, REST APIs, and data-intensive services with Java, Go, Python, and modern backend technologies.</p>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-category"><h3 class="skills-category-title">Programming Languages</h3><div class="skills-icons">
-            <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+        <div class="skills-category"><h3 class="skills-category-title">Languages</h3><div class="skills-icons">
             <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
-            <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
+            <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+            <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"></div>
             <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
         </div></div>
         <div class="skills-category"><h3 class="skills-category-title">Frameworks & APIs</h3><div class="skills-icons">
+            <div class="skill-icon" title="Spring Boot"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"></div>
             <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
             <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
-            <div class="skill-icon" title="Spring"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"></div>
         </div></div>
         <div class="skills-category"><h3 class="skills-category-title">Databases</h3><div class="skills-icons">
             <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
-            <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
             <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
+            <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
             <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
         </div></div>
         <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
@@ -137,11 +138,8 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">Backend Projects</h2>
-        <a href="https://github.com/saitejasrivilli/DistributedKVStore" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Distributed KV Store</h3><span class="project-impact">Go + Raft</span></div><p class="project-description">High-performance distributed key-value store → Replication, partitioning, and Raft consensus algorithm implementation.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Distributed</span><span class="tech-tag">Raft</span></div></a>
-        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Video Analysis API</h3><span class="project-impact">FastAPI</span></div><p class="project-description">RESTful API backend for video analysis → Async processing, queue management, P95 &lt;25ms latency.</p><div class="project-tech"><span class="tech-tag">FastAPI</span><span class="tech-tag">Redis</span><span class="tech-tag">Celery</span></div></a>
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Inference Server</h3><span class="project-impact">High Throughput</span></div><p class="project-description">High-throughput inference server → 10K+ daily requests with optimized latency for production ML serving.</p><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">API</span></div></a>
-        <a href="https://github.com/saitejasrivilli/go-event-inges" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Go Event Ingestion</h3><span class="project-impact">Streaming</span></div><p class="project-description">High-throughput event ingestion service → Real-time data processing built in Go.</p><div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Streaming</span><span class="tech-tag">Events</span></div></a>
-        <a href="https://github.com/saitejasrivilli/JobSchedulingAlgosCompa" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Job Scheduling Algorithms</h3><span class="project-impact">Systems</span></div><p class="project-description">Comparison of job scheduling algorithms → Benchmarking for distributed systems optimization.</p><div class="project-tech"><span class="tech-tag">Algorithms</span><span class="tech-tag">Scheduling</span></div></a>
+        <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div></div>
     </div></section>
 
     <section class="section"><div class="container">
@@ -189,22 +187,26 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Backend SDE.</p></footer>
 
     <script>
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
+        const projects = [
+            { repo: 'DistributedKVStore', title: 'Distributed KV Store', description: 'High-performance distributed key-value store → Replication, partitioning, and Raft consensus algorithm implementation.', impact: 'Go + Raft', tech: ['Go', 'Distributed', 'Raft'] },
+            { repo: 'ai-video-analysis-system', title: 'Video Analysis API', description: 'RESTful API backend for video analysis → Async processing, queue management, P95 <25ms latency.', impact: 'FastAPI', tech: ['FastAPI', 'Redis', 'Celery'] },
+            { repo: 'vllm-throughput-benchmark', title: 'Inference Server', description: 'High-throughput inference server → 10K+ daily requests with optimized latency for production ML serving.', impact: 'High Throughput', tech: ['Python', 'vLLM', 'API'] },
+            { repo: 'go-event-inges', title: 'Go Event Ingestion', description: 'High-throughput event ingestion service → Real-time data processing built in Go.', impact: 'Streaming', tech: ['Go', 'Streaming', 'Events'] },
+            { repo: 'JobSchedulingAlgosCompa', title: 'Job Scheduling Algorithms', description: 'Comparison of job scheduling algorithms → Benchmarking for distributed systems optimization.', impact: 'Systems', tech: ['Algorithms', 'Scheduling'] }
+        ];
+
+        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            data.sort((a, b) => b.updatedAt - a.updatedAt);
+            container.innerHTML = data.map(p => { const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''; return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`; }).join('');
+            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+        }
+        document.addEventListener('DOMContentLoaded', loadProjects);
+        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+        document.querySelectorAll('.experience-item, .cert-item, .leetcode-card').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
     </script>
 </body>
 </html>

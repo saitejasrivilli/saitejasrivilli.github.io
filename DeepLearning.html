@@ -14,39 +14,32 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        
-        /* Theme Toggle */
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
-        
-        /* Animations */
+        .auto-theme-badge { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.65rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; }
+        .auto-theme-badge.visible { opacity: 1; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
-        
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--accent); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
-        
         .hero { padding: 8rem 0 4rem; text-align: center; }
         .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
-        
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
         .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
         .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
         .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
-        
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
         .project-item:hover { border-color: var(--accent); box-shadow: var(--card-shadow); transform: translateY(-3px); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -55,20 +48,21 @@
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
         .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        
         .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
         .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
-        
         .cta-section { padding: 4rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
@@ -76,13 +70,9 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
-        .btn-primary:hover { background: var(--text-primary); border-color: var(--text-primary); }
-        
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .skill-icon { width: 40px; height: 40px; } .skill-icon img { width: 32px; height: 32px; } .theme-toggle { top: auto; bottom: 1.5rem; } }
-        html { scroll-behavior: smooth; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .auto-theme-badge { top: auto; bottom: 6rem; } }
     </style>
 </head>
 <body>
@@ -112,17 +102,16 @@
         <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
             <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
             <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
-            <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
             <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
         </div></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Deep Learning Projects</h2>
-        <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Attention Mechanism Optimization</h3><span class="project-impact">12.3× faster</span></div><p class="project-description">Built attention benchmarking framework → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.</p><div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">CUDA</span></div></a>
-        <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">GPU Optimization & Profiling System</h3><span class="project-impact">4× memory ↓</span></div><p class="project-description">Built GPU optimization for Mistral-7B → 2.8× inference speedup, 4× memory reduction. C++/CUDA fused kernels, INT4-NF4 quantization.</p><div class="project-tech"><span class="tech-tag">CUDA</span><span class="tech-tag">C++</span><span class="tech-tag">INT4-NF4</span><span class="tech-tag">torch.profiler</span></div></a>
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">7M tokens/sec</span></div><p class="project-description">Comprehensive benchmarking suite for vLLM → 7M+ tokens/sec throughput optimization.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">PyTorch</span><span class="tech-tag">Profiling</span></div></a>
-        <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">PEFT</span></div><p class="project-description">Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.</p><div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div></a>
+        <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+        <div id="projects-container">
+            <div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div>
+        </div>
     </div></section>
 
     <section class="section"><div class="container">
@@ -146,22 +135,28 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Deep Learning Engineer.</p></footer>
 
     <script>
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
+        const projects = [
+            { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'Built attention benchmarking framework → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.', impact: '12.3× faster', tech: ['PyTorch', 'FlashAttention-2', 'xFormers', 'CUDA'] },
+            { repo: 'gpu-optimization-mistral', title: 'GPU Optimization & Profiling System', description: 'Built GPU optimization for Mistral-7B → 2.8× inference speedup, 4× memory reduction. C++/CUDA fused kernels, INT4-NF4 quantization.', impact: '4× memory ↓', tech: ['CUDA', 'C++', 'INT4-NF4', 'torch.profiler'] },
+            { repo: 'vllm-throughput-benchmark', title: 'vLLM Throughput Benchmark', description: 'Comprehensive benchmarking suite for vLLM → 7M+ tokens/sec throughput optimization.', impact: '7M tokens/sec', tech: ['vLLM', 'PyTorch', 'Profiling'] },
+            { repo: 'LORA-implementation', title: 'LoRA Implementation', description: 'Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.', impact: 'PEFT', tech: ['LoRA', 'QLoRA', 'PEFT'] }
+        ];
+
+        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            data.sort((a, b) => b.updatedAt - a.updatedAt);
+            container.innerHTML = data.map(p => {
+                const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : '';
+                return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`;
+            }).join('');
+            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+        }
+        document.addEventListener('DOMContentLoaded', loadProjects);
+        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+        document.querySelectorAll('.experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
     </script>
 </body>
 </html>

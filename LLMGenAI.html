@@ -16,10 +16,12 @@
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+        .auto-theme-badge { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.65rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; }
+        .auto-theme-badge.visible { opacity: 1; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
         .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--accent); }
@@ -31,6 +33,7 @@
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
@@ -45,6 +48,10 @@
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
         .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
@@ -65,7 +72,7 @@
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .auto-theme-badge { top: auto; bottom: 6rem; } }
     </style>
 </head>
 <body>
@@ -101,148 +108,51 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">LLM/GenAI Projects</h2>
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">vLLM Optimization</h3><span class="project-impact">7M tokens/sec</span></div><p class="project-description">Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM. Systematic benchmarking and profiling.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Inference</span></div></a>
-        <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">Multi-Agent</span></div><p class="project-description">Sophisticated LLM agent with tool use capabilities → Planning, multi-step reasoning, and RAG integration.</p><div class="project-tech"><span class="tech-tag">LangChain</span><span class="tech-tag">RAG</span><span class="tech-tag">Agents</span></div></a>
-        <a href="https://github.com/saitejasrivilli/Multi_Agent_Workflow_Automator" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Multi-Agent Workflow Automator</h3><span class="project-impact">Orchestration</span></div><p class="project-description">Multi-agent orchestration system → Complex workflow automation with coordinated LLM agents.</p><div class="project-tech"><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Workflows</span><span class="tech-tag">LLM</span></div></a>
-        <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent System</h3><span class="project-impact">4 Research Papers</span></div><p class="project-description">AI Agent with auto-strategy selection → Implements Chain-of-Thought (self-consistency voting), Tree-of-Thoughts (beam search), ReAct (tool-use), and Multi-Agent (Planner-Worker-Critic) collaboration. Live demo on HuggingFace Spaces.</p><div class="project-tech"><span class="tech-tag">Groq LLM</span><span class="tech-tag">Tavily Search</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div></a>
-        <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">Privacy-First</span></div><p class="project-description">Privacy-focused RAG system → Offline deployment with local embeddings and vector search.</p><div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">VectorDB</span><span class="tech-tag">Embeddings</span></div></a>
-        <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">TeluguGPT</h3><span class="project-impact">Regional LLM</span></div><p class="project-description">Custom language model for Telugu → Fine-tuning and domain adaptation for regional languages.</p><div class="project-tech"><span class="tech-tag">Transformers</span><span class="tech-tag">NLP</span><span class="tech-tag">Fine-tuning</span></div></a>
-        <a href="https://github.com/saitejasrivilli/LORA-implementation" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">LoRA Implementation</h3><span class="project-impact">PEFT</span></div><p class="project-description">Low-Rank Adaptation → Parameter-efficient fine-tuning for large language models.</p><div class="project-tech"><span class="tech-tag">LoRA</span><span class="tech-tag">QLoRA</span><span class="tech-tag">PEFT</span></div></a>
+        <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">Led CTMap project (IEEE ICC 2026) - LLM-enabled path planning for mmWave networks. Fine-tuned LLMs with 10K+ supervision examples. Designed end-to-end inference pipelines.</p></div>
+        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled connectivity-aware path planning. Fine-tuning LLMs for network prediction tasks.</p></div>
+        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Integrating GenAI capabilities into dental image analysis pipelines. Building conversational AI features.</p></div>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Certifications</h2>
         <div class="cert-item"><span class="cert-icon">🎓</span><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
         <div class="cert-item"><span class="cert-icon">🔴</span><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
-        <div class="cert-item"><span class="cert-icon">☁️</span><div class="cert-content"><h4>Agentforce Specialist</h4><p>Salesforce • Jun 2025</p></div></div>
     </div></section>
 
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Building with LLMs?</h2>
-        <p class="cta-description">Let's discuss how I can help build intelligent AI systems.</p>
+        <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
         <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
     <script>
-        // Time-based automatic theme detection
-        function getTimeBasedTheme() {
-            const hour = new Date().getHours();
-            // Dark mode from 6 PM (18:00) to 6 AM (06:00)
-            return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+        const projects = [
+            { repo: 'vllm-throughput-benchmark', title: 'vLLM Optimization', description: 'Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM. Systematic benchmarking and profiling.', impact: '7M tokens/sec', tech: ['vLLM', 'LLM', 'Inference'] },
+            { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use capabilities → Planning, multi-step reasoning, and RAG integration.', impact: 'Multi-Agent', tech: ['LangChain', 'RAG', 'Agents'] },
+            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → Chain-of-Thought, Tree-of-Thoughts, ReAct patterns.', impact: 'Reasoning', tech: ['Python', 'Groq', 'LangChain'] },
+            { repo: 'RAG-Application', title: 'RAG Application', description: 'Retrieval-Augmented Generation pipeline → Document chunking, vector search, LLM response generation.', impact: 'RAG', tech: ['LangChain', 'Vector DB', 'LLM'] },
+            { repo: 'LORA-implementation', title: 'LoRA Fine-tuning', description: 'Parameter-efficient fine-tuning implementation → LoRA and QLoRA for large language models.', impact: 'Fine-tuning', tech: ['LoRA', 'QLoRA', 'PEFT'] }
+        ];
+
+        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            data.sort((a, b) => b.updatedAt - a.updatedAt);
+            container.innerHTML = data.map(p => { const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''; return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`; }).join('');
+            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
         }
-        
-        // Manual theme toggle
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            localStorage.setItem('themeManualOverride', 'true');
-            updateThemeIcon(newTheme);
-            showThemeToast(newTheme);
-        }
-        
-        // Update the toggle button icon
-        function updateThemeIcon(theme) {
-            const icon = document.querySelector('.theme-icon');
-            if (icon) {
-                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
-        }
-        
-        // Show toast notification on theme change
-        function showThemeToast(theme) {
-            const existingToast = document.querySelector('.theme-toast');
-            if (existingToast) existingToast.remove();
-            
-            const toast = document.createElement('div');
-            toast.className = 'theme-toast';
-            toast.innerHTML = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                right: 2rem;
-                background: var(--text-primary);
-                color: var(--bg-primary);
-                padding: 0.75rem 1.25rem;
-                border-radius: 50px;
-                font-size: 0.85rem;
-                font-weight: 500;
-                z-index: 1001;
-                animation: fadeInUp 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            `;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 2000);
-        }
-        
-        // Apply theme based on manual override or time
-        function applyTheme() {
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            const savedTheme = localStorage.getItem('theme');
-            
-            let theme;
-            if (manualOverride === 'true' && savedTheme) {
-                theme = savedTheme;
-            } else {
-                theme = getTimeBasedTheme();
-                localStorage.removeItem('themeManualOverride');
-            }
-            
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-        }
-        
-        // Apply theme immediately on page load
-        applyTheme();
-        
-        // Check and update theme every minute for auto-switching
-        setInterval(() => {
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            if (manualOverride !== 'true') {
-                applyTheme();
-            }
-        }, 60000);
-        
-        // Reset manual override at 6 AM and 6 PM to re-enable auto-switching
-        setInterval(() => {
-            const now = new Date();
-            const hour = now.getHours();
-            const minute = now.getMinutes();
-            if ((hour === 6 || hour === 18) && minute === 0) {
-                localStorage.removeItem('themeManualOverride');
-                applyTheme();
-            }
-        }, 60000);
-        
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            observer.observe(el);
-        });
+        document.addEventListener('DOMContentLoaded', loadProjects);
+        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+        document.querySelectorAll('.experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
     </script>
 </body>
 </html>

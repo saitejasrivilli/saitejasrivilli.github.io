@@ -177,6 +177,10 @@
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
         .theme-toggle:active { transform: scale(0.95); }
         
+        /* Auto Theme Indicator */
+        .auto-theme-indicator { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.7rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.25rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .auto-theme-indicator.visible { opacity: 1; }
+        
         /* Open to Work Banner */
         .open-to-work-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(90deg, var(--accent-green), #059669); color: white; text-align: center; padding: 0.6rem; font-size: 0.85rem; font-weight: 500; }
         .open-to-work-banner a { color: white; text-decoration: underline; margin-left: 0.5rem; }
@@ -202,11 +206,8 @@
         .profile-container { width: 150px; height: 150px; margin-bottom: 1.5rem; position: relative; }
         .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; display: block; }
         .profile-fallback { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
-        .profile-placeholder { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1.5rem; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
         .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; }
-        .word-fade { display: inline; animation: wordFadeIn 0.3s ease forwards; opacity: 0; }
-        @keyframes wordFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Status Badge */
         .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
@@ -232,38 +233,19 @@
         .about-content { color: var(--text-secondary); font-size: 1rem; line-height: 1.9; max-width: 700px; margin: 0 auto; text-align: center; }
         .about-content p { margin-bottom: 1rem; }
         
-        /* Skills */
-        .skills-category { margin-bottom: 2.5rem; }
-        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
-        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
-        .skill-icon img { width: 40px; height: 40px; object-fit: contain; filter: var(--icon-filter, none); }
-        [data-theme="dark"] .skill-icon img { filter: brightness(0.9); }
-        
-        /* Currently Learning Section */
-        .learning-section { background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05)); border-radius: 20px; padding: 2.5rem; margin-top: 2rem; }
-        .learning-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-        .learning-card { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; text-align: center; transition: all 0.3s ease; }
-        .learning-card:hover { transform: translateY(-5px); box-shadow: var(--card-shadow); border-color: var(--accent); }
-        .learning-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-        .learning-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
-        .learning-status { font-size: 0.8rem; color: var(--accent-green); font-weight: 500; }
-        
         /* Timeline */
-        .timeline-item { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; transition: all 0.3s ease; }
-        .timeline-item:hover { transform: translateX(5px); }
-        .timeline-logo { width: 55px; height: 55px; border-radius: 12px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 0.75rem; border: 1px solid var(--border-color); overflow: hidden; }
-        .timeline-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+        .timeline-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .timeline-item:hover { transform: translateX(5px); border-color: var(--accent); }
+        .timeline-logo { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.75rem; }
         .timeline-content { flex: 1; }
         .timeline-company { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
-        .timeline-role { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .timeline-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-        .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
         
-        /* Education Cards */
-        .education-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
-        .education-card:hover { border-color: var(--accent); box-shadow: var(--card-shadow); }
+        /* Education */
+        .education-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
+        .education-card:hover { border-color: var(--accent); }
         .masters-card { border: 2px solid var(--accent); background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(16, 185, 129, 0.03)); }
         .education-header { display: flex; align-items: flex-start; gap: 1.25rem; margin-bottom: 1rem; }
         .education-logo { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.8rem; color: white; }
@@ -280,46 +262,22 @@
         .gpa-scale { font-size: 0.9rem; color: var(--text-secondary); }
         .education-summary { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-primary); border-radius: 8px; border-left: 3px solid var(--accent); }
         .education-conclusion { font-size: 0.85rem; color: var(--text-secondary); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
-        
-        /* Accordion Styles */
-        .courses-accordion { display: flex; flex-direction: column; gap: 0.5rem; }
-        .accordion-item { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
-        .accordion-item:hover { border-color: var(--accent); }
-        .accordion-item.active { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .accordion-header { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.3s ease; user-select: none; }
-        .accordion-header:hover { background: var(--bg-secondary); }
-        .accordion-title { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
-        .accordion-icon { font-size: 1.1rem; flex-shrink: 0; }
-        .accordion-name { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .accordion-level { font-size: 0.7rem; padding: 0.2rem 0.5rem; background: var(--bg-secondary); border-radius: 10px; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; }
-        .progress-bar { flex: 0 0 120px; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
-        .accordion-arrow { font-size: 0.7rem; color: var(--text-secondary); transition: transform 0.3s ease; flex-shrink: 0; width: 20px; text-align: center; }
-        .accordion-item.active .accordion-arrow { transform: rotate(180deg); color: var(--accent); }
-        .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease, padding 0.4s ease; }
-        .accordion-content-inner { overflow: hidden; }
-        .accordion-item.active .accordion-content { grid-template-rows: 1fr; }
-        .accordion-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; padding: 0 1rem 1rem 2.75rem; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; }
-        .accordion-item.active .accordion-content p { opacity: 1; transform: translateY(0); }
-        
-        /* Simple Course Tags */
         .education-courses { border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 1rem; }
         .courses-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .courses-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .course-tag { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.85rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.82rem; color: var(--text-primary); transition: all 0.3s ease; cursor: default; }
-        .course-tag:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.08); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .course-tag:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.08); transform: translateY(-2px); }
         .course-icon { font-size: 1rem; }
-        
-        /* Masters card specific styling */
         .masters-card .courses-grid { gap: 0.6rem; }
         .masters-card .course-tag { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary)); font-weight: 500; }
         
-        @media (max-width: 768px) {
-            .education-header { flex-wrap: wrap; }
-            .education-gpa { width: 100%; text-align: left; margin-top: 0.5rem; }
-            .progress-bar { flex: 0 0 80px; }
-            .accordion-name { font-size: 0.8rem; }
-        }
+        /* Skills */
+        .skills-category { margin-bottom: 2.5rem; }
+        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
+        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
+        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
+        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         
         /* Projects */
         .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
@@ -330,6 +288,12 @@
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+        
+        /* Projects Loading State */
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
         /* Certifications */
         .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
@@ -349,163 +313,12 @@
         .role-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
         .role-card:hover .role-link svg { transform: translateX(5px); }
         
-        /* GitHub Contributions */
-        .github-contrib-container { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
-        .github-chart { width: 100%; max-width: 800px; border-radius: 12px; border: 1px solid var(--border-color); padding: 1rem; background: var(--bg-secondary); }
-        .github-stats { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .github-stat-card img { height: 28px; transition: transform 0.3s ease; }
-        .github-stat-card:hover img { transform: scale(1.05); }
-        
-        /* Availability Widget */
-        .availability-container { display: flex; gap: 2rem; justify-content: center; align-items: stretch; flex-wrap: wrap; }
-        .availability-card { flex: 1; min-width: 320px; max-width: 500px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; }
-        .availability-status { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
-        .status-dot-large { width: 14px; height: 14px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
-        .status-text-large { font-weight: 700; font-size: 1.1rem; color: #10b981; }
-        .availability-details { display: flex; flex-direction: column; gap: 1rem; }
-        .availability-item { display: flex; align-items: flex-start; gap: 1rem; }
-        .avail-icon { font-size: 1.25rem; }
-        .avail-info { display: flex; flex-direction: column; gap: 0.15rem; }
-        .avail-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
-        .avail-value { font-weight: 500; color: var(--text-primary); font-size: 0.95rem; }
-        
-        /* QR Code */
-        .qr-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .qr-code { background: white; padding: 1rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .qr-code img { width: 150px; height: 150px; display: block; }
-        .qr-label { font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
-        .qr-url { font-size: 0.85rem; color: var(--accent); }
-        
-        /* Resume Preview */
-        .resume-preview-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-        .resume-frame { position: relative; width: 100%; max-width: 700px; height: 500px; border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden; background: var(--bg-secondary); }
-        .resume-frame iframe { width: 100%; height: 100%; border: none; }
-        .resume-frame .resume-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, var(--bg-primary)); padding: 2rem; text-align: center; pointer-events: none; }
-        .resume-frame .resume-overlay p { color: var(--text-secondary); font-size: 0.9rem; }
-        .resume-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .resume-download-btn { display: flex; align-items: center; gap: 0.5rem; }
-        
-        /* Contact Form */
-        .contact-form-container { max-width: 700px; margin: 0 auto; }
-        .contact-form { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-group label { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
-        .form-group input, .form-group select, .form-group textarea { padding: 0.85rem 1rem; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 0.95rem; background: var(--bg-primary); color: var(--text-primary); transition: all 0.3s ease; font-family: inherit; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-secondary); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-submit-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; font-size: 1rem; margin-top: 0.5rem; }
-        .contact-alternatives { text-align: center; }
-        .contact-alternatives p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem; }
-        .alt-contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-        .alt-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
-        .alt-link:hover { color: var(--accent); }
-        
-        @media (max-width: 768px) {
-            .form-row { grid-template-columns: 1fr; }
-            .availability-container { flex-direction: column; align-items: center; }
-            .availability-card { min-width: 100%; }
-            .resume-frame { height: 400px; }
-        }
-        
         /* Contact Section */
         .contact-section { padding: 5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
         .contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: 50px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; transition: all 0.3s ease; background: var(--bg-primary); }
         .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
         .contact-link svg { width: 18px; height: 18px; }
-        
-        /* Roadmap Styles - Full Width Timeline */
-        .roadmap-wrapper { padding: 2rem 0; width: 100%; display: flex; justify-content: center; }
-        .roadmap-container { position: relative; padding: 6rem 2rem; width: 100%; max-width: 1200px; }
-        .roadmap-line { position: absolute; top: 50%; left: 2rem; right: 2rem; height: 6px; background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 15%, var(--accent) 40%, #10b981 70%, #10b981 100%); transform: translateY(-50%); border-radius: 3px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
-        .roadmap-line::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: #cbd5e1; border-radius: 50%; }
-        .roadmap-line::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 12px solid #10b981; }
-        .roadmap-items { display: flex; justify-content: space-between; position: relative; width: 100%; }
-        .roadmap-item { display: flex; flex-direction: column; align-items: center; position: relative; transition: all 0.3s ease; flex: 1; max-width: 160px; }
-        .roadmap-item:hover { transform: scale(1.05); z-index: 10; }
-        .roadmap-diamond { width: 24px; height: 24px; background: var(--bg-primary); border: 3px solid var(--accent); transform: rotate(45deg); z-index: 2; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .roadmap-item:hover .roadmap-diamond { transform: rotate(45deg) scale(1.2); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25); }
-        .roadmap-diamond.filled { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-color: #0ea5e9; }
-        .roadmap-diamond.filled-dark { background: linear-gradient(135deg, #0ea5e9, #0284c7); border-color: #0369a1; }
-        .roadmap-diamond.current { background: linear-gradient(135deg, #10b981, #059669); border-color: #047857; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2), 0 4px 20px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
-        .roadmap-content { text-align: center; width: 100%; padding: 0 0.5rem; }
-        .roadmap-top { margin-bottom: 1.25rem; }
-        .roadmap-bottom { margin-top: 1.25rem; }
-        .roadmap-logo { width: 52px; height: 52px; border-radius: 12px; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; color: white; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-secondary); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .roadmap-item:hover .roadmap-logo { transform: scale(1.1) translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: var(--accent); }
-        .roadmap-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .au-logo { background: linear-gradient(135deg, #991b1b, #7f1d1d) !important; border-color: #991b1b !important; }
-        .uta-logo { background: linear-gradient(135deg, #0077cc, #0064b1) !important; border-color: #0064b1 !important; }
-        .tcs-logo { background: white !important; border-color: #e5e7eb !important; }
-        .dsn-logo { background: white !important; border-color: #e5e7eb !important; }
-        .roadmap-title { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.25rem; transition: color 0.3s ease; }
-        .roadmap-item:hover .roadmap-title { color: var(--accent); }
-        .roadmap-subtitle { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; min-height: 2.4em; }
-        .roadmap-year { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-top: 0.75rem; padding: 0.3rem 0.6rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
-        .roadmap-year-bottom { font-weight: 700; font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; padding: 0.3rem 0.6rem; background: rgba(37, 99, 235, 0.08); border-radius: 20px; display: inline-block; }
-        .current-year { color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }
-        
-        @media (max-width: 1000px) {
-            .roadmap-item { max-width: 130px; }
-            .roadmap-logo { width: 46px; height: 46px; }
-            .roadmap-title { font-size: 0.78rem; }
-            .roadmap-subtitle { font-size: 0.68rem; }
-        }
-        
-        @media (max-width: 800px) {
-            .roadmap-container { padding: 5rem 0; }
-            .roadmap-item { max-width: 110px; }
-            .roadmap-logo { width: 40px; height: 40px; }
-            .roadmap-title { font-size: 0.7rem; }
-            .roadmap-subtitle { font-size: 0.6rem; min-height: 2em; }
-            .roadmap-diamond { width: 20px; height: 20px; }
-            .roadmap-year, .roadmap-year-bottom { font-size: 0.68rem; padding: 0.25rem 0.5rem; }
-        }
-        
-        @media (max-width: 600px) {
-            .roadmap-container { padding: 4rem 0; }
-            .roadmap-item { max-width: 90px; }
-            .roadmap-line { height: 4px; }
-            .roadmap-logo { width: 34px; height: 34px; font-size: 0.55rem; border-radius: 8px; }
-            .roadmap-title { font-size: 0.6rem; }
-            .roadmap-subtitle { display: none; }
-            .roadmap-diamond { width: 16px; height: 16px; border-width: 2px; }
-            .roadmap-top { margin-bottom: 0.75rem; }
-            .roadmap-bottom { margin-top: 0.75rem; }
-            .roadmap-year, .roadmap-year-bottom { font-size: 0.55rem; padding: 0.2rem 0.4rem; }
-        }
-        
-        /* Focus Areas / Interactive Donut Chart Styles */
-        .focus-container { display: flex; align-items: center; justify-content: center; gap: 4rem; }
-        .focus-labels { display: flex; flex-direction: column; gap: 0.75rem; flex: 1; max-width: 420px; }
-        .focus-label { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; background: var(--bg-secondary); position: relative; }
-        .focus-label:hover, .focus-label.active { border-color: var(--accent); transform: translateX(8px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); background: var(--bg-primary); }
-        .focus-label::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: transparent; border-radius: 12px 0 0 12px; transition: all 0.3s ease; }
-        .focus-label:hover::before, .focus-label.active::before { background: var(--accent); }
-        .focus-number { width: 32px; height: 32px; border-radius: 50%; color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s ease; }
-        .focus-label:hover .focus-number, .focus-label.active .focus-number { transform: scale(1.1); }
-        .focus-info { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; }
-        .focus-text { font-size: 0.9rem; color: var(--text-primary); font-weight: 600; }
-        .focus-percent-label { font-size: 0.8rem; color: var(--accent); font-weight: 700; }
-        .focus-details { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; line-height: 1.4; }
-        .donut-chart-container { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-        .donut-chart { position: relative; width: 280px; height: 280px; }
-        .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .donut-segment { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; transform-origin: center; pointer-events: stroke; }
-        .donut-segment.highlighted { stroke-width: 48 !important; filter: brightness(1.15) drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
-        .donut-segment.dimmed { opacity: 0.25; }
-        .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; transition: all 0.3s ease; }
-        .donut-percent { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; transition: all 0.3s ease; }
-        .donut-label { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem; transition: all 0.3s ease; }
-        
-        @media (max-width: 768px) { 
-            .focus-container { flex-direction: column; gap: 2rem; }
-            .focus-labels { max-width: 100%; }
-            .donut-chart { width: 240px; height: 240px; }
-            .focus-details { display: none; }
-        }
         
         /* Footer */
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
@@ -519,9 +332,11 @@
             .skill-icon { width: 40px; height: 40px; } 
             .skill-icon img { width: 32px; height: 32px; }
             .theme-toggle { top: auto; bottom: 1.5rem; right: 1.5rem; width: 56px; height: 56px; font-size: 1.5rem; }
+            .auto-theme-indicator { top: auto; bottom: 6rem; }
             .open-to-work-banner { font-size: 0.75rem; padding: 0.5rem; }
             .resume-btn-hero { padding: 0.85rem 1.5rem; font-size: 0.9rem; }
-            .theme-toast { bottom: 100px; left: 50%; right: auto; transform: translateX(-50%); }
+            .education-header { flex-wrap: wrap; }
+            .education-gpa { width: 100%; text-align: left; margin-top: 0.5rem; }
         }
         html { scroll-behavior: smooth; }
     </style>
@@ -530,13 +345,16 @@
     <!-- Open to Work Banner -->
     <div class="open-to-work-banner">
         🚀 Open to ML Engineer, Deep Learning, LLM/GenAI, and Backend SDE roles
-        <a href="#contact-form">Contact Me</a>
+        <a href="#contact">Contact Me</a>
     </div>
     
     <!-- Dark Mode Toggle -->
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
         <span class="theme-icon">🌙</span>
     </button>
+    
+    <!-- Auto Theme Indicator -->
+    <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme active</div>
 
     <section class="hero">
         <div class="hero-background">
@@ -568,7 +386,6 @@
                     }
                 }
                 
-                // Start after a small delay for the fade-in animation
                 setTimeout(typeChar, 600);
             })();
         </script>
@@ -579,10 +396,9 @@
         </a>
         
         <div class="hero-buttons animate-fade-in-up delay-5">
-            <a href="#journey" class="btn">Journey</a>
             <a href="#experience" class="btn">Experience</a>
             <a href="#projects" class="btn">Projects</a>
-            <a href="#contact-form" class="btn">Contact</a>
+            <a href="#contact" class="btn">Contact</a>
             <a href="#roles" class="btn">Explore Roles</a>
         </div>
         
@@ -595,249 +411,7 @@
             <div class="about-content">
                 <p>Deep Learning Engineer specializing in GPU Optimization and LLM Inference. MS in Computer Science from UT Arlington (May 2025).</p>
                 <p>I optimize ML systems for speed, memory, and cost. My work focuses on CUDA kernels, FlashAttention, quantization techniques, and building production-grade inference infrastructure.</p>
-                <p>Published researcher with work accepted at <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE ICC 2026</strong></a> on LLM-enabled path planning for wireless networks. <a href="https://saitejasrivilli.github.io/Research.html" target="_blank" style="color: var(--accent); text-decoration: underline;">Check my latest research here →</a></p>
-            </div>
-            
-            <!-- Currently Learning Section -->
-            <div class="learning-section">
-                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem;">🌱 Currently Learning & Building</h3>
-                <p style="text-align: center; color: var(--text-secondary); font-size: 0.95rem;">Always expanding my skillset with cutting-edge technologies</p>
-                <div class="learning-grid">
-                    <div class="learning-card">
-                        <div class="learning-icon">⚡</div>
-                        <div class="learning-title">Triton Kernels</div>
-                        <div class="learning-status">In Progress</div>
-                    </div>
-                    <div class="learning-card">
-                        <div class="learning-icon">🦀</div>
-                        <div class="learning-title">Rust for Systems</div>
-                        <div class="learning-status">Exploring</div>
-                    </div>
-                    <div class="learning-card">
-                        <div class="learning-icon">🤖</div>
-                        <div class="learning-title">Multi-Agent Systems</div>
-                        <div class="learning-status">Building</div>
-                    </div>
-                    <div class="learning-card">
-                        <div class="learning-icon">🔬</div>
-                        <div class="learning-title">Mixture of Experts</div>
-                        <div class="learning-status">Researching</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Journey Roadmap Section -->
-    <section class="section" id="journey">
-        <div class="container">
-            <h2 class="section-title">My Journey</h2>
-        </div>
-        <div class="roadmap-wrapper">
-            <div class="roadmap-container">
-                <div class="roadmap-line"></div>
-                <div class="roadmap-items">
-                    <!-- Andhra University -->
-                    <div class="roadmap-item">
-                        <div class="roadmap-content roadmap-top">
-                            <div class="roadmap-logo au-logo">AU</div>
-                            <div class="roadmap-title">Andhra University</div>
-                            <div class="roadmap-subtitle">B.Tech Computer Science</div>
-                        </div>
-                        <div class="roadmap-diamond"></div>
-                        <div class="roadmap-year">2015 - 19</div>
-                    </div>
-                    <!-- TCS Software Engineer -->
-                    <div class="roadmap-item">
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-year-bottom">2019 - 21</div>
-                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                            <div class="roadmap-title">TCS</div>
-                            <div class="roadmap-subtitle">Software Engineer</div>
-                        </div>
-                        <div class="roadmap-diamond filled"></div>
-                    </div>
-                    <!-- TCS Senior Software Engineer -->
-                    <div class="roadmap-item">
-                        <div class="roadmap-content roadmap-top">
-                            <div class="roadmap-logo tcs-logo"><img src="tcs-logo.png" alt="TCS"></div>
-                            <div class="roadmap-title">TCS</div>
-                            <div class="roadmap-subtitle">Senior Software Engineer</div>
-                        </div>
-                        <div class="roadmap-diamond filled-dark"></div>
-                        <div class="roadmap-year">2021 - 23</div>
-                    </div>
-                    <!-- UTA MS -->
-                    <div class="roadmap-item">
-                        <div class="roadmap-content roadmap-bottom">
-                            <div class="roadmap-year-bottom">2023 - 25</div>
-                            <div class="roadmap-logo uta-logo">UTA</div>
-                            <div class="roadmap-title">UT Arlington</div>
-                            <div class="roadmap-subtitle">MS CS (Graduated)</div>
-                        </div>
-                        <div class="roadmap-diamond"></div>
-                </div>
-                <!-- UTA GRA -->
-                <div class="roadmap-item">
-                    <div class="roadmap-content roadmap-top">
-                        <div class="roadmap-logo uta-logo">UTA</div>
-                        <div class="roadmap-title">UTA Research</div>
-                        <div class="roadmap-subtitle">Graduate Research Asst.</div>
-                    </div>
-                    <div class="roadmap-diamond filled-dark"></div>
-                    <div class="roadmap-year">2025</div>
-                </div>
-                <!-- DentalScan -->
-                <div class="roadmap-item">
-                    <div class="roadmap-content roadmap-bottom">
-                        <div class="roadmap-year-bottom current-year">Present</div>
-                        <div class="roadmap-logo dsn-logo"><img src="dentalscan-logo.png" alt="DentalScan"></div>
-                        <div class="roadmap-title">DentalScan</div>
-                        <div class="roadmap-subtitle">ML Engineer Intern</div>
-                    </div>
-                    <div class="roadmap-diamond current"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section>
-
-    <!-- Focus Areas Section - Interactive -->
-    <section class="section" id="focus">
-        <div class="container">
-            <h2 class="section-title">My Focus Areas</h2>
-            <div class="focus-container">
-                <div class="focus-labels">
-                    <div class="focus-label" data-segment="1">
-                        <span class="focus-number" style="background: #0ea5e9;">1</span>
-                        <div class="focus-info">
-                            <span class="focus-text">Deep Learning & GPU Optimization</span>
-                            <span class="focus-percent-label">35%</span>
-                        </div>
-                        <div class="focus-details">CUDA, FlashAttention, Quantization, PyTorch, Triton</div>
-                    </div>
-                    <div class="focus-label" data-segment="2">
-                        <span class="focus-number" style="background: #f59e0b;">2</span>
-                        <div class="focus-info">
-                            <span class="focus-text">LLM & GenAI Systems</span>
-                            <span class="focus-percent-label">25%</span>
-                        </div>
-                        <div class="focus-details">vLLM, RAG, Fine-tuning, Multi-Agent, LangChain</div>
-                    </div>
-                    <div class="focus-label" data-segment="3">
-                        <span class="focus-number" style="background: #10b981;">3</span>
-                        <div class="focus-info">
-                            <span class="focus-text">ML Infrastructure & MLOps</span>
-                            <span class="focus-percent-label">20%</span>
-                        </div>
-                        <div class="focus-details">AWS SageMaker, Docker, Airflow, MLflow, CI/CD</div>
-                    </div>
-                    <div class="focus-label" data-segment="4">
-                        <span class="focus-number" style="background: #8b5cf6;">4</span>
-                        <div class="focus-info">
-                            <span class="focus-text">Backend & Distributed Systems</span>
-                            <span class="focus-percent-label">12%</span>
-                        </div>
-                        <div class="focus-details">Go, Java, Microservices, Kafka, Redis, PostgreSQL</div>
-                    </div>
-                    <div class="focus-label" data-segment="5">
-                        <span class="focus-number" style="background: #06b6d4;">5</span>
-                        <div class="focus-info">
-                            <span class="focus-text">Research & Publications</span>
-                            <span class="focus-percent-label">8%</span>
-                        </div>
-                        <div class="focus-details">IEEE ICC 2026, LLMs for Wireless, 6G Networks</div>
-                    </div>
-                </div>
-                <div class="donut-chart-container">
-                    <div class="donut-chart">
-                        <svg viewBox="0 0 200 200" class="donut-svg" style="overflow: visible;">
-                            <circle class="donut-segment" id="segment-1" cx="100" cy="100" r="70" stroke="#0ea5e9" stroke-width="40" stroke-dasharray="153.94 439.82" stroke-dashoffset="0" fill="none"/>
-                            <circle class="donut-segment" id="segment-2" cx="100" cy="100" r="70" stroke="#f59e0b" stroke-width="40" stroke-dasharray="109.96 439.82" stroke-dashoffset="-153.94" fill="none"/>
-                            <circle class="donut-segment" id="segment-3" cx="100" cy="100" r="70" stroke="#10b981" stroke-width="40" stroke-dasharray="87.96 439.82" stroke-dashoffset="-263.9" fill="none"/>
-                            <circle class="donut-segment" id="segment-4" cx="100" cy="100" r="70" stroke="#8b5cf6" stroke-width="40" stroke-dasharray="52.78 439.82" stroke-dashoffset="-351.86" fill="none"/>
-                            <circle class="donut-segment" id="segment-5" cx="100" cy="100" r="70" stroke="#06b6d4" stroke-width="40" stroke-dasharray="35.19 439.82" stroke-dashoffset="-404.64" fill="none"/>
-                            <circle cx="100" cy="100" r="50" fill="var(--bg-primary)" style="pointer-events: none;"/>
-                        </svg>
-                        <div class="donut-center" id="donut-center">
-                            <div class="donut-percent" id="donut-percent">35%</div>
-                            <div class="donut-label" id="donut-label">Deep Learning</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            
-            <div class="skills-category">
-                <h3 class="skills-category-title">Programming</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
-                    <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
-                    <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
-                    <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" alt="Go"></div>
-                    <div class="skill-icon" title="JavaScript"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div>
-                    <div class="skill-icon" title="Bash"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash"></div>
-                </div>
-            </div>
-
-            <div class="skills-category">
-                <h3 class="skills-category-title">ML / Deep Learning</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
-                    <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
-                    <div class="skill-icon" title="CUDA"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA/NVIDIA"></div>
-                    <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
-                    <div class="skill-icon" title="scikit-learn"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit-learn"></div>
-                    <div class="skill-icon" title="NumPy"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"></div>
-                    <div class="skill-icon" title="Pandas"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"></div>
-                </div>
-            </div>
-
-            <div class="skills-category">
-                <h3 class="skills-category-title">Cloud & Infrastructure</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
-                    <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
-                    <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
-                    <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
-                    <div class="skill-icon" title="Git"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"></div>
-                    <div class="skill-icon" title="GitHub"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></div>
-                </div>
-            </div>
-
-            <div class="skills-category">
-                <h3 class="skills-category-title">Databases</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
-                    <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
-                    <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
-                    <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
-                    <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
-                </div>
-            </div>
-
-            <div class="skills-category">
-                <h3 class="skills-category-title">MLOps & Data Engineering</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="Apache Airflow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"></div>
-                    <div class="skill-icon" title="Apache Spark"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"></div>
-                    <div class="skill-icon" title="Apache Kafka"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"></div>
-                    <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
-                    <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
-                </div>
-            </div>
-
-            <div class="skills-category">
-                <h3 class="skills-category-title">AI Tools</h3>
-                <div class="skills-icons">
-                    <div class="skill-icon" title="OpenAI"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI"></div>
-                    <div class="skill-icon" title="LangChain"><img src="https://avatars.githubusercontent.com/u/126733545?s=200&v=4" alt="LangChain"></div>
-                </div>
+                <p>Published researcher with work accepted at <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE ICC 2026</strong></a> on LLM-enabled path planning for wireless networks.</p>
             </div>
         </div>
     </section>
@@ -846,7 +420,7 @@
         <div class="container">
             <h2 class="section-title">Experience</h2>
             <div class="timeline-item">
-                <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="dentalscan-logo.png" alt="DentalScan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></div>
+                <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="dentalscan-logo.png" alt="DentalScan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" onerror="this.parentElement.innerHTML='DS'; this.parentElement.style.background='#10b981'; this.parentElement.style.color='white';"></div>
                 <div class="timeline-content">
                     <h3 class="timeline-company">ReplyQuickAI (DentalScan)</h3>
                     <p class="timeline-role">Machine Learning Engineer Intern</p>
@@ -860,7 +434,7 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant</p>
                     <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
-                    <p class="timeline-description">Leading ML systems work on <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">CTMap</a>, an LLM-enabled connectivity-aware path planning system for mmWave networks, accepted at <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">IEEE ICC 2026</a>. Designing end-to-end LLM inference pipelines and fine-tuning models in PyTorch.</p>
+                    <p class="timeline-description">Leading ML systems work on CTMap, an LLM-enabled connectivity-aware path planning system for mmWave networks, accepted at IEEE ICC 2026. Designing end-to-end LLM inference pipelines and fine-tuning models in PyTorch.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -869,11 +443,11 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Teaching Assistant</p>
                     <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
-                    <p class="timeline-description">Supported graduate courses in Numerical Methods, assisting students with algorithmic problem solving, optimization, and computational modeling. Led weekly review sessions and office hours.</p>
+                    <p class="timeline-description">Supported graduate courses in Numerical Methods, assisting students with algorithmic problem solving, optimization, and computational modeling.</p>
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="tcs-logo.png" alt="TCS" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></div>
+                <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="tcs-logo.png" alt="TCS" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" onerror="this.parentElement.innerHTML='TCS'; this.parentElement.style.background='#1a1a2e'; this.parentElement.style.color='white';"></div>
                 <div class="timeline-content">
                     <h3 class="timeline-company">Tata Consultancy Services</h3>
                     <p class="timeline-role">Senior Software Engineer → Software Engineer</p>
@@ -888,7 +462,6 @@
         <div class="container">
             <h2 class="section-title">Education</h2>
             
-            <!-- Masters -->
             <div class="education-card masters-card">
                 <div class="education-header">
                     <div class="education-logo uta">UTA</div>
@@ -915,16 +488,10 @@
                         <div class="course-tag"><span class="course-icon">📊</span>Data Analysis & Modeling</div>
                         <div class="course-tag"><span class="course-icon">⛏️</span>Data Mining</div>
                         <div class="course-tag"><span class="course-icon">⚙️</span>Design & Analysis of Algorithms</div>
-                        <div class="course-tag"><span class="course-icon">🧮</span>Numerical Methods</div>
-                        <div class="course-tag"><span class="course-icon">💻</span>Software Engineering & QA</div>
-                        <div class="course-tag"><span class="course-icon">🚀</span>Scalable Search & Optimization</div>
                     </div>
                 </div>
-                
-                <p class="education-conclusion">💡 Each course strengthened my ability to design robust software systems, build data-driven architectures, and develop scalable ML solutions.</p>
             </div>
             
-            <!-- Bachelors -->
             <div class="education-card">
                 <div class="education-header">
                     <div class="education-logo au">AU</div>
@@ -938,15 +505,6 @@
                         <span class="gpa-scale">/ 10.0</span>
                     </div>
                 </div>
-                <div class="education-courses">
-                    <p class="courses-label">Relevant Coursework:</p>
-                    <div class="courses-grid">
-                        <div class="course-tag"><span class="course-icon">🤖</span>Artificial Intelligence</div>
-                        <div class="course-tag"><span class="course-icon">📈</span>Big Data Analytics</div>
-                        <div class="course-tag"><span class="course-icon">🗄️</span>Database Systems</div>
-                        <div class="course-tag"><span class="course-icon">📐</span>Data Structures & Algorithms</div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -954,36 +512,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -999,193 +535,38 @@
 
     <section class="section" id="roles">
         <div class="container">
-            <h2 class="section-title">Explore by Role</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem; text-align: center;">View role-specific projects, skills, and experience.</p>
+            <h2 class="section-title">Explore My Work By Role</h2>
             <div class="roles-grid">
-                <a href="DeepLearning.html" class="role-card"><div class="role-icon">🧠</div><h3 class="role-title">Deep Learning Engineer</h3><p class="role-description">GPU optimization, CUDA kernels, FlashAttention, quantization.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-                <a href="MLEngineer.html" class="role-card"><div class="role-icon">⚙️</div><h3 class="role-title">ML Engineer</h3><p class="role-description">Production ML systems, MLOps, model deployment.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-                <a href="LLMGenAI.html" class="role-card"><div class="role-icon">🤖</div><h3 class="role-title">LLM/GenAI Engineer</h3><p class="role-description">LLM fine-tuning, RAG systems, multi-agent architectures.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-                <a href="CloudData.html" class="role-card"><div class="role-icon">☁️</div><h3 class="role-title">Cloud & Data Engineer</h3><p class="role-description">AWS architecture, data pipelines, distributed systems.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-                <a href="BackendSDE.html" class="role-card"><div class="role-icon">💻</div><h3 class="role-title">Backend SDE</h3><p class="role-description">Distributed systems, microservices, high-performance APIs.</p><span class="role-link">View Portfolio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-                <a href="https://saitejasrivilli.github.io/Research.html" class="role-card" target="_blank"><div class="role-icon">📚</div><h3 class="role-title">Research</h3><p class="role-description">IEEE ICC 2026 publication, LLMs for wireless networks.</p><span class="role-link">View Research <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- GitHub Contributions Section -->
-    <section class="section" id="github-activity">
-        <div class="container">
-            <h2 class="section-title">GitHub Activity</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Actively building and contributing to open source</p>
-            <div class="github-contrib-container">
-                <img src="https://ghchart.rshah.org/2563eb/saitejasrivilli" alt="GitHub Contributions" class="github-chart" />
-                <div class="github-stats">
-                    <a href="https://github.com/saitejasrivilli" target="_blank" class="github-stat-card">
-                        <img src="https://img.shields.io/github/followers/saitejasrivilli?style=for-the-badge&logo=github&label=Followers&color=2563eb" alt="Followers">
-                    </a>
-                    <a href="https://github.com/saitejasrivilli?tab=repositories" target="_blank" class="github-stat-card">
-                        <img src="https://img.shields.io/badge/Public%20Repos-25+-2563eb?style=for-the-badge&logo=github" alt="Repos">
-                    </a>
-                    <a href="https://github.com/saitejasrivilli" target="_blank" class="github-stat-card">
-                        <img src="https://img.shields.io/badge/Contributions-500+-10b981?style=for-the-badge&logo=github" alt="Contributions">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Availability Widget Section -->
-    <section class="section" id="availability">
-        <div class="container">
-            <h2 class="section-title">Availability</h2>
-            <div class="availability-container">
-                <div class="availability-card">
-                    <div class="availability-status">
-                        <span class="status-dot-large"></span>
-                        <span class="status-text-large">Available for Opportunities</span>
-                    </div>
-                    <div class="availability-details">
-                        <div class="availability-item">
-                            <span class="avail-icon">📍</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Location</span>
-                                <span class="avail-value">Dallas, TX (Open to Relocation)</span>
-                            </div>
-                        </div>
-                        <div class="availability-item">
-                            <span class="avail-icon">🌍</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Work Preference</span>
-                                <span class="avail-value">Remote, Hybrid, or On-site</span>
-                            </div>
-                        </div>
-                        <div class="availability-item">
-                            <span class="avail-icon">🕐</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Timezone</span>
-                                <span class="avail-value">CST (UTC-6) • Flexible hours</span>
-                            </div>
-                        </div>
-                        <div class="availability-item">
-                            <span class="avail-icon">🗓️</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Start Date</span>
-                                <span class="avail-value">Immediately Available</span>
-                            </div>
-                        </div>
-                        <div class="availability-item">
-                            <span class="avail-icon">🎯</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Target Roles</span>
-                                <span class="avail-value">ML Engineer, Deep Learning, LLM/GenAI, Backend SDE</span>
-                            </div>
-                        </div>
-                        <div class="availability-item">
-                            <span class="avail-icon">🏢</span>
-                            <div class="avail-info">
-                                <span class="avail-label">Preferred Locations</span>
-                                <span class="avail-value">TX, CA, WA, NY, Remote</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- QR Code -->
-                <div class="qr-card">
-                    <div class="qr-code">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://saitejasrivilli.github.io&bgcolor=ffffff&color=1a1a2e" alt="Portfolio QR Code">
-                    </div>
-                    <p class="qr-label">Scan to view portfolio</p>
-                    <p class="qr-url">saitejasrivilli.github.io</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resume Preview Section -->
-    <section class="section" id="resume-preview">
-        <div class="container">
-            <h2 class="section-title">Resume Preview</h2>
-            <div class="resume-preview-container">
-                <div class="resume-frame">
-                    <iframe src="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" title="Resume Preview"></iframe>
-                    <div class="resume-overlay">
-                        <p>📄 Click to view full resume</p>
-                    </div>
-                </div>
-                <div class="resume-actions">
-                    <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn btn-primary resume-download-btn" target="_blank">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        Download Resume (PDF)
-                    </a>
-                    <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                        Open in New Tab
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form Section -->
-    <section class="section" id="contact-form">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">Have an opportunity or want to collaborate? Send me a message and I'll get back to you within 24 hours.</p>
-            
-            <div class="contact-form-container">
-                <form class="contact-form" action="https://formspree.io/f/xpwzgkvq" method="POST">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Your Name *</label>
-                            <input type="text" id="name" name="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email *</label>
-                            <input type="email" id="email" name="email" placeholder="john@company.com" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company" placeholder="Google, Meta, Startup...">
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Role Type</label>
-                            <select id="role" name="role">
-                                <option value="">Select role type</option>
-                                <option value="ML Engineer">ML Engineer</option>
-                                <option value="Deep Learning Engineer">Deep Learning Engineer</option>
-                                <option value="LLM/GenAI Engineer">LLM/GenAI Engineer</option>
-                                <option value="Backend SDE">Backend SDE</option>
-                                <option value="Research">Research Position</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Tell me about the opportunity, project, or how I can help..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary form-submit-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                        Send Message
-                    </button>
-                </form>
-                
-                <div class="contact-alternatives">
-                    <p>Or reach out directly:</p>
-                    <div class="alt-contact-links">
-                        <a href="/cdn-cgi/l/email-protection#cdbeaca4b9a8a7ace3bebfa4bba4a1a1a4afa5b8b9b9b9b8bfb88daaa0aca4a1e3aea2a0" class="alt-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            <span class="__cf_email__" data-cfemail="8ffceee6fbeae5eea1fcfde6f9e6e3e3e6ede7fafbfbfbfafdfacfe8e2eee6e3a1ece0e2">[email&#160;protected]</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="alt-link">
-                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            LinkedIn
-                        </a>
-                    </div>
-                </div>
+                <a href="DeepLearning.html" class="role-card">
+                    <div class="role-icon">🧠</div>
+                    <h3 class="role-title">Deep Learning Engineer</h3>
+                    <p class="role-description">GPU optimization, CUDA kernels, FlashAttention, quantization techniques.</p>
+                    <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a href="LLMGenAI.html" class="role-card">
+                    <div class="role-icon">🤖</div>
+                    <h3 class="role-title">LLM/GenAI Engineer</h3>
+                    <p class="role-description">LLM fine-tuning, RAG pipelines, multi-agent systems, vLLM inference.</p>
+                    <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a href="MLEngineer.html" class="role-card">
+                    <div class="role-icon">⚙️</div>
+                    <h3 class="role-title">ML Engineer</h3>
+                    <p class="role-description">Production ML systems, MLOps, model serving, Airflow pipelines.</p>
+                    <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a href="BackendSDE.html" class="role-card">
+                    <div class="role-icon">💻</div>
+                    <h3 class="role-title">Backend SDE</h3>
+                    <p class="role-description">Distributed systems, Java services, high-throughput APIs, databases.</p>
+                    <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a href="CloudData.html" class="role-card">
+                    <div class="role-icon">☁️</div>
+                    <h3 class="role-title">Cloud & Data Engineer</h3>
+                    <p class="role-description">AWS infrastructure, data pipelines, Spark, Kafka, ETL workflows.</p>
+                    <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
             </div>
         </div>
     </section>
@@ -1195,7 +576,7 @@
             <h2 class="section-title">Let's Connect</h2>
             <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to ML Engineering, Deep Learning, LLM/GenAI, and Backend roles.</p>
             <div class="contact-links">
-                <a href="/cdn-cgi/l/email-protection#ef9c8e869b8a858ec19c9d8699868383868d879a9b9b9b9a9d9aaf88828e8683c18c8082" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+                <a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
                 <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
                 <a href="https://github.com/saitejasrivilli" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
                 <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>Scholar</a>
@@ -1207,44 +588,129 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p></footer>
 
     <script>
-        // Accordion Toggle for Education
-        function toggleAccordion(header) {
-            const item = header.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Close all other accordions
-            document.querySelectorAll('.accordion-item').forEach(acc => {
-                acc.classList.remove('active');
-            });
-            
-            // Toggle current one
-            if (!isActive) {
-                item.classList.add('active');
+        /**
+         * Time-Based Theme Management
+         */
+        function getTimeBasedTheme() {
+            const hour = new Date().getHours();
+            return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+        }
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            localStorage.setItem('themeManualOverride', 'true');
+            updateThemeIcon(newTheme);
+            showThemeToast(newTheme);
+            hideAutoIndicator();
+        }
+        
+        function updateThemeIcon(theme) {
+            const icon = document.querySelector('.theme-icon');
+            if (icon) {
+                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
             }
         }
         
-        // Intersection Observer for scroll animations
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+        function showThemeToast(theme) {
+            const existingToast = document.querySelector('.theme-toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'theme-toast';
+            toast.innerHTML = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 80px;
+                right: 2rem;
+                background: var(--text-primary);
+                color: var(--bg-primary);
+                padding: 0.75rem 1.25rem;
+                border-radius: 50px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                z-index: 1001;
+                animation: fadeInUp 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
         
-        // Observe all project items and cards
-        document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item')
+        function showAutoIndicator() {
+            const indicator = document.getElementById('auto-theme-indicator');
+            if (indicator) {
+                indicator.classList.add('visible');
+                setTimeout(() => indicator.classList.remove('visible'), 3000);
+            }
+        }
         
-        // ==================== NETWORK ANIMATION ====================
-        ;(function() {
+        function hideAutoIndicator() {
+            const indicator = document.getElementById('auto-theme-indicator');
+            if (indicator) indicator.classList.remove('visible');
+        }
+        
+        function applyTheme() {
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            const savedTheme = localStorage.getItem('theme');
+            
+            let theme;
+            if (manualOverride === 'true' && savedTheme) {
+                theme = savedTheme;
+            } else {
+                theme = getTimeBasedTheme();
+                localStorage.removeItem('themeManualOverride');
+            }
+            
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+        
+        // Initialize theme
+        applyTheme();
+        
+        // Show auto indicator on first load if not manually overridden
+        if (localStorage.getItem('themeManualOverride') !== 'true') {
+            setTimeout(showAutoIndicator, 1000);
+        }
+        
+        // Check and update theme every minute for auto-switching
+        setInterval(() => {
+            const manualOverride = localStorage.getItem('themeManualOverride');
+            if (manualOverride !== 'true') {
+                applyTheme();
+            }
+        }, 60000);
+        
+        // Reset manual override at 6 AM and 6 PM
+        setInterval(() => {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            if ((hour === 6 || hour === 18) && minute === 0) {
+                localStorage.removeItem('themeManualOverride');
+                applyTheme();
+                showAutoIndicator();
+            }
+        }, 60000);
+        
+        /**
+         * Network Animation
+         */
+        (function() {
             const canvas = document.getElementById('network-canvas');
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
             let particles = [];
-            let animationId;
             
             function resize() {
                 canvas.width = canvas.offsetWidth;
@@ -1272,7 +738,6 @@
                 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Draw connections
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
@@ -1290,7 +755,6 @@
                     }
                 }
                 
-                // Draw particles
                 particles.forEach(p => {
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -1312,8 +776,138 @@
             function animate() {
                 update();
                 draw();
-                animationId = requestAnimationFrame(animate);
+                requestAnimationFrame(animate);
             }
             
             resize();
-            create
+            createParticles();
+            animate();
+            window.addEventListener('resize', () => { resize(); createParticles(); });
+        })();
+        
+        /**
+         * Scroll Animations
+         */
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+        
+        /**
+         * GitHub Projects - Fetch and Sort by Last Updated
+         */
+        const featuredProjects = [
+            {
+                repo: 'attention-optimization',
+                title: 'Attention Mechanism Optimization',
+                description: 'Built attention benchmarking framework comparing Vanilla, SDPA, FlashAttention-2, xFormers. Achieved 2.8x throughput improvement and 65% memory reduction.',
+                impact: 'Deep Learning',
+                tech: ['PyTorch', 'FlashAttention-2', 'CUDA']
+            },
+            {
+                repo: 'gpu-optimization-mistral',
+                title: 'GPU Optimization for Mistral-7B',
+                description: 'GPU Optimization System achieving 2.8x speedup using PyTorch quantization, CUDA kernel optimization, and GPU profiling with INT4-NF4 quantization.',
+                impact: 'Deep Learning',
+                tech: ['CUDA', 'C++', 'PyTorch']
+            },
+            {
+                repo: 'ai-agent',
+                title: 'Multi-Strategy AI Agent',
+                description: 'AI Agent that auto-selects optimal reasoning strategy. Implements Chain-of-Thought, Tree-of-Thoughts, ReAct, and Multi-Agent collaboration.',
+                impact: 'GenAI',
+                tech: ['Python', 'Groq', 'LangChain']
+            },
+            {
+                repo: 'vllm-throughput-benchmark',
+                title: 'vLLM Throughput Benchmark',
+                description: 'Benchmarked LLM inference throughput using vLLM vs Hugging Face, focusing on batching, KV cache behavior, and scalability under concurrent requests.',
+                impact: 'LLM Inference',
+                tech: ['vLLM', 'PyTorch', 'Profiling']
+            },
+            {
+                repo: 'DistributedKVStore',
+                title: 'Distributed KV Store',
+                description: 'High-performance distributed key-value store with replication, partitioning, and consensus protocols for fault tolerance.',
+                impact: 'Backend',
+                tech: ['Go', 'Distributed Systems', 'Raft']
+            }
+        ];
+        
+        async function fetchGitHubRepoInfo(repoName) {
+            try {
+                const response = await fetch(`https://api.github.com/repos/saitejasrivilli/${repoName}`);
+                if (response.ok) {
+                    return await response.json();
+                }
+            } catch (error) {
+                console.log(`Could not fetch ${repoName}:`, error);
+            }
+            return null;
+        }
+        
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            
+            // Fetch all repo info in parallel
+            const repoPromises = featuredProjects.map(async (project) => {
+                const repoInfo = await fetchGitHubRepoInfo(project.repo);
+                return {
+                    ...project,
+                    updatedAt: repoInfo ? new Date(repoInfo.updated_at) : new Date(0),
+                    url: `https://github.com/saitejasrivilli/${project.repo}`
+                };
+            });
+            
+            const projectsWithDates = await Promise.all(repoPromises);
+            
+            // Sort by most recently updated
+            projectsWithDates.sort((a, b) => b.updatedAt - a.updatedAt);
+            
+            // Render projects
+            container.innerHTML = projectsWithDates.map(project => {
+                const dateStr = project.updatedAt.getTime() > 0 
+                    ? `Updated ${project.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                    : '';
+                
+                return `
+                    <a href="${project.url}" class="project-item" target="_blank">
+                        <div class="project-header">
+                            <h3 class="project-title">${project.title}</h3>
+                            <span class="project-impact">${project.impact}</span>
+                        </div>
+                        <p class="project-description">${project.description}</p>
+                        <div class="project-tech">
+                            ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        ${dateStr ? `<p class="project-updated">📅 ${dateStr}</p>` : ''}
+                    </a>
+                `;
+            }).join('');
+            
+            // Re-apply scroll animations
+            container.querySelectorAll('.project-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        }
+        
+        // Load projects when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>

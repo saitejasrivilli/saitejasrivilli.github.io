@@ -16,12 +16,14 @@
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+        .auto-theme-badge { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.65rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; }
+        .auto-theme-badge.visible { opacity: 1; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--accent); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
         .hero { padding: 8rem 0 4rem; text-align: center; }
@@ -31,6 +33,7 @@
         .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
         .skills-category { margin-bottom: 2.5rem; }
         .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
         .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
@@ -45,6 +48,10 @@
         .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
         .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
@@ -65,7 +72,7 @@
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .auto-theme-badge { top: auto; bottom: 6rem; } }
     </style>
 </head>
 <body>
@@ -102,10 +109,8 @@
 
     <section class="section"><div class="container">
         <h2 class="section-title">ML Engineering Projects</h2>
-        <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">vLLM Production Benchmark</h3><span class="project-impact">$3.6M saved</span></div><p class="project-description">Production benchmarking suite for LLM inference → 86% cost reduction projected. Serving 10K+ daily requests with P95 &lt;25ms.</p><div class="project-tech"><span class="tech-tag">vLLM</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span></div></a>
-        <a href="https://github.com/saitejasrivilli/ai-video-analysis-system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Video Analysis Pipeline</h3><span class="project-impact">Production</span></div><p class="project-description">End-to-end video analysis pipeline with CV models → Real-time processing, scalable deployment on AWS.</p><div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FastAPI</span><span class="tech-tag">AWS</span><span class="tech-tag">Docker</span></div></a>
-        <a href="https://github.com/saitejasrivilli/TelecomChurnPredictor" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Churn Predictor Pipeline</h3><span class="project-impact">PySpark</span></div><p class="project-description">Customer churn prediction with feature engineering → Full ML pipeline with MLflow tracking and Airflow orchestration.</p><div class="project-tech"><span class="tech-tag">PySpark</span><span class="tech-tag">MLflow</span><span class="tech-tag">Airflow</span></div></a>
-        <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">Recommender System</h3><span class="project-impact">Scalable</span></div><p class="project-description">Collaborative filtering recommendation engine → Distributed training on Spark with Redis caching for real-time serving.</p><div class="project-tech"><span class="tech-tag">Spark</span><span class="tech-tag">Redis</span><span class="tech-tag">ALS</span></div></a>
+        <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div></div>
     </div></section>
 
     <section class="section"><div class="container">
@@ -129,22 +134,25 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. ML Engineer.</p></footer>
 
     <script>
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.project-item, .experience-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
+        const projects = [
+            { repo: 'vllm-throughput-benchmark', title: 'vLLM Production Benchmark', description: 'Production benchmarking suite for LLM inference → 86% cost reduction projected. Serving 10K+ daily requests with P95 <25ms.', impact: '$3.6M saved', tech: ['vLLM', 'Docker', 'AWS'] },
+            { repo: 'ai-video-analysis-system', title: 'Video Analysis Pipeline', description: 'End-to-end video analysis pipeline with CV models → Real-time processing, scalable deployment on AWS.', impact: 'Production', tech: ['PyTorch', 'FastAPI', 'AWS', 'Docker'] },
+            { repo: 'TelecomChurnPredictor', title: 'Churn Predictor Pipeline', description: 'Customer churn prediction with feature engineering → Full ML pipeline with MLflow tracking and Airflow orchestration.', impact: 'PySpark', tech: ['PySpark', 'MLflow', 'Airflow'] },
+            { repo: 'Collaborative_filtering_recommender_system', title: 'Recommender System', description: 'Collaborative filtering recommendation engine → Distributed training on Spark with Redis caching for real-time serving.', impact: 'Scalable', tech: ['Spark', 'Redis', 'ALS'] }
+        ];
+
+        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            data.sort((a, b) => b.updatedAt - a.updatedAt);
+            container.innerHTML = data.map(p => { const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''; return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`; }).join('');
+            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+        }
+        document.addEventListener('DOMContentLoaded', loadProjects);
+        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+        document.querySelectorAll('.experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
     </script>
 </body>
 </html>

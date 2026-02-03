@@ -16,53 +16,92 @@
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
         .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
-        .auto-theme-badge { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.65rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; }
-        .auto-theme-badge.visible { opacity: 1; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
+        
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--accent); }
         .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
-        .hero { padding: 8rem 0 4rem; text-align: center; }
-        .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.9rem; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
-        .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
-        .section { padding: 4rem 0; border-top: 1px solid var(--border-color); }
+
+        .hero { padding: 8rem 0 3rem; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 150%; background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%); pointer-events: none; }
+        .hero-greeting { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 3rem; }
+        
+        .avatar-container { margin: 2rem auto; position: relative; }
+        .avatar { width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #3b82f6); display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 4rem; box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .ai-input-container { max-width: 600px; margin: 0 auto 3rem; position: relative; }
+        .ai-input-wrapper { display: flex; align-items: center; background: var(--bg-secondary); border: 2px solid var(--border-color); border-radius: 50px; padding: 0.5rem 0.5rem 0.5rem 1.5rem; transition: all 0.3s ease; }
+        .ai-input-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
+        .ai-input { flex: 1; border: none; background: transparent; font-size: 1rem; color: var(--text-primary); outline: none; padding: 0.75rem 0; }
+        .ai-input::placeholder { color: var(--text-secondary); }
+        .ai-submit { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .ai-submit:hover { transform: scale(1.1); background: #059669; }
+        
+        .quick-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .quick-action { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.25rem 2rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: inherit; min-width: 120px; }
+        .quick-action:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--card-shadow); }
+        .quick-action-icon { font-size: 1.5rem; }
+        .quick-action-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .ai-response { max-width: 700px; margin: 0 auto; padding: 2rem; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border-color); display: none; }
+        .ai-response.active { display: block; animation: fadeInUp 0.5s ease; }
+        .ai-response-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .ai-response-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .ai-response-name { font-weight: 600; }
+        .ai-response-content { color: var(--text-secondary); line-height: 1.8; }
+        .ai-response-content strong { color: var(--text-primary); }
+        .typing-indicator { display: flex; gap: 4px; padding: 0.5rem 0; }
+        .typing-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } }
+
+        .section { padding: 5rem 0; border-top: 1px solid var(--border-color); }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
-        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
-        .skills-category { margin-bottom: 2.5rem; }
-        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
-        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
-        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
-        .project-item:hover { border-color: var(--accent); box-shadow: var(--card-shadow); transform: translateY(-3px); }
-        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
-        .project-title { font-weight: 600; font-size: 1.1rem; }
-        .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
-        .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
-        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
-        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
-        .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
+
+        .skills-section { padding: 4rem 0; border-top: 1px solid var(--border-color); overflow: hidden; }
+        .skills-marquee { overflow: hidden; padding: 1rem 0; margin-top: 2rem; }
+        .skills-track { display: flex; gap: 2rem; animation: marquee 25s linear infinite; width: max-content; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; white-space: nowrap; transition: all 0.3s ease; }
+        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
+        .skill-item img { width: 24px; height: 24px; object-fit: contain; }
+        .skill-item span { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; display: flex; flex-direction: column; background: rgba(248, 249, 250, 0.6); backdrop-filter: blur(10px); transition: all 0.3s; }
+        [data-theme="dark"] .project-item { background: rgba(30, 41, 59, 0.6); }
+        .project-item:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-5px); }
+        .project-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif; }
+        .project-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; flex-grow: 1; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
+        .project-links { display: flex; gap: 0.5rem; margin-top: auto; }
+        .project-link { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; flex: 1; transition: all 0.2s; }
+        .project-link.code { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .project-link.code:hover { border-color: var(--text-primary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; text-align: right; }
+
+        .experience-item, .cert-item { margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .experience-item:hover, .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
-        .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
+        .cert-item { display: flex; gap: 1rem; }
         .cert-icon { font-size: 1.5rem; }
         .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
+
         .cta-section { padding: 4rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
@@ -70,89 +109,252 @@
         .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
         .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .auto-theme-badge { top: auto; bottom: 6rem; } }
+
+        .chat-widget { position: fixed; bottom: 2rem; left: 2rem; z-index: 1000; }
+        .chat-bubble { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.3s ease; }
+        .chat-bubble:hover { transform: scale(1.1); }
+        .chat-popup { position: absolute; bottom: 75px; left: 0; width: 320px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95); transition: all 0.3s ease; overflow: hidden; }
+        .chat-popup.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+        .chat-avatar-placeholder { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .chat-header-text { flex: 1; } .chat-name { display: block; font-weight: 600; color: var(--text-primary); } .chat-status { font-size: 0.75rem; color: #22c55e; }
+        .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
+        .chat-body { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
+        .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
+        .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; }
+        .chat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        .chat-btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 2.5rem; } 
+            .theme-toggle { top: auto; bottom: 1.5rem; right: 1.5rem; } 
+            .quick-actions { gap: 0.75rem; }
+            .quick-action { min-width: 100px; padding: 1rem 1.5rem; }
+            .chat-widget { bottom: 1.5rem; left: 1rem; } 
+            .chat-popup { width: 290px; } 
+            .chat-bubble { width: 55px; height: 55px; }
+            .avatar { width: 140px; height: 140px; font-size: 3rem; }
+        }
+
+        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
+    
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-bubble" onclick="toggleChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
+            <div class="chat-body"><p>Hey! 👋 Interested in LLMs or GenAI? Let's chat about agents, RAG, or fine-tuning!</p></div>
+            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+        </div>
+    </div>
+
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">LLM/GenAI Engineer</span></div></nav>
 
-    <section class="hero"><div class="container">
-        <div class="role-badge animate-fade-in-up"><span>🤖</span><span>LLM/GenAI Engineer</span></div>
-        <h1 class="animate-fade-in-up delay-1">Large Language Models & Generative AI</h1>
-        <p class="hero-description animate-fade-in-up delay-2">Building intelligent AI systems with LLM fine-tuning, RAG pipelines, multi-agent architectures, and cutting-edge generative AI applications.</p>
-    </div></section>
+    <section class="hero">
+        <div class="container">
+            <p class="hero-greeting animate-fade-in-up">Hey, I'm Sai Teja 👋</p>
+            <h1 class="animate-fade-in-up delay-1">LLM/GenAI Engineer</h1>
+            <p class="hero-subtitle animate-fade-in-up delay-2">Building intelligent AI systems with LLMs, RAG pipelines, and multi-agent architectures.</p>
+            
+            <div class="avatar-container animate-fade-in-up delay-2">
+                <div class="avatar">🤖</div>
+            </div>
 
-    <section class="section"><div class="container">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-category"><h3 class="skills-category-title">LLM Frameworks</h3><div class="skills-icons">
-            <div class="skill-icon" title="Hugging Face"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"></div>
-            <div class="skill-icon" title="LangChain"><img src="https://avatars.githubusercontent.com/u/126733545?s=200&v=4" alt="LangChain"></div>
-            <div class="skill-icon" title="vLLM"><img src="https://avatars.githubusercontent.com/u/124825026?s=200&v=4" alt="vLLM"></div>
-            <div class="skill-icon" title="OpenAI"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI"></div>
-        </div></div>
-        <div class="skills-category"><h3 class="skills-category-title">Deep Learning</h3><div class="skills-icons">
-            <div class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"></div>
-            <div class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"></div>
-            <div class="skill-icon" title="CUDA"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"></div>
-        </div></div>
-        <div class="skills-category"><h3 class="skills-category-title">Vector Databases & Infrastructure</h3><div class="skills-icons">
-            <div class="skill-icon" title="Neo4j"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"></div>
-            <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
-            <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
-            <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
-        </div></div>
-    </div></section>
+            <div class="ai-input-container animate-fade-in-up delay-3">
+                <div class="ai-input-wrapper">
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything about my GenAI work..." onkeypress="handleKeyPress(event)">
+                    <button class="ai-submit" onclick="handleAIQuery()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
 
-    <section class="section"><div class="container">
-        <h2 class="section-title">LLM/GenAI Projects</h2>
-        <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
-        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div></div>
-    </div></section>
+            <div class="quick-actions animate-fade-in-up delay-3">
+                <a href="#about" class="quick-action"><span class="quick-action-icon">😊</span><span class="quick-action-label">About Me</span></a>
+                <a href="#projects" class="quick-action"><span class="quick-action-icon">💼</span><span class="quick-action-label">Projects</span></a>
+                <a href="#skills" class="quick-action"><span class="quick-action-icon">📚</span><span class="quick-action-label">Skills</span></a>
+                <a href="#experience" class="quick-action"><span class="quick-action-icon">🎯</span><span class="quick-action-label">Experience</span></a>
+                <a href="#contact" class="quick-action"><span class="quick-action-icon">🔑</span><span class="quick-action-label">Contact</span></a>
+            </div>
 
-    <section class="section"><div class="container">
-        <h2 class="section-title">Relevant Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled connectivity-aware path planning. Fine-tuning LLMs for network prediction tasks.</p></div>
-        <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Integrating GenAI capabilities into dental image analysis pipelines. Building conversational AI features.</p></div>
-    </div></section>
+            <div class="ai-response" id="aiResponse">
+                <div class="ai-response-header">
+                    <div class="ai-response-avatar">🤖</div>
+                    <span class="ai-response-name">Sai's AI Assistant</span>
+                </div>
+                <div class="ai-response-content" id="aiResponseContent"></div>
+            </div>
+        </div>
+    </section>
 
-    <section class="section"><div class="container">
-        <h2 class="section-title">Certifications</h2>
-        <div class="cert-item"><span class="cert-icon">🎓</span><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
-        <div class="cert-item"><span class="cert-icon">🔴</span><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
-    </div></section>
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About My GenAI Journey</h2>
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <p style="color: var(--text-secondary); line-height: 1.9; margin-bottom: 1rem;">I specialize in building production-grade LLM applications, from fine-tuning large language models to architecting complex multi-agent systems. My work spans the entire GenAI stack: prompt engineering, RAG pipelines, vector databases, and high-performance inference optimization.</p>
+                <p style="color: var(--text-secondary); line-height: 1.9;">Published researcher with work at <strong style="color: var(--accent);">IEEE ICC 2026</strong> on LLM-enabled path planning. I've achieved <strong style="color: var(--accent);">12.3× throughput improvements</strong> through vLLM optimization.</p>
+            </div>
+        </div>
+    </section>
 
-    <section class="cta-section"><div class="container">
-        <h2 class="cta-title">Building with LLMs?</h2>
-        <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
-    </div></section>
+    <section class="skills-section" id="skills">
+        <div class="container"><h2 class="section-title">Technical Skills</h2></div>
+        <div class="skills-marquee">
+            <div class="skills-track">
+                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+                <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
+                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+                <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">LLM/GenAI Projects</h2>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
+        </div>
+    </section>
+
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="section-title">Relevant Experience</h2>
+            <div class="experience-item"><h3 class="experience-company">The University of Texas at Arlington</h3><p class="experience-role">Graduate Research Assistant</p><p class="experience-date">Jun 2025 - Present</p><p class="experience-description">CTMap project (IEEE ICC 2026) - LLM-enabled path planning. Fine-tuning LLMs for network prediction.</p></div>
+            <div class="experience-item"><h3 class="experience-company">ReplyQuickAI (DentalScan)</h3><p class="experience-role">Machine Learning Engineer Intern</p><p class="experience-date">Dec 2025 - Present</p><p class="experience-description">Integrating GenAI capabilities into healthcare applications. Building conversational AI features.</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="cert-item"><span class="cert-icon">🎓</span><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
+            <div class="cert-item"><span class="cert-icon">🔴</span><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2 class="cta-title">Building with LLMs?</h2>
+            <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
+            <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        </div>
+    </section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
     <script>
         const projects = [
-            { repo: 'vllm-throughput-benchmark', title: 'vLLM Optimization', description: 'Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM. Systematic benchmarking and profiling.', impact: '7M tokens/sec', tech: ['vLLM', 'LLM', 'Inference'] },
-            { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use capabilities → Planning, multi-step reasoning, and RAG integration.', impact: 'Multi-Agent', tech: ['LangChain', 'RAG', 'Agents'] },
-            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → Chain-of-Thought, Tree-of-Thoughts, ReAct patterns.', impact: 'Reasoning', tech: ['Python', 'Groq', 'LangChain'] },
-            { repo: 'RAG-Application', title: 'RAG Application', description: 'Retrieval-Augmented Generation pipeline → Document chunking, vector search, LLM response generation.', impact: 'RAG', tech: ['LangChain', 'Vector DB', 'LLM'] },
-            { repo: 'LORA-implementation', title: 'LoRA Fine-tuning', description: 'Parameter-efficient fine-tuning implementation → LoRA and QLoRA for large language models.', impact: 'Fine-tuning', tech: ['LoRA', 'QLoRA', 'PEFT'] }
+            { repo: 'vllm-throughput-benchmark', title: 'vLLM Optimization', description: 'Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM.', impact: '7M tokens/sec' },
+            { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use → Planning, multi-step reasoning, RAG integration.', impact: 'Multi-Agent' },
+            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → CoT, ToT, ReAct patterns.', impact: 'Reasoning' },
+            { repo: 'RAG-Application', title: 'RAG Application', description: 'Retrieval-Augmented Generation pipeline → Document chunking, vector search, generation.', impact: 'RAG' },
+            { repo: 'LORA-implementation', title: 'LoRA Fine-tuning', description: 'Parameter-efficient fine-tuning → LoRA and QLoRA for large language models.', impact: 'Fine-tuning' }
         ];
 
-        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        const aiKnowledge = {
+            projects: "I've built several GenAI projects including: <strong>vLLM Optimization</strong> (12.3× throughput improvement), <strong>Advanced LLM Agent</strong> (multi-agent with RAG), <strong>Multi-Strategy AI Agent</strong> (auto-selects reasoning patterns), <strong>RAG Application</strong>, and <strong>LoRA Fine-tuning</strong>. Check out the Projects section below!",
+            skills: "My GenAI skills include: <strong>LLM Frameworks</strong> (Hugging Face, LangChain, vLLM), <strong>Fine-tuning</strong> (LoRA, QLoRA, PEFT), <strong>RAG</strong> (vector databases, embeddings), <strong>Agents</strong> (ReAct, Chain-of-Thought, multi-agent), and <strong>Inference Optimization</strong> (CUDA, quantization).",
+            experience: "I'm currently a <strong>Graduate Research Assistant at UT Arlington</strong> working on CTMap (IEEE ICC 2026) - LLM-enabled path planning. Also an <strong>ML Engineer Intern at ReplyQuickAI</strong> integrating GenAI into healthcare.",
+            rag: "I've built RAG systems with: document chunking, embedding models, vector databases (Pinecone, ChromaDB, Neo4j), hybrid search, and re-ranking. Check my RAG-Application project!",
+            agents: "I specialize in LLM agents that use tools, plan multi-step tasks, implement reasoning strategies (CoT, ToT, ReAct), and collaborate. See my AdvancedLLMAgent project!",
+            contact: "Reach me at <strong>saiteja.srivillibhuttturu@gmail.com</strong> or on <strong>LinkedIn</strong>. I'm excited to discuss LLM applications!",
+            default: "I'm Sai Teja, an LLM/GenAI Engineer. I build intelligent AI systems with LLMs, RAG pipelines, and multi-agent architectures. Ask about my <strong>projects</strong>, <strong>skills</strong>, <strong>experience</strong>, or topics like <strong>RAG</strong>, <strong>agents</strong>!"
+        };
+
+        function handleAIQuery() {
+            const input = document.getElementById('aiInput');
+            const query = input.value.trim().toLowerCase();
+            if (!query) return;
+
+            const responseArea = document.getElementById('aiResponse');
+            const responseContent = document.getElementById('aiResponseContent');
+
+            responseArea.classList.add('active');
+            responseContent.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+
+            setTimeout(() => {
+                let response = aiKnowledge.default;
+                if (query.includes('project')) response = aiKnowledge.projects;
+                else if (query.includes('skill') || query.includes('tech')) response = aiKnowledge.skills;
+                else if (query.includes('experience') || query.includes('work')) response = aiKnowledge.experience;
+                else if (query.includes('rag') || query.includes('retrieval')) response = aiKnowledge.rag;
+                else if (query.includes('agent')) response = aiKnowledge.agents;
+                else if (query.includes('contact') || query.includes('email') || query.includes('hire')) response = aiKnowledge.contact;
+                responseContent.innerHTML = response;
+            }, 1500);
+
+            input.value = '';
+        }
+
+        function handleKeyPress(event) { if (event.key === 'Enter') handleAIQuery(); }
+
+        async function fetchRepo(name) {
+            try {
+                const [repoRes, langRes] = await Promise.all([
+                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}`),
+                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}/languages`)
+                ]);
+                return { repoData: repoRes.ok ? await repoRes.json() : null, langData: langRes.ok ? await langRes.json() : {} };
+            } catch(e) { return { repoData: null, langData: {} }; }
+        }
+        
+        function getTechStack(langData, topics = []) {
+            const langs = Object.entries(langData).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([lang]) => lang);
+            return [...new Set([...langs, ...topics.slice(0, 3)])].slice(0, 5);
+        }
+        
         async function loadProjects() {
             const container = document.getElementById('projects-container');
-            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            if (!container) return;
+            
+            const data = await Promise.all(projects.map(async p => {
+                const { repoData, langData } = await fetchRepo(p.repo);
+                const tech = getTechStack(langData, repoData?.topics || []);
+                return { ...p, updatedAt: repoData ? new Date(repoData.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}`, tech: tech.length > 0 ? tech : ['Code'] };
+            }));
             data.sort((a, b) => b.updatedAt - a.updatedAt);
-            container.innerHTML = data.map(p => { const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''; return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`; }).join('');
-            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+            
+            container.innerHTML = `<div class="projects-grid">${data.map(p => {
+                const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : '';
+                return `<div class="project-item"><h3 class="project-title">${p.title}</h3><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div><div class="project-links"><a href="${p.url}" class="project-link code" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Code</a></div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</div>`;
+            }).join('')}</div>`;
         }
+
         document.addEventListener('DOMContentLoaded', loadProjects);
-        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-        document.querySelectorAll('.experience-item, .cert-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+
+        function toggleChat() {
+            const popup = document.getElementById('chatPopup');
+            if (popup) popup.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const widget = document.getElementById('chatWidget');
+            const popup = document.getElementById('chatPopup');
+            if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) {
+                popup.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>

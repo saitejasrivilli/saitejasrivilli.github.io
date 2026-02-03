@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #06b6d4; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #6366f1; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; }
@@ -19,7 +19,7 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
         .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); transition: background 0.3s ease; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: var(--bg-primary); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
         .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: var(--accent); }
@@ -32,35 +32,48 @@
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
         .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
-        .skills-category { margin-bottom: 2.5rem; }
-        .skills-category-title { font-size: 1rem; font-weight: 500; color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; }
-        .skills-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-        .skill-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-        .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
-        .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; background: var(--bg-primary); }
-        .project-item:hover { border-color: var(--accent); box-shadow: var(--card-shadow); transform: translateY(-3px); }
-        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
-        .project-title { font-weight: 600; font-size: 1.1rem; }
-        .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
-        .project-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+
+        /* Skills Marquee */
+        .skills-section { padding: 4rem 0; border-top: 1px solid var(--border-color); overflow: hidden; }
+        .skills-marquee { overflow: hidden; padding: 1rem 0; margin-top: 2rem; }
+        .skills-track { display: flex; gap: 2rem; animation: marquee 25s linear infinite; width: max-content; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; white-space: nowrap; transition: all 0.3s ease; }
+        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
+        .skill-item img { width: 24px; height: 24px; object-fit: contain; }
+        .skill-item span { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+
+        /* Glassmorphism Project Cards */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; display: flex; flex-direction: column; background: rgba(248, 249, 250, 0.6); backdrop-filter: blur(10px); transition: all 0.3s; }
+        [data-theme="dark"] .project-item { background: rgba(30, 41, 59, 0.6); }
+        .project-item:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-5px); }
+        .project-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif; }
+        .project-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; flex-grow: 1; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
+        .project-links { display: flex; gap: 0.5rem; margin-top: auto; }
+        .project-link { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; flex: 1; transition: all 0.2s; }
+        .project-link.code { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .project-link.code:hover { border-color: var(--text-primary); }
+        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; text-align: right; }
         .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
-        .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .experience-item { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
-        .experience-item:hover { transform: translateX(5px); border-color: var(--accent); }
+
+        /* LeetCode Card */
+        .leetcode-card { display: block; padding: 2rem; border: 1px solid var(--border-color); border-radius: 16px; background: var(--bg-primary); text-decoration: none; color: inherit; transition: all 0.3s ease; margin-bottom: 2rem; }
+        .leetcode-card:hover { border-color: #ffa116; box-shadow: 0 8px 30px rgba(255, 161, 22, 0.15); transform: translateY(-3px); }
+        .leetcode-stats { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .solved-number { font-size: 2.5rem; font-weight: 700; color: #ffa116; }
+        .solved-label { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .experience-item, .cert-item { margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
+        .experience-item:hover, .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
         .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
         .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
-        .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
-        .cert-icon { font-size: 1.5rem; }
-        .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
-        .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
         .cta-section { padding: 4rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
         .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
@@ -70,117 +83,94 @@
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
-        /* LeetCode Card Styles */
-        .leetcode-card { display: block; padding: 2rem; border: 1px solid var(--border-color); border-radius: 16px; background: var(--bg-primary); text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        .leetcode-card:hover { border-color: #ffa116; box-shadow: 0 8px 30px rgba(255, 161, 22, 0.15); transform: translateY(-3px); }
-        .leetcode-stats { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 1.5rem; }
-        .leetcode-main { display: flex; gap: 2rem; align-items: center; }
-        .leetcode-solved { text-align: center; }
-        .solved-number { display: block; font-size: 3rem; font-weight: 700; color: #ffa116; line-height: 1; }
-        .solved-label { font-size: 0.85rem; color: var(--text-secondary); }
-        .leetcode-breakdown { display: flex; flex-direction: column; gap: 0.5rem; }
-        .difficulty { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.85rem; }
-        .difficulty.easy .diff-label { color: #00b8a3; }
-        .difficulty.medium .diff-label { color: #ffc01e; }
-        .difficulty.hard .diff-label { color: #ff375f; }
-        .diff-count { color: var(--text-secondary); }
-        .leetcode-streak { display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }
-        .streak-item { display: flex; flex-direction: column; }
-        .streak-value { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
-        .streak-label { font-size: 0.75rem; color: var(--text-secondary); }
-        .leetcode-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .badge { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.8rem; color: var(--text-secondary); }
-        .leetcode-link { color: #ffa116; font-weight: 500; font-size: 0.9rem; }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .leetcode-stats { flex-direction: column; } .leetcode-main { flex-direction: column; align-items: center; } }
+
+        .chat-widget { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; }
+        .chat-bubble { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.3s ease; }
+        .chat-bubble:hover { transform: scale(1.1); }
+        .chat-popup { position: absolute; bottom: 75px; right: 0; width: 320px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95); transition: all 0.3s ease; overflow: hidden; }
+        .chat-popup.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+        .chat-avatar-placeholder { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .chat-header-text { flex: 1; } .chat-name { display: block; font-weight: 600; color: var(--text-primary); } .chat-status { font-size: 0.75rem; color: #22c55e; }
+        .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
+        .chat-body { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
+        .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
+        .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; }
+        .chat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        .chat-btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .theme-toggle { top: auto; bottom: 1.5rem; } .chat-widget { bottom: 1.5rem; right: 1rem; } .chat-popup { width: 290px; } .chat-bubble { width: 55px; height: 55px; } }
     </style>
 </head>
 <body>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-bubble" onclick="toggleChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
+            <div class="chat-body"><p>Hey! 👋 Need backend expertise? Let's talk about distributed systems, APIs, or scalable architectures!</p></div>
+            <div class="chat-actions"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
+        </div>
+    </div>
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend SDE</span></div></nav>
 
     <section class="hero"><div class="container">
         <div class="role-badge animate-fade-in-up"><span>💻</span><span>Backend SDE</span></div>
-        <h1 class="animate-fade-in-up delay-1">Scalable Backend Systems & APIs</h1>
-        <p class="hero-description animate-fade-in-up delay-2">Building high-performance distributed systems, REST APIs, and data-intensive services with Java, Go, Python, and modern backend technologies.</p>
+        <h1 class="animate-fade-in-up delay-1">Distributed Systems & High-Performance APIs</h1>
+        <p class="hero-description animate-fade-in-up delay-2">Building scalable backend services, distributed systems, and high-throughput data processing pipelines.</p>
     </div></section>
 
-    <section class="section"><div class="container">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-category"><h3 class="skills-category-title">Languages</h3><div class="skills-icons">
-            <div class="skill-icon" title="Java"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"></div>
-            <div class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
-            <div class="skill-icon" title="Go"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"></div>
-            <div class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"></div>
-        </div></div>
-        <div class="skills-category"><h3 class="skills-category-title">Frameworks & APIs</h3><div class="skills-icons">
-            <div class="skill-icon" title="Spring Boot"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"></div>
-            <div class="skill-icon" title="FastAPI"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"></div>
-            <div class="skill-icon" title="Flask"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"></div>
-        </div></div>
-        <div class="skills-category"><h3 class="skills-category-title">Databases</h3><div class="skills-icons">
-            <div class="skill-icon" title="PostgreSQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
-            <div class="skill-icon" title="MongoDB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"></div>
-            <div class="skill-icon" title="Redis"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"></div>
-            <div class="skill-icon" title="MySQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"></div>
-        </div></div>
-        <div class="skills-category"><h3 class="skills-category-title">Infrastructure</h3><div class="skills-icons">
-            <div class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"></div>
-            <div class="skill-icon" title="Kubernetes"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
-            <div class="skill-icon" title="AWS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"></div>
-            <div class="skill-icon" title="Linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"></div>
-        </div></div>
-    </div></section>
+    <section class="skills-section"><div class="container"><h2 class="section-title">Technical Skills</h2></div>
+        <div class="skills-marquee">
+            <div class="skills-track">
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"><span>Spring Boot</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s"><span>Kubernetes</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"><span>Kafka</span></div>
+                <!-- Duplicate -->
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring"><span>Spring Boot</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s"><span>Kubernetes</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka"><span>Kafka</span></div>
+            </div>
+        </div>
+    </section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Professional Experience</h2>
-        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years • Chennai</p><p class="experience-description">Designed distributed Java services across production systems. Led system design for data-intensive services. Built fault-tolerant backend with high availability. Mentored junior engineers on best practices.</p></div>
+        <h2 class="section-title">LeetCode Progress</h2>
+        <a href="https://leetcode.com/u/saitejasrivilli/" class="leetcode-card" target="_blank">
+            <div class="leetcode-stats">
+                <div><span class="solved-number">400+</span><p class="solved-label">Problems Solved</p></div>
+                <div style="text-align: right;"><p style="color: #22c55e; font-weight: 600;">Easy: 150+</p><p style="color: #ffa116; font-weight: 600;">Medium: 200+</p><p style="color: #ef4444; font-weight: 600;">Hard: 50+</p></div>
+            </div>
+        </a>
     </div></section>
 
     <section class="section"><div class="container">
         <h2 class="section-title">Backend Projects</h2>
         <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
-        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects from GitHub...</p></div></div>
+        <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
     </div></section>
 
     <section class="section"><div class="container">
-        <h2 class="section-title">Certifications</h2>
-        <div class="cert-item"><span class="cert-icon">💻</span><div class="cert-content"><h4>CodePath Technical Interview Prep</h4><p>CodePath • May 2025</p></div></div>
-        <div class="cert-item"><span class="cert-icon">🔶</span><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
-        <div class="cert-item"><span class="cert-icon">🔵</span><div class="cert-content"><h4>Neo4j Certified Professional</h4><p>Neo4j • Jul 2024</p></div></div>
-    </div></section>
-
-    <section class="section"><div class="container">
-        <h2 class="section-title">LeetCode Profile</h2>
-        <a href="https://leetcode.com/u/ssteja1998/" class="leetcode-card" target="_blank">
-            <div class="leetcode-stats">
-                <div class="leetcode-main">
-                    <div class="leetcode-solved">
-                        <span class="solved-number">716</span>
-                        <span class="solved-label">Problems Solved</span>
-                    </div>
-                    <div class="leetcode-breakdown">
-                        <div class="difficulty easy"><span class="diff-label">Easy</span><span class="diff-count">292/924</span></div>
-                        <div class="difficulty medium"><span class="diff-label">Medium</span><span class="diff-count">345/2002</span></div>
-                        <div class="difficulty hard"><span class="diff-label">Hard</span><span class="diff-count">79/905</span></div>
-                    </div>
-                </div>
-                <div class="leetcode-streak">
-                    <div class="streak-item"><span class="streak-value">1,654</span><span class="streak-label">Submissions (1 year)</span></div>
-                    <div class="streak-item"><span class="streak-value">223</span><span class="streak-label">Active Days</span></div>
-                    <div class="streak-item"><span class="streak-value">46</span><span class="streak-label">Max Streak</span></div>
-                </div>
-            </div>
-            <div class="leetcode-badges">
-                <span class="badge">🏆 100 Days Badge 2025</span>
-                <span class="badge">⭐ 4 Badges</span>
-            </div>
-            <div class="leetcode-link">View Full Profile →</div>
-        </a>
+        <h2 class="section-title">Relevant Experience</h2>
+        <div class="experience-item"><h3 class="experience-company">Tata Consultancy Services</h3><p class="experience-role">Senior Software Engineer → Software Engineer</p><p class="experience-date">Jun 2019 - May 2023 • 4 years</p><p class="experience-description">Designed and owned Java-based distributed data processing services. Led system design for high-throughput APIs. Built fault-tolerant backend services handling millions of requests daily.</p></div>
     </div></section>
 
     <section class="cta-section"><div class="container">
-        <h2 class="cta-title">Looking for Backend Expertise?</h2>
-        <p class="cta-description">Let's discuss how I can help build robust, scalable backend systems.</p>
+        <h2 class="cta-title">Need Backend Engineering?</h2>
+        <p class="cta-description">Let's discuss scalable systems and distributed architectures.</p>
         <div class="cta-buttons"><a href="mailto:saiteja.srivillibhuttturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
@@ -188,25 +178,46 @@
 
     <script>
         const projects = [
-            { repo: 'DistributedKVStore', title: 'Distributed KV Store', description: 'High-performance distributed key-value store → Replication, partitioning, and Raft consensus algorithm implementation.', impact: 'Go + Raft', tech: ['Go', 'Distributed', 'Raft'] },
-            { repo: 'ai-video-analysis-system', title: 'Video Analysis API', description: 'RESTful API backend for video analysis → Async processing, queue management, P95 <25ms latency.', impact: 'FastAPI', tech: ['FastAPI', 'Redis', 'Celery'] },
-            { repo: 'vllm-throughput-benchmark', title: 'Inference Server', description: 'High-throughput inference server → 10K+ daily requests with optimized latency for production ML serving.', impact: 'High Throughput', tech: ['Python', 'vLLM', 'API'] },
-            { repo: 'go-event-inges', title: 'Go Event Ingestion', description: 'High-throughput event ingestion service → Real-time data processing built in Go.', impact: 'Streaming', tech: ['Go', 'Streaming', 'Events'] },
-            { repo: 'JobSchedulingAlgosCompa', title: 'Job Scheduling Algorithms', description: 'Comparison of job scheduling algorithms → Benchmarking for distributed systems optimization.', impact: 'Systems', tech: ['Algorithms', 'Scheduling'] }
+            { repo: 'DistributedKVStore', title: 'Distributed Key-Value Store', description: 'High-performance distributed KV store → Replication, partitioning, consensus protocols for fault tolerance.', impact: 'Distributed' },
+            { repo: 'vllm-throughput-benchmark', title: 'High-Throughput Benchmarking', description: 'Production benchmarking system → Systematic performance testing achieving 7M+ ops/sec.', impact: 'Performance' },
+            { repo: 'RAG-Application', title: 'Backend API Service', description: 'RESTful API backend → Document processing, caching, database integration.', impact: 'API' }
         ];
 
-        async function fetchRepo(name) { try { const r = await fetch(`https://api.github.com/repos/saitejasrivilli/${name}`); if (r.ok) return await r.json(); } catch(e) {} return null; }
+        async function fetchRepo(name) {
+            try {
+                const [repoRes, langRes] = await Promise.all([
+                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}`),
+                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}/languages`)
+                ]);
+                return { repoData: repoRes.ok ? await repoRes.json() : null, langData: langRes.ok ? await langRes.json() : {} };
+            } catch(e) { return { repoData: null, langData: {} }; }
+        }
+        
+        function getTechStack(langData, topics = []) {
+            const langs = Object.entries(langData).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([lang]) => lang);
+            return [...new Set([...langs, ...topics.slice(0, 3)])].slice(0, 5);
+        }
+        
         async function loadProjects() {
             const container = document.getElementById('projects-container');
-            const data = await Promise.all(projects.map(async p => { const info = await fetchRepo(p.repo); return { ...p, updatedAt: info ? new Date(info.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}` }; }));
+            if (!container) return;
+            
+            const data = await Promise.all(projects.map(async p => {
+                const { repoData, langData } = await fetchRepo(p.repo);
+                const tech = getTechStack(langData, repoData?.topics || []);
+                return { ...p, updatedAt: repoData ? new Date(repoData.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}`, tech: tech.length > 0 ? tech : ['Code'] };
+            }));
             data.sort((a, b) => b.updatedAt - a.updatedAt);
-            container.innerHTML = data.map(p => { const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''; return `<a href="${p.url}" class="project-item" target="_blank"><div class="project-header"><h3 class="project-title">${p.title}</h3><span class="project-impact">${p.impact}</span></div><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</a>`; }).join('');
-            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+            
+            container.innerHTML = `<div class="projects-grid">${data.map(p => {
+                const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : '';
+                return `<div class="project-item"><h3 class="project-title">${p.title}</h3><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div><div class="project-links"><a href="${p.url}" class="project-link code" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Code</a></div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</div>`;
+            }).join('')}</div>`;
         }
+
         document.addEventListener('DOMContentLoaded', loadProjects);
-        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-        document.querySelectorAll('.experience-item, .cert-item, .leetcode-card').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
+        function toggleChat() { const popup = document.getElementById('chatPopup'); if (popup) popup.classList.toggle('active'); }
+        document.addEventListener('click', function(e) { const widget = document.getElementById('chatWidget'); const popup = document.getElementById('chatPopup'); if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) popup.classList.remove('active'); });
     </script>
 </body>
 </html>

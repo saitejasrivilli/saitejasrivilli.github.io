@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Portfolio Auto-Updater
-- Updates index.html with ALL projects (sorted by update date)
+- Updates index.html with TOP 5 latest projects (sorted by update date)
 - Updates role-specific pages with ONLY relevant projects
 """
 
@@ -203,12 +203,27 @@ def format_repo_name(name):
         "advancedllmagent": "Advanced LLM Agent",
         "datasciencemasters": "Data Science Masters",
         "telugugpt": "Telugu GPT",
-        "jobschedulingalgoscompa": "Job Scheduling Algorithms"
+        "jobschedulingalgoscompa": "Job Scheduling Algorithms",
+        "ai-agent": "AI Agent",
+        "multi-lora-rag-assistant": "Multi-LoRA RAG Assistant",
+        "gpu-optimization-mistral": "GPU Optimization for Mistral",
+        "vllm-throughput-benchmark": "vLLM Throughput Benchmark",
+        "llm-long-context-stress-test": "LLM Long Context Stress Test",
+        "offline-rag-assistant": "Offline RAG Assistant",
+        "ai-video-analysis-system": "AI Video Analysis System",
+        "amazon-recommender-system": "Amazon Recommender System",
+        "youtube-transcript-query-tool": "YouTube Transcript Query Tool",
+        "buyer-seller-mt": "Buyer-Seller Machine Translation",
+        "quantization-speculative-decoding-benchmark": "Quantization & Speculative Decoding Benchmark"
     }
     
     lower_name = name.lower().replace("-", "").replace("_", "")
     if lower_name in special_names:
         return special_names[lower_name]
+    
+    # Check with hyphens
+    if name.lower() in special_names:
+        return special_names[name.lower()]
     
     # Default: replace hyphens/underscores with spaces and title case
     return name.replace("-", " ").replace("_", " ").title()

@@ -1,118 +1,184 @@
-// theme.js - Shared Dark Mode for All Pages
-// Add this to your GitHub Pages repo and include in all HTML files
+/**
+ * Theme Manager - Auto Dark/Light Mode
+ * - Automatically switches based on time of day (6PM-6AM = dark)
+ * - Respects system preference (prefers-color-scheme)
+ * - Manual toggle override with memory
+ * - Mobile compatible with touch events
+ */
 
 (function() {
-    // Apply theme IMMEDIATELY to prevent flash (runs before page renders)
+    'use strict';
+
+    // Configuration
+    const CONFIG = {
+        darkStartHour: 18,    // 6 PM
+        darkEndHour: 6,       // 6 AM
+        storageKey: 'theme',
+        overrideKey: 'themeManualOverride',
+        transitionDuration: 300
+    };
+
+    // Determine theme based on time of day
     function getTimeBasedTheme() {
         const hour = new Date().getHours();
-        // Dark mode from 6 PM (18:00) to 6 AM (06:00)
-        return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+        return (hour >= CONFIG.darkStartHour || hour < CONFIG.darkEndHour) ? 'dark' : 'light';
     }
 
-    function applyThemeImmediately() {
-        const manualOverride = localStorage.getItem('themeManualOverride');
-        const savedTheme = localStorage.getItem('theme');
-        const theme = (manualOverride === 'true' && savedTheme) ? savedTheme : getTimeBasedTheme();
-        document.documentElement.setAttribute('data-theme', theme);
-        return theme;
+    // Check system preference
+    function getSystemPreference() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
     }
 
-    // Apply immediately
-    const currentTheme = applyThemeImmediately();
+    // Determine the best theme to use
+    function determineTheme() {
+        const manualOverride = localStorage.getItem(CONFIG.overrideKey);
+        const savedTheme = localStorage.getItem(CONFIG.storageKey);
 
-    // Full theme functionality (runs after DOM loads)
-    document.addEventListener('DOMContentLoaded', function() {
+        // If user manually selected a theme, respect it
+        if (manualOverride === 'true' && savedTheme) {
+            return savedTheme;
+        }
+
+        // Otherwise, use time-based theme
+        return getTimeBasedTheme();
+    }
+
+    // Apply theme to document
+    function applyTheme(theme, animate = true) {
+        const html = document.documentElement;
         
-        // Update the toggle button icon
-        function updateThemeIcon(theme) {
-            const icon = document.querySelector('.theme-icon');
-            if (icon) {
-                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
+        if (animate) {
+            html.style.transition = `background ${CONFIG.transitionDuration}ms ease, color ${CONFIG.transitionDuration}ms ease`;
         }
-
-        // Show toast notification on theme change
-        function showThemeToast(theme) {
-            const existingToast = document.querySelector('.theme-toast');
-            if (existingToast) existingToast.remove();
-
-            const toast = document.createElement('div');
-            toast.className = 'theme-toast';
-            toast.innerHTML = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                right: 2rem;
-                background: var(--text-primary);
-                color: var(--bg-primary);
-                padding: 0.75rem 1.25rem;
-                border-radius: 50px;
-                font-size: 0.85rem;
-                font-weight: 500;
-                z-index: 1001;
-                animation: fadeInUp 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            `;
-            document.body.appendChild(toast);
-
+        
+        html.setAttribute('data-theme', theme);
+        
+        // Update theme toggle icon if it exists
+        updateThemeIcon(theme);
+        
+        // Remove transition after it completes
+        if (animate) {
             setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 2000);
+                html.style.transition = '';
+            }, CONFIG.transitionDuration);
+        }
+    }
+
+    // Update the toggle button icon
+    function updateThemeIcon(theme) {
+        const icon = document.querySelector('.theme-icon');
+        if (icon) {
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+    }
+
+    // Show toast notification
+    function showToast(theme) {
+        // Remove existing toast
+        const existingToast = document.querySelector('.theme-toast');
+        if (existingToast) {
+            existingToast.remove();
         }
 
-        // Apply theme with icon update
-        function applyTheme() {
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            const savedTheme = localStorage.getItem('theme');
-            
-            let theme;
-            if (manualOverride === 'true' && savedTheme) {
-                theme = savedTheme;
-            } else {
-                theme = getTimeBasedTheme();
-                localStorage.removeItem('themeManualOverride');
-            }
-            
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-            return theme;
-        }
+        const toast = document.createElement('div');
+        toast.className = 'theme-toast';
+        toast.textContent = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            right: 1rem;
+            left: 1rem;
+            max-width: 200px;
+            margin-left: auto;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 1001;
+            text-align: center;
+            animation: fadeInUp 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        `;
+        document.body.appendChild(toast);
 
-        // Toggle theme (called by button click)
-        window.toggleTheme = function() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            localStorage.setItem('themeManualOverride', 'true');
-            updateThemeIcon(newTheme);
-            showThemeToast(newTheme);
-        };
+        // Auto-remove toast
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
 
-        // Initialize
-        updateThemeIcon(document.documentElement.getAttribute('data-theme'));
+    // Toggle theme (called by button)
+    window.toggleTheme = function() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Save preference
+        localStorage.setItem(CONFIG.storageKey, newTheme);
+        localStorage.setItem(CONFIG.overrideKey, 'true');
+        
+        // Apply theme
+        applyTheme(newTheme);
+        showToast(newTheme);
+    };
 
-        // Auto-update theme every minute (for users who keep page open)
-        setInterval(() => {
-            const manualOverride = localStorage.getItem('themeManualOverride');
+    // Initialize theme immediately (before DOM loads to prevent flash)
+    function initTheme() {
+        const theme = determineTheme();
+        applyTheme(theme, false);
+    }
+
+    // Run immediately
+    initTheme();
+
+    // Also run when DOM is ready (to update icon)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            updateThemeIcon(determineTheme());
+        });
+    } else {
+        updateThemeIcon(determineTheme());
+    }
+
+    // Listen for system preference changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            const manualOverride = localStorage.getItem(CONFIG.overrideKey);
             if (manualOverride !== 'true') {
-                applyTheme();
+                applyTheme(e.matches ? 'dark' : 'light');
             }
-        }, 60000);
+        });
+    }
 
-        // Reset manual override at 6 AM and 6 PM to re-enable auto-switching
-        setInterval(() => {
-            const now = new Date();
-            const hour = now.getHours();
-            const minute = now.getMinutes();
-            if ((hour === 6 || hour === 18) && minute === 0) {
-                localStorage.removeItem('themeManualOverride');
-                applyTheme();
+    // Check time-based theme every minute
+    setInterval(function() {
+        const manualOverride = localStorage.getItem(CONFIG.overrideKey);
+        if (manualOverride !== 'true') {
+            const theme = getTimeBasedTheme();
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (theme !== currentTheme) {
+                applyTheme(theme);
             }
-        }, 60000);
-    });
+        }
+    }, 60000);
+
+    // Reset manual override at theme switch times (6 AM and 6 PM)
+    setInterval(function() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        
+        if ((hour === CONFIG.darkStartHour || hour === CONFIG.darkEndHour) && minute === 0) {
+            localStorage.removeItem(CONFIG.overrideKey);
+            applyTheme(getTimeBasedTheme());
+        }
+    }, 60000);
+
 })();

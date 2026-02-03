@@ -162,41 +162,8 @@
         ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
         ctx.fill();
 
-        // Secondary bright core - SMALLER
-        const coreGradient = ctx.createRadialGradient(
-            mouseX, mouseY, 0,
-            mouseX, mouseY, 50
-        );
-
-        const coreColor = colorPalette[(Math.floor((animationTime * 0.03) % colorPalette.length) + 4) % colorPalette.length];
-        const coreAlpha = baseIntensity * 0.9;
         
-        coreGradient.addColorStop(0, `hsla(${coreColor.h}, ${coreColor.s}%, ${coreColor.l + 20}%, ${coreAlpha})`);
-        coreGradient.addColorStop(0.5, `hsla(${coreColor.h}, ${coreColor.s}%, ${coreColor.l + 10}%, ${coreAlpha * 0.6})`);
-        coreGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
-
-        ctx.fillStyle = coreGradient;
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 50, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Ultra-bright center point
-        const centerGradient = ctx.createRadialGradient(
-            mouseX, mouseY, 0,
-            mouseX, mouseY, 25
-        );
-
-        const centerColor = colorPalette[(Math.floor((animationTime * 0.03) % colorPalette.length) + 2) % colorPalette.length];
-        const centerAlpha = baseIntensity * 0.95;
-        
-        centerGradient.addColorStop(0, `hsla(${centerColor.h}, ${centerColor.s}%, ${centerColor.l + 25}%, ${centerAlpha})`);
-        centerGradient.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
-
-        ctx.fillStyle = centerGradient;
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2);
-        ctx.fill();
-    }
+            }
 
     function animate() {
         animationTime++;

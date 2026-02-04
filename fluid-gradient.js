@@ -1,9 +1,6 @@
 if (typeof window === "undefined") return;
-document.addEventListener("DOMContentLoaded",()=>{
 
-
-// fluid-gradient.js
-// Luxury Nebula Fluid with GSAP easing, edge curl distortion, touch splats, slow idle drift
+document.addEventListener("DOMContentLoaded", () => {
 
 (function () {
   if (window.__fluidGradientLoaded) return;
@@ -30,11 +27,17 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   function init(){
 
-    const container=document.querySelector(".hero-background")||document.body;
-
+    // FULLSCREEN FIXED CANVAS (behind everything)
     const canvas=document.createElement("canvas");
-    canvas.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";
-    container.appendChild(canvas);
+    canvas.style.cssText=`
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      pointer-events:none;
+      z-index:-1;
+    `;
+    document.body.prepend(canvas);
 
     const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
     renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -45,18 +48,16 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const mouse={x:.5,y:.5,tx:.5,ty:.5};
 
-    gsap.ticker.fps(60);
-
     function setTarget(x,y){
       mouse.tx=x; mouse.ty=y;
       gsap.to(mouse,{x:mouse.tx,y:mouse.ty,duration:.6,ease:"power3.out"});
     }
 
-    window.addEventListener("mousemove",e=>{
-      setTarget(e.clientX/innerWidth,1-e.clientY/innerHeight);
+    addEventListener("mousemove",e=>{
+      setTarget(e.clientX/innerWidth,1-e.clientY/inners);
     });
 
-    window.addEventListener("touchmove",e=>{
+    addEventListener("touchmove",e=>{
       const t=e.touches[0];
       setTarget(t.clientX/innerWidth,1-t.clientY/innerHeight);
     },{passive:true});
@@ -103,11 +104,10 @@ void main(){
  vec2 uv=gl_FragCoord.xy/resolution.xy;
  vec2 p=uv*2.-1.; p.x*=resolution.x/resolution.y;
 
- // slow luxury idle drift
  float n=noise(p*3.+time*.03);
  float swirl=noise(p*1.8+vec2(time*.02));
 
- // edge curl
+ // curl distortion
  p+=vec2(-p.y,p.x)*swirl*.15;
 
  vec2 m=mouse*2.-1.;
@@ -123,8 +123,7 @@ void main(){
 }`
     });
 
-    const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),material);
-    scene.add(quad);
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),material));
 
     function resize(){
       renderer.setSize(innerWidth,innerHeight);
@@ -133,7 +132,7 @@ void main(){
     addEventListener("resize",resize); resize();
 
     function loop(){
-      uniforms.time.value+=.008; // slower drift
+      uniforms.time.value+=.008;
       uniforms.mouse.value.set(mouse.x,mouse.y);
       renderer.render(scene,camera);
       requestAnimationFrame(loop);
@@ -141,5 +140,4 @@ void main(){
     loop();
   }
 })();
-
 });

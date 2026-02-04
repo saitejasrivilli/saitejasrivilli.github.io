@@ -205,6 +205,8 @@
             filter: blur(60px);
             opacity: 0.7;
             mix-blend-mode: normal;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
         }
         
         /* Blob 1 - Pink/Coral - Top Left flowing down */
@@ -219,7 +221,6 @@
                 transparent 70%);
             top: -10%;
             left: -10%;
-            animation: float1 20s ease-in-out infinite;
         }
         
         /* Blob 2 - Purple/Blue - Top Right */
@@ -234,7 +235,6 @@
                 transparent 70%);
             top: -5%;
             right: -5%;
-            animation: float2 25s ease-in-out infinite;
         }
         
         /* Blob 3 - Cyan/Mint - Center Right */
@@ -249,7 +249,6 @@
                 transparent 70%);
             top: 30%;
             right: -8%;
-            animation: float3 22s ease-in-out infinite;
         }
         
         /* Blob 4 - Yellow/Orange - Bottom Left */
@@ -264,7 +263,6 @@
                 transparent 70%);
             bottom: -15%;
             left: -10%;
-            animation: float4 28s ease-in-out infinite;
         }
         
         /* Blob 5 - Magenta/Pink - Bottom Center */
@@ -279,41 +277,6 @@
                 transparent 70%);
             bottom: -10%;
             left: 35%;
-            animation: float5 24s ease-in-out infinite;
-        }
-        
-        /* Smooth flowing animations */
-        @keyframes float1 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            25% { transform: translate(5%, 8%) scale(1.05) rotate(5deg); }
-            50% { transform: translate(10%, 5%) scale(1.1) rotate(-3deg); }
-            75% { transform: translate(3%, 10%) scale(1.02) rotate(2deg); }
-        }
-        
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            25% { transform: translate(-8%, 5%) scale(1.08) rotate(-5deg); }
-            50% { transform: translate(-5%, 12%) scale(1.02) rotate(3deg); }
-            75% { transform: translate(-10%, 6%) scale(1.06) rotate(-2deg); }
-        }
-        
-        @keyframes float3 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            33% { transform: translate(-6%, -8%) scale(1.1) rotate(4deg); }
-            66% { transform: translate(-12%, 5%) scale(1.05) rotate(-4deg); }
-        }
-        
-        @keyframes float4 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            25% { transform: translate(8%, -5%) scale(1.05) rotate(-3deg); }
-            50% { transform: translate(5%, -10%) scale(1.12) rotate(5deg); }
-            75% { transform: translate(12%, -3%) scale(1.03) rotate(-2deg); }
-        }
-        
-        @keyframes float5 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            33% { transform: translate(-5%, -12%) scale(1.08) rotate(-4deg); }
-            66% { transform: translate(8%, -6%) scale(1.04) rotate(3deg); }
         }
         
         /* Dark mode - more vibrant, slightly higher opacity */
@@ -393,9 +356,7 @@
         
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
-        .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-        .hero-background canvas { width: 100%; height: 100%; }
-        .hero > *:not(.hero-background) { position: relative; z-index: 1; }
+        .hero > * { position: relative; z-index: 1; }
         .profile-container { 
             width: 160px; 
             height: 160px; 
@@ -646,11 +607,11 @@
     <!-- Mouse Following Gradient - Pastel Swirl -->
     <!-- Fluid Marble Gradient Background -->
     <div class="fluid-gradient">
-        <div class="marble-blob marble-blob-1"></div>
-        <div class="marble-blob marble-blob-2"></div>
-        <div class="marble-blob marble-blob-3"></div>
-        <div class="marble-blob marble-blob-4"></div>
-        <div class="marble-blob marble-blob-5"></div>
+        <div class="marble-blob marble-blob-1" id="marble1"></div>
+        <div class="marble-blob marble-blob-2" id="marble2"></div>
+        <div class="marble-blob marble-blob-3" id="marble3"></div>
+        <div class="marble-blob marble-blob-4" id="marble4"></div>
+        <div class="marble-blob marble-blob-5" id="marble5"></div>
     </div>
 
     <!-- Open to Work Banner -->
@@ -700,9 +661,6 @@
     <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme active</div>
 
     <section class="hero">
-        <div class="hero-background">
-            <canvas id="network-canvas"></canvas>
-        </div>
         <div class="profile-container animate-fade-in-up">
             <img src="me.jpeg" alt="Sai Teja Srivillibhutturu" class="profile-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="profile-fallback" style="display: none;">ST</div>
@@ -719,6 +677,7 @@
             (function() {
                 const text = "ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS";
                 const element = document.getElementById('typewriter-text');
+                if (!element) return;
                 let charIndex = 0;
                 
                 function typeChar() {
@@ -917,36 +876,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1130,89 +1067,6 @@
         }, 60000);
         
         /**
-         * Network Animation
-         */
-        (function() {
-            const canvas = document.getElementById('network-canvas');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            function resize() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
-            
-            function createParticles() {
-                particles = [];
-                const numParticles = Math.floor((canvas.width * canvas.height) / 15000);
-                for (let i = 0; i < numParticles; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        radius: Math.random() * 2 + 1
-                    });
-                }
-            }
-            
-            function draw() {
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                const lineColor = isDark ? 'rgba(148, 163, 184, ' : 'rgba(156, 163, 175, ';
-                const dotColor = isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(156, 163, 175, 0.5)';
-                
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (dist < 150) {
-                            ctx.beginPath();
-                            ctx.strokeStyle = lineColor + (1 - dist / 150) * 0.3 + ')';
-                            ctx.lineWidth = 1;
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-                
-                particles.forEach(p => {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = dotColor;
-                    ctx.fill();
-                });
-            }
-            
-            function update() {
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    
-                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                });
-            }
-            
-            function animate() {
-                update();
-                draw();
-                requestAnimationFrame(animate);
-            }
-            
-            resize();
-            createParticles();
-            animate();
-            window.addEventListener('resize', () => { resize(); createParticles(); });
-        })();
-        
-        /**
          * Scroll Animations
          */
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
@@ -1225,11 +1079,13 @@
             });
         }, observerOptions);
         
-        document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.project-item, .role-card, .timeline-item, .cert-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
         });
         
         /**
@@ -1271,6 +1127,7 @@
         
         async function loadProjects() {
             const container = document.getElementById('projects-container');
+            if (!container) return;
             
             const repoPromises = featuredProjects.map(async (project) => {
                 const { repoData, langData } = await fetchGitHubRepoInfo(project.repo);
@@ -1318,17 +1175,91 @@
         
         document.addEventListener('DOMContentLoaded', loadProjects);
 
+        // Fluid Marble Mouse Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const marble1 = document.getElementById('marble1');
+            const marble2 = document.getElementById('marble2');
+            const marble3 = document.getElementById('marble3');
+            const marble4 = document.getElementById('marble4');
+            const marble5 = document.getElementById('marble5');
+            
+            // Safety check - all elements must exist
+            if (!marble1 || !marble2 || !marble3 || !marble4 || !marble5) return;
+            
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let targetX = mouseX;
+            let targetY = mouseY;
+            
+            // Smooth interpolation values for each blob
+            let blob1X = 0, blob1Y = 0;
+            let blob2X = 0, blob2Y = 0;
+            let blob3X = 0, blob3Y = 0;
+            let blob4X = 0, blob4Y = 0;
+            let blob5X = 0, blob5Y = 0;
+            
+            document.addEventListener('mousemove', function(e) {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                targetX = e.touches[0].clientX;
+                targetY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            function animate() {
+                // Smooth follow
+                mouseX += (targetX - mouseX) * 0.05;
+                mouseY += (targetY - mouseY) * 0.05;
+                
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                // Calculate offset from center (normalized)
+                const offsetX = (mouseX - centerX) / centerX;
+                const offsetY = (mouseY - centerY) / centerY;
+                
+                // Each blob follows at different speeds and offsets
+                blob1X += (offsetX * 80 - blob1X) * 0.03;
+                blob1Y += (offsetY * 60 - blob1Y) * 0.03;
+                
+                blob2X += (-offsetX * 70 - blob2X) * 0.025;
+                blob2Y += (offsetY * 50 - blob2Y) * 0.025;
+                
+                blob3X += (-offsetX * 50 - blob3X) * 0.02;
+                blob3Y += (-offsetY * 40 - blob3Y) * 0.02;
+                
+                blob4X += (offsetX * 40 - blob4X) * 0.02;
+                blob4Y += (-offsetY * 70 - blob4Y) * 0.025;
+                
+                blob5X += (offsetX * 30 - blob5X) * 0.015;
+                blob5Y += (offsetY * 30 - blob5Y) * 0.015;
+                
+                // Apply transforms
+                marble1.style.transform = 'translate(' + blob1X + 'px, ' + blob1Y + 'px)';
+                marble2.style.transform = 'translate(' + blob2X + 'px, ' + blob2Y + 'px)';
+                marble3.style.transform = 'translate(' + blob3X + 'px, ' + blob3Y + 'px)';
+                marble4.style.transform = 'translate(' + blob4X + 'px, ' + blob4Y + 'px)';
+                marble5.style.transform = 'translate(' + blob5X + 'px, ' + blob5Y + 'px)';
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        });
+
         // Chat Widget Toggle
         function toggleChat() {
             const popup = document.getElementById('chatPopup');
-            popup.classList.toggle('active');
+            if (popup) popup.classList.toggle('active');
         }
         
         // Close chat when clicking outside
         document.addEventListener('click', function(e) {
             const widget = document.getElementById('chatWidget');
             const popup = document.getElementById('chatPopup');
-            if (widget && !widget.contains(e.target) && popup.classList.contains('active')) {
+            if (widget && popup && !widget.contains(e.target) && popup.classList.contains('active')) {
                 popup.classList.remove('active');
             }
         });

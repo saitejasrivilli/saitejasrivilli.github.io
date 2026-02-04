@@ -10,25 +10,27 @@
     let lastMouseX = -500, lastMouseY = -500;
     let colorAngle = 0;
 
-    // Bright vivid colors
+    // SUPER BRIGHT vivid colors
     const lightModeColors = [
-        [255, 120, 160],  // Pink
-        [255, 160, 130],  // Coral/Peach
-        [100, 200, 255],  // Sky blue
-        [100, 230, 210],  // Cyan/Teal
-        [140, 255, 170],  // Mint
-        [200, 160, 255],  // Lavender
-        [255, 200, 120],  // Golden
+        [255, 80, 130],   // Hot pink
+        [255, 100, 80],   // Bright coral
+        [255, 120, 180],  // Pink
+        [50, 180, 255],   // Vivid sky blue
+        [0, 220, 200],    // Bright cyan
+        [80, 255, 140],   // Neon mint
+        [180, 100, 255],  // Vivid purple
+        [255, 180, 50],   // Bright orange/gold
     ];
 
     const darkModeColors = [
-        [255, 100, 150],  // Hot pink
-        [255, 140, 100],  // Bright coral
-        [80, 180, 255],   // Bright blue
-        [80, 220, 200],   // Bright cyan
-        [120, 255, 160],  // Bright green
-        [180, 130, 255],  // Bright purple
-        [255, 210, 100],  // Bright gold
+        [255, 50, 120],   // Neon pink
+        [255, 80, 50],    // Neon coral
+        [255, 100, 170],  // Bright pink
+        [30, 160, 255],   // Electric blue
+        [0, 255, 220],    // Neon cyan
+        [50, 255, 120],   // Neon green
+        [160, 80, 255],   // Neon purple
+        [255, 200, 30],   // Neon yellow/gold
     ];
 
     function isDarkMode() {
@@ -88,7 +90,7 @@
         if (speed < 1) return;
 
         const colors = getColors();
-        const numParticles = Math.min(Math.floor(speed / 2) + 1, 4);
+        const numParticles = Math.min(Math.floor(speed / 2) + 2, 6);
 
         for (let i = 0; i < numParticles; i++) {
             const color = colors[Math.floor(colorAngle + i) % colors.length];
@@ -100,10 +102,10 @@
                 y: mouseY + (Math.random() - 0.5) * 10,
                 vx: Math.cos(angle) * spd,
                 vy: Math.sin(angle) * spd,
-                size: 25 + Math.random() * 35,
+                size: 35 + Math.random() * 45,
                 color: color,
-                alpha: 0.9,
-                decay: 0.02 + Math.random() * 0.015,
+                alpha: 1.0,
+                decay: 0.018 + Math.random() * 0.012,
                 angle: Math.random() * Math.PI * 2,
                 spin: (Math.random() - 0.5) * 0.15
             });
@@ -112,8 +114,8 @@
         colorAngle = (colorAngle + 0.3) % colors.length;
 
         // Keep particles limited
-        if (particles.length > 60) {
-            particles = particles.slice(-60);
+        if (particles.length > 100) {
+            particles = particles.slice(-100);
         }
     }
 
@@ -142,12 +144,14 @@
                 continue;
             }
 
-            // Draw soft glowing circle
+            // Draw bright glowing circle
             const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
             const r = p.color[0], g = p.color[1], b = p.color[2];
             
+            // More intense colors - less fade
             gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.alpha})`);
-            gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.5})`);
+            gradient.addColorStop(0.3, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.8})`);
+            gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.4})`);
             gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
 
             ctx.fillStyle = gradient;

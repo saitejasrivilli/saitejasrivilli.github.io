@@ -63,7 +63,14 @@
         
         /* Make all interactive elements clickable */
         a, button, input, select, textarea, 
-        .btn, .theme-toggle, /* Enable scrolling on mobile */
+        .btn, .theme-toggle,
+        .scroll-indicator, .project-item, .timeline-item, .cert-item, 
+        .skill-item, nav, .back-link,
+        .cta-buttons a {
+            pointer-events: auto !important;
+        }
+        
+        /* Enable scrolling on mobile */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto;
@@ -77,7 +84,15 @@
                 pointer-events: none;
             }
             a, button, input, select, textarea, 
-            .btn, .theme-toggle, }
+            .btn, .theme-toggle,
+            .scroll-indicator, .project-item, .timeline-item, .cert-item, 
+            .skill-item, nav, .back-link,
+            .container, .section, .hero, h1, h2, h3, h4, p {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 2;
+            }
+        }
         
         .fluid-blob {
             position: absolute;

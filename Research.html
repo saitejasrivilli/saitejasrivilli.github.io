@@ -64,12 +64,27 @@
         
         /* Interactive elements */
         a, button, input, select, textarea, 
-        .btn, .theme-toggle, @media (max-width: 768px) {
+        .btn, .theme-toggle,
+        .publication-card, .interest-card, .experience-card, .stat-card, .skill-item,
+        nav, .back-link, .scholar-btn, .pub-link,
+        .cta-buttons a {
+            pointer-events: auto !important;
+        }
+        
+        @media (max-width: 768px) {
             body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
             #fluid-canvas { pointer-events: auto; z-index: 1; }
             body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) { pointer-events: none; }
             a, button, input, select, textarea, 
-            .btn, .theme-toggle, }
+            .btn, .theme-toggle,
+            .publication-card, .interest-card, .experience-card, .stat-card, .skill-item,
+            nav, .back-link, .scholar-btn, .pub-link,
+            .container, .section, .hero, h1, h2, h3, h4, p {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 2;
+            }
+        }
         
         .fluid-blob {
             position: absolute;

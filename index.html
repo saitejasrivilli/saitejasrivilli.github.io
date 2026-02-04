@@ -633,57 +633,52 @@
                 canvas.dispatchEvent(canvasEvent);
             }, { passive: true });
             
-            // Touch event forwarding for mobile fluid animation
-            let lastTouchX = 0;
-            let lastTouchY = 0;
+            // Mobile touch handling - separate scrolling from animation
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
+            let isScrolling = false;
+            let hasAnimated = false;
             
             document.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 0) {
+                if (e.touches.length === 1) {
                     const touch = e.touches[0];
-                    lastTouchX = touch.clientX;
-                    lastTouchY = touch.clientY;
-                    
-                    // Dispatch touch start to canvas
-                    const canvasEvent = new PointerEvent('pointerdown', {
-                        clientX: touch.clientX,
-                        clientY: touch.clientY,
-                        bubbles: true,
-                        cancelable: true,
-                        pointerType: 'touch'
-                    });
-                    canvas.dispatchEvent(canvasEvent);
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    touchStartTime = Date.now();
+                    isScrolling = false;
+                    hasAnimated = false;
                 }
             }, { passive: true });
             
             document.addEventListener('touchmove', function(e) {
-                if (e.touches.length > 0) {
+                if (e.touches.length === 1) {
                     const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - touchStartX);
+                    const deltaY = Math.abs(touch.clientY - touchStartY);
+                    const timeDelta = Date.now() - touchStartTime;
                     
-                    // Always dispatch pointermove to canvas for fluid effect
-                    const canvasEvent = new PointerEvent('pointermove', {
-                        clientX: touch.clientX,
-                        clientY: touch.clientY,
-                        bubbles: true,
-                        cancelable: true,
-                        pointerType: 'touch'
-                    });
-                    canvas.dispatchEvent(canvasEvent);
+                    // Determine if this is a scroll gesture (vertical movement dominates)
+                    if (!isScrolling && !hasAnimated) {
+                        // If moved more than 10px within first 100ms, determine direction
+                        if (timeDelta < 100 && (deltaX > 10 || deltaY > 10)) {
+                            isScrolling = deltaY > deltaX * 1.5; // Vertical movement is 1.5x horizontal
+                        }
+                    }
                     
-                    lastTouchX = touch.clientX;
-                    lastTouchY = touch.clientY;
+                    // Only trigger animation if NOT scrolling
+                    if (!isScrolling) {
+                        const canvasEvent = new PointerEvent('pointermove', {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY,
+                            bubbles: true,
+                            cancelable: true,
+                            pointerType: 'touch'
+                        });
+                        canvas.dispatchEvent(canvasEvent);
+                        hasAnimated = true;
+                    }
                 }
-            }, { passive: true });
-            
-            document.addEventListener('touchend', function(e) {
-                // Dispatch touch end to canvas
-                const canvasEvent = new PointerEvent('pointerup', {
-                    clientX: lastTouchX,
-                    clientY: lastTouchY,
-                    bubbles: true,
-                    cancelable: true,
-                    pointerType: 'touch'
-                });
-                canvas.dispatchEvent(canvasEvent);
             }, { passive: true });
             
             // Theme change observer - reinitialize fluid with new background
@@ -983,36 +978,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 

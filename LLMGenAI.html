@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM/GenAI Engineer | Sai Teja Srivillibhutturu</title>
     <script src="theme.js"></script>
-    <script src="fluid-gradient.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -28,65 +27,154 @@
             --border-color: #334155;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            transition: background 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        
+        /* Fluid Canvas - Full screen background */
+        #fluid-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
         
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        /* CSS Fallback Animation */
+        .fluid-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #fff 0%, #fff 100%);
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .fluid-fallback.hidden { display: none; }
+        
+        /* Content layer - visible but passes mouse events through to canvas */
+        body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
             position: relative;
             z-index: 1;
+            pointer-events: none;
         }
-        .theme-toggle {
-            position: fixed;
-            top: 1.5rem;
-            right: 2rem;
-            z-index: 1000;
-            width: 45px;
-            height: 45px;
+        
+        /* Make all interactive elements clickable */
+        a, button, input, select, textarea, 
+        .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
+        .project-item, .experience-item, .cert-item, 
+        .skill-item, nav, .back-link,
+        .project-link, .chat-btn, .chat-close {
+            pointer-events: auto !important;
+        }
+        
+        /* Enable scrolling on mobile */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            #fluid-canvas {
+                pointer-events: auto;
+                z-index: 1;
+            }
+            body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
+                pointer-events: none;
+            }
+            a, button, input, select, textarea, 
+            .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
+            .project-item, .experience-item, .cert-item, 
+            .skill-item, nav, .back-link,
+            .container, .section, .hero,
+            h1, h2, h3, h4, p, .project-link, .chat-btn, .chat-close {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 2;
+            }
+        }
+        
+        .fluid-blob {
+            position: absolute;
             border-radius: 50%;
-            border: 2px solid var(--border-color);
-            background: var(--bg-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: var(--card-shadow);
+            filter: blur(80px);
+            opacity: 0.7;
+            animation: float-blob 20s ease-in-out infinite;
         }
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            border-color: var(--accent);
+        .fluid-blob:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #FF6B9D 0%, transparent 70%);
+            top: -10%; left: -10%;
+            animation-delay: 0s;
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .fluid-blob:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #C490E4 0%, transparent 70%);
+            top: 20%; right: -5%;
+            animation-delay: -5s;
+            animation-duration: 25s;
         }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease forwards;
-            opacity: 0;
+        .fluid-blob:nth-child(3) {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, #5DE2A3 0%, transparent 70%);
+            bottom: -10%; left: 20%;
+            animation-delay: -10s;
+            animation-duration: 22s;
         }
+        .fluid-blob:nth-child(4) {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #4FC3F7 0%, transparent 70%);
+            top: 40%; left: 30%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+        .fluid-blob:nth-child(5) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #FFD54F 0%, transparent 70%);
+            bottom: 20%; right: 10%;
+            animation-delay: -8s;
+            animation-duration: 24s;
+        }
+        .fluid-blob:nth-child(6) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #FF8A80 0%, transparent 70%);
+            top: 60%; left: 5%;
+            animation-delay: -12s;
+            animation-duration: 26s;
+        }
+        
+        @keyframes float-blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 40px) scale(0.95); }
+            75% { transform: translate(30px, 20px) scale(1.05); }
+        }
+        
+        [data-theme="dark"] .fluid-fallback {
+            background: linear-gradient(135deg, #0f172a 0%, #0f172a 100%);
+        }
+        [data-theme="dark"] .fluid-blob { opacity: 0.4; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        
+        /* Dark Mode Toggle - Mobile Friendly */
+        .theme-toggle { position: fixed; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); -webkit-tap-highlight-color: transparent; touch-action: manipulation; top: 1.5rem; right: 2rem; }
+        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+        .theme-toggle:active { transform: scale(0.95); }
+        
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
+        .animate-fade-in { animation: fadeIn 0.6s ease forwards; opacity: 0; }
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
         nav {
             position: fixed;
             top: 0;
@@ -600,12 +688,17 @@
     </style>
 </head>
 <body>
-
-    <div class="gradient-blob blob-2" id="blob2"></div>
-        <div class="gradient-blob blob-3" id="blob3"></div>
-        <div class="gradient-blob blob-4" id="blob4"></div>
-        <div class="gradient-blob blob-5" id="blob5"></div>
+    <!-- Fluid Fallback (CSS animation when WebGL unavailable) -->
+    <div class="fluid-fallback" id="fluid-fallback">
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
     </div>
+    
+    <canvas id="fluid-canvas"></canvas>
     
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     
@@ -694,72 +787,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -869,31 +898,6 @@
 
         document.addEventListener('DOMContentLoaded', loadProjects);
 
-        // Mouse gradient effect - Pastel Swirl
-        const blob1 = document.getElementById('blob1');
-        const blob2 = document.getElementById('blob2');
-        const blob3 = document.getElementById('blob3');
-        const blob4 = document.getElementById('blob4');
-        const blob5 = document.getElementById('blob5');
-        
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY + window.scrollY;
-        });
-        
-        function animateBlobs() {
-            if (blob1) blob1.style.transform = `translate(${mouseX - 250}px, ${mouseY - 250}px)`;
-            if (blob2) blob2.style.transform = `translate(${mouseX - 400}px, ${mouseY - 200}px)`;
-            if (blob3) blob3.style.transform = `translate(${mouseX - 100}px, ${mouseY - 350}px)`;
-            if (blob4) blob4.style.transform = `translate(${mouseX - 350}px, ${mouseY - 100}px)`;
-            if (blob5) blob5.style.transform = `translate(${mouseX - 150}px, ${mouseY - 450}px)`;
-            requestAnimationFrame(animateBlobs);
-        }
-        animateBlobs();
-
         function toggleChat() {
             const popup = document.getElementById('chatPopup');
             if (popup) popup.classList.toggle('active');
@@ -901,4 +905,114 @@
 
         document.addEventListener('click', function(e) {
             const widget = document.getElementById('chatWidget');
-            const popup = document.getElementById
+            const popup = document.getElementById('chatPopup');
+            if (popup && widget && !widget.contains(e.target)) popup.classList.remove('active');
+        });
+    </script>
+    
+    <!-- WebGL Fluid Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+    <script>
+        (function() {
+            const canvas = document.getElementById('fluid-canvas');
+            const fallback = document.getElementById('fluid-fallback');
+            
+            if (typeof WebGLFluid === 'undefined') {
+                console.error('WebGL Fluid library not loaded');
+                return;
+            }
+            
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            
+            WebGLFluid(canvas, {
+                IMMEDIATE: false,
+                TRIGGER: 'hover',
+                AUTO: false,
+                SIM_RESOLUTION: 256,
+                DYE_RESOLUTION: 1024,
+                CAPTURE_RESOLUTION: 512,
+                DENSITY_DISSIPATION: 0.98,
+                VELOCITY_DISSIPATION: 0.6,
+                PRESSURE: 0.2,
+                PRESSURE_ITERATIONS: 20,
+                CURL: 12,
+                SPLAT_RADIUS: 0.18,
+                SPLAT_FORCE: 8000,
+                SHADING: false,
+                COLORFUL: true,
+                COLOR_UPDATE_SPEED: 30,
+                PAUSED: false,
+                BACK_COLOR: isDarkMode ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
+                TRANSPARENT: false,
+                BLOOM: false,
+                SUNRAYS: false,
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                const canvasEvent = new PointerEvent('pointermove', {
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                    bubbles: true,
+                    cancelable: true,
+                    pointerType: 'mouse'
+                });
+                canvas.dispatchEvent(canvasEvent);
+            }, { passive: true });
+            
+            let touchStartX = 0, touchStartY = 0, isScrolling = false, hasAnimated = false, scrollTimeout = null;
+            
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    isScrolling = false;
+                    hasAnimated = false;
+                    if (scrollTimeout) { clearTimeout(scrollTimeout); scrollTimeout = null; }
+                }
+            }, { passive: true, capture: true });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - touchStartX);
+                    const deltaY = Math.abs(touch.clientY - touchStartY);
+                    if (!isScrolling && !hasAnimated && (deltaX > 5 || deltaY > 5)) {
+                        isScrolling = deltaY > (deltaX * 2);
+                    }
+                    if (!isScrolling || (deltaX < 3 && deltaY < 3)) {
+                        const canvasEvent = new PointerEvent('pointermove', {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY,
+                            bubbles: true,
+                            cancelable: true,
+                            pointerType: 'touch'
+                        });
+                        canvas.dispatchEvent(canvasEvent);
+                        hasAnimated = true;
+                    }
+                }
+            }, { passive: true, capture: true });
+            
+            document.addEventListener('touchend', function(e) {
+                scrollTimeout = setTimeout(function() { isScrolling = false; hasAnimated = false; }, 100);
+            }, { passive: true, capture: true });
+            
+            const themeObserver = new MutationObserver(function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                WebGLFluid(canvas, {
+                    IMMEDIATE: false, TRIGGER: 'hover', AUTO: false, SIM_RESOLUTION: 256, DYE_RESOLUTION: 1024,
+                    CAPTURE_RESOLUTION: 512, DENSITY_DISSIPATION: 0.98, VELOCITY_DISSIPATION: 0.6, PRESSURE: 0.2,
+                    PRESSURE_ITERATIONS: 20, CURL: 12, SPLAT_RADIUS: 0.18, SPLAT_FORCE: 8000, SHADING: false,
+                    COLORFUL: true, COLOR_UPDATE_SPEED: 30, PAUSED: false,
+                    BACK_COLOR: isDark ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
+                    TRANSPARENT: false, BLOOM: false, SUNRAYS: false,
+                });
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            
+            if (fallback) fallback.classList.add('hidden');
+        })();
+    </script>
+</body>
+</html>

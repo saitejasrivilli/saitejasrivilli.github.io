@@ -66,6 +66,7 @@
         .btn, .theme-toggle,
         .scroll-indicator, .project-item, .timeline-item, .cert-item, 
         .skill-item, nav, .back-link,
+        .ai-input, .ai-submit, .ai-input-wrapper, .quick-action,
         .cta-buttons a {
             pointer-events: auto !important;
         }
@@ -87,6 +88,7 @@
             .btn, .theme-toggle,
             .scroll-indicator, .project-item, .timeline-item, .cert-item, 
             .skill-item, nav, .back-link,
+            .ai-input, .ai-submit, .ai-input-wrapper, .quick-action,
             .container, .section, .hero, h1, h2, h3, h4, p {
                 pointer-events: auto !important;
                 position: relative;
@@ -288,6 +290,31 @@
                 width: 14px;
                 height: 14px;
             }
+            .ai-input-container {
+                margin: 1.5rem 1rem;
+            }
+            .ai-input-wrapper {
+                padding: 0.4rem 0.4rem 0.4rem 1rem;
+            }
+            .ai-input {
+                font-size: 0.9rem;
+            }
+            .ai-submit {
+                width: 42px;
+                height: 42px;
+            }
+            .quick-actions {
+                gap: 0.5rem;
+                padding: 0 1rem;
+            }
+            .quick-action {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+            .ai-response {
+                margin: 1.5rem 1rem;
+                padding: 1rem;
+            }
         }
         nav {
             position: fixed;
@@ -346,12 +373,176 @@
             margin-bottom: 1rem;
             line-height: 1.2;
         }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
         .hero-description {
             font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto 2rem;
         }
+        
+        /* AI Chat Input - ChatGPT Style */
+        .ai-input-container {
+            max-width: 700px;
+            margin: 2rem auto;
+        }
+        .ai-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .ai-input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+        }
+        .ai-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.75rem 0;
+        }
+        .ai-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        .ai-submit {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .ai-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .ai-submit:active {
+            transform: scale(0.95);
+        }
+        
+        /* Quick Action Chips */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+        }
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .quick-action:hover {
+            border-color: var(--accent);
+            background: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+        .quick-action-icon {
+            font-size: 1rem;
+        }
+        .quick-action-label {
+            font-weight: 500;
+        }
+        
+        /* AI Response Area */
+        .ai-response {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+        .ai-response.active {
+            display: block;
+        }
+        .ai-response-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .ai-response-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .ai-response-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        .ai-response-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        .ai-response-content strong {
+            color: var(--accent);
+        }
+        
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 0.5rem 0;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
         .section {
             padding: 4rem 0;
             border-top: 1px solid var(--border-color);
@@ -764,72 +955,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -869,13 +996,16 @@
         ];
 
         const aiKnowledge = {
-            projects: "I've built several GenAI projects including: <strong>vLLM Optimization</strong> (12.3× throughput improvement), <strong>Advanced LLM Agent</strong> (multi-agent with RAG), <strong>Multi-Strategy AI Agent</strong> (auto-selects reasoning patterns), <strong>RAG Application</strong>, and <strong>LoRA Fine-tuning</strong>. Check out the Projects section below!",
-            skills: "My GenAI skills include: <strong>LLM Frameworks</strong> (Hugging Face, LangChain, vLLM), <strong>Fine-tuning</strong> (LoRA, QLoRA, PEFT), <strong>RAG</strong> (vector databases, embeddings), <strong>Agents</strong> (ReAct, Chain-of-Thought, multi-agent), and <strong>Inference Optimization</strong> (CUDA, quantization).",
-            experience: "I'm currently a <strong>Graduate Research Assistant at UT Arlington</strong> working on CTMap (IEEE ICC 2026) - LLM-enabled path planning. Also an <strong>ML Engineer Intern at ReplyQuickAI</strong> integrating GenAI into healthcare.",
-            rag: "I've built RAG systems with: document chunking, embedding models, vector databases (Pinecone, ChromaDB, Neo4j), hybrid search, and re-ranking. Check my RAG-Application project!",
-            agents: "I specialize in LLM agents that use tools, plan multi-step tasks, implement reasoning strategies (CoT, ToT, ReAct), and collaborate. See my AdvancedLLMAgent project!",
-            contact: "Reach me at <strong>saiteja.srivillibhuttturu@gmail.com</strong> or on <strong>LinkedIn</strong>. I'm excited to discuss LLM applications!",
-            default: "I'm Sai Teja, an LLM/GenAI Engineer. I build intelligent AI systems with LLMs, RAG pipelines, and multi-agent architectures. Ask about my <strong>projects</strong>, <strong>skills</strong>, <strong>experience</strong>, or topics like <strong>RAG</strong>, <strong>agents</strong>!"
+            projects: "I've built several GenAI projects: <br><br>🚀 <strong>vLLM Optimization</strong> - 12.3× throughput improvement, 7M tokens/sec<br>🤖 <strong>Advanced LLM Agent</strong> - Multi-agent with RAG integration<br>🧠 <strong>Multi-Strategy AI Agent</strong> - Auto-selects CoT, ToT, ReAct patterns<br>📚 <strong>RAG Application</strong> - Document chunking, vector search<br>🔧 <strong>LoRA Fine-tuning</strong> - Parameter-efficient fine-tuning<br><br>Check out the Projects section below for code!",
+            skills: "My GenAI tech stack includes:<br><br>🔷 <strong>LLM Frameworks:</strong> Hugging Face, LangChain, LlamaIndex, vLLM<br>🔷 <strong>Fine-tuning:</strong> LoRA, QLoRA, PEFT, SFT<br>🔷 <strong>RAG:</strong> Pinecone, ChromaDB, Neo4j, FAISS<br>🔷 <strong>Agents:</strong> ReAct, Chain-of-Thought, Tree-of-Thought<br>🔷 <strong>Inference:</strong> CUDA, TensorRT, quantization (GPTQ, AWQ)<br>🔷 <strong>Languages:</strong> Python, PyTorch, C++",
+            experience: "My GenAI experience:<br><br>🎓 <strong>Graduate Research Assistant @ UTA</strong> (Jun 2025-Present)<br>→ CTMap: LLM-enabled path planning for mmWave networks<br>→ IEEE ICC 2026 publication<br>→ Fine-tuning with 10K+ examples<br><br>💼 <strong>ML Engineer Intern @ ReplyQuickAI</strong><br>→ Integrated GenAI into healthcare workflows<br>→ Built LLM-powered chatbots",
+            rag: "My RAG expertise:<br><br>📄 <strong>Document Processing:</strong> Chunking strategies, metadata extraction<br>🔢 <strong>Embeddings:</strong> OpenAI, Sentence Transformers, BGE<br>💾 <strong>Vector DBs:</strong> Pinecone, ChromaDB, Neo4j, Weaviate<br>🔍 <strong>Retrieval:</strong> Hybrid search, re-ranking, MMR<br>⚡ <strong>Optimization:</strong> Query routing, caching, streaming<br><br>Check my RAG-Application project on GitHub!",
+            agents: "My LLM Agent work:<br><br>🧠 <strong>Reasoning:</strong> Chain-of-Thought, Tree-of-Thought, ReAct<br>🛠️ <strong>Tool Use:</strong> Function calling, API integration<br>🤝 <strong>Multi-Agent:</strong> Collaboration, delegation, consensus<br>📋 <strong>Planning:</strong> Task decomposition, goal tracking<br>💾 <strong>Memory:</strong> Short-term, long-term, episodic<br><br>See my AdvancedLLMAgent and ai-agent repos!",
+            education: "My education:<br><br>🎓 <strong>MS Computer Science</strong> - UT Arlington (May 2025)<br>→ GPA: 3.67/4.0<br>→ Specialization in Deep Learning<br>→ Courses: Advanced ML, NLP, Computer Vision<br><br>🎓 <strong>BTech Computer Science</strong> - Andhra University<br>→ GPA: 8.0/10.0",
+            research: "My research & publications:<br><br>📝 <strong>IEEE ICC 2026</strong> - CTMap: LLM-Enabled Connectivity-Aware Path Planning in mmWave Digital Twin Networks<br><br>🔬 <strong>In Progress:</strong> Equity-Aware Congestion Pricing with Multi-Agent RL<br><br>🔬 <strong>In Progress:</strong> TopGPT - Cross-Encoder Enhanced RAG for Telecom<br><br>📊 Google Scholar: scholar.google.com/citations?user=StKZohYAAAAJ",
+            resume: "Quick resume highlights:<br><br>👨‍💻 <strong>Current:</strong> GRA @ UT Arlington, ML Intern @ ReplyQuickAI<br>🎓 <strong>Education:</strong> MS CS @ UTA (GPA 3.67)<br>📝 <strong>Publication:</strong> IEEE ICC 2026<br>🛠️ <strong>Skills:</strong> PyTorch, CUDA, vLLM, LangChain, RAG<br>🏆 <strong>Certs:</strong> UC Berkeley LLM Agents, Oracle GenAI Pro<br><br>Download my full resume from the button below!",
+            contact: "Let's connect! 📬<br><br>📧 <strong>Email:</strong> saiteja.srivllibhutturu@gmail.com<br>💼 <strong>LinkedIn:</strong> linkedin.com/in/saitejasrivillibhutturu<br>💻 <strong>GitHub:</strong> github.com/saitejasrivilli<br><br>I'm open to LLM/GenAI engineering roles and collaborations!",
+            default: "👋 Hi! I'm Sai Teja, an LLM/GenAI Engineer specializing in building intelligent AI systems.<br><br>Ask me about:<br>• <strong>projects</strong> - My GenAI work<br>• <strong>skills</strong> - Tech stack<br>• <strong>experience</strong> - Work history<br>• <strong>RAG</strong> - Retrieval systems<br>• <strong>agents</strong> - LLM agents<br>• <strong>research</strong> - Publications<br>• <strong>education</strong> - Background<br>• <strong>resume</strong> - Quick overview<br>• <strong>contact</strong> - How to reach me"
         };
 
         function handleAIQuery() {
@@ -891,14 +1021,31 @@
 
             setTimeout(() => {
                 let response = aiKnowledge.default;
-                if (query.includes('project')) response = aiKnowledge.projects;
-                else if (query.includes('skill') || query.includes('tech')) response = aiKnowledge.skills;
-                else if (query.includes('experience') || query.includes('work')) response = aiKnowledge.experience;
-                else if (query.includes('rag') || query.includes('retrieval')) response = aiKnowledge.rag;
-                else if (query.includes('agent')) response = aiKnowledge.agents;
-                else if (query.includes('contact') || query.includes('email') || query.includes('hire')) response = aiKnowledge.contact;
+                if (query.includes('project') || query.includes('build') || query.includes('built') || query.includes('portfolio')) {
+                    response = aiKnowledge.projects;
+                } else if (query.includes('skill') || query.includes('tech') || query.includes('stack') || query.includes('tool') || query.includes('framework')) {
+                    response = aiKnowledge.skills;
+                } else if (query.includes('experience') || query.includes('work') || query.includes('job') || query.includes('intern') || query.includes('company')) {
+                    response = aiKnowledge.experience;
+                } else if (query.includes('rag') || query.includes('retrieval') || query.includes('vector') || query.includes('embedding') || query.includes('document')) {
+                    response = aiKnowledge.rag;
+                } else if (query.includes('agent') || query.includes('reasoning') || query.includes('cot') || query.includes('react') || query.includes('planning')) {
+                    response = aiKnowledge.agents;
+                } else if (query.includes('education') || query.includes('degree') || query.includes('university') || query.includes('school') || query.includes('gpa') || query.includes('study')) {
+                    response = aiKnowledge.education;
+                } else if (query.includes('research') || query.includes('paper') || query.includes('publication') || query.includes('ieee') || query.includes('publish')) {
+                    response = aiKnowledge.research;
+                } else if (query.includes('resume') || query.includes('cv') || query.includes('background') || query.includes('overview') || query.includes('summary') || query.includes('about')) {
+                    response = aiKnowledge.resume;
+                } else if (query.includes('contact') || query.includes('email') || query.includes('hire') || query.includes('reach') || query.includes('connect') || query.includes('linkedin')) {
+                    response = aiKnowledge.contact;
+                } else if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
+                    response = "👋 Hello! I'm Sai Teja's AI assistant. Ask me about his <strong>projects</strong>, <strong>skills</strong>, <strong>experience</strong>, <strong>research</strong>, or how to <strong>contact</strong> him!";
+                } else if (query.includes('llm') || query.includes('genai') || query.includes('gpt') || query.includes('language model')) {
+                    response = aiKnowledge.skills;
+                }
                 responseContent.innerHTML = response;
-            }, 1500);
+            }, 1200);
 
             input.value = '';
         }
@@ -938,8 +1085,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadProjects);
-
-        );
     </script>
     
     <!-- WebGL Fluid Animation -->

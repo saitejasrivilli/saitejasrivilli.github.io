@@ -216,46 +216,46 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.6;
+            opacity: 0.7;
             animation: float-blob 20s ease-in-out infinite;
         }
         .fluid-blob:nth-child(1) {
             width: 600px; height: 600px;
-            background: radial-gradient(circle, #F9C6D0 0%, transparent 70%);
+            background: radial-gradient(circle, #FF6B9D 0%, transparent 70%);
             top: -10%; left: -10%;
             animation-delay: 0s;
         }
         .fluid-blob:nth-child(2) {
             width: 500px; height: 500px;
-            background: radial-gradient(circle, #D4BBFF 0%, transparent 70%);
+            background: radial-gradient(circle, #C490E4 0%, transparent 70%);
             top: 20%; right: -5%;
             animation-delay: -5s;
             animation-duration: 25s;
         }
         .fluid-blob:nth-child(3) {
             width: 550px; height: 550px;
-            background: radial-gradient(circle, #A8E6CF 0%, transparent 70%);
+            background: radial-gradient(circle, #5DE2A3 0%, transparent 70%);
             bottom: -10%; left: 20%;
             animation-delay: -10s;
             animation-duration: 22s;
         }
         .fluid-blob:nth-child(4) {
             width: 450px; height: 450px;
-            background: radial-gradient(circle, #88D9E6 0%, transparent 70%);
+            background: radial-gradient(circle, #4FC3F7 0%, transparent 70%);
             top: 40%; left: 30%;
             animation-delay: -15s;
             animation-duration: 28s;
         }
         .fluid-blob:nth-child(5) {
             width: 400px; height: 400px;
-            background: radial-gradient(circle, #FEE4A6 0%, transparent 70%);
+            background: radial-gradient(circle, #FFD54F 0%, transparent 70%);
             bottom: 20%; right: 10%;
             animation-delay: -8s;
             animation-duration: 24s;
         }
         .fluid-blob:nth-child(6) {
             width: 350px; height: 350px;
-            background: radial-gradient(circle, #FFB7C5 0%, transparent 70%);
+            background: radial-gradient(circle, #FF8A80 0%, transparent 70%);
             top: 60%; left: 5%;
             animation-delay: -12s;
             animation-duration: 26s;
@@ -282,8 +282,9 @@
         .theme-toggle:active { transform: scale(0.95); }
         
         /* Auto Theme Indicator */
-        .auto-theme-indicator { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.7rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 0.25rem 0.5rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .auto-theme-indicator { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.75rem; color: var(--text-primary); background: var(--bg-secondary); padding: 0.4rem 0.75rem; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; border: 1px solid var(--border-color); box-shadow: var(--card-shadow); }
         .auto-theme-indicator.visible { opacity: 1; }
+        .auto-theme-indicator::before { content: '🕐 '; }
         
         /* Open to Work Banner */
         .open-to-work-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(90deg, var(--accent-green), #059669); color: white; text-align: center; padding: 0.6rem; font-size: 0.85rem; font-weight: 500; }
@@ -575,8 +576,10 @@
                 return;
             }
             
-            // Initialize fluid simulation - toukoum.fr style
-            // Colors flow only from mouse, multiple colors cycle quickly
+            // Check current theme for initial background color
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            
+            // Initialize fluid simulation - bright pastel colors
             WebGLFluid(canvas, {
                 IMMEDIATE: false,
                 TRIGGER: 'hover',
@@ -584,26 +587,25 @@
                 SIM_RESOLUTION: 256,
                 DYE_RESOLUTION: 1024,
                 CAPTURE_RESOLUTION: 512,
-                DENSITY_DISSIPATION: 1.0,
+                DENSITY_DISSIPATION: 0.98,
                 VELOCITY_DISSIPATION: 0.6,
                 PRESSURE: 0.2,
                 PRESSURE_ITERATIONS: 20,
-                CURL: 10,
-                SPLAT_RADIUS: 0.15,
+                CURL: 12,
+                SPLAT_RADIUS: 0.18,
                 SPLAT_FORCE: 8000,
                 SHADING: false,
                 COLORFUL: true,
-                COLOR_UPDATE_SPEED: 25,
+                COLOR_UPDATE_SPEED: 30,
                 PAUSED: false,
-                BACK_COLOR: { r: 255, g: 255, b: 255 },
+                BACK_COLOR: isDarkMode ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
                 TRANSPARENT: false,
                 BLOOM: false,
                 SUNRAYS: false,
             });
             
-            // Also forward document-level mouse events to canvas for reliability
+            // Forward document-level mouse events to canvas
             document.addEventListener('mousemove', function(e) {
-                const rect = canvas.getBoundingClientRect();
                 const canvasEvent = new PointerEvent('pointermove', {
                     clientX: e.clientX,
                     clientY: e.clientY,
@@ -628,6 +630,36 @@
                 }
             }, { passive: true });
             
+            // Theme change observer - reinitialize fluid with new background
+            const themeObserver = new MutationObserver(function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                // Reinitialize with correct background color
+                WebGLFluid(canvas, {
+                    IMMEDIATE: false,
+                    TRIGGER: 'hover',
+                    AUTO: false,
+                    SIM_RESOLUTION: 256,
+                    DYE_RESOLUTION: 1024,
+                    CAPTURE_RESOLUTION: 512,
+                    DENSITY_DISSIPATION: 0.98,
+                    VELOCITY_DISSIPATION: 0.6,
+                    PRESSURE: 0.2,
+                    PRESSURE_ITERATIONS: 20,
+                    CURL: 12,
+                    SPLAT_RADIUS: 0.18,
+                    SPLAT_FORCE: 8000,
+                    SHADING: false,
+                    COLORFUL: true,
+                    COLOR_UPDATE_SPEED: 30,
+                    PAUSED: false,
+                    BACK_COLOR: isDark ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
+                    TRANSPARENT: false,
+                    BLOOM: false,
+                    SUNRAYS: false,
+                });
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            
             // Hide fallback when WebGL works
             if (fallback) fallback.classList.add('hidden');
         })();
@@ -640,7 +672,7 @@
     </div>
     
     <!-- Dark Mode Toggle -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme (Auto-switches at 6AM/6PM)">
         <span class="theme-icon">🌙</span>
     </button>
 
@@ -677,7 +709,7 @@
     </div>
     
     <!-- Auto Theme Indicator -->
-    <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme active</div>
+    <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme (6AM-6PM light)</div>
 
     <section class="hero">
         <div class="profile-container animate-fade-in-up">
@@ -895,36 +927,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1026,7 +1036,9 @@
             
             const toast = document.createElement('div');
             toast.className = 'theme-toast';
-            toast.innerHTML = theme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled';
+            toast.innerHTML = theme === 'dark' 
+                ? '🌙 Dark mode enabled<br><small style="opacity:0.7">Resets at 6 AM</small>' 
+                : '☀️ Light mode enabled<br><small style="opacity:0.7">Resets at 6 PM</small>';
             toast.style.cssText = `
                 position: fixed;
                 bottom: 80px;
@@ -1034,12 +1046,14 @@
                 background: var(--text-primary);
                 color: var(--bg-primary);
                 padding: 0.75rem 1.25rem;
-                border-radius: 50px;
+                border-radius: 16px;
                 font-size: 0.85rem;
                 font-weight: 500;
                 z-index: 1001;
                 animation: fadeInUp 0.3s ease;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                text-align: center;
+                line-height: 1.4;
             `;
             document.body.appendChild(toast);
             
@@ -1047,7 +1061,7 @@
                 toast.style.opacity = '0';
                 toast.style.transition = 'opacity 0.3s ease';
                 setTimeout(() => toast.remove(), 300);
-            }, 2000);
+            }, 2500);
         }
         
         function showAutoIndicator() {

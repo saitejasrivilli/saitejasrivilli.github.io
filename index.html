@@ -781,14 +781,36 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
-            
-            <div id="projects-container">
-                <div class="projects-loading">
-                    <div class="spinner"></div>
-                    <p>Loading projects from GitHub...</p>
-                </div>
-            </div>
+
+            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
+                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
+                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
+                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
+                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
+                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
+
+            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
+                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
+                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
+                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
+            </a>
         </div>
     </section>
 

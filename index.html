@@ -181,6 +181,80 @@
             z-index: 0;
         }
         
+        /* CSS Fallback Animation (shows when WebGL not available) */
+        .fluid-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #fff 0%, #fff 100%);
+            overflow: hidden;
+        }
+        .fluid-fallback.hidden { display: none; }
+        
+        .fluid-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float-blob 20s ease-in-out infinite;
+        }
+        .fluid-blob:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #F9C6D0 0%, transparent 70%);
+            top: -10%; left: -10%;
+            animation-delay: 0s;
+        }
+        .fluid-blob:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #D4BBFF 0%, transparent 70%);
+            top: 20%; right: -5%;
+            animation-delay: -5s;
+            animation-duration: 25s;
+        }
+        .fluid-blob:nth-child(3) {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, #A8E6CF 0%, transparent 70%);
+            bottom: -10%; left: 20%;
+            animation-delay: -10s;
+            animation-duration: 22s;
+        }
+        .fluid-blob:nth-child(4) {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #88D9E6 0%, transparent 70%);
+            top: 40%; left: 30%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+        .fluid-blob:nth-child(5) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #FEE4A6 0%, transparent 70%);
+            bottom: 20%; right: 10%;
+            animation-delay: -8s;
+            animation-duration: 24s;
+        }
+        .fluid-blob:nth-child(6) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #FFB7C5 0%, transparent 70%);
+            top: 60%; left: 5%;
+            animation-delay: -12s;
+            animation-duration: 26s;
+        }
+        
+        @keyframes float-blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 40px) scale(0.95); }
+            75% { transform: translate(30px, 20px) scale(1.05); }
+        }
+        
+        [data-theme="dark"] .fluid-fallback {
+            background: linear-gradient(135deg, #0f172a 0%, #0f172a 100%);
+        }
+        [data-theme="dark"] .fluid-blob { opacity: 0.4; }
+        
         /* Ensure all content is above the fluid canvas */
         body > *:not(#fluid-canvas):not(script) {
             position: relative;
@@ -467,56 +541,57 @@
 </head>
 <body>
     <!-- Fluid Marble Gradient Background - WebGL Fluid Simulation -->
+    <!-- CSS Fallback for environments without WebGL -->
+    <div class="fluid-fallback" id="fluid-fallback">
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+        <div class="fluid-blob"></div>
+    </div>
+    
     <canvas id="fluid-canvas"></canvas>
-    <script type="module">
-        import webGLFluidEnhanced from 'https://esm.run/webgl-fluid-enhanced@latest';
-        
-        const canvas = document.getElementById('fluid-canvas');
-        
-        // Initialize fluid simulation - toukoum.fr exact style
-        // Soft pastel colors with smooth flowing motion
-        webGLFluidEnhanced.simulation(canvas, {
-            SIM_RESOLUTION: 128,
-            DYE_RESOLUTION: 1024,
-            DENSITY_DISSIPATION: 3.5,
-            VELOCITY_DISSIPATION: 2.0,
-            PRESSURE: 0.1,
-            PRESSURE_ITERATIONS: 20,
-            CURL: 3,
-            SPLAT_RADIUS: 0.4,
-            SPLAT_FORCE: 4000,
-            SHADING: false,
-            COLORFUL: true,
-            COLOR_UPDATE_SPEED: 6,
-            COLOR_PALETTE: [
-                '#F9C6D0',  // Soft pink
-                '#D4BBFF',  // Soft purple/lavender
-                '#A8E6CF',  // Soft mint green
-                '#88D9E6',  // Soft cyan/blue
-                '#FEE4A6',  // Soft yellow/cream
-                '#FFB7C5',  // Light rose
-                '#B8E0D2',  // Pale teal
-                '#E2C2FF',  // Light violet
-            ],
-            HOVER: true,
-            BACK_COLOR: '#ffffff',
-            TRANSPARENT: false,
-            BRIGHTNESS: 0.5,
-            BLOOM: false,
-            SUNRAYS: false,
-            INITIAL: false,
-            SPLAT_KEY: '',
-        });
-        
-        // Theme change handling
-        const observer = new MutationObserver(() => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            webGLFluidEnhanced.config({
-                BACK_COLOR: isDark ? '#0f172a' : '#ffffff',
-                BRIGHTNESS: isDark ? 0.6 : 0.5,
+    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+    <script>
+        (function() {
+            const canvas = document.getElementById('fluid-canvas');
+            const fallback = document.getElementById('fluid-fallback');
+            
+            if (typeof WebGLFluid === 'undefined') {
+                console.error('WebGL Fluid library not loaded');
+                return;
+            }
+            
+            // Initialize fluid simulation - toukoum.fr style
+            // Colors ONLY flow from mouse movement
+            WebGLFluid(canvas, {
+                IMMEDIATE: false,        // No initial splats
+                TRIGGER: 'hover',        // Only trigger on mouse hover
+                AUTO: false,             // No automatic splats
+                SIM_RESOLUTION: 128,
+                DYE_RESOLUTION: 1024,
+                CAPTURE_RESOLUTION: 512,
+                DENSITY_DISSIPATION: 0.97,
+                VELOCITY_DISSIPATION: 0.98,
+                PRESSURE: 0.8,
+                PRESSURE_ITERATIONS: 20,
+                CURL: 5,
+                SPLAT_RADIUS: 0.25,
+                SPLAT_FORCE: 6000,
+                SHADING: false,
+                COLORFUL: true,
+                COLOR_UPDATE_SPEED: 10,
+                PAUSED: false,
+                BACK_COLOR: { r: 255, g: 255, b: 255 },
+                TRANSPARENT: false,
+                BLOOM: false,
+                SUNRAYS: false,
             });
-        });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            
+            // Hide fallback when WebGL works
+            if (fallback) fallback.classList.add('hidden');
+        })();
     </script>
 
     <!-- Open to Work Banner -->
@@ -781,36 +856,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 

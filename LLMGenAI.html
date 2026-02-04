@@ -63,14 +63,7 @@
         
         /* Make all interactive elements clickable */
         a, button, input, select, textarea, 
-        .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
-        .project-item, .experience-item, .cert-item, 
-        .skill-item, nav, .back-link,
-        .project-link, .chat-btn, .chat-close {
-            pointer-events: auto !important;
-        }
-        
-        /* Enable scrolling on mobile */
+        .btn, .theme-toggle, /* Enable scrolling on mobile */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto;
@@ -84,16 +77,7 @@
                 pointer-events: none;
             }
             a, button, input, select, textarea, 
-            .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
-            .project-item, .experience-item, .cert-item, 
-            .skill-item, nav, .back-link,
-            .container, .section, .hero,
-            h1, h2, h3, h4, p, .project-link, .chat-btn, .chat-close {
-                pointer-events: auto !important;
-                position: relative;
-                z-index: 2;
-            }
-        }
+            .btn, .theme-toggle, }
         
         .fluid-blob {
             position: absolute;
@@ -646,138 +630,6 @@
             color: var(--text-secondary);
         }
 
-        /* Chat Widget */
-        .chat-widget {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1001;
-            pointer-events: auto !important;
-        }
-        .chat-bubble {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            transition: all 0.3s ease;
-            pointer-events: auto !important;
-            z-index: 1001;
-        }
-        .chat-bubble:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-        }
-        .chat-popup {
-            position: absolute;
-            bottom: 75px;
-            right: 0;
-            width: 320px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px) scale(0.95);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1001;
-        }
-        .chat-popup.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-        }
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .chat-avatar-placeholder {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-        .chat-header-text {
-            flex: 1;
-        }
-        .chat-name {
-            display: block;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .chat-status {
-            font-size: 0.75rem;
-            color: #22c55e;
-        }
-        .chat-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-        }
-        .chat-close:hover {
-            opacity: 0.7;
-        }
-        .chat-body {
-            padding: 1.25rem;
-        }
-        .chat-body p {
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin: 0;
-        }
-        .chat-actions {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0 1rem 1rem;
-        }
-        .chat-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            background: var(--bg-primary);
-            transition: all 0.2s ease;
-        }
-        .chat-btn:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .chat-btn-primary {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
         
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -790,17 +642,6 @@
             .theme-toggle {
                 top: auto;
                 bottom: 1.5rem;
-            }
-            .chat-widget {
-                bottom: 1.5rem;
-                right: 1rem;
-            }
-            .chat-popup {
-                width: 290px;
-            }
-            .chat-bubble {
-                width: 55px;
-                height: 55px;
             }
             .projects-grid {
                 grid-template-columns: 1fr;
@@ -823,16 +664,7 @@
     
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-bubble" onclick="toggleChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
-        <div class="chat-popup" id="chatPopup">
-            <div class="chat-header"><div class="chat-avatar-placeholder">ST</div><div class="chat-header-text"><span class="chat-name">Sai Teja</span><span class="chat-status">● Available</span></div><button class="chat-close" onclick="toggleChat()">×</button></div>
-            <div class="chat-body"><p>Hey! 👋 Interested in LLMs or GenAI? Let's chat about agents, RAG, or fine-tuning!</p></div>
-            <div class="chat-actions"><a href="mailto:saiteja.srivllibhutturu@gmail.com" class="chat-btn chat-btn-primary">Email</a><a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">LinkedIn</a></div>
-        </div>
-    </div>
-
-    <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">LLM/GenAI Engineer</span></div></nav>
+        <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">LLM/GenAI Engineer</span></div></nav>
 
     <section class="hero">
         <div class="container">
@@ -917,72 +749,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -1092,16 +860,7 @@
 
         document.addEventListener('DOMContentLoaded', loadProjects);
 
-        function toggleChat() {
-            const popup = document.getElementById('chatPopup');
-            if (popup) popup.classList.toggle('active');
-        }
-
-        document.addEventListener('click', function(e) {
-            const widget = document.getElementById('chatWidget');
-            const popup = document.getElementById('chatPopup');
-            if (popup && widget && !widget.contains(e.target)) popup.classList.remove('active');
-        });
+        );
     </script>
     
     <!-- WebGL Fluid Animation -->

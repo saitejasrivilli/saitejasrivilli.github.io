@@ -202,15 +202,7 @@
         
         /* Make all interactive elements clickable */
         a, button, input, select, textarea, 
-        .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
-        .scroll-indicator, .project-item, .timeline-item, .cert-item, 
-        .donut-segment, .focus-label, .skill-item, .course-tag,
-        .education-card, .project-link, .chat-btn, .chat-close,
-        .open-to-work-banner a {
-            pointer-events: auto !important;
-        }
-        
-        /* Enable scrolling on mobile by allowing text content to receive touch events */
+        .btn, .theme-toggle, /* Enable scrolling on mobile by allowing text content to receive touch events */
         @media (max-width: 768px) {
             /* Allow scrolling by enabling pointer events on body */
             body {
@@ -231,17 +223,7 @@
             
             /* Interactive elements and text need higher z-index to be above canvas and clickable */
             a, button, input, select, textarea, 
-            .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
-            .scroll-indicator, .project-item, .timeline-item, .cert-item, 
-            .donut-segment, .focus-label, .skill-item, .course-tag,
-            .education-card, .project-link, .chat-btn, .chat-close,
-            .open-to-work-banner, .container, .section, .hero,
-            h1, h2, h3, h4, p, .role-card, .contact-link {
-                pointer-events: auto !important;
-                position: relative;
-                z-index: 2;
-            }
-        }
+            .btn, .theme-toggle, }
         
         .fluid-blob {
             position: absolute;
@@ -542,26 +524,6 @@
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
 
-        /* Chat Widget */
-        .chat-widget { position: fixed; bottom: 2rem; right: 2rem; z-index: 1001; pointer-events: auto !important; }
-        .chat-bubble { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.3s ease; pointer-events: auto !important; z-index: 1001; }
-        .chat-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(0,0,0,0.3); }
-        .chat-popup { position: absolute; bottom: 75px; right: 0; width: 320px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95); transition: all 0.3s ease; overflow: hidden; pointer-events: none; z-index: 1001; }
-        .chat-popup.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
-        .chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
-        .chat-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: var(--accent); }
-        .chat-header-text { flex: 1; }
-        .chat-name { display: block; font-weight: 600; font-size: 0.95rem; color: var(--text-primary); }
-        .chat-status { font-size: 0.75rem; color: #22c55e; }
-        .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; padding: 0; line-height: 1; }
-        .chat-close:hover { color: var(--text-primary); }
-        .chat-body { padding: 1.25rem; }
-        .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
-        .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
-        .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
-        .chat-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
-        .chat-btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
-        .chat-btn-primary:hover { background: var(--text-primary); border-color: var(--text-primary); }
         
         /* Responsive */
         @media (max-width: 768px) { 
@@ -576,10 +538,7 @@
             .resume-btn-hero { padding: 0.85rem 1.5rem; font-size: 0.9rem; }
             .education-header { flex-wrap: wrap; }
             .education-gpa { width: 100%; text-align: left; margin-top: 0.5rem; }
-            .chat-widget { bottom: 1.5rem; right: 1rem; }
-            .chat-popup { width: 290px; right: -0.5rem; }
-            .chat-bubble { width: 55px; height: 55px; }
-        }
+            }
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -753,39 +712,7 @@
         <span class="theme-icon">🌙</span>
     </button>
 
-    <!-- Chat Widget -->
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-bubble" id="chatBubble" onclick="toggleChat()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-        </div>
-        <div class="chat-popup" id="chatPopup">
-            <div class="chat-header">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQHCr7xkzFI33g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730781014650?e=1744243200&v=beta&t=YOUR_PHOTO" alt="Sai Teja" class="chat-avatar" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%233b82f6%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>ST</text></svg>'">
-                <div class="chat-header-text">
-                    <span class="chat-name">Sai Teja</span>
-                    <span class="chat-status">● Available</span>
-                </div>
-                <button class="chat-close" onclick="toggleChat()">×</button>
-            </div>
-            <div class="chat-body">
-                <p>Hey! 👋 If you have any questions about my work or want to discuss opportunities, feel free to reach out. I usually respond within 24 hours.</p>
-            </div>
-            <div class="chat-actions">
-                <a href="mailto:saiteja.srivllibhutturu@gmail.com" class="chat-btn chat-btn-primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    Send Email
-                </a>
-                <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" target="_blank" class="chat-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    LinkedIn
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Auto Theme Indicator -->
+        <!-- Auto Theme Indicator -->
     <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme (6AM-6PM light)</div>
 
     <section class="hero">
@@ -1004,36 +931,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1334,21 +1239,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', loadProjects);
-
-        // Chat Widget Toggle
-        function toggleChat() {
-            const popup = document.getElementById('chatPopup');
-            if (popup) popup.classList.toggle('active');
-        }
-        
-        // Close chat when clicking outside
-        document.addEventListener('click', function(e) {
-            const chatWidget = document.querySelector('.chat-widget');
-            const chatPopup = document.getElementById('chatPopup');
-            if (chatPopup && !chatWidget.contains(e.target) && !chatPopup.contains(e.target)) {
-                chatPopup.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>

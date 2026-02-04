@@ -498,7 +498,7 @@
         /* Certifications */
         .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
         .cert-item:hover { transform: translateX(5px); }
-        .cert-image { width: 100px; height: 70px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text-secondary); }
+        .cert-image { width: 80px; height: 80px; border-radius: 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; padding: 0.75rem; flex-shrink: 0; }
         .cert-content h4 { font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
         
@@ -931,46 +931,24 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="section" id="certifications">
         <div class="container">
             <h2 class="section-title">Certifications</h2>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft • Aug 2025</p></div></div>
-            <div class="cert-item"><div class="cert-image">Certificate</div><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
+            <div class="cert-item"><div class="cert-image"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Seal_of_University_of_California%2C_Berkeley.svg" alt="UC Berkeley" style="width: 50px; height: 50px; object-fit: contain;"></div><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
+            <div class="cert-item"><div class="cert-image"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" style="width: 50px; height: 50px; object-fit: contain;"></div><div class="cert-content"><h4>AWS Data Engineer Associate</h4><p>Amazon Web Services • Dec 2024 - Dec 2027</p></div></div>
+            <div class="cert-item"><div class="cert-image"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Microsoft" style="width: 50px; height: 50px; object-fit: contain;"></div><div class="cert-content"><h4>Microsoft Fabric Data Engineer Associate</h4><p>Microsoft • Aug 2025</p></div></div>
+            <div class="cert-item"><div class="cert-image"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" alt="Oracle" style="width: 50px; height: 50px; object-fit: contain;"></div><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
         </div>
     </section>
 

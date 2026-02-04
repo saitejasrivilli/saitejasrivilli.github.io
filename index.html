@@ -171,158 +171,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
-        /* Fluid Marble Gradient Background - Premium Apple/Stripe Aesthetic */
-        .fluid-gradient {
+        /* Fluid Canvas - Full screen background */
+        #fluid-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
-            overflow: hidden;
-            background: var(--bg-primary);
         }
         
-        .fluid-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255, 50, 120, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(130, 60, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 60% at 70% 80%, rgba(0, 240, 220, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 70% at 30% 90%, rgba(255, 220, 0, 0.1) 0%, transparent 50%);
-            filter: blur(40px);
-        }
-        
-        .marble-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.7;
-            mix-blend-mode: normal;
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-        }
-        
-        /* Blob 1 - Pink/Coral - Top Left flowing down */
-        .marble-blob-1 {
-            width: 50vw;
-            height: 50vw;
-            max-width: 600px;
-            max-height: 600px;
-            background: radial-gradient(circle at 30% 30%, 
-                rgba(255, 50, 120, 0.5) 0%, 
-                rgba(255, 100, 50, 0.3) 40%, 
-                transparent 70%);
-            top: -10%;
-            left: -10%;
-        }
-        
-        /* Blob 2 - Purple/Blue - Top Right */
-        .marble-blob-2 {
-            width: 45vw;
-            height: 45vw;
-            max-width: 550px;
-            max-height: 550px;
-            background: radial-gradient(circle at 70% 30%, 
-                rgba(130, 60, 255, 0.45) 0%, 
-                rgba(30, 160, 255, 0.25) 45%, 
-                transparent 70%);
-            top: -5%;
-            right: -5%;
-        }
-        
-        /* Blob 3 - Cyan/Mint - Center Right */
-        .marble-blob-3 {
-            width: 40vw;
-            height: 55vw;
-            max-width: 500px;
-            max-height: 650px;
-            background: radial-gradient(circle at 60% 50%, 
-                rgba(0, 240, 220, 0.4) 0%, 
-                rgba(50, 255, 100, 0.2) 50%, 
-                transparent 70%);
-            top: 30%;
-            right: -8%;
-        }
-        
-        /* Blob 4 - Yellow/Orange - Bottom Left */
-        .marble-blob-4 {
-            width: 55vw;
-            height: 45vw;
-            max-width: 650px;
-            max-height: 550px;
-            background: radial-gradient(circle at 40% 60%, 
-                rgba(255, 220, 0, 0.35) 0%, 
-                rgba(255, 100, 50, 0.2) 45%, 
-                transparent 70%);
-            bottom: -15%;
-            left: -10%;
-        }
-        
-        /* Blob 5 - Magenta/Pink - Bottom Center */
-        .marble-blob-5 {
-            width: 35vw;
-            height: 40vw;
-            max-width: 450px;
-            max-height: 500px;
-            background: radial-gradient(circle at 50% 70%, 
-                rgba(255, 80, 220, 0.35) 0%, 
-                rgba(130, 60, 255, 0.15) 50%, 
-                transparent 70%);
-            bottom: -10%;
-            left: 35%;
-        }
-        
-        /* Dark mode - more vibrant, slightly higher opacity */
-        [data-theme="dark"] .fluid-gradient::before {
-            background: 
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255, 30, 100, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(110, 40, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 60% at 70% 80%, rgba(0, 255, 240, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 70% at 30% 90%, rgba(255, 240, 0, 0.12) 0%, transparent 50%);
-        }
-        
-        [data-theme="dark"] .marble-blob { opacity: 0.6; filter: blur(70px); }
-        
-        [data-theme="dark"] .marble-blob-1 {
-            background: radial-gradient(circle at 30% 30%, 
-                rgba(255, 30, 100, 0.55) 0%, 
-                rgba(255, 80, 20, 0.35) 40%, 
-                transparent 70%);
-        }
-        
-        [data-theme="dark"] .marble-blob-2 {
-            background: radial-gradient(circle at 70% 30%, 
-                rgba(110, 40, 255, 0.5) 0%, 
-                rgba(20, 140, 255, 0.3) 45%, 
-                transparent 70%);
-        }
-        
-        [data-theme="dark"] .marble-blob-3 {
-            background: radial-gradient(circle at 60% 50%, 
-                rgba(0, 255, 240, 0.45) 0%, 
-                rgba(30, 255, 80, 0.25) 50%, 
-                transparent 70%);
-        }
-        
-        [data-theme="dark"] .marble-blob-4 {
-            background: radial-gradient(circle at 40% 60%, 
-                rgba(255, 240, 0, 0.4) 0%, 
-                rgba(255, 80, 20, 0.25) 45%, 
-                transparent 70%);
-        }
-        
-        [data-theme="dark"] .marble-blob-5 {
-            background: radial-gradient(circle at 50% 70%, 
-                rgba(255, 50, 200, 0.4) 0%, 
-                rgba(110, 40, 255, 0.2) 50%, 
-                transparent 70%);
+        /* Ensure all content is above the fluid canvas */
+        body > *:not(#fluid-canvas):not(script) {
+            position: relative;
+            z-index: 1;
         }
         
         
@@ -604,15 +466,48 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Gradient - Pastel Swirl -->
-    <!-- Fluid Marble Gradient Background -->
-    <div class="fluid-gradient">
-        <div class="marble-blob marble-blob-1" id="marble1"></div>
-        <div class="marble-blob marble-blob-2" id="marble2"></div>
-        <div class="marble-blob marble-blob-3" id="marble3"></div>
-        <div class="marble-blob marble-blob-4" id="marble4"></div>
-        <div class="marble-blob marble-blob-5" id="marble5"></div>
-    </div>
+    <!-- Fluid Marble Gradient Background - WebGL Fluid Simulation -->
+    <canvas id="fluid-canvas"></canvas>
+    <script type="module">
+        import webGLFluidEnhanced from 'https://esm.run/webgl-fluid-enhanced@0.6.1';
+        
+        const canvas = document.getElementById('fluid-canvas');
+        
+        // Initialize fluid simulation - toukoum.fr exact style
+        webGLFluidEnhanced.simulation(canvas, {
+            SIM_RESOLUTION: 128,
+            DYE_RESOLUTION: 1024,
+            DENSITY_DISSIPATION: 0.98,
+            VELOCITY_DISSIPATION: 0.99,
+            PRESSURE: 0.8,
+            PRESSURE_ITERATIONS: 20,
+            CURL: 30,
+            SPLAT_RADIUS: 0.2,
+            SPLAT_FORCE: 6000,
+            SHADING: true,
+            COLORFUL: true,
+            COLOR_UPDATE_SPEED: 10,
+            COLOR_PALETTE: ['#88D9E6', '#9CF196', '#FEE440', '#F9C6D0', '#D4BBFF', '#A0E7E5'],
+            HOVER: true,
+            BACK_COLOR: '#ffffff',
+            TRANSPARENT: false,
+            BRIGHTNESS: 0.7,
+            BLOOM: false,
+            SUNRAYS: false,
+            INITIAL: false,
+            SPLAT_KEY: '',
+        });
+        
+        // Theme change handling
+        const observer = new MutationObserver(() => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            webGLFluidEnhanced.config({
+                BACK_COLOR: isDark ? '#0a0a14' : '#ffffff',
+                BRIGHTNESS: isDark ? 0.8 : 0.7,
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
 
     <!-- Open to Work Banner -->
     <div class="open-to-work-banner">
@@ -876,36 +771,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1196,80 +1069,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', loadProjects);
-
-        // Fluid Marble Mouse Animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const marble1 = document.getElementById('marble1');
-            const marble2 = document.getElementById('marble2');
-            const marble3 = document.getElementById('marble3');
-            const marble4 = document.getElementById('marble4');
-            const marble5 = document.getElementById('marble5');
-            
-            // Safety check - all elements must exist
-            if (!marble1 || !marble2 || !marble3 || !marble4 || !marble5) return;
-            
-            let mouseX = window.innerWidth / 2;
-            let mouseY = window.innerHeight / 2;
-            let targetX = mouseX;
-            let targetY = mouseY;
-            
-            // Smooth interpolation values for each blob
-            let blob1X = 0, blob1Y = 0;
-            let blob2X = 0, blob2Y = 0;
-            let blob3X = 0, blob3Y = 0;
-            let blob4X = 0, blob4Y = 0;
-            let blob5X = 0, blob5Y = 0;
-            
-            document.addEventListener('mousemove', function(e) {
-                targetX = e.clientX;
-                targetY = e.clientY;
-            });
-            
-            document.addEventListener('touchmove', function(e) {
-                targetX = e.touches[0].clientX;
-                targetY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            function animate() {
-                // Smooth follow
-                mouseX += (targetX - mouseX) * 0.05;
-                mouseY += (targetY - mouseY) * 0.05;
-                
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                
-                // Calculate offset from center (normalized)
-                const offsetX = (mouseX - centerX) / centerX;
-                const offsetY = (mouseY - centerY) / centerY;
-                
-                // Each blob follows at different speeds and offsets
-                blob1X += (offsetX * 80 - blob1X) * 0.03;
-                blob1Y += (offsetY * 60 - blob1Y) * 0.03;
-                
-                blob2X += (-offsetX * 70 - blob2X) * 0.025;
-                blob2Y += (offsetY * 50 - blob2Y) * 0.025;
-                
-                blob3X += (-offsetX * 50 - blob3X) * 0.02;
-                blob3Y += (-offsetY * 40 - blob3Y) * 0.02;
-                
-                blob4X += (offsetX * 40 - blob4X) * 0.02;
-                blob4Y += (-offsetY * 70 - blob4Y) * 0.025;
-                
-                blob5X += (offsetX * 30 - blob5X) * 0.015;
-                blob5Y += (offsetY * 30 - blob5Y) * 0.015;
-                
-                // Apply transforms
-                marble1.style.transform = 'translate(' + blob1X + 'px, ' + blob1Y + 'px)';
-                marble2.style.transform = 'translate(' + blob2X + 'px, ' + blob2Y + 'px)';
-                marble3.style.transform = 'translate(' + blob3X + 'px, ' + blob3Y + 'px)';
-                marble4.style.transform = 'translate(' + blob4X + 'px, ' + blob4Y + 'px)';
-                marble5.style.transform = 'translate(' + blob5X + 'px, ' + blob5Y + 'px)';
-                
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-        });
 
         // Chat Widget Toggle
         function toggleChat() {

@@ -10,145 +10,593 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --text-primary: #1a1a2e; --text-secondary: #6b7280; --accent: #10b981; --border-color: #e5e7eb; --card-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155; --card-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --accent: #f59e0b;
+            --accent-green: #10b981;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
         
-        .container { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        
-        
-        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-        .theme-toggle { position: fixed; top: 1.5rem; right: 2rem; z-index: 1000; width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); }
-        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
-        
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        [data-theme="dark"] nav { background: rgba(15, 23, 42, 0.8); }
-        .nav-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { color: var(--accent); }
-        .nav-role { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
-
-        .hero { padding: 8rem 0 3rem; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
-        .hero-greeting { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 3rem; }
-        
-        .avatar-container { margin: 2rem auto; position: relative; }
-        .avatar { width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #3b82f6); display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 4rem; box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3); animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        
-        .ai-input-container { max-width: 600px; margin: 0 auto 3rem; position: relative; }
-        .ai-input-wrapper { display: flex; align-items: center; background: var(--bg-secondary); border: 2px solid var(--border-color); border-radius: 50px; padding: 0.5rem 0.5rem 0.5rem 1.5rem; transition: all 0.3s ease; }
-        .ai-input-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
-        .ai-input { flex: 1; border: none; background: transparent; font-size: 1rem; color: var(--text-primary); outline: none; padding: 0.75rem 0; }
-        .ai-input::placeholder { color: var(--text-secondary); }
-        .ai-submit { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .ai-submit:hover { transform: scale(1.1); background: #059669; }
-        
-        .quick-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-        .quick-action { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.25rem 2rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: inherit; min-width: 120px; }
-        .quick-action:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--card-shadow); }
-        .quick-action-icon { font-size: 1.5rem; }
-        .quick-action-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
-
-        .ai-response { max-width: 700px; margin: 0 auto; padding: 2rem; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border-color); display: none; }
-        .ai-response.active { display: block; animation: fadeInUp 0.5s ease; }
-        .ai-response-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-        .ai-response-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .ai-response-name { font-weight: 600; }
-        .ai-response-content { color: var(--text-secondary); line-height: 1.8; }
-        .ai-response-content strong { color: var(--text-primary); }
-        .typing-indicator { display: flex; gap: 4px; padding: 0.5rem 0; }
-        .typing-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: typing 1.4s infinite; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } }
-
-        .section { padding: 5rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
-        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
-
-        .skills-section { padding: 4rem 0; border-top: 1px solid var(--border-color); overflow: hidden; }
-        .skills-marquee { overflow: hidden; padding: 1rem 0; margin-top: 2rem; }
-        .skills-track { display: flex; gap: 2rem; animation: marquee 25s linear infinite; width: max-content; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; white-space: nowrap; transition: all 0.3s ease; }
-        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
-        .skill-item img { width: 24px; height: 24px; object-fit: contain; }
-        .skill-item span { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
-
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; display: flex; flex-direction: column; background: rgba(248, 249, 250, 0.6); backdrop-filter: blur(10px); transition: all 0.3s; }
-        [data-theme="dark"] .project-item { background: rgba(30, 41, 59, 0.6); }
-        .project-item:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-5px); }
-        .project-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif; }
-        .project-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; flex-grow: 1; }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-        .tech-tag { padding: 0.25rem 0.75rem; background: var(--bg-secondary); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
-        .project-links { display: flex; gap: 0.5rem; margin-top: auto; }
-        .project-link { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; flex: 1; transition: all 0.2s; }
-        .project-link.code { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
-        .project-link.code:hover { border-color: var(--text-primary); }
-        .project-updated { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; text-align: right; }
-
-        .experience-item, .cert-item { margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; }
-        .experience-item:hover, .cert-item:hover { transform: translateX(5px); border-color: var(--accent); }
-        .experience-company { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
-        .experience-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
-        .experience-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
-        .experience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-        .cert-item { display: flex; gap: 1rem; }
-        .cert-icon { font-size: 1.5rem; }
-        .cert-content h4 { font-weight: 600; margin-bottom: 0.25rem; }
-        .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
-
-        .cta-section { padding: 4rem 0; border-top: 1px solid var(--border-color); text-align: center; }
-        .cta-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
-        .cta-description { color: var(--text-secondary); margin-bottom: 2rem; }
-        .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
-        .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
-        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
-
-        footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
-        footer p { font-size: 0.85rem; color: var(--text-secondary); }
-
-        .chat-widget { position: fixed; bottom: 2rem; left: 2rem; z-index: 1000; }
-        .chat-bubble { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.3s ease; }
-        .chat-bubble:hover { transform: scale(1.1); }
-        .chat-popup { position: absolute; bottom: 75px; left: 0; width: 320px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95); transition: all 0.3s ease; overflow: hidden; }
-        .chat-popup.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-        .chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
-        .chat-avatar-placeholder { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-        .chat-header-text { flex: 1; } .chat-name { display: block; font-weight: 600; color: var(--text-primary); } .chat-status { font-size: 0.75rem; color: #22c55e; }
-        .chat-close { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
-        .chat-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        
-        .container { padding: 1.25rem; } .chat-body p { font-size: 0.9rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
-        .chat-actions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem; }
-        .chat-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); transition: all 0.2s; }
-        .chat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-        .chat-btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
-
-        @media (max-width: 768px) { 
-            .hero h1 { font-size: 2.5rem; } 
-            .theme-toggle { top: auto; bottom: 1.5rem; right: 1.5rem; } 
-            .quick-actions { gap: 0.75rem; }
-            .quick-action { min-width: 100px; padding: 1rem 1.5rem; }
-            .chat-widget { bottom: 1.5rem; left: 1rem; } 
-            .chat-popup { width: 290px; } 
-            .chat-bubble { width: 55px; height: 55px; }
-            .avatar { width: 140px; height: 140px; font-size: 3rem; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: var(--bg-primary);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+        .nav-role {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0.75rem auto 2rem;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
         }
 
-        .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
-        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Skills Marquee */
+        .skills-section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .skills-marquee {
+            overflow: hidden;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        .skills-track {
+            display: flex;
+            gap: 2rem;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        .skill-item:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        .skill-item img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+        .skill-item span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Glassmorphism Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .project-item {
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(248, 249, 250, 0.6);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] .project-item {
+            background: rgba(30, 41, 59, 0.6);
+        }
+        .project-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        .project-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+        }
+        .project-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+        .project-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        .project-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+        .project-link.code {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .project-link.code:hover {
+            border-color: var(--text-primary);
+        }
+        .project-updated {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            text-align: right;
+        }
+        .projects-loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* LeetCode Card */
+        .leetcode-card {
+            display: block;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--bg-primary);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .leetcode-card:hover {
+            border-color: #ffa116;
+            box-shadow: 0 8px 30px rgba(255, 161, 22, 0.15);
+            transform: translateY(-3px);
+        }
+        .leetcode-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .solved-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffa116;
+        }
+        .solved-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .experience-item, .cert-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        .experience-item:hover, .cert-item:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+        }
+        .experience-company {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .experience-role {
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+        .experience-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .experience-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .cta-section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .cta-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+        .btn:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+        footer p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .chat-bubble {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+        .chat-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+        }
+        .chat-popup {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 320px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(0.95);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .chat-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .chat-avatar-placeholder {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        .chat-header-text {
+            flex: 1;
+        }
+        .chat-name {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .chat-status {
+            font-size: 0.75rem;
+            color: #22c55e;
+        }
+        .chat-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+        .chat-close:hover {
+            opacity: 0.7;
+        }
+        .chat-body {
+            padding: 1.25rem;
+        }
+        .chat-body p {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+        }
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1rem 1rem;
+        }
+        .chat-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+        .chat-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .chat-btn-primary {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 0 1.5rem;
+            }
+            .theme-toggle {
+                top: auto;
+                bottom: 1.5rem;
+            }
+            .chat-widget {
+                bottom: 1.5rem;
+                right: 1rem;
+            }
+            .chat-popup {
+                width: 290px;
+            }
+            .chat-bubble {
+                width: 55px;
+                height: 55px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -246,72 +694,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 

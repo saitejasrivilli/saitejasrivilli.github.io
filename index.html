@@ -218,14 +218,28 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* Keep canvas at normal z-index to receive events */
+            /* Keep canvas on top on mobile to receive all touches */
             #fluid-canvas {
                 pointer-events: auto;
+                z-index: 1;
             }
             
-            /* Make content scrollable but still pass through non-interactive touches to canvas */
+            /* Content layer - keep visible but no pointer events except on interactive elements */
             body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
-                pointer-events: auto;
+                pointer-events: none;
+            }
+            
+            /* Interactive elements and text need higher z-index to be above canvas and clickable */
+            a, button, input, select, textarea, 
+            .btn, .theme-toggle, .chat-widget, .chat-bubble, .chat-popup,
+            .scroll-indicator, .project-item, .timeline-item, .cert-item, 
+            .donut-segment, .focus-label, .skill-item, .course-tag,
+            .education-card, .project-link, .chat-btn, .chat-close,
+            .open-to-work-banner, .container, .section, .hero,
+            h1, h2, h3, h4, p, .role-card, .contact-link {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 2;
             }
         }
         
@@ -639,6 +653,7 @@
             let touchStartTime = 0;
             let isScrolling = false;
             let hasAnimated = false;
+            let scrollTimeout = null;
             
             document.addEventListener('touchstart', function(e) {
                 if (e.touches.length === 1) {
@@ -648,26 +663,29 @@
                     touchStartTime = Date.now();
                     isScrolling = false;
                     hasAnimated = false;
+                    
+                    // Clear any existing scroll timeout
+                    if (scrollTimeout) {
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = null;
+                    }
                 }
-            }, { passive: true });
+            }, { passive: true, capture: true });
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length === 1) {
                     const touch = e.touches[0];
                     const deltaX = Math.abs(touch.clientX - touchStartX);
                     const deltaY = Math.abs(touch.clientY - touchStartY);
-                    const timeDelta = Date.now() - touchStartTime;
                     
-                    // Determine if this is a scroll gesture (vertical movement dominates)
-                    if (!isScrolling && !hasAnimated) {
-                        // If moved more than 10px within first 100ms, determine direction
-                        if (timeDelta < 100 && (deltaX > 10 || deltaY > 10)) {
-                            isScrolling = deltaY > deltaX * 1.5; // Vertical movement is 1.5x horizontal
-                        }
+                    // Determine if this is a scroll gesture on first significant movement
+                    if (!isScrolling && !hasAnimated && (deltaX > 5 || deltaY > 5)) {
+                        // Vertical movement significantly more than horizontal = scrolling
+                        isScrolling = deltaY > (deltaX * 2);
                     }
                     
-                    // Only trigger animation if NOT scrolling
-                    if (!isScrolling) {
+                    // Trigger animation if NOT scrolling OR if very minimal movement (tap and hold)
+                    if (!isScrolling || (deltaX < 3 && deltaY < 3)) {
                         const canvasEvent = new PointerEvent('pointermove', {
                             clientX: touch.clientX,
                             clientY: touch.clientY,
@@ -679,7 +697,15 @@
                         hasAnimated = true;
                     }
                 }
-            }, { passive: true });
+            }, { passive: true, capture: true });
+            
+            document.addEventListener('touchend', function(e) {
+                // Reset scroll detection after a delay
+                scrollTimeout = setTimeout(function() {
+                    isScrolling = false;
+                    hasAnimated = false;
+                }, 100);
+            }, { passive: true, capture: true });
             
             // Theme change observer - reinitialize fluid with new background
             const themeObserver = new MutationObserver(function() {
@@ -978,36 +1004,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 

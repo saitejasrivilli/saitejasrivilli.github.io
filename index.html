@@ -681,36 +681,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1122,6 +1100,166 @@
             }
         });
     </script>
-    <script src="fluid-eyes.js"></script>
+    <script>
+    // Bright Swirling Color Effect - Inline version
+    (function() {
+        'use strict';
+
+        let canvas, ctx;
+        let particles = [];
+        let mouseX = -500, mouseY = -500;
+        let lastMouseX = -500, lastMouseY = -500;
+        let colorAngle = 0;
+
+        const lightModeColors = [
+            [255, 80, 130],   // Bright Pink
+            [255, 130, 80],   // Coral Orange  
+            [255, 200, 50],   // Golden Yellow
+            [100, 255, 130],  // Bright Green
+            [80, 230, 210],   // Cyan Teal
+            [150, 100, 255],  // Purple
+            [230, 130, 230],  // Magenta Pink
+            [80, 180, 255],   // Sky Blue
+        ];
+
+        const darkModeColors = [
+            [255, 50, 130],   // Hot Pink
+            [255, 100, 50],   // Bright Orange
+            [255, 230, 30],   // Vivid Yellow
+            [50, 255, 100],   // Neon Green
+            [30, 255, 230],   // Neon Cyan
+            [130, 80, 255],   // Electric Purple
+            [255, 100, 200],  // Bright Magenta
+            [50, 150, 255],   // Electric Blue
+        ];
+
+        function isDarkMode() {
+            return document.documentElement.getAttribute('data-theme') === 'dark';
+        }
+
+        function getColors() {
+            return isDarkMode() ? darkModeColors : lightModeColors;
+        }
+
+        function init() {
+            // Hide old gradient
+            const oldGradient = document.querySelector('.mouse-gradient');
+            if (oldGradient) oldGradient.style.display = 'none';
+
+            canvas = document.createElement('canvas');
+            canvas.id = 'swirl-canvas';
+            canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;';
+            document.body.appendChild(canvas);
+            ctx = canvas.getContext('2d');
+            resize();
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('touchmove', onTouchMove, { passive: true });
+            window.addEventListener('resize', resize);
+
+            animate();
+            console.log('Swirl effect initialized!');
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function onMouseMove(e) {
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            createParticles();
+        }
+
+        function onTouchMove(e) {
+            const touch = e.touches[0];
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            mouseX = touch.clientX;
+            mouseY = touch.clientY;
+            createParticles();
+        }
+
+        function createParticles() {
+            const dx = mouseX - lastMouseX;
+            const dy = mouseY - lastMouseY;
+            const speed = Math.sqrt(dx * dx + dy * dy);
+
+            if (speed < 1) return;
+
+            const colors = getColors();
+            const numParticles = Math.min(Math.floor(speed / 2) + 2, 6);
+
+            for (let i = 0; i < numParticles; i++) {
+                const color = colors[Math.floor(colorAngle + i) % colors.length];
+                const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 2;
+                const spd = 1 + Math.random() * 2;
+
+                particles.push({
+                    x: mouseX + (Math.random() - 0.5) * 15,
+                    y: mouseY + (Math.random() - 0.5) * 15,
+                    vx: Math.cos(angle) * spd,
+                    vy: Math.sin(angle) * spd,
+                    size: 50 + Math.random() * 60,
+                    color: color,
+                    alpha: 1.0,
+                    decay: 0.008 + Math.random() * 0.006,
+                    angle: Math.random() * Math.PI * 2,
+                    spin: (Math.random() - 0.5) * 0.12
+                });
+            }
+
+            colorAngle = (colorAngle + 0.3) % colors.length;
+
+            if (particles.length > 150) {
+                particles = particles.slice(-150);
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+
+                p.angle += p.spin;
+                p.x += p.vx + Math.cos(p.angle) * 0.5;
+                p.y += p.vy + Math.sin(p.angle) * 0.5;
+                p.vx *= 0.97;
+                p.vy *= 0.97;
+                p.alpha -= p.decay;
+
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                const r = p.color[0], g = p.color[1], b = p.color[2];
+                
+                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.alpha})`);
+                gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.95})`);
+                gradient.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.6})`);
+                gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
 </body>
 </html>

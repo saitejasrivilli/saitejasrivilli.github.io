@@ -42,10 +42,14 @@
     }
 
     function init() {
+        // Hide old gradient first
+        const oldGradient = document.querySelector('.mouse-gradient');
+        if (oldGradient) oldGradient.style.display = 'none';
+
         canvas = document.createElement('canvas');
         canvas.id = 'swirl-canvas';
-        canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
-        document.body.insertBefore(canvas, document.body.firstChild);
+        canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;';
+        document.body.appendChild(canvas);
         ctx = canvas.getContext('2d');
         resize();
 
@@ -53,11 +57,8 @@
         document.addEventListener('touchmove', onTouchMove, { passive: true });
         window.addEventListener('resize', resize);
 
-        // Hide old effects
-        const oldGradient = document.querySelector('.mouse-gradient');
-        if (oldGradient) oldGradient.style.display = 'none';
-
         animate();
+        console.log('Swirl effect initialized!');
     }
 
     function resize() {

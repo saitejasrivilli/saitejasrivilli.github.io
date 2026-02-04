@@ -10,27 +10,27 @@
     let lastMouseX = -500, lastMouseY = -500;
     let colorAngle = 0;
 
-    // BRIGHT VIVID COLORS - like the reference image
+    // NEON BRIGHT COLORS
     const lightModeColors = [
-        [255, 80, 130],   // Bright Pink
-        [255, 130, 80],   // Coral Orange  
-        [255, 200, 50],   // Golden Yellow
-        [100, 255, 130],  // Bright Green
-        [80, 230, 210],   // Cyan Teal
-        [150, 100, 255],  // Purple
-        [230, 130, 230],  // Magenta Pink
-        [80, 180, 255],   // Sky Blue
+        [255, 50, 120],   // Hot Pink
+        [255, 100, 50],   // Bright Orange  
+        [255, 220, 0],    // Vivid Yellow
+        [50, 255, 100],   // Neon Green
+        [0, 240, 220],    // Bright Cyan
+        [130, 60, 255],   // Vivid Purple
+        [255, 80, 220],   // Neon Magenta
+        [30, 160, 255],   // Electric Blue
     ];
 
     const darkModeColors = [
-        [255, 50, 130],   // Hot Pink
-        [255, 100, 50],   // Bright Orange
-        [255, 230, 30],   // Vivid Yellow
-        [50, 255, 100],   // Neon Green
-        [30, 255, 230],   // Neon Cyan
-        [130, 80, 255],   // Electric Purple
-        [255, 100, 200],  // Bright Magenta
-        [50, 150, 255],   // Electric Blue
+        [255, 30, 100],   // Neon Pink
+        [255, 80, 20],    // Neon Orange
+        [255, 240, 0],    // Bright Yellow
+        [30, 255, 80],    // Neon Green
+        [0, 255, 240],    // Neon Cyan
+        [110, 40, 255],   // Neon Purple
+        [255, 50, 200],   // Neon Magenta
+        [20, 140, 255],   // Neon Blue
     ];
 
     function isDarkMode() {
@@ -99,11 +99,11 @@
             const spd = 1 + Math.random() * 2;
 
             particles.push({
-                x: mouseX + (Math.random() - 0.5) * 15,
-                y: mouseY + (Math.random() - 0.5) * 15,
+                x: mouseX + (Math.random() - 0.5) * 10,
+                y: mouseY + (Math.random() - 0.5) * 10,
                 vx: Math.cos(angle) * spd,
                 vy: Math.sin(angle) * spd,
-                size: 50 + Math.random() * 60,
+                size: 15 + Math.random() * 20,
                 color: color,
                 alpha: 1.0,
                 decay: 0.008 + Math.random() * 0.006,

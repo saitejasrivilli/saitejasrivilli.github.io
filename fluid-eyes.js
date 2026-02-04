@@ -1,5 +1,5 @@
-// Beautiful Swirling Fluid Simulation with Dark Mode Support
-// Creates smooth, flowing pastel colors like ink in water
+// Bright Swirling Fluid Simulation - Localized around mouse
+// Beautiful colorful effect that follows cursor
 
 (function() {
     'use strict';
@@ -9,45 +9,43 @@
             this.canvas = null;
             this.gl = null;
             this.programs = {};
-            this.textures = {};
             this.framebuffers = {};
             this.config = {
-                TEXTURE_DOWNSAMPLE: 1,
-                DENSITY_DISSIPATION: 0.98,
-                VELOCITY_DISSIPATION: 0.99,
-                PRESSURE_DISSIPATION: 0.8,
-                PRESSURE_ITERATIONS: 25,
-                CURL: 30,
-                SPLAT_RADIUS: 0.005
+                SIM_RESOLUTION: 128,
+                DYE_RESOLUTION: 512,
+                DENSITY_DISSIPATION: 0.97,
+                VELOCITY_DISSIPATION: 0.98,
+                PRESSURE_ITERATIONS: 20,
+                CURL: 35,
+                SPLAT_RADIUS: 0.003,
+                SPLAT_FORCE: 6000
             };
-            this.pointer = {
-                x: 0.5,
-                y: 0.5,
-                dx: 0,
-                dy: 0,
-                down: false,
-                moved: false
-            };
-            // Light mode colors (softer pastels)
+            this.pointer = { x: 0.5, y: 0.5, dx: 0, dy: 0, moved: false };
+            
+            // Bright vibrant colors (like image 2)
             this.lightColors = [
-                [1.0, 0.6, 0.8],  // Pink
-                [0.8, 0.6, 1.0],  // Lavender
-                [0.6, 0.8, 1.0],  // Light blue
-                [0.6, 1.0, 0.8],  // Mint
-                [0.8, 1.0, 0.6],  // Light green
-                [1.0, 1.0, 0.7],  // Cream yellow
-                [1.0, 0.8, 0.7],  // Peach
+                [1.0, 0.45, 0.55],  // Bright pink/coral
+                [1.0, 0.55, 0.65],  // Salmon pink
+                [0.95, 0.6, 0.5],   // Peach
+                [0.4, 0.75, 0.95],  // Sky blue
+                [0.45, 0.85, 0.9],  // Cyan
+                [0.5, 0.9, 0.7],    // Mint/teal
+                [0.55, 0.9, 0.55],  // Light green
+                [0.85, 0.7, 0.95],  // Lavender
             ];
-            // Dark mode colors (more vibrant/saturated)
+            
+            // Even brighter for dark mode
             this.darkColors = [
-                [1.0, 0.4, 0.6],  // Bright pink
-                [0.7, 0.4, 1.0],  // Bright purple
-                [0.4, 0.7, 1.0],  // Bright blue
-                [0.4, 1.0, 0.7],  // Bright mint
-                [0.6, 1.0, 0.4],  // Bright green
-                [1.0, 0.9, 0.4],  // Bright yellow
-                [1.0, 0.6, 0.4],  // Bright orange
+                [1.0, 0.4, 0.6],    // Hot pink
+                [1.0, 0.5, 0.4],    // Coral
+                [0.3, 0.8, 1.0],    // Bright cyan
+                [0.4, 0.9, 0.8],    // Turquoise
+                [0.5, 1.0, 0.5],    // Bright green
+                [0.9, 0.6, 1.0],    // Bright purple
+                [1.0, 0.8, 0.3],    // Golden yellow
+                [1.0, 0.6, 0.8],    // Pink
             ];
+            
             this.colorIndex = 0;
             this.isDarkMode = false;
         }
@@ -66,7 +64,7 @@
             this.canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
             document.body.insertBefore(this.canvas, document.body.firstChild);
 
-            const gl = this.canvas.getContext('webgl', { alpha: true, depth: false, stencil: false, antialias: false });
+            const gl = this.canvas.getContext('webgl', { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false });
             if (!gl) return false;
             this.gl = gl;
 
@@ -78,9 +76,6 @@
             this.initShaders();
             this.initFramebuffers();
             this.setupEvents();
-            
-            // Initial splats
-            setTimeout(() => this.multipleSplats(5), 100);
             
             this.render();
             return true;
@@ -94,7 +89,8 @@
         initShaders() {
             const gl = this.gl;
 
-            const vertexShader = `
+            const baseVert = `
+                precision highp float;
                 attribute vec2 aPosition;
                 varying vec2 vUv;
                 varying vec2 vL, vR, vT, vB;
@@ -109,7 +105,7 @@
                 }
             `;
 
-            // Display shader with dark mode support
+            // Display with brightness boost
             const displayFrag = `
                 precision highp float;
                 varying vec2 vUv;
@@ -117,10 +113,12 @@
                 uniform float uBrightness;
                 void main() {
                     vec3 c = texture2D(uTexture, vUv).rgb;
-                    c = pow(c * uBrightness, vec3(0.95));
+                    // Boost saturation and brightness
+                    c *= uBrightness;
+                    c = pow(c, vec3(0.85));
                     float a = max(c.r, max(c.g, c.b));
-                    a = smoothstep(0.0, 0.25, a);
-                    gl_FragColor = vec4(c, a * 0.9);
+                    a = smoothstep(0.0, 0.15, a);
+                    gl_FragColor = vec4(c, a);
                 }
             `;
 
@@ -164,8 +162,7 @@
                     float R = texture2D(uVelocity, vR).x;
                     float T = texture2D(uVelocity, vT).y;
                     float B = texture2D(uVelocity, vB).y;
-                    float div = 0.5 * (R - L + T - B);
-                    gl_FragColor = vec4(div, 0.0, 0.0, 1.0);
+                    gl_FragColor = vec4(0.5 * (R - L + T - B), 0.0, 0.0, 1.0);
                 }
             `;
 
@@ -178,8 +175,7 @@
                     float R = texture2D(uVelocity, vR).y;
                     float T = texture2D(uVelocity, vT).x;
                     float B = texture2D(uVelocity, vB).x;
-                    float vorticity = R - L - T + B;
-                    gl_FragColor = vec4(vorticity, 0.0, 0.0, 1.0);
+                    gl_FragColor = vec4(R - L - T + B, 0.0, 0.0, 1.0);
                 }
             `;
 
@@ -200,8 +196,8 @@
                     force /= length(force) + 0.0001;
                     force *= curl * C;
                     force.y *= -1.0;
-                    vec2 vel = texture2D(uVelocity, vUv).xy;
-                    gl_FragColor = vec4(vel + force * dt, 0.0, 1.0);
+                    vec2 vel = texture2D(uVelocity, vUv).xy + force * dt;
+                    gl_FragColor = vec4(vel, 0.0, 1.0);
                 }
             `;
 
@@ -215,14 +211,12 @@
                     float R = texture2D(uPressure, vR).x;
                     float T = texture2D(uPressure, vT).x;
                     float B = texture2D(uPressure, vB).x;
-                    float C = texture2D(uPressure, vUv).x;
                     float divergence = texture2D(uDivergence, vUv).x;
-                    float pressure = (L + R + B + T - divergence) * 0.25;
-                    gl_FragColor = vec4(pressure, 0.0, 0.0, 1.0);
+                    gl_FragColor = vec4((L + R + B + T - divergence) * 0.25, 0.0, 0.0, 1.0);
                 }
             `;
 
-            const gradientSubtractFrag = `
+            const gradSubtractFrag = `
                 precision highp float;
                 varying vec2 vUv, vL, vR, vT, vB;
                 uniform sampler2D uPressure;
@@ -232,9 +226,8 @@
                     float R = texture2D(uPressure, vR).x;
                     float T = texture2D(uPressure, vT).x;
                     float B = texture2D(uPressure, vB).x;
-                    vec2 velocity = texture2D(uVelocity, vUv).xy;
-                    velocity.xy -= vec2(R - L, T - B);
-                    gl_FragColor = vec4(velocity, 0.0, 1.0);
+                    vec2 vel = texture2D(uVelocity, vUv).xy - vec2(R - L, T - B);
+                    gl_FragColor = vec4(vel, 0.0, 1.0);
                 }
             `;
 
@@ -248,17 +241,16 @@
                 }
             `;
 
-            this.programs.display = this.createProgram(vertexShader, displayFrag);
-            this.programs.splat = this.createProgram(vertexShader, splatFrag);
-            this.programs.advection = this.createProgram(vertexShader, advectionFrag);
-            this.programs.divergence = this.createProgram(vertexShader, divergenceFrag);
-            this.programs.curl = this.createProgram(vertexShader, curlFrag);
-            this.programs.vorticity = this.createProgram(vertexShader, vorticityFrag);
-            this.programs.pressure = this.createProgram(vertexShader, pressureFrag);
-            this.programs.gradientSubtract = this.createProgram(vertexShader, gradientSubtractFrag);
-            this.programs.clear = this.createProgram(vertexShader, clearFrag);
+            this.programs.display = this.createProgram(baseVert, displayFrag);
+            this.programs.splat = this.createProgram(baseVert, splatFrag);
+            this.programs.advection = this.createProgram(baseVert, advectionFrag);
+            this.programs.divergence = this.createProgram(baseVert, divergenceFrag);
+            this.programs.curl = this.createProgram(baseVert, curlFrag);
+            this.programs.vorticity = this.createProgram(baseVert, vorticityFrag);
+            this.programs.pressure = this.createProgram(baseVert, pressureFrag);
+            this.programs.gradSubtract = this.createProgram(baseVert, gradSubtractFrag);
+            this.programs.clear = this.createProgram(baseVert, clearFrag);
 
-            // Vertex buffer
             const buffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]), gl.STATIC_DRAW);
@@ -276,38 +268,38 @@
             gl.shaderSource(frag, fragSrc);
             gl.compileShader(frag);
 
-            const program = gl.createProgram();
-            gl.attachShader(program, vert);
-            gl.attachShader(program, frag);
-            gl.linkProgram(program);
+            const prog = gl.createProgram();
+            gl.attachShader(prog, vert);
+            gl.attachShader(prog, frag);
+            gl.linkProgram(prog);
 
             const uniforms = {};
-            const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+            const count = gl.getProgramParameter(prog, gl.ACTIVE_UNIFORMS);
             for (let i = 0; i < count; i++) {
-                const name = gl.getActiveUniform(program, i).name;
-                uniforms[name] = gl.getUniformLocation(program, name);
+                const name = gl.getActiveUniform(prog, i).name;
+                uniforms[name] = gl.getUniformLocation(prog, name);
             }
-
-            return { program, uniforms };
+            return { program: prog, uniforms };
         }
 
         initFramebuffers() {
             const gl = this.gl;
-            const w = gl.drawingBufferWidth >> this.config.TEXTURE_DOWNSAMPLE;
-            const h = gl.drawingBufferHeight >> this.config.TEXTURE_DOWNSAMPLE;
+            const simW = this.config.SIM_RESOLUTION;
+            const simH = this.config.SIM_RESOLUTION;
+            const dyeW = this.config.DYE_RESOLUTION;
+            const dyeH = this.config.DYE_RESOLUTION;
 
-            this.texelSize = { x: 1.0 / w, y: 1.0 / h };
-            this.framebuffers.velocity = this.createDoubleFBO(w, h);
-            this.framebuffers.dye = this.createDoubleFBO(w, h);
-            this.framebuffers.divergence = this.createFBO(w, h);
-            this.framebuffers.curl = this.createFBO(w, h);
-            this.framebuffers.pressure = this.createDoubleFBO(w, h);
+            this.velocity = this.createDoubleFBO(simW, simH);
+            this.dye = this.createDoubleFBO(dyeW, dyeH);
+            this.divergence = this.createFBO(simW, simH);
+            this.curl = this.createFBO(simW, simH);
+            this.pressure = this.createDoubleFBO(simW, simH);
         }
 
         createFBO(w, h) {
             const gl = this.gl;
-            const texture = gl.createTexture();
-            gl.bindTexture(gl.TEXTURE_2D, texture);
+            const tex = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, tex);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -316,11 +308,12 @@
 
             const fbo = gl.createFramebuffer();
             gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
 
             return {
-                fbo, texture, width: w, height: h,
-                attach: (id) => { gl.activeTexture(gl.TEXTURE0 + id); gl.bindTexture(gl.TEXTURE_2D, texture); return id; }
+                fbo, texture: tex, width: w, height: h,
+                texelSizeX: 1 / w, texelSizeY: 1 / h,
+                attach: (id) => { gl.activeTexture(gl.TEXTURE0 + id); gl.bindTexture(gl.TEXTURE_2D, tex); return id; }
             };
         }
 
@@ -328,6 +321,8 @@
             let fbo1 = this.createFBO(w, h);
             let fbo2 = this.createFBO(w, h);
             return {
+                width: w, height: h,
+                texelSizeX: 1 / w, texelSizeY: 1 / h,
                 get read() { return fbo1; },
                 get write() { return fbo2; },
                 swap() { [fbo1, fbo2] = [fbo2, fbo1]; }
@@ -338,12 +333,24 @@
             document.addEventListener('mousemove', (e) => {
                 const x = e.clientX / window.innerWidth;
                 const y = 1.0 - e.clientY / window.innerHeight;
-                this.pointer.dx = (x - this.pointer.x) * 5.0;
-                this.pointer.dy = (y - this.pointer.y) * 5.0;
+                this.pointer.dx = (x - this.pointer.x) * 8;
+                this.pointer.dy = (y - this.pointer.y) * 8;
+                this.pointer.x = x;
+                this.pointer.y = y;
+                this.pointer.moved = Math.abs(this.pointer.dx) > 0.0001 || Math.abs(this.pointer.dy) > 0.0001;
+            });
+
+            // Touch support
+            document.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const x = touch.clientX / window.innerWidth;
+                const y = 1.0 - touch.clientY / window.innerHeight;
+                this.pointer.dx = (x - this.pointer.x) * 8;
+                this.pointer.dy = (y - this.pointer.y) * 8;
                 this.pointer.x = x;
                 this.pointer.y = y;
                 this.pointer.moved = true;
-            });
+            }, { passive: true });
 
             window.addEventListener('resize', () => {
                 this.resize();
@@ -351,59 +358,30 @@
             });
 
             // Watch for theme changes
-            const observer = new MutationObserver(() => {
-                this.checkDarkMode();
-            });
+            const observer = new MutationObserver(() => this.checkDarkMode());
             observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-            // Random splats periodically
-            setInterval(() => {
-                if (Math.random() < 0.3) {
-                    this.randomSplat();
-                }
-            }, 500);
-        }
-
-        multipleSplats(amount) {
-            for (let i = 0; i < amount; i++) {
-                const x = Math.random();
-                const y = Math.random();
-                const dx = (Math.random() - 0.5) * 0.01;
-                const dy = (Math.random() - 0.5) * 0.01;
-                const color = this.splatColors[Math.floor(Math.random() * this.splatColors.length)];
-                this.splat(x, y, dx, dy, color);
-            }
-        }
-
-        randomSplat() {
-            const x = Math.random();
-            const y = Math.random();
-            const dx = (Math.random() - 0.5) * 0.003;
-            const dy = (Math.random() - 0.5) * 0.003;
-            const color = this.splatColors[Math.floor(Math.random() * this.splatColors.length)];
-            this.splat(x, y, dx, dy, color);
         }
 
         splat(x, y, dx, dy, color) {
             const gl = this.gl;
             const prog = this.programs.splat;
-            
-            // Adjust color intensity based on mode
-            const intensity = this.isDarkMode ? 0.7 : 0.5;
+            const intensity = this.isDarkMode ? 1.0 : 0.8;
 
+            gl.viewport(0, 0, this.velocity.width, this.velocity.height);
             gl.useProgram(prog.program);
-            gl.uniform1i(prog.uniforms.uTarget, this.framebuffers.velocity.read.attach(0));
+            gl.uniform1i(prog.uniforms.uTarget, this.velocity.read.attach(0));
             gl.uniform1f(prog.uniforms.aspectRatio, this.canvas.width / this.canvas.height);
             gl.uniform2f(prog.uniforms.point, x, y);
-            gl.uniform3f(prog.uniforms.color, dx * 10, dy * 10, 0);
+            gl.uniform3f(prog.uniforms.color, dx * this.config.SPLAT_FORCE, dy * this.config.SPLAT_FORCE, 0);
             gl.uniform1f(prog.uniforms.radius, this.config.SPLAT_RADIUS);
-            this.blit(this.framebuffers.velocity.write.fbo);
-            this.framebuffers.velocity.swap();
+            this.blit(this.velocity.write.fbo);
+            this.velocity.swap();
 
-            gl.uniform1i(prog.uniforms.uTarget, this.framebuffers.dye.read.attach(0));
+            gl.viewport(0, 0, this.dye.width, this.dye.height);
+            gl.uniform1i(prog.uniforms.uTarget, this.dye.read.attach(0));
             gl.uniform3f(prog.uniforms.color, color[0] * intensity, color[1] * intensity, color[2] * intensity);
-            this.blit(this.framebuffers.dye.write.fbo);
-            this.framebuffers.dye.swap();
+            this.blit(this.dye.write.fbo);
+            this.dye.swap();
         }
 
         blit(target) {
@@ -416,79 +394,95 @@
             const gl = this.gl;
             const dt = 0.016;
 
-            // Check dark mode each frame for smooth transition
             this.checkDarkMode();
 
+            // Create splats when mouse moves
             if (this.pointer.moved) {
                 this.pointer.moved = false;
-                const color = this.splatColors[this.colorIndex];
+                // Multiple colors per movement for rich effect
+                for (let i = 0; i < 3; i++) {
+                    const color = this.splatColors[(this.colorIndex + i) % this.splatColors.length];
+                    const offsetX = (Math.random() - 0.5) * 0.01;
+                    const offsetY = (Math.random() - 0.5) * 0.01;
+                    this.splat(
+                        this.pointer.x + offsetX,
+                        this.pointer.y + offsetY,
+                        this.pointer.dx * (0.8 + Math.random() * 0.4),
+                        this.pointer.dy * (0.8 + Math.random() * 0.4),
+                        color
+                    );
+                }
                 this.colorIndex = (this.colorIndex + 1) % this.splatColors.length;
-                this.splat(this.pointer.x, this.pointer.y, this.pointer.dx, this.pointer.dy, color);
             }
+
+            // Simulation steps
+            gl.viewport(0, 0, this.velocity.width, this.velocity.height);
 
             // Curl
             gl.useProgram(this.programs.curl.program);
-            gl.uniform2f(this.programs.curl.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.curl.uniforms.uVelocity, this.framebuffers.velocity.read.attach(0));
-            this.blit(this.framebuffers.curl.fbo);
+            gl.uniform2f(this.programs.curl.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.curl.uniforms.uVelocity, this.velocity.read.attach(0));
+            this.blit(this.curl.fbo);
 
             // Vorticity
             gl.useProgram(this.programs.vorticity.program);
-            gl.uniform2f(this.programs.vorticity.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.vorticity.uniforms.uVelocity, this.framebuffers.velocity.read.attach(0));
-            gl.uniform1i(this.programs.vorticity.uniforms.uCurl, this.framebuffers.curl.attach(1));
+            gl.uniform2f(this.programs.vorticity.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.vorticity.uniforms.uVelocity, this.velocity.read.attach(0));
+            gl.uniform1i(this.programs.vorticity.uniforms.uCurl, this.curl.attach(1));
             gl.uniform1f(this.programs.vorticity.uniforms.curl, this.config.CURL);
             gl.uniform1f(this.programs.vorticity.uniforms.dt, dt);
-            this.blit(this.framebuffers.velocity.write.fbo);
-            this.framebuffers.velocity.swap();
+            this.blit(this.velocity.write.fbo);
+            this.velocity.swap();
 
             // Divergence
             gl.useProgram(this.programs.divergence.program);
-            gl.uniform2f(this.programs.divergence.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.divergence.uniforms.uVelocity, this.framebuffers.velocity.read.attach(0));
-            this.blit(this.framebuffers.divergence.fbo);
+            gl.uniform2f(this.programs.divergence.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.divergence.uniforms.uVelocity, this.velocity.read.attach(0));
+            this.blit(this.divergence.fbo);
 
             // Clear pressure
             gl.useProgram(this.programs.clear.program);
-            gl.uniform1i(this.programs.clear.uniforms.uTexture, this.framebuffers.pressure.read.attach(0));
-            gl.uniform1f(this.programs.clear.uniforms.value, this.config.PRESSURE_DISSIPATION);
-            this.blit(this.framebuffers.pressure.write.fbo);
-            this.framebuffers.pressure.swap();
+            gl.uniform1i(this.programs.clear.uniforms.uTexture, this.pressure.read.attach(0));
+            gl.uniform1f(this.programs.clear.uniforms.value, 0.8);
+            this.blit(this.pressure.write.fbo);
+            this.pressure.swap();
 
             // Pressure solve
             gl.useProgram(this.programs.pressure.program);
-            gl.uniform2f(this.programs.pressure.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.pressure.uniforms.uDivergence, this.framebuffers.divergence.attach(0));
+            gl.uniform2f(this.programs.pressure.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.pressure.uniforms.uDivergence, this.divergence.attach(0));
             for (let i = 0; i < this.config.PRESSURE_ITERATIONS; i++) {
-                gl.uniform1i(this.programs.pressure.uniforms.uPressure, this.framebuffers.pressure.read.attach(1));
-                this.blit(this.framebuffers.pressure.write.fbo);
-                this.framebuffers.pressure.swap();
+                gl.uniform1i(this.programs.pressure.uniforms.uPressure, this.pressure.read.attach(1));
+                this.blit(this.pressure.write.fbo);
+                this.pressure.swap();
             }
 
             // Gradient subtract
-            gl.useProgram(this.programs.gradientSubtract.program);
-            gl.uniform2f(this.programs.gradientSubtract.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.gradientSubtract.uniforms.uPressure, this.framebuffers.pressure.read.attach(0));
-            gl.uniform1i(this.programs.gradientSubtract.uniforms.uVelocity, this.framebuffers.velocity.read.attach(1));
-            this.blit(this.framebuffers.velocity.write.fbo);
-            this.framebuffers.velocity.swap();
+            gl.useProgram(this.programs.gradSubtract.program);
+            gl.uniform2f(this.programs.gradSubtract.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.gradSubtract.uniforms.uPressure, this.pressure.read.attach(0));
+            gl.uniform1i(this.programs.gradSubtract.uniforms.uVelocity, this.velocity.read.attach(1));
+            this.blit(this.velocity.write.fbo);
+            this.velocity.swap();
 
-            // Advection velocity
+            // Advect velocity
             gl.useProgram(this.programs.advection.program);
-            gl.uniform2f(this.programs.advection.uniforms.texelSize, this.texelSize.x, this.texelSize.y);
-            gl.uniform1i(this.programs.advection.uniforms.uVelocity, this.framebuffers.velocity.read.attach(0));
-            gl.uniform1i(this.programs.advection.uniforms.uSource, this.framebuffers.velocity.read.attach(0));
+            gl.uniform2f(this.programs.advection.uniforms.texelSize, this.velocity.texelSizeX, this.velocity.texelSizeY);
+            gl.uniform1i(this.programs.advection.uniforms.uVelocity, this.velocity.read.attach(0));
+            gl.uniform1i(this.programs.advection.uniforms.uSource, this.velocity.read.attach(0));
             gl.uniform1f(this.programs.advection.uniforms.dt, dt);
             gl.uniform1f(this.programs.advection.uniforms.dissipation, this.config.VELOCITY_DISSIPATION);
-            this.blit(this.framebuffers.velocity.write.fbo);
-            this.framebuffers.velocity.swap();
+            this.blit(this.velocity.write.fbo);
+            this.velocity.swap();
 
-            // Advection dye
-            gl.uniform1i(this.programs.advection.uniforms.uVelocity, this.framebuffers.velocity.read.attach(0));
-            gl.uniform1i(this.programs.advection.uniforms.uSource, this.framebuffers.dye.read.attach(1));
+            // Advect dye
+            gl.viewport(0, 0, this.dye.width, this.dye.height);
+            gl.uniform2f(this.programs.advection.uniforms.texelSize, this.dye.texelSizeX, this.dye.texelSizeY);
+            gl.uniform1i(this.programs.advection.uniforms.uVelocity, this.velocity.read.attach(0));
+            gl.uniform1i(this.programs.advection.uniforms.uSource, this.dye.read.attach(1));
             gl.uniform1f(this.programs.advection.uniforms.dissipation, this.config.DENSITY_DISSIPATION);
-            this.blit(this.framebuffers.dye.write.fbo);
-            this.framebuffers.dye.swap();
+            this.blit(this.dye.write.fbo);
+            this.dye.swap();
 
             // Display
             gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
@@ -499,9 +493,8 @@
             gl.clear(gl.COLOR_BUFFER_BIT);
 
             gl.useProgram(this.programs.display.program);
-            gl.uniform1i(this.programs.display.uniforms.uTexture, this.framebuffers.dye.read.attach(0));
-            // Brightness: higher for dark mode to make colors pop
-            gl.uniform1f(this.programs.display.uniforms.uBrightness, this.isDarkMode ? 1.5 : 1.2);
+            gl.uniform1i(this.programs.display.uniforms.uTexture, this.dye.read.attach(0));
+            gl.uniform1f(this.programs.display.uniforms.uBrightness, this.isDarkMode ? 1.8 : 1.5);
             this.blit(null);
 
             requestAnimationFrame(() => this.render());
@@ -542,7 +535,7 @@
                 justify-content: center;
                 box-shadow: 0 6px 24px rgba(0,0,0,0.1), inset 0 -3px 8px rgba(0,0,0,0.05);
                 animation: eyeFloat 4s ease-in-out infinite;
-                transition: background 0.3s ease, box-shadow 0.3s ease;
+                transition: background 0.3s, box-shadow 0.3s;
             }
             .left-eye { animation-delay: 0s; }
             .right-eye { animation-delay: 0.4s; }
@@ -556,7 +549,7 @@
                 background: radial-gradient(circle at 35% 35%, #3a3a3a, #111);
                 border-radius: 50%;
                 position: relative;
-                transition: transform 0.1s ease-out, background 0.3s ease;
+                transition: transform 0.1s ease-out;
             }
             .glint {
                 position: absolute;
@@ -583,13 +576,12 @@
                 0%, 100% { transform: scaleY(1); }
                 50% { transform: scaleY(0.1); }
             }
-            /* Dark mode styles */
-            [data-theme="dark"] .eye { 
+            [data-theme="dark"] .eye {
                 background: radial-gradient(circle at 35% 35%, #f0f0f0, #d0d0d0);
                 box-shadow: 0 6px 24px rgba(0,0,0,0.4), inset 0 -3px 8px rgba(0,0,0,0.1);
             }
-            [data-theme="dark"] .pupil { 
-                background: radial-gradient(circle at 35% 35%, #1a1a1a, #000); 
+            [data-theme="dark"] .pupil {
+                background: radial-gradient(circle at 35% 35%, #1a1a1a, #000);
             }
         `;
 

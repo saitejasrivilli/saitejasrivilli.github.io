@@ -175,6 +175,121 @@
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
+        
+        /* Cute Eyes */
+        .cute-eyes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            pointer-events: none;
+        }
+        .eye {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.1),
+                inset 0 -3px 10px rgba(0,0,0,0.05),
+                inset 0 3px 10px rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .eye::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 12px;
+            height: 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+        .eye-white {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #e8e8e8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .pupil {
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 35% 35%, #4a4a4a, #1a1a1a);
+            border-radius: 50%;
+            position: absolute;
+            transition: transform 0.1s ease-out;
+            box-shadow: inset 0 -2px 4px rgba(255,255,255,0.2);
+        }
+        .pupil::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+        }
+        .pupil::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+        }
+        [data-theme="dark"] .eye {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                inset 0 -3px 10px rgba(0,0,0,0.2),
+                inset 0 3px 10px rgba(255,255,255,0.1);
+        }
+        [data-theme="dark"] .eye-white {
+            background: radial-gradient(circle at 30% 30%, #f0f0f0, #d0d0d0);
+        }
+        
+        /* Blink animation */
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .eye {
+            animation: blink 4s infinite;
+        }
+        .eye:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        @media (max-width: 768px) {
+            .cute-eyes {
+                gap: 10px;
+                margin-bottom: 1rem;
+            }
+            .eye {
+                width: 40px;
+                height: 40px;
+            }
+            .eye-white {
+                width: 32px;
+                height: 32px;
+            }
+            .pupil {
+                width: 14px;
+                height: 14px;
+            }
+        }
         nav {
             position: fixed;
             top: 0;
@@ -536,7 +651,8 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 1000;
+            z-index: 1001;
+            pointer-events: auto !important;
         }
         .chat-bubble {
             width: 60px;
@@ -550,6 +666,8 @@
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             transition: all 0.3s ease;
+            pointer-events: auto !important;
+            z-index: 1001;
         }
         .chat-bubble:hover {
             transform: scale(1.1);
@@ -569,11 +687,14 @@
             transform: translateY(10px) scale(0.95);
             transition: all 0.3s ease;
             overflow: hidden;
+            pointer-events: none;
+            z-index: 1001;
         }
         .chat-popup.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
+            pointer-events: auto;
         }
         .chat-header {
             display: flex;
@@ -716,6 +837,19 @@
     <section class="hero">
         <div class="container">
             <p class="hero-greeting animate-fade-in-up">Hey, I'm Sai Teja 👋</p>
+            <!-- Cute Eyes that follow mouse -->
+            <div class="cute-eyes" id="cuteEyes">
+                <div class="eye">
+                    <div class="eye-white">
+                        <div class="pupil" id="pupilLeft"></div>
+                    </div>
+                </div>
+                <div class="eye">
+                    <div class="eye-white">
+                        <div class="pupil" id="pupilRight"></div>
+                    </div>
+                </div>
+            </div>
             <h1 class="animate-fade-in-up delay-1">LLM/GenAI Engineer</h1>
             <p class="hero-subtitle animate-fade-in-up delay-2">Building intelligent AI systems with LLMs, RAG pipelines, and multi-agent architectures.</p>
             
@@ -787,72 +921,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -1076,6 +1146,45 @@
             themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
             
             if (fallback) fallback.classList.add('hidden');
+        })();
+        
+        // Cute Eyes Mouse Tracking
+        (function() {
+            const pupilLeft = document.getElementById('pupilLeft');
+            const pupilRight = document.getElementById('pupilRight');
+            const eyes = document.getElementById('cuteEyes');
+            
+            if (!pupilLeft || !pupilRight || !eyes) return;
+            
+            const maxMove = 8;
+            
+            function updateEyes(mouseX, mouseY) {
+                const eyesRect = eyes.getBoundingClientRect();
+                const eyesCenterX = eyesRect.left + eyesRect.width / 2;
+                const eyesCenterY = eyesRect.top + eyesRect.height / 2;
+                
+                const angle = Math.atan2(mouseY - eyesCenterY, mouseX - eyesCenterX);
+                const distance = Math.min(
+                    Math.sqrt(Math.pow(mouseX - eyesCenterX, 2) + Math.pow(mouseY - eyesCenterY, 2)) / 20,
+                    maxMove
+                );
+                
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                
+                pupilLeft.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                pupilRight.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+            
+            document.addEventListener('mousemove', function(e) {
+                updateEyes(e.clientX, e.clientY);
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length > 0) {
+                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: true });
         })();
     </script>
 </body>

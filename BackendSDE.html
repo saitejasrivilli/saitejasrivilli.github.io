@@ -175,6 +175,121 @@
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
+        
+        /* Cute Eyes */
+        .cute-eyes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            pointer-events: none;
+        }
+        .eye {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.1),
+                inset 0 -3px 10px rgba(0,0,0,0.05),
+                inset 0 3px 10px rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .eye::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 12px;
+            height: 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+        .eye-white {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #e8e8e8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .pupil {
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 35% 35%, #4a4a4a, #1a1a1a);
+            border-radius: 50%;
+            position: absolute;
+            transition: transform 0.1s ease-out;
+            box-shadow: inset 0 -2px 4px rgba(255,255,255,0.2);
+        }
+        .pupil::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+        }
+        .pupil::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+        }
+        [data-theme="dark"] .eye {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                inset 0 -3px 10px rgba(0,0,0,0.2),
+                inset 0 3px 10px rgba(255,255,255,0.1);
+        }
+        [data-theme="dark"] .eye-white {
+            background: radial-gradient(circle at 30% 30%, #f0f0f0, #d0d0d0);
+        }
+        
+        /* Blink animation */
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .eye {
+            animation: blink 4s infinite;
+        }
+        .eye:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        @media (max-width: 768px) {
+            .cute-eyes {
+                gap: 10px;
+                margin-bottom: 1rem;
+            }
+            .eye {
+                width: 40px;
+                height: 40px;
+            }
+            .eye-white {
+                width: 32px;
+                height: 32px;
+            }
+            .pupil {
+                width: 14px;
+                height: 14px;
+            }
+        }
         nav {
             position: fixed;
             top: 0;
@@ -536,7 +651,8 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 1000;
+            z-index: 1001;
+            pointer-events: auto !important;
         }
         .chat-bubble {
             width: 60px;
@@ -550,6 +666,8 @@
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             transition: all 0.3s ease;
+            pointer-events: auto !important;
+            z-index: 1001;
         }
         .chat-bubble:hover {
             transform: scale(1.1);
@@ -569,11 +687,14 @@
             transform: translateY(10px) scale(0.95);
             transition: all 0.3s ease;
             overflow: hidden;
+            pointer-events: none;
+            z-index: 1001;
         }
         .chat-popup.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
+            pointer-events: auto;
         }
         .chat-header {
             display: flex;
@@ -712,6 +833,19 @@
     <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend SDE</span></div></nav>
 
     <section class="hero"><div class="container">
+        <!-- Cute Eyes that follow mouse -->
+        <div class="cute-eyes" id="cuteEyes">
+            <div class="eye">
+                <div class="eye-white">
+                    <div class="pupil" id="pupilLeft"></div>
+                </div>
+            </div>
+            <div class="eye">
+                <div class="eye-white">
+                    <div class="pupil" id="pupilRight"></div>
+                </div>
+            </div>
+        </div>
         <div class="role-badge animate-fade-in-up"><span>💻</span><span>Backend SDE</span></div>
         <h1 class="animate-fade-in-up delay-1">Distributed Systems & High-Performance APIs</h1>
         <p class="hero-description animate-fade-in-up delay-2">Building scalable backend services, distributed systems, and high-throughput data processing pipelines.</p>
@@ -921,6 +1055,45 @@
             themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
             
             if (fallback) fallback.classList.add('hidden');
+        })();
+        
+        // Cute Eyes Mouse Tracking
+        (function() {
+            const pupilLeft = document.getElementById('pupilLeft');
+            const pupilRight = document.getElementById('pupilRight');
+            const eyes = document.getElementById('cuteEyes');
+            
+            if (!pupilLeft || !pupilRight || !eyes) return;
+            
+            const maxMove = 8; // Maximum pixels the pupil can move
+            
+            function updateEyes(mouseX, mouseY) {
+                const eyesRect = eyes.getBoundingClientRect();
+                const eyesCenterX = eyesRect.left + eyesRect.width / 2;
+                const eyesCenterY = eyesRect.top + eyesRect.height / 2;
+                
+                const angle = Math.atan2(mouseY - eyesCenterY, mouseX - eyesCenterX);
+                const distance = Math.min(
+                    Math.sqrt(Math.pow(mouseX - eyesCenterX, 2) + Math.pow(mouseY - eyesCenterY, 2)) / 20,
+                    maxMove
+                );
+                
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                
+                pupilLeft.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                pupilRight.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+            
+            document.addEventListener('mousemove', function(e) {
+                updateEyes(e.clientX, e.clientY);
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length > 0) {
+                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: true });
         })();
     </script>
 </body>

@@ -392,7 +392,7 @@
         .skills-track {
             display: flex;
             gap: 2rem;
-            animation: marquee 25s linear infinite;
+            animation: marquee 50s linear infinite;
             width: max-content;
         }
         @keyframes marquee {
@@ -795,8 +795,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadProjects);
-        
-        
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+    <script>
+        (function() {
+            const canvas = document.getElementById('fluid-canvas');
+            const fallback = document.getElementById('fluid-fallback');
+            
+            if (typeof WebGLFluid === 'undefined') {
+                console.error('WebGL Fluid library not loaded');
+                return;
+            }
             
             const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
             

@@ -726,12 +726,9 @@
     </div>
     
     <!-- Dark Mode Toggle -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme (Auto-switches at 6AM/6PM)">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme (follows system preference)">
         <span class="theme-icon">🌙</span>
     </button>
-
-        <!-- Auto Theme Indicator -->
-    <div class="auto-theme-indicator" id="auto-theme-indicator">Auto theme (6AM-6PM light)</div>
 
     <section class="hero">
         <div class="profile-container animate-fade-in-up">
@@ -949,36 +946,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">GPU Optimization for Mistral</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">GPU Optimization System achieving 2.8x speedup on Mistral-7B using PyTorch quantization, CUDA kernel optimization, and GPU profiling. Includes GPUProfiler, CUDAKernelOptimizer, and QuantizedLinear layers with custom autograd functions. Production-ready with comprehensive documentation and benchmarking.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1053,103 +1028,6 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p></footer>
 
     <script>
-        /**
-         * Time-Based Theme Management
-         */
-        function getTimeBasedTheme() {
-            const hour = new Date().getHours();
-            return (hour >= 18 || hour < 6) ? 'dark' : 'light';
-        }
-        
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            localStorage.setItem('themeManualOverride', 'true');
-            updateThemeIcon(newTheme);
-            showThemeToast(newTheme);
-            hideAutoIndicator();
-        }
-        
-        function updateThemeIcon(theme) {
-            const icon = document.querySelector('.theme-icon');
-            if (icon) {
-                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
-        }
-        
-        function showThemeToast(theme) {
-            const existingToast = document.querySelector('.theme-toast');
-            if (existingToast) existingToast.remove();
-            
-            const toast = document.createElement('div');
-            toast.className = 'theme-toast';
-            toast.innerHTML = theme === 'dark' 
-                ? '🌙 Dark mode enabled<br><small style="opacity:0.7">Resets at 6 AM</small>' 
-                : '☀️ Light mode enabled<br><small style="opacity:0.7">Resets at 6 PM</small>';
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                right: 2rem;
-                background: var(--text-primary);
-                color: var(--bg-primary);
-                padding: 0.75rem 1.25rem;
-                border-radius: 16px;
-                font-size: 0.85rem;
-                font-weight: 500;
-                z-index: 1001;
-                animation: fadeInUp 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                text-align: center;
-                line-height: 1.4;
-            `;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
-        
-        function showAutoIndicator() {
-            const indicator = document.getElementById('auto-theme-indicator');
-            if (indicator) {
-                indicator.classList.add('visible');
-                setTimeout(() => indicator.classList.remove('visible'), 3000);
-            }
-        }
-        
-        function hideAutoIndicator() {
-            const indicator = document.getElementById('auto-theme-indicator');
-            if (indicator) indicator.classList.remove('visible');
-        }
-        
-        function applyTheme() {
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            const savedTheme = localStorage.getItem('theme');
-            
-            let theme;
-            if (manualOverride === 'true' && savedTheme) {
-                theme = savedTheme;
-            } else {
-                theme = getTimeBasedTheme();
-                localStorage.removeItem('themeManualOverride');
-            }
-            
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-        }
-        
-        // Initialize theme
-        applyTheme();
-        
-        // Show auto indicator on first load if not manually overridden
-        if (localStorage.getItem('themeManualOverride') !== 'true') {
-            setTimeout(showAutoIndicator, 1000);
-        }
         
         // Check and update theme every minute for auto-switching
         setInterval(() => {

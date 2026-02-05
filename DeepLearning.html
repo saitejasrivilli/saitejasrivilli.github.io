@@ -782,10 +782,6 @@
                     </div>
                 </div>`
             ).join('')}</div>`;
-            
-            // Animate on scroll
-            const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
-            container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
         })();
     </script>
     

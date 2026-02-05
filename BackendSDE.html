@@ -759,7 +759,9 @@
     <script>
         // Instant project loading - no API calls
         const projects = [
-            { repo: 'DistributedKVStore', title: 'Distributed Key-Value Store', description: 'Production-grade distributed KV store with Raft consensus → gRPC APIs, leader election, log replication, and horizontal scaling. Handles 100K+ ops/sec.', tech: ['Go', 'gRPC', 'Raft', 'Docker', 'Protobuf'] }
+            { repo: 'DistributedKVStore', title: 'Distributed Key-Value Store', description: 'Production-grade distributed KV store with Raft consensus → gRPC APIs, leader election, log replication, and horizontal scaling.', tech: ['Go', 'gRPC', 'Raft', 'Docker', 'Protobuf'] },
+            { repo: 'containerized-microservices-demo', title: 'Containerized Microservices', description: 'Full microservices architecture demo → Docker containerization, Kubernetes orchestration, service mesh, and API gateway patterns.', tech: ['Docker', 'Kubernetes', 'Go', 'REST API', 'Nginx'] },
+            { repo: 'go-event-inges', title: 'Go Event Ingestion Service', description: 'High-throughput event ingestion backend → Async processing, message queues, rate limiting, and fault-tolerant data pipelines.', tech: ['Go', 'Kafka', 'Redis', 'PostgreSQL', 'Docker'] }
         ];
 
         (function loadProjects() {

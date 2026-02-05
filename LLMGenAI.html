@@ -955,72 +955,8 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Sorted by most recently updated on GitHub</p>
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -1051,16 +987,34 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
     <script>
+        // Instant project loading - no API calls
         const projects = [
-            { repo: 'vllm-throughput-benchmark', title: 'vLLM Optimization', description: 'Comprehensive LLM inference optimization → 12.3× throughput improvement with vLLM.', impact: '7M tokens/sec' },
-            { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use → Planning, multi-step reasoning, RAG integration.', impact: 'Multi-Agent' },
-            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → CoT, ToT, ReAct patterns.', impact: 'Reasoning' },
-            { repo: 'RAG-Application', title: 'RAG Application', description: 'Retrieval-Augmented Generation pipeline → Document chunking, vector search, generation.', impact: 'RAG' },
-            { repo: 'LORA-implementation', title: 'LoRA Fine-tuning', description: 'Parameter-efficient fine-tuning → LoRA and QLoRA for large language models.', impact: 'Fine-tuning' }
+            { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use → Planning, multi-step reasoning, RAG integration, and autonomous task execution.', tech: ['Python', 'LangChain', 'OpenAI', 'FastAPI'] },
+            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → Chain-of-Thought, Tree-of-Thought, ReAct patterns based on task complexity.', tech: ['Python', 'LangChain', 'GPT-4', 'Streamlit'] }
         ];
 
+        // Render projects immediately
+        (function loadProjects() {
+            const container = document.getElementById('projects-container');
+            if (!container) return;
+            
+            container.innerHTML = `<div class="projects-grid">${projects.map(p => 
+                `<div class="project-item">
+                    <h3 class="project-title">${p.title}</h3>
+                    <p class="project-description">${p.description}</p>
+                    <div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+                    <div class="project-links">
+                        <a href="https://github.com/saitejasrivilli/${p.repo}" class="project-link code" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            Code
+                        </a>
+                    </div>
+                </div>`
+            ).join('')}</div>`;
+        })();
+
         const aiKnowledge = {
-            projects: "I've built several GenAI projects: <br><br>🚀 <strong>vLLM Optimization</strong> - 12.3× throughput improvement, 7M tokens/sec<br>🤖 <strong>Advanced LLM Agent</strong> - Multi-agent with RAG integration<br>🧠 <strong>Multi-Strategy AI Agent</strong> - Auto-selects CoT, ToT, ReAct patterns<br>📚 <strong>RAG Application</strong> - Document chunking, vector search<br>🔧 <strong>LoRA Fine-tuning</strong> - Parameter-efficient fine-tuning<br><br>Check out the Projects section below for code!",
+            projects: "I've built LLM Agent projects: <br><br>🤖 <strong>Advanced LLM Agent</strong> - Multi-agent with RAG integration, tool use, planning<br>🧠 <strong>Multi-Strategy AI Agent</strong> - Auto-selects CoT, ToT, ReAct patterns<br><br>Check out the Projects section below for code!",
             skills: "My GenAI tech stack includes:<br><br>🔷 <strong>LLM Frameworks:</strong> Hugging Face, LangChain, LlamaIndex, vLLM<br>🔷 <strong>Fine-tuning:</strong> LoRA, QLoRA, PEFT, SFT<br>🔷 <strong>RAG:</strong> Pinecone, ChromaDB, Neo4j, FAISS<br>🔷 <strong>Agents:</strong> ReAct, Chain-of-Thought, Tree-of-Thought<br>🔷 <strong>Inference:</strong> CUDA, TensorRT, quantization (GPTQ, AWQ)<br>🔷 <strong>Languages:</strong> Python, PyTorch, C++",
             experience: "My GenAI experience:<br><br>🎓 <strong>Graduate Research Assistant @ UTA</strong> (Jun 2025-Present)<br>→ CTMap: LLM-enabled path planning for mmWave networks<br>→ IEEE ICC 2026 publication<br>→ Fine-tuning with 10K+ examples<br><br>💼 <strong>ML Engineer Intern @ ReplyQuickAI</strong><br>→ Integrated GenAI into healthcare workflows<br>→ Built LLM-powered chatbots",
             rag: "My RAG expertise:<br><br>📄 <strong>Document Processing:</strong> Chunking strategies, metadata extraction<br>🔢 <strong>Embeddings:</strong> OpenAI, Sentence Transformers, BGE<br>💾 <strong>Vector DBs:</strong> Pinecone, ChromaDB, Neo4j, Weaviate<br>🔍 <strong>Retrieval:</strong> Hybrid search, re-ranking, MMR<br>⚡ <strong>Optimization:</strong> Query routing, caching, streaming<br><br>Check my RAG-Application project on GitHub!",
@@ -1115,40 +1069,6 @@
         }
 
         function handleKeyPress(event) { if (event.key === 'Enter') handleAIQuery(); }
-
-        async function fetchRepo(name) {
-            try {
-                const [repoRes, langRes] = await Promise.all([
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}`),
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}/languages`)
-                ]);
-                return { repoData: repoRes.ok ? await repoRes.json() : null, langData: langRes.ok ? await langRes.json() : {} };
-            } catch(e) { return { repoData: null, langData: {} }; }
-        }
-        
-        function getTechStack(langData, topics = []) {
-            const langs = Object.entries(langData).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([lang]) => lang);
-            return [...new Set([...langs, ...topics.slice(0, 3)])].slice(0, 5);
-        }
-        
-        async function loadProjects() {
-            const container = document.getElementById('projects-container');
-            if (!container) return;
-            
-            const data = await Promise.all(projects.map(async p => {
-                const { repoData, langData } = await fetchRepo(p.repo);
-                const tech = getTechStack(langData, repoData?.topics || []);
-                return { ...p, updatedAt: repoData ? new Date(repoData.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}`, tech: tech.length > 0 ? tech : ['Code'] };
-            }));
-            data.sort((a, b) => b.updatedAt - a.updatedAt);
-            
-            container.innerHTML = `<div class="projects-grid">${data.map(p => {
-                const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : '';
-                return `<div class="project-item"><h3 class="project-title">${p.title}</h3><p class="project-description">${p.description}</p><div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div><div class="project-links"><a href="${p.url}" class="project-link code" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Code</a></div>${date ? `<p class="project-updated">📅 ${date}</p>` : ''}</div>`;
-            }).join('')}</div>`;
-        }
-
-        document.addEventListener('DOMContentLoaded', loadProjects);
     </script>
     
     <!-- WebGL Fluid Animation -->

@@ -757,57 +757,34 @@
     <footer><p>© 2026 Sai Teja Srivillibhutturu. Deep Learning Engineer.</p></footer>
 
     <script>
+        // Instant project loading - no API calls
         const projects = [
-            { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'Built attention benchmarking framework → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.', impact: '12.3× faster' },
-            { repo: 'gpu-optimization-mistral', title: 'GPU Optimization & Profiling System', description: 'Built GPU optimization for Mistral-7B → 2.8× inference speedup, 4× memory reduction. C++/CUDA fused kernels, INT4-NF4 quantization.', impact: '4× memory ↓' },
-            { repo: 'vllm-throughput-benchmark', title: 'vLLM Throughput Benchmark', description: 'Comprehensive benchmarking suite for vLLM → 7M+ tokens/sec throughput optimization.', impact: '7M tokens/sec' },
-            { repo: 'LORA-implementation', title: 'LoRA Implementation', description: 'Low-Rank Adaptation for parameter-efficient fine-tuning of large language models.', impact: 'PEFT' }
+            { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'CUDA kernel optimization for transformer attention → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.', tech: ['Python', 'PyTorch', 'CUDA', 'C++'] },
+            { repo: 'gpu-optimization-mistral', title: 'GPU Optimization & Profiling', description: 'Deep optimization for Mistral-7B inference → 2.8× speedup, 4× memory reduction. Custom C++/CUDA fused kernels, INT4-NF4 quantization.', tech: ['C++', 'CUDA', 'PyTorch', 'TensorRT'] }
         ];
 
-        async function fetchRepo(name) {
-            try {
-                const [repoRes, langRes] = await Promise.all([
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}`),
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${name}/languages`)
-                ]);
-                const repoData = repoRes.ok ? await repoRes.json() : null;
-                const langData = langRes.ok ? await langRes.json() : {};
-                return { repoData, langData };
-            } catch(e) { return { repoData: null, langData: {} }; }
-        }
-        
-        function getTechStack(langData, topics = []) {
-            const langs = Object.entries(langData).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([lang]) => lang);
-            return [...new Set([...langs, ...topics.slice(0, 3)])].slice(0, 5);
-        }
-        
-        async function loadProjects() {
+        (function loadProjects() {
             const container = document.getElementById('projects-container');
-            const data = await Promise.all(projects.map(async p => {
-                const { repoData, langData } = await fetchRepo(p.repo);
-                const tech = getTechStack(langData, repoData?.topics || []);
-                return { ...p, updatedAt: repoData ? new Date(repoData.updated_at) : new Date(0), url: `https://github.com/saitejasrivilli/${p.repo}`, tech: tech.length > 0 ? tech : ['Code'] };
-            }));
-            data.sort((a, b) => b.updatedAt - a.updatedAt);
-            container.innerHTML = `<div class="projects-grid">${data.map(p => {
-                const date = p.updatedAt.getTime() > 0 ? `Updated ${p.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : '';
-                return `<div class="project-item">
+            if (!container) return;
+            
+            container.innerHTML = `<div class="projects-grid">${projects.map(p => 
+                `<div class="project-item">
                     <h3 class="project-title">${p.title}</h3>
                     <p class="project-description">${p.description}</p>
                     <div class="project-tech">${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
                     <div class="project-links">
-                        <a href="${p.url}" class="project-link code" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Code</a>
+                        <a href="https://github.com/saitejasrivilli/${p.repo}" class="project-link code" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            Code
+                        </a>
                     </div>
-                    ${date ? `<p class="project-updated">📅 ${date}</p>` : ''}
-                </div>`;
-            }).join('')}</div>`;
+                </div>`
+            ).join('')}</div>`;
+            
+            // Animate on scroll
             const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
             container.querySelectorAll('.project-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s, transform 0.5s'; obs.observe(el); });
-        }
-        document.addEventListener('DOMContentLoaded', loadProjects);
-        
-        );
-        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity = '1'; x.target.style.transform = 'translateY(0)'; } }), { threshold: 0.1 });
+        })();
     </script>
     
     <!-- WebGL Fluid Animation -->

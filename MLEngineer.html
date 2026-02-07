@@ -821,25 +821,42 @@
             ).join('')}</div>`;
         }
 
+        // Fetch README and extract demo URL - STRICT detection only
         async function fetchReadmeData(repoName) {
             try {
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/readme`, { headers: { 'Accept': 'application/vnd.github.v3.raw' } });
                 if (!res.ok) return null;
                 const readme = await res.text();
-                const demoPatterns = [
-                    /\[(?:live demo|demo|try it|deployed|app|notebook|colab|run|playground|website|hosted|online)\]\((https?:\/\/[^\s\)]+)\)/i,
-                    /\[!\[.*?(?:demo|deploy|heroku|streamlit|vercel|netlify|hugging|colab).*?\]\([^\)]+\)\]\((https?:\/\/[^\s\)]+)\)/i,
-                    /(https?:\/\/(?:[\w-]+\.)?(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces|colab\.research\.google\.com|nbviewer\.jupyter\.org|github\.io|render\.com|railway\.app|fly\.io|replit\.com)[^\s\)\]"']*)/i,
-                    /(?:demo|live|deployed?|app|website|hosted)[\s:]+\*?\*?(https?:\/\/[^\s\)\]"']+)/i
+                
+                // STRICT demo URL detection - only explicit demo links
+                let demoUrl = null;
+                
+                // Pattern 1: Markdown links explicitly labeled as demo/live
+                const linkPatterns = [
+                    /\[(?:🚀\s*)?(?:live\s*demo|demo|try\s*it\s*(?:live|now|here)|deployed\s*(?:app|version)|web\s*app|online\s*demo)\]\s*\(\s*(https?:\/\/[^\s\)]+)\s*\)/gi,
+                    /\[(?:!\[(?:demo|deploy|live)[^\]]*\]\([^\)]+\))\]\s*\(\s*(https?:\/\/[^\s\)]+)\s*\)/gi
                 ];
-                for (const pattern of demoPatterns) {
-                    const match = readme.match(pattern);
-                    if (match) {
-                        let demoUrl = (match[1] || match[2] || match[0]).replace(/[)\]"'.,;:]+$/, '').trim();
-                        if (demoUrl.startsWith('http')) return { demoUrl };
+                
+                for (const pattern of linkPatterns) {
+                    const match = pattern.exec(readme);
+                    if (match && match[1]) {
+                        const url = match[1].trim();
+                        if (!url.includes('github.com/' + GITHUB_USER)) {
+                            demoUrl = url;
+                            break;
+                        }
                     }
                 }
-                return null;
+                
+                // Pattern 2: Only if explicitly on deployment platforms
+                if (!demoUrl) {
+                    const platformPattern = /(https?:\/\/[\w-]+\.(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces\/[\w-]+\/[\w-]+|gradio\.app|railway\.app|render\.com|fly\.dev)[^\s\)\]"'<]*)/gi;
+                    const match = platformPattern.exec(readme);
+                    if (match && match[1]) {
+                        demoUrl = match[1].replace(/[)\]"'.,;:]+$/, '').trim();
+                    }
+                }
+                return demoUrl ? { demoUrl } : null;
             } catch (e) { return null; }
         }
 
@@ -853,7 +870,7 @@
                 if (!repoRes.ok) return null;
                 const repoData = await repoRes.json();
                 const langData = langRes.ok ? await langRes.json() : {};
-                return { updatedAt: repoData.updated_at, tech: Object.keys(langData).slice(0, 4), demoUrl: readmeData?.demoUrl || repoData.homepage || null };
+                return { updatedAt: repoData.updated_at, tech: Object.keys(langData).slice(0, 4), demoUrl: readmeData?.demoUrl || null };
             } catch (e) { return null; }
         }
 

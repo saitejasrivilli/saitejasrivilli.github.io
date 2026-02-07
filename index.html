@@ -847,37 +847,38 @@
             
             <!-- Interactive Skill Radar Chart -->
             <div class="skill-radar-container" style="max-width: 500px; margin: 2rem auto; text-align: center;">
-                <svg viewBox="0 0 400 400" style="max-width: 100%; height: auto;">
-                    <!-- Background circles -->
-                    <circle cx="200" cy="200" r="150" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <circle cx="200" cy="200" r="112.5" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <circle cx="200" cy="200" r="75" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <circle cx="200" cy="200" r="37.5" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                <svg viewBox="0 0 500 450" style="max-width: 100%; height: auto;">
+                    <!-- Background circles - centered at 250,200 -->
+                    <circle cx="250" cy="200" r="120" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <circle cx="250" cy="200" r="90" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <circle cx="250" cy="200" r="60" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <circle cx="250" cy="200" r="30" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
                     
-                    <!-- Axis lines -->
-                    <line x1="200" y1="50" x2="200" y2="350" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <line x1="50" y1="200" x2="350" y2="200" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <line x1="94" y1="94" x2="306" y2="306" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
-                    <line x1="306" y1="94" x2="94" y2="306" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <!-- Axis lines from center to each vertex -->
+                    <line x1="250" y1="200" x2="250" y2="80" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <line x1="250" y1="200" x2="364" y2="137" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <line x1="250" y1="200" x2="321" y2="310" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <line x1="250" y1="200" x2="179" y2="310" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
+                    <line x1="250" y1="200" x2="136" y2="137" stroke="var(--border-color)" stroke-width="1" opacity="0.3"/>
                     
-                    <!-- Skill polygon - animated -->
-                    <polygon class="skill-polygon" points="200,65 320,140 295,295 105,295 80,140" fill="rgba(37, 99, 235, 0.2)" stroke="#2563eb" stroke-width="2">
-                        <animate attributeName="points" dur="2s" values="200,200 200,200 200,200 200,200 200,200; 200,65 320,140 295,295 105,295 80,140" fill="freeze"/>
+                    <!-- Skill polygon - pentagon shape -->
+                    <polygon class="skill-polygon" points="250,86 358,140 310,305 190,305 142,140" fill="rgba(37, 99, 235, 0.2)" stroke="#2563eb" stroke-width="2">
+                        <animate attributeName="points" dur="1.5s" values="250,200 250,200 250,200 250,200 250,200; 250,86 358,140 310,305 190,305 142,140" fill="freeze"/>
                     </polygon>
                     
-                    <!-- Skill points -->
-                    <circle cx="200" cy="65" r="6" fill="#2563eb"><title>Deep Learning: 95%</title></circle>
-                    <circle cx="320" cy="140" r="6" fill="#f59e0b"><title>LLM/GenAI: 90%</title></circle>
-                    <circle cx="295" cy="295" r="6" fill="#10b981"><title>MLOps: 85%</title></circle>
-                    <circle cx="105" cy="295" r="6" fill="#8b5cf6"><title>Backend: 80%</title></circle>
-                    <circle cx="80" cy="140" r="6" fill="#06b6d4"><title>Systems: 75%</title></circle>
+                    <!-- Skill points with tooltips -->
+                    <circle cx="250" cy="86" r="8" fill="#2563eb"><title>Deep Learning: 95%</title></circle>
+                    <circle cx="358" cy="140" r="8" fill="#f59e0b"><title>LLM/GenAI: 90%</title></circle>
+                    <circle cx="310" cy="305" r="8" fill="#10b981"><title>MLOps: 85%</title></circle>
+                    <circle cx="190" cy="305" r="8" fill="#8b5cf6"><title>Backend: 80%</title></circle>
+                    <circle cx="142" cy="140" r="8" fill="#06b6d4"><title>Systems: 75%</title></circle>
                     
-                    <!-- Labels -->
-                    <text x="200" y="35" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="600">Deep Learning</text>
-                    <text x="350" y="140" text-anchor="start" fill="var(--text-primary)" font-size="12" font-weight="600">LLM/GenAI</text>
-                    <text x="310" y="320" text-anchor="start" fill="var(--text-primary)" font-size="12" font-weight="600">MLOps</text>
-                    <text x="90" y="320" text-anchor="end" fill="var(--text-primary)" font-size="12" font-weight="600">Backend</text>
-                    <text x="50" y="140" text-anchor="end" fill="var(--text-primary)" font-size="12" font-weight="600">Systems</text>
+                    <!-- Labels - positioned outside the chart -->
+                    <text x="250" y="55" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="600">Deep Learning</text>
+                    <text x="390" y="145" text-anchor="start" fill="var(--text-primary)" font-size="14" font-weight="600">LLM/GenAI</text>
+                    <text x="330" y="340" text-anchor="start" fill="var(--text-primary)" font-size="14" font-weight="600">MLOps</text>
+                    <text x="170" y="340" text-anchor="end" fill="var(--text-primary)" font-size="14" font-weight="600">Backend</text>
+                    <text x="110" y="145" text-anchor="end" fill="var(--text-primary)" font-size="14" font-weight="600">Systems</text>
                 </svg>
                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 1rem;">Hover over points for proficiency levels</p>
             </div>
@@ -1036,36 +1037,14 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/movie-recommender-demo" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Movie Recommender Demo</h3><span class="project-impact">ML</span></div>
-                <p class="project-description">Production-ready movie recommender implementing 4 collaborative filtering algorithms (SVD, CF, ALS) with 0.96 RMSE on MovieLens dataset, deployed as interactive Gradio demo</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/fleet-telemetry-monitor" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Fleet Telemetry Monitor</h3><span class="project-impact">Cloud</span></div>
-                <p class="project-description">Go-based CLI tool for ingesting vehicle telemetry data (GPS, speed, diagnostics). Stores 10,000+ data points in SQLite with sub-100ms queries. Includes C++ parser achieving 5x faster parsing than Python. REST API, Docker, and live dashboard included.</p>
-                <div class="project-tech"><span class="tech-tag">Go</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Sorted by most recently updated on GitHub</p>
+            
+            <div id="projects-container">
+                <div class="projects-loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
         </div>
     </section>
 

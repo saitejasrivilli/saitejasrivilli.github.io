@@ -19,6 +19,18 @@
             --border-color: #e5e7eb;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
+        /* Auto dark mode when system prefers dark (before JS loads) */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --border-color: #334155;
+                --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+        }
+        /* JS-controlled dark mode */
         [data-theme="dark"] {
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;

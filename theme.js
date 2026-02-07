@@ -1,14 +1,22 @@
 /**
  * Theme Management - System Preference Based
  * Automatically detects and syncs theme with device/browser settings
+ * Works on both desktop and mobile
  */
 
 (function() {
     // Get theme based on system preference
     function getSystemTheme() {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
+        // Check if matchMedia is supported
+        if (window.matchMedia) {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                return 'light';
+            }
         }
+        // Default to light if no preference detected
         return 'light';
     }
     
@@ -22,7 +30,9 @@
             // Use saved preference if manually set
             theme = savedTheme;
         } else {
-            // Use system preference
+            // Clear any stale manual override and use system preference
+            localStorage.removeItem('themeManualOverride');
+            localStorage.removeItem('theme');
             theme = getSystemTheme();
         }
         
@@ -35,14 +45,24 @@
     
     // Listen for system theme changes
     if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Use the appropriate listener method (addEventListener for modern browsers, addListener for older)
+        const listener = function(e) {
             // Only auto-switch if no manual override
             if (localStorage.getItem('themeManualOverride') !== 'true') {
                 const newTheme = e.matches ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', newTheme);
                 updateThemeIcon(newTheme);
             }
-        });
+        };
+        
+        if (darkModeQuery.addEventListener) {
+            darkModeQuery.addEventListener('change', listener);
+        } else if (darkModeQuery.addListener) {
+            // Fallback for older browsers (Safari < 14)
+            darkModeQuery.addListener(listener);
+        }
     }
     
     // Update theme icon

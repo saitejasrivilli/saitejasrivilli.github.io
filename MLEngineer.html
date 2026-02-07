@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML Engineer | Sai Teja Srivillibhutturu</title>
@@ -770,7 +778,9 @@
         // Instant project loading - no API calls
         const projects = [
             { repo: 'vllm-throughput-benchmark', title: 'vLLM Production Benchmark', description: 'Production-grade LLM inference benchmarking → Systematic optimization achieving 7M+ tokens/sec with CI/CD integration and monitoring.', tech: ['Python', 'vLLM', 'CUDA', 'Docker', 'MLflow'] },
+            { repo: 'ml-serving-pipeline', title: 'ML Serving Pipeline', description: 'Production ML model serving infrastructure → FastAPI endpoints, model versioning, A/B testing, and real-time inference at scale.', tech: ['Python', 'FastAPI', 'Docker', 'Kubernetes', 'Redis'] },
             { repo: 'foundation-model-finetuning', title: 'Foundation Model Fine-tuning', description: 'End-to-end fine-tuning pipeline → LoRA/QLoRA training, experiment tracking, model registry, and deployment automation.', tech: ['Python', 'PyTorch', 'PEFT', 'Weights & Biases'] },
+            { repo: 'two-tower-ad-recommender', title: 'Two-Tower Ad Recommender', description: 'Production recommendation system → Two-tower neural architecture for ad ranking, real-time feature serving, and online learning.', tech: ['Python', 'TensorFlow', 'FAISS', 'Redis', 'Docker'] },
             { repo: 'ai-video-analysis-sys', title: 'AI Video Analysis System', description: 'Production ML system for video analytics → Real-time inference, model serving, GPU optimization, and scalable deployment.', tech: ['Python', 'PyTorch', 'FastAPI', 'Docker', 'Redis'] },
             { repo: 'ABTesting', title: 'ML A/B Testing Framework', description: 'Statistical framework for ML experimentation → Hypothesis testing, sample size calculation, and automated experiment analysis.', tech: ['Python', 'Scipy', 'Pandas', 'Streamlit'] }
         ];

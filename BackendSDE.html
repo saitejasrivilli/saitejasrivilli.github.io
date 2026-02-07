@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backend SDE | Sai Teja Srivillibhutturu</title>
@@ -772,7 +780,9 @@
         // Instant project loading - no API calls
         const projects = [
             { repo: 'DistributedKVStore', title: 'Distributed Key-Value Store', description: 'Production-grade distributed KV store with Raft consensus → gRPC APIs, leader election, log replication, and horizontal scaling.', tech: ['Go', 'gRPC', 'Raft', 'Docker', 'Protobuf'] },
+            { repo: 'rtb-bidding-system', title: 'Real-Time Bidding System', description: 'High-performance RTB system → Sub-10ms latency bidding engine, real-time auction processing, and distributed caching layer.', tech: ['Go', 'Redis', 'Kafka', 'PostgreSQL', 'Docker'] },
             { repo: 'containerized-microservices-demo', title: 'Containerized Microservices', description: 'Full microservices architecture demo → Docker containerization, Kubernetes orchestration, service mesh, and API gateway patterns.', tech: ['Docker', 'Kubernetes', 'Go', 'REST API', 'Nginx'] },
+            { repo: 'fleet-telemetry-monitor', title: 'Fleet Telemetry Monitor', description: 'Real-time fleet monitoring system → High-throughput telemetry ingestion, time-series storage, and alerting pipeline.', tech: ['Go', 'InfluxDB', 'Kafka', 'Grafana', 'Docker'] },
             { repo: 'go-event-inges', title: 'Go Event Ingestion Service', description: 'High-throughput event ingestion backend → Async processing, message queues, rate limiting, and fault-tolerant data pipelines.', tech: ['Go', 'Kafka', 'Redis', 'PostgreSQL', 'Docker'] }
         ];
 

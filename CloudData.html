@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud & Data Engineer | Sai Teja Srivillibhutturu</title>
@@ -742,6 +750,8 @@
         const projects = [
             { repo: 'end-to-end-data-engineering-project', title: 'End-to-End Data Engineering', description: 'Complete data engineering pipeline → Data ingestion, transformation, warehousing, and orchestration with modern data stack.', tech: ['Python', 'Apache Airflow', 'dbt', 'Snowflake', 'Docker'] },
             { repo: 'Lightweight-Profiling-Pipeline', title: 'Data Profiling Pipeline', description: 'Automated data quality and profiling system → Schema validation, anomaly detection, and data lineage tracking at scale.', tech: ['Python', 'Great Expectations', 'Pandas', 'AWS S3', 'Spark'] },
+            { repo: 'amazon-recommender-system', title: 'Amazon Recommender System', description: 'Large-scale recommendation engine → Collaborative filtering, content-based filtering, and hybrid approaches on product data.', tech: ['Python', 'Spark', 'AWS', 'Redis', 'Docker'] },
+            { repo: 'Collaborative_filtering_recommender_system', title: 'Collaborative Filtering System', description: 'Production recommendation system → Matrix factorization, ALS algorithm, and real-time personalization pipeline.', tech: ['Python', 'PySpark', 'AWS EMR', 'S3', 'MLflow'] },
             { repo: 'TelecomChurnPredictor', title: 'Telecom Churn Analytics', description: 'Production ML pipeline for customer churn → Feature engineering, model training, and real-time prediction serving.', tech: ['Python', 'Scikit-learn', 'MLflow', 'PostgreSQL', 'FastAPI'] }
         ];
 

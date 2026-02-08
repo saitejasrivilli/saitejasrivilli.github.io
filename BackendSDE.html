@@ -825,7 +825,7 @@
             ).join('')}</div>`;
         }
 
-        // Fetch README and extract demo URL - STRICT detection only
+        // Fetch README and extract demo URL
         async function fetchReadmeData(repoName) {
             try {
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/readme`, {
@@ -834,32 +834,28 @@
                 if (!res.ok) return null;
                 const readme = await res.text();
                 
-                // STRICT demo URL detection - only explicit demo links
-                let demoUrl = null;
-                
-                // Pattern 1: Markdown links explicitly labeled as demo/live
-                const linkPatterns = [
-                    /\[(?:🚀\s*)?(?:live\s*demo|demo|try\s*it\s*(?:live|now|here)|deployed\s*(?:app|version)|web\s*app|online\s*demo)\]\s*\(\s*(https?:\/\/[^\s\)]+)\s*\)/gi,
-                    /\[(?:!\[(?:demo|deploy|live)[^\]]*\]\([^\)]+\))\]\s*\(\s*(https?:\/\/[^\s\)]+)\s*\)/gi
+                // Find deployment platform URLs in the README
+                const platforms = [
+                    'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
+                    'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
+                    'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
                 ];
                 
-                for (const pattern of linkPatterns) {
-                    const match = pattern.exec(readme);
-                    if (match && match[1]) {
-                        const url = match[1].trim();
-                        if (!url.includes('github.com/' + GITHUB_USER)) {
-                            demoUrl = url;
-                            break;
-                        }
+                let demoUrl = null;
+                for (const platform of platforms) {
+                    const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace('.', '\\.') + '[^\\s\\)\\]"\']*', 'i');
+                    const match = readme.match(regex);
+                    if (match && match[0]) {
+                        demoUrl = match[0].replace(/[\)\]"'.,;:]+$/, '').trim();
+                        break;
                     }
                 }
                 
-                // Pattern 2: Only if explicitly on deployment platforms
+                // Also check for markdown links labeled as demo
                 if (!demoUrl) {
-                    const platformPattern = /(https?:\/\/[\w-]+\.(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces\/[\w-]+\/[\w-]+|gradio\.app|railway\.app|render\.com|fly\.dev)[^\s\)\]"'<]*)/gi;
-                    const match = platformPattern.exec(readme);
-                    if (match && match[1]) {
-                        demoUrl = match[1].replace(/[)\]"'.,;:]+$/, '').trim();
+                    const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live|app|try|hosted)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
+                    if (demoLinkMatch && demoLinkMatch[2] && !demoLinkMatch[2].includes('github.com')) {
+                        demoUrl = demoLinkMatch[2];
                     }
                 }
                 return { demoUrl };
@@ -877,10 +873,20 @@
                 const repoData = await repoRes.json();
                 const langData = langRes.ok ? await langRes.json() : {};
                 const langs = Object.keys(langData).slice(0, 4);
+                
+                // Check if homepage is a valid deployment URL
+                let homepageDemo = null;
+                if (repoData.homepage && !repoData.homepage.includes('github.com')) {
+                    const deployDomains = ['.streamlit.app', '.herokuapp.com', '.vercel.app', '.netlify.app', 'huggingface.co', '.gradio.app', '.hf.space', '.railway.app', '.onrender.com', '.fly.dev', '.replit.app', '.pythonanywhere.com'];
+                    if (deployDomains.some(d => repoData.homepage.includes(d))) {
+                        homepageDemo = repoData.homepage;
+                    }
+                }
+                
                 return {
                     updatedAt: repoData.updated_at,
                     tech: langs.length > 0 ? langs : null,
-                    demoUrl: readmeData?.demoUrl || null  // Only from README, no fallback
+                    demoUrl: readmeData?.demoUrl || homepageDemo || null
                 };
             } catch (e) { return null; }
         }

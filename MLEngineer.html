@@ -778,19 +778,21 @@
     <section class="cta-section"><div class="container">
         <h2 class="cta-title">Need Production ML Expertise?</h2>
         <p class="cta-description">Let's discuss how I can help build scalable ML systems.</p>
-        <div class="cta-buttons"><a href="mailto:saiteja.srivllibhutturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+        <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#cebdafa7baaba4afe0bdbca7b8a2a2a7aca6bbbababbbcbb8ea9a3afa7a2e0ada1a3" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
     </div></section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. ML Engineer.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
         const CACHE_KEY = 'mlengineer_projects_cache_v2';
         const CACHE_DURATION = 10 * 60 * 1000;
         
         const staticProjects = [
-            { repo: 'vllm-throughput-benchmark', title: 'vLLM Production Benchmark', description: 'Production-grade LLM inference benchmarking → Systematic optimization achieving 7M+ tokens/sec with CI/CD integration and monitoring.', tech: ['Python', 'vLLM', 'CUDA', 'Docker', 'MLflow'] },
+            { repo: 'vllm-throughput-benchmark', title: 'vLLM Throughput Benchmark', description: 'Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.', tech: ['Python', 'vLLM', 'CUDA', 'Docker', 'MLflow'] },
+            { repo: 'amazon-recommender-system', title: 'Amazon Recommender System', description: 'Production recommendation system for e-commerce → Collaborative filtering, matrix factorization, real-time personalization with A/B testing.', tech: ['Python', 'TensorFlow', 'Redis', 'FastAPI', 'Docker'] },
+            { repo: 'collaborative-filtering-ml', title: 'Collaborative Filtering Engine', description: 'Advanced collaborative filtering implementation → User-item matrix factorization, implicit feedback, cold-start handling, and scalable deployment.', tech: ['Python', 'Scikit-learn', 'Pandas', 'FastAPI'] },
             { repo: 'ml-serving-pipeline', title: 'ML Serving Pipeline', description: 'Production ML model serving infrastructure → FastAPI endpoints, model versioning, A/B testing, and real-time inference at scale.', tech: ['Python', 'FastAPI', 'Docker', 'Kubernetes', 'Redis'] },
             { repo: 'foundation-model-finetuning', title: 'Foundation Model Fine-tuning', description: 'End-to-end fine-tuning pipeline → LoRA/QLoRA training, experiment tracking, model registry, and deployment automation.', tech: ['Python', 'PyTorch', 'PEFT', 'Weights & Biases'] },
             { repo: 'two-tower-ad-recommender', title: 'Two-Tower Ad Recommender', description: 'Production recommendation system → Two-tower neural architecture for ad ranking, real-time feature serving, and online learning.', tech: ['Python', 'TensorFlow', 'FAISS', 'Redis', 'Docker'] },
@@ -821,37 +823,25 @@
             ).join('')}</div>`;
         }
 
-        // Fetch README and extract demo URL
         async function fetchReadmeData(repoName) {
             try {
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/readme`, { headers: { 'Accept': 'application/vnd.github.v3.raw' } });
                 if (!res.ok) return null;
                 const readme = await res.text();
-                
-                // Find deployment platform URLs in the README
-                const platforms = [
-                    'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
-                    'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
-                    'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
+                const demoPatterns = [
+                    /\[(?:live demo|demo|try it|deployed|app|notebook|colab|run|playground|website|hosted|online)\]\((https?:\/\/[^\s\)]+)\)/i,
+                    /\[!\[.*?(?:demo|deploy|heroku|streamlit|vercel|netlify|hugging|colab).*?\]\([^\)]+\)\]\((https?:\/\/[^\s\)]+)\)/i,
+                    /(https?:\/\/(?:[\w-]+\.)?(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces|colab\.research\.google\.com|nbviewer\.jupyter\.org|github\.io|render\.com|railway\.app|fly\.io|replit\.com)[^\s\)\]"']*)/i,
+                    /(?:demo|live|deployed?|app|website|hosted)[\s:]+\*?\*?(https?:\/\/[^\s\)\]"']+)/i
                 ];
-                
-                let demoUrl = null;
-                for (const platform of platforms) {
-                    const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace('.', '\\.') + '[^\\s\\)\\]"\']*', 'i');
-                    const match = readme.match(regex);
-                    if (match && match[0]) {
-                        demoUrl = match[0].replace(/[\)\]"'.,;:]+$/, '').trim();
-                        break;
+                for (const pattern of demoPatterns) {
+                    const match = readme.match(pattern);
+                    if (match) {
+                        let demoUrl = (match[1] || match[2] || match[0]).replace(/[)\]"'.,;:]+$/, '').trim();
+                        if (demoUrl.startsWith('http')) return { demoUrl };
                     }
                 }
-                
-                if (!demoUrl) {
-                    const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live|app|try|hosted)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
-                    if (demoLinkMatch && demoLinkMatch[2] && !demoLinkMatch[2].includes('github.com')) {
-                        demoUrl = demoLinkMatch[2];
-                    }
-                }
-                return demoUrl ? { demoUrl } : null;
+                return null;
             } catch (e) { return null; }
         }
 
@@ -865,16 +855,7 @@
                 if (!repoRes.ok) return null;
                 const repoData = await repoRes.json();
                 const langData = langRes.ok ? await langRes.json() : {};
-                
-                let homepageDemo = null;
-                if (repoData.homepage && !repoData.homepage.includes('github.com')) {
-                    const deployDomains = ['.streamlit.app', '.herokuapp.com', '.vercel.app', '.netlify.app', 'huggingface.co', '.gradio.app', '.hf.space', '.railway.app', '.onrender.com', '.fly.dev'];
-                    if (deployDomains.some(d => repoData.homepage.includes(d))) {
-                        homepageDemo = repoData.homepage;
-                    }
-                }
-                
-                return { updatedAt: repoData.updated_at, tech: Object.keys(langData).slice(0, 4), demoUrl: readmeData?.demoUrl || homepageDemo || null };
+                return { updatedAt: repoData.updated_at, tech: Object.keys(langData).slice(0, 4), demoUrl: readmeData?.demoUrl || repoData.homepage || null };
             } catch (e) { return null; }
         }
 
@@ -1031,10 +1012,4 @@
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length > 0) {
-                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-        })();
-    </script>
-</body>
-</html>
+        

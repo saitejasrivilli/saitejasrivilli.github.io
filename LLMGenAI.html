@@ -1043,72 +1043,18 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">LLM/GenAI Projects</h2>
-
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/quantization-speculative-decoding-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Quantization & Speculative Decoding Benchmark</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking framework for LLM optimization.  Evaluates 5 quantization methods (FP16, INT8, INT4-NF4, GPTQ, AWQ)  and speculative decoding. Achieves 75% memory reduction & 3.3x speedup.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/llm-long-context-stress-test" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">LLM Long Context Stress Test</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">A practical experiment analyzing how long input contexts affect LLM inference latency, throughput, and GPU memory limits using vLLM.</p>
-                <div class="project-tech"></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face generation, focusing on batching, KV cache behavior, and scalability under concurrent requests.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/offline-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Offline RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Creating an Offline RAG Assistant</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/AdvancedLLMAgent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Advanced LLM Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Assignment for Advanced LLM Agent MOOC Course</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/amazon-recommender-system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Amazon Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Built an Amazon Product Recommender System using Python, PostgreSQL, and FastAPI, leveraging Collaborative Filtering (SVD) for personalized recommendations. Deployed as a REST API.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/youtube-transcript-query-tool" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">YouTube Transcript Query Tool</h3><span class="project-impact">Python</span></div>
-                <p class="project-description"> Streamlit app to process YouTube transcripts, store them in Pinecone, and query or summarize information using OpenAI's GPT-3.5. Handles tasks like summarization, bullet points, and question answering efficiently.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/Collaborative_filtering_recommender_system" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Collaborative Filtering Recommender System</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">A hybrid product recommendation system leveraging user-based, item-based, and SVD filtering, deployed with Streamlit for interactive UI.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
-
-            <a href="https://github.com/saitejasrivilli/TeluguGPT" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Telugu GPT</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">LLM's output in Telugu</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+            <p class="section-subtitle">Click to filter by category</p>
+            
+            <!-- Project Filters -->
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="agent">🤖 Agents</button>
+                <button class="filter-btn" data-filter="rag">📚 RAG</button>
+                <button class="filter-btn" data-filter="safety">🛡️ Safety</button>
+                <button class="filter-btn" data-filter="production">🚀 Production</button>
+            </div>
+            
+            <div id="projects-container"><div class="projects-loading"><div class="spinner"></div><p>Loading projects...</p></div></div>
         </div>
     </section>
 
@@ -1132,13 +1078,13 @@
         <div class="container">
             <h2 class="cta-title">Building with LLMs?</h2>
             <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
-            <div class="cta-buttons"><a href="mailto:saiteja.srivllibhutturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+            <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#2c5f4d455849464d025f5e455a4040454e44595858595e596c4b414d4540024f4341" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
         </div>
     </section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
         const CACHE_KEY = 'llmgenai_projects_cache_v2';
@@ -1218,33 +1164,26 @@
                 if (!res.ok) return null;
                 const readme = await res.text();
                 
-                // Find deployment platform URLs in the README
-                const platforms = [
-                    'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
-                    'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
-                    'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
+                // Enhanced demo/deployment URL patterns
+                const demoPatterns = [
+                    /\[(?:live demo|demo|try it|deployed|app|notebook|colab|run|playground|website|hosted|online)\]\((https?:\/\/[^\s\)]+)\)/i,
+                    /\[!\[.*?(?:demo|deploy|heroku|streamlit|vercel|netlify|hugging|colab).*?\]\([^\)]+\)\]\((https?:\/\/[^\s\)]+)\)/i,
+                    /(https?:\/\/(?:[\w-]+\.)?(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces|colab\.research\.google\.com|nbviewer\.jupyter\.org|github\.io|render\.com|railway\.app|fly\.io|replit\.com)[^\s\)\]"']*)/i,
+                    /(?:demo|live|deployed?|app|website|hosted)[\s:]+\*?\*?(https?:\/\/[^\s\)\]"']+)/i
                 ];
                 
                 let demoUrl = null;
-                for (const platform of platforms) {
-                    const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace('.', '\\.') + '[^\\s\\)\\]"\']*', 'i');
-                    const match = readme.match(regex);
-                    if (match && match[0]) {
-                        demoUrl = match[0].replace(/[\)\]"'.,;:]+$/, '').trim();
-                        break;
-                    }
-                }
-                
-                // Also check for markdown links labeled as demo
-                if (!demoUrl) {
-                    const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live|app|try|hosted)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
-                    if (demoLinkMatch && demoLinkMatch[2] && !demoLinkMatch[2].includes('github.com')) {
-                        demoUrl = demoLinkMatch[2];
+                for (const pattern of demoPatterns) {
+                    const match = readme.match(pattern);
+                    if (match) {
+                        demoUrl = (match[1] || match[2] || match[0]).replace(/[)\]"'.,;:]+$/, '').trim();
+                        if (demoUrl.startsWith('http')) break;
+                        demoUrl = null;
                     }
                 }
                 
                 // Extract first paragraph as description
-                const descMatch = readme.match(/^(?:#+\s+[^\n]+\n+)?(?:(?:\[!\[|\!\[)[^\n]*\n+)*([^#\n][^\n]+)/m);
+                const descMatch = readme.match(/^(?:#+\s+[^\n]+\n+)?(?:(?:\[!\[|\!\[|<)[^\n]*\n+)*([^#\n][^\n]+)/m);
                 const shortDesc = descMatch ? descMatch[1].replace(/[*_`\[\]]/g, '').trim().substring(0, 200) : null;
                 
                 return { demoUrl, shortDesc };
@@ -1266,19 +1205,10 @@
                 const langData = langRes.ok ? await langRes.json() : {};
                 const langs = Object.keys(langData).slice(0, 4);
                 
-                // Check if homepage is a valid deployment URL (not github.com)
-                let homepageDemo = null;
-                if (repoData.homepage && !repoData.homepage.includes('github.com')) {
-                    const deployDomains = ['.streamlit.app', '.herokuapp.com', '.vercel.app', '.netlify.app', 'huggingface.co', '.gradio.app', '.hf.space', '.railway.app', '.onrender.com', '.fly.dev', '.replit.app', '.pythonanywhere.com'];
-                    if (deployDomains.some(d => repoData.homepage.includes(d))) {
-                        homepageDemo = repoData.homepage;
-                    }
-                }
-                
                 return {
                     updatedAt: repoData.updated_at,
                     tech: langs.length > 0 ? langs : null,
-                    demoUrl: readmeData?.demoUrl || homepageDemo || null,
+                    demoUrl: readmeData?.demoUrl || null,
                     readmeDesc: readmeData?.shortDesc || null,
                     stars: repoData.stargazers_count,
                     homepage: repoData.homepage
@@ -1529,10 +1459,4 @@
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length > 0) {
-                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-        })();
-    </script>
-</body>
-</html>
+        

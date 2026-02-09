@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,15 +19,70 @@
   --border-color: #e5e7eb;
 }
 
+/* ================= FLUID BACKGROUND FIX ================= */
+
+/* Let canvas be the true background */
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
   margin: 0;
   line-height: 1.7;
+  color: var(--text-primary);
+  background: transparent !important;
+  overflow-x: hidden;
 }
 
-/* ---------- GitHub Stats Fix ---------- */
+/* Keep animation visible across sections */
+.section,
+.skills-section,
+.contact-section,
+footer {
+  background: transparent !important;
+}
+
+/* Glassmorphism cards */
+.timeline-item,
+.education-card,
+.role-card,
+.project-item,
+.contact-link,
+.btn {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+}
+
+/* Dark mode glass */
+[data-theme="dark"] .timeline-item,
+[data-theme="dark"] .education-card,
+[data-theme="dark"] .role-card,
+[data-theme="dark"] .project-item,
+[data-theme="dark"] .contact-link,
+[data-theme="dark"] .btn {
+  background: rgba(15, 23, 42, 0.65) !important;
+}
+
+/* ======================================================= */
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* GitHub stats safety */
 .github-stats {
   display: flex;
   justify-content: center;
@@ -40,61 +94,77 @@ body {
 .github-stats img {
   border-radius: 12px;
   max-width: 100%;
-  height: auto;
   display: block;
-}
-
-/* Prevent broken image icons */
-.github-stats img[src=""],
-.github-stats img:not([src]) {
-  display: none;
-}
-/* ------------------------------------ */
-
-.section {
-  padding: 5rem 1.5rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.container {
-  max-width: 900px;
-  margin: 0 auto;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= GITHUB ACTIVITY ================= -->
+<!-- ================= FLUID BACKGROUND ================= -->
+<canvas id="fluid-canvas"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+<script>
+WebGLFluid(document.getElementById('fluid-canvas'), {
+  SIM_RESOLUTION: 256,
+  DYE_RESOLUTION: 1024,
+  DENSITY_DISSIPATION: 0.98,
+  VELOCITY_DISSIPATION: 0.6,
+  PRESSURE: 0.2,
+  CURL: 12,
+  SPLAT_RADIUS: 0.18,
+  SPLAT_FORCE: 8000,
+  SHADING: false,
+  COLORFUL: true,
+  BACK_COLOR: { r: 255, g: 255, b: 255 }
+});
+</script>
+
+<!-- ================= HERO ================= -->
+<section class="section">
+  <div class="container">
+    <h1 class="section-title">Sai Teja Srivillibhutturu</h1>
+    <p style="text-align:center;color:var(--text-secondary)">
+      ML & Deep Learning Engineer · LLMs · GPU Optimization
+    </p>
+  </div>
+</section>
+
+<!-- ================= GITHUB ================= -->
 <section class="section">
   <div class="container">
     <h2 class="section-title">GitHub Activity</h2>
 
     <div class="github-stats">
-      <img
-        src="https://github-readme-stats.vercel.app/api?username=saitejasrivilli&show_icons=true&hide_title=true"
-        alt=""
-        onerror="this.style.display='none'"
-      >
-
-      <img
-        src="https://github-readme-streak-stats.herokuapp.com/?user=saitejasrivilli"
-        alt=""
-        onerror="this.style.display='none'"
-      >
+      <img src="https://github-readme-stats.vercel.app/api?username=saitejasrivilli&show_icons=true&hide_title=true"
+           onerror="this.style.display='none'">
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=saitejasrivilli"
+           onerror="this.style.display='none'">
     </div>
-
-    <!-- ❌ Top Languages REMOVED COMPLETELY -->
   </div>
 </section>
-<!-- ================================================== -->
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+
+    <div class="timeline-item">
+      <strong>Machine Learning Engineer Intern</strong><br>
+      DentalScan / ReplyQuickAI
+    </div>
+
+    <div class="timeline-item">
+      <strong>Graduate Research Assistant</strong><br>
+      UT Arlington — IEEE ICC 2026
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>© 2026 Sai Teja Srivillibhutturu</p>
+</footer>
 
 </body>
 </html>

@@ -1078,29 +1078,28 @@
         <div class="container">
             <h2 class="cta-title">Building with LLMs?</h2>
             <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
-            <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#2053414954454a410e535249564c4c49424855545455525560474d41494c0e434f4d" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+            <div class="cta-buttons"><a href="mailto:saiteja.srivllibhutturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
         </div>
     </section>
 
     <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
-        const CACHE_KEY = 'llmgenai_projects_cache_v2';
+        const CACHE_KEY = 'llmgenai_projects_cache_v4';
         const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
         
         // Static fallback data with categories (shows instantly)
         const staticProjects = [
-            { repo: 'multi-agent-research-mcp', title: 'Multi-Agent Research Assistant', description: 'Production multi-agent system with LangGraph orchestration → Researcher, Critic, Synthesizer agents with ChromaDB RAG, RAGAS evaluation, FastAPI backend, and Docker deployment.', tech: ['LangGraph', 'ChromaDB', 'FastAPI', 'RAGAS', 'Groq'], categories: ['agent', 'rag', 'production'] },
+            { repo: 'multi-agent-research-mcp', title: 'Multi-Agent Research Assistant', description: 'Production multi-agent system with LangGraph orchestration → Researcher, Critic, Synthesizer agents with ChromaDB RAG, RAGAS evaluation, FastAPI backend, and Docker deployment.', tech: ['LangGraph', 'ChromaDB', 'FastAPI', 'RAGAS', 'Groq'], categories: ['agent', 'rag', 'production'], demoUrl: 'https://multi-agent-research-mcp-pr.streamlit.app/' },
             { repo: 'AdvancedLLMAgent', title: 'Advanced LLM Agent', description: 'Sophisticated LLM agent with tool use → Planning, multi-step reasoning, RAG integration, and autonomous task execution.', tech: ['Python', 'LangChain', 'OpenAI', 'FastAPI'], categories: ['agent', 'rag'] },
-            { repo: 'llm-brand-safety-system', title: 'LLM Brand Safety System', description: 'Production LLM system for brand safety → Content moderation, toxicity detection, and brand-safe content generation.', tech: ['Python', 'OpenAI', 'FastAPI', 'Docker'], categories: ['safety', 'production'] },
+            { repo: 'llm-brand-safety-system', title: 'LLM Brand Safety System', description: 'Production LLM system for brand safety → Content moderation, toxicity detection, and brand-safe content generation.', tech: ['Python', 'OpenAI', 'FastAPI', 'Docker'], categories: ['safety', 'production'], demoUrl: 'https://huggingface.co/spaces/SaiTejaSrivilli/LLMBrandSafetySystem' },
             { repo: 'ad-safety-llm', title: 'Ad Safety LLM', description: 'LLM-powered ad content safety checker → Real-time ad validation, policy compliance, and automated content review.', tech: ['Python', 'LLM', 'FastAPI', 'Redis'], categories: ['safety', 'production'] },
-            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → Chain-of-Thought, Tree-of-Thought, ReAct patterns based on task complexity.', tech: ['Python', 'LangChain', 'GPT-4', 'Streamlit'], categories: ['agent'] },
+            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy → Chain-of-Thought, Tree-of-Thought, ReAct patterns based on task complexity.', tech: ['Python', 'LangChain', 'GPT-4', 'Streamlit'], categories: ['agent'], demoUrl: 'https://huggingface.co/spaces/SaiTejaSrivilli/ai-agent-system' },
             { repo: 'multi-lora-rag-assistant', title: 'Multi-LoRA RAG Assistant', description: 'Advanced RAG system with multiple LoRA adapters → Dynamic adapter switching, context-aware retrieval, and specialized responses.', tech: ['Python', 'PEFT', 'LangChain', 'ChromaDB'], categories: ['rag'] },
             { repo: 'offline-rag-assistant', title: 'Offline RAG Assistant', description: 'Fully offline RAG system → Local embeddings, vector search, and LLM inference without internet dependency.', tech: ['Python', 'FAISS', 'Ollama', 'Streamlit'], categories: ['rag'] },
-            { repo: 'Red-Teaming-Failure-Analysis-Mitigation', title: 'LLM Red Teaming & Safety', description: 'Red teaming framework for LLMs → Adversarial testing, failure analysis, jailbreak detection, and safety mitigation strategies.', tech: ['Python', 'LLM', 'Safety', 'Evaluation'], categories: ['safety'] },
-            { repo: 'TelecomGPT', title: 'TelecomGPT', description: 'Domain-specific LLM for telecom industry → Fine-tuned on telecom data, specialized knowledge retrieval, technical Q&A.', tech: ['Python', 'Transformers', 'RAG', 'FastAPI'], categories: ['rag', 'production'] }
+            { repo: 'Red-Teaming-Failure-Analysis-Mitigation', title: 'LLM Red Teaming & Safety', description: 'Red teaming framework for LLMs → Adversarial testing, failure analysis, jailbreak detection, and safety mitigation strategies.', tech: ['Python', 'LLM', 'Safety', 'Evaluation'], categories: ['safety'] }
         ];
 
         let allProjects = [...staticProjects];
@@ -1164,26 +1163,42 @@
                 if (!res.ok) return null;
                 const readme = await res.text();
                 
-                // Enhanced demo/deployment URL patterns
-                const demoPatterns = [
-                    /\[(?:live demo|demo|try it|deployed|app|notebook|colab|run|playground|website|hosted|online)\]\((https?:\/\/[^\s\)]+)\)/i,
-                    /\[!\[.*?(?:demo|deploy|heroku|streamlit|vercel|netlify|hugging|colab).*?\]\([^\)]+\)\]\((https?:\/\/[^\s\)]+)\)/i,
-                    /(https?:\/\/(?:[\w-]+\.)?(?:streamlit\.app|herokuapp\.com|vercel\.app|netlify\.app|huggingface\.co\/spaces|colab\.research\.google\.com|nbviewer\.jupyter\.org|github\.io|render\.com|railway\.app|fly\.io|replit\.com)[^\s\)\]"']*)/i,
-                    /(?:demo|live|deployed?|app|website|hosted)[\s:]+\*?\*?(https?:\/\/[^\s\)\]"']+)/i
-                ];
-                
                 let demoUrl = null;
-                for (const pattern of demoPatterns) {
-                    const match = readme.match(pattern);
-                    if (match) {
-                        demoUrl = (match[1] || match[2] || match[0]).replace(/[)\]"'.,;:]+$/, '').trim();
-                        if (demoUrl.startsWith('http')) break;
-                        demoUrl = null;
+                
+                // FIRST: Check for markdown links labeled as demo (most reliable)
+                const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live demo|try it|launch)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
+                if (demoLinkMatch && demoLinkMatch[2]) {
+                    const url = demoLinkMatch[2];
+                    if (!url.includes('shields.io') && !url.includes('badge') && !url.includes('github.com')) {
+                        demoUrl = url;
+                    }
+                }
+                
+                // SECOND: Find deployment platform URLs (exclude badges)
+                if (!demoUrl) {
+                    const platforms = [
+                        'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
+                        'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
+                        'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
+                    ];
+                    
+                    for (const platform of platforms) {
+                        const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace(/\./g, '\\.') + '[^\\s\\)\\]"\']*', 'gi');
+                        const matches = readme.match(regex);
+                        if (matches) {
+                            for (const match of matches) {
+                                if (!match.includes('shields.io') && !match.includes('badge') && !match.includes('img.')) {
+                                    demoUrl = match.replace(/[\)\]"'.,;:]+$/, '').trim();
+                                    break;
+                                }
+                            }
+                            if (demoUrl) break;
+                        }
                     }
                 }
                 
                 // Extract first paragraph as description
-                const descMatch = readme.match(/^(?:#+\s+[^\n]+\n+)?(?:(?:\[!\[|\!\[|<)[^\n]*\n+)*([^#\n][^\n]+)/m);
+                const descMatch = readme.match(/^(?:#+\s+[^\n]+\n+)?(?:(?:\[!\[|\!\[)[^\n]*\n+)*([^#\n][^\n]+)/m);
                 const shortDesc = descMatch ? descMatch[1].replace(/[*_`\[\]]/g, '').trim().substring(0, 200) : null;
                 
                 return { demoUrl, shortDesc };
@@ -1205,10 +1220,19 @@
                 const langData = langRes.ok ? await langRes.json() : {};
                 const langs = Object.keys(langData).slice(0, 4);
                 
+                // Check if homepage is a valid deployment URL (not github.com)
+                let homepageDemo = null;
+                if (repoData.homepage && !repoData.homepage.includes('github.com')) {
+                    const deployDomains = ['.streamlit.app', '.herokuapp.com', '.vercel.app', '.netlify.app', 'huggingface.co', '.gradio.app', '.hf.space', '.railway.app', '.onrender.com', '.fly.dev', '.replit.app', '.pythonanywhere.com'];
+                    if (deployDomains.some(d => repoData.homepage.includes(d))) {
+                        homepageDemo = repoData.homepage;
+                    }
+                }
+                
                 return {
                     updatedAt: repoData.updated_at,
                     tech: langs.length > 0 ? langs : null,
-                    demoUrl: readmeData?.demoUrl || null,
+                    demoUrl: readmeData?.demoUrl || homepageDemo || null,
                     readmeDesc: readmeData?.shortDesc || null,
                     stars: repoData.stargazers_count,
                     homepage: repoData.homepage
@@ -1236,7 +1260,7 @@
                     ...p,
                     updatedAt: ghData?.updatedAt || null,
                     tech: ghData?.tech || p.tech,
-                    demoUrl: ghData?.demoUrl || ghData?.homepage || null,
+                    demoUrl: ghData?.demoUrl || p.demoUrl || null,
                     description: ghData?.readmeDesc || p.description,
                     stars: ghData?.stars || 0
                 };
@@ -1264,7 +1288,7 @@
         setTimeout(() => updateFromGitHub(), 100);
 
         const aiKnowledge = {
-            projects: "I've built LLM/GenAI projects: <br><br>🔬 <strong>Multi-Agent Research Assistant</strong> - LangGraph orchestration, ChromaDB RAG, RAGAS evaluation<br>🤖 <strong>Advanced LLM Agent</strong> - Multi-agent with RAG, tool use, planning<br>🛡️ <strong>LLM Brand Safety System</strong> - Content moderation & toxicity detection<br>🔒 <strong>Ad Safety LLM</strong> - Real-time ad validation & policy compliance<br>🧠 <strong>Multi-Strategy AI Agent</strong> - Auto-selects CoT, ToT, ReAct<br>📚 <strong>Multi-LoRA RAG Assistant</strong> - Dynamic adapter switching<br>💾 <strong>Offline RAG Assistant</strong> - Fully offline RAG system<br>🔴 <strong>LLM Red Teaming</strong> - Adversarial testing & safety<br>📡 <strong>TelecomGPT</strong> - Domain-specific telecom LLM<br><br>Check out the Projects section below!",
+            projects: "I've built LLM/GenAI projects: <br><br>🔬 <strong>Multi-Agent Research Assistant</strong> - LangGraph orchestration, ChromaDB RAG, RAGAS evaluation<br>🤖 <strong>Advanced LLM Agent</strong> - Multi-agent with RAG, tool use, planning<br>🛡️ <strong>LLM Brand Safety System</strong> - Content moderation & toxicity detection<br>🔒 <strong>Ad Safety LLM</strong> - Real-time ad validation & policy compliance<br>🧠 <strong>Multi-Strategy AI Agent</strong> - Auto-selects CoT, ToT, ReAct<br>📚 <strong>Multi-LoRA RAG Assistant</strong> - Dynamic adapter switching<br>💾 <strong>Offline RAG Assistant</strong> - Fully offline RAG system<br>🔴 <strong>LLM Red Teaming</strong> - Adversarial testing & safety<br><br>Check out the Projects section below!",
             skills: "My GenAI tech stack includes:<br><br>🔷 <strong>LLM Frameworks:</strong> Hugging Face, LangChain, LlamaIndex, vLLM<br>🔷 <strong>Fine-tuning:</strong> LoRA, QLoRA, PEFT, SFT<br>🔷 <strong>RAG:</strong> Pinecone, ChromaDB, Neo4j, FAISS<br>🔷 <strong>Agents:</strong> ReAct, Chain-of-Thought, Tree-of-Thought<br>🔷 <strong>Inference:</strong> CUDA, TensorRT, quantization (GPTQ, AWQ)<br>🔷 <strong>Languages:</strong> Python, PyTorch, C++",
             experience: "My GenAI experience:<br><br>🎓 <strong>Graduate Research Assistant @ UTA</strong> (Jun 2025-Present)<br>→ CTMap: LLM-enabled path planning for mmWave networks<br>→ IEEE ICC 2026 publication<br>→ Fine-tuning with 10K+ examples<br><br>💼 <strong>ML Engineer Intern @ ReplyQuickAI</strong><br>→ Integrated GenAI into healthcare workflows<br>→ Built LLM-powered chatbots",
             rag: "My RAG expertise:<br><br>📄 <strong>Document Processing:</strong> Chunking strategies, metadata extraction<br>🔢 <strong>Embeddings:</strong> OpenAI, Sentence Transformers, BGE<br>💾 <strong>Vector DBs:</strong> Pinecone, ChromaDB, Neo4j, Weaviate<br>🔍 <strong>Retrieval:</strong> Hybrid search, re-ranking, MMR<br>⚡ <strong>Optimization:</strong> Query routing, caching, streaming<br><br>Check my RAG-Application project on GitHub!",
@@ -1459,9 +1483,9 @@
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length > 0) {
-                            updateEyes(e.touches[0].clientX, e.touches[0].clientY);
+                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
                 }
-            });
+            }, { passive: true });
         })();
     </script>
 </body>

@@ -918,7 +918,7 @@
                     ...p,
                     updatedAt: ghData?.updatedAt || null,
                     tech: ghData?.tech || p.tech,
-                    demoUrl: ghData?.demoUrl || null
+                    demoUrl: ghData?.demoUrl || p.demoUrl || null
                 };
             }));
 

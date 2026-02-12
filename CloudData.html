@@ -757,14 +757,14 @@
     <script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
-        const CACHE_KEY = 'clouddata_projects_cache_v2';
+        const CACHE_KEY = 'clouddata_projects_cache_v4';
         const CACHE_DURATION = 10 * 60 * 1000;
         
         const staticProjects = [
             { repo: 'end-to-end-data-engineering-project', title: 'End-to-End Data Engineering', description: 'Complete data engineering pipeline → Data ingestion, transformation, warehousing, and orchestration with modern data stack.', tech: ['Python', 'Apache Airflow', 'dbt', 'Snowflake', 'Docker'] },
             { repo: 'Lightweight-Profiling-Pipeline', title: 'Data Profiling Pipeline', description: 'Automated data quality and profiling system → Schema validation, anomaly detection, and data lineage tracking at scale.', tech: ['Python', 'Great Expectations', 'Pandas', 'AWS S3', 'Spark'] },
-            { repo: 'amazon-recommender-system', title: 'Amazon Recommender System', description: 'Large-scale recommendation engine → Collaborative filtering, content-based filtering, and hybrid approaches on product data.', tech: ['Python', 'Spark', 'AWS', 'Redis', 'Docker'] },
-            { repo: 'Collaborative_filtering_recommender_system', title: 'Collaborative Filtering System', description: 'Production recommendation system → Matrix factorization, ALS algorithm, and real-time personalization pipeline.', tech: ['Python', 'PySpark', 'AWS EMR', 'S3', 'MLflow'] },
+            { repo: 'amazon-recommender-system', title: 'Amazon Recommender System', description: 'Large-scale recommendation engine → Collaborative filtering, content-based filtering, and hybrid approaches on product data.', tech: ['Python', 'Spark', 'AWS', 'Redis', 'Docker'], demoUrl: 'https://amazon-recommender-system.onrender.com/' },
+            { repo: 'Collaborative_filtering_recommender_system', title: 'Collaborative Filtering System', description: 'Production recommendation system → Matrix factorization, ALS algorithm, and real-time personalization pipeline.', tech: ['Python', 'PySpark', 'AWS EMR', 'S3', 'MLflow'], demoUrl: 'https://collaborativefilteringrecommendersystem.streamlit.app/' },
             { repo: 'TelecomChurnPredictor', title: 'Telecom Churn Analytics', description: 'Production ML pipeline for customer churn → Feature engineering, model training, and real-time prediction serving.', tech: ['Python', 'Scikit-learn', 'MLflow', 'PostgreSQL', 'FastAPI'] }
         ];
 
@@ -798,27 +798,37 @@
                 if (!res.ok) return null;
                 const readme = await res.text();
                 
-                // Find deployment platform URLs in the README
-                const platforms = [
-                    'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
-                    'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
-                    'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
-                ];
-                
                 let demoUrl = null;
-                for (const platform of platforms) {
-                    const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace('.', '\\.') + '[^\\s\\)\\]"\']*', 'i');
-                    const match = readme.match(regex);
-                    if (match && match[0]) {
-                        demoUrl = match[0].replace(/[\)\]"'.,;:]+$/, '').trim();
-                        break;
+                
+                // FIRST: Check for markdown links labeled as demo
+                const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live demo|try it|launch)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
+                if (demoLinkMatch && demoLinkMatch[2]) {
+                    const url = demoLinkMatch[2];
+                    if (!url.includes('shields.io') && !url.includes('badge') && !url.includes('github.com')) {
+                        demoUrl = url;
                     }
                 }
                 
+                // SECOND: Find deployment platform URLs (exclude badges)
                 if (!demoUrl) {
-                    const demoLinkMatch = readme.match(/\[([^\]]*(?:demo|live|app|try|hosted)[^\]]*)\]\((https?:\/\/[^\s\)]+)\)/i);
-                    if (demoLinkMatch && demoLinkMatch[2] && !demoLinkMatch[2].includes('github.com')) {
-                        demoUrl = demoLinkMatch[2];
+                    const platforms = [
+                        'streamlit.app', 'herokuapp.com', 'vercel.app', 'netlify.app',
+                        'huggingface.co/spaces', 'gradio.app', 'hf.space', 'railway.app',
+                        'onrender.com', 'fly.dev', 'replit.app', 'pythonanywhere.com'
+                    ];
+                    
+                    for (const platform of platforms) {
+                        const regex = new RegExp('https?://[^\\s\\)\\]"\']+' + platform.replace(/\./g, '\\.') + '[^\\s\\)\\]"\']*', 'gi');
+                        const matches = readme.match(regex);
+                        if (matches) {
+                            for (const match of matches) {
+                                if (!match.includes('shields.io') && !match.includes('badge') && !match.includes('img.')) {
+                                    demoUrl = match.replace(/[\)\]"'.,;:]+$/, '').trim();
+                                    break;
+                                }
+                            }
+                            if (demoUrl) break;
+                        }
                     }
                 }
                 return demoUrl ? { demoUrl } : null;
@@ -853,7 +863,7 @@
             if (cached) { const { data, timestamp } = JSON.parse(cached); if (Date.now() - timestamp < CACHE_DURATION) { renderProjects(data); return; } }
             const updatedProjects = await Promise.all(staticProjects.map(async (p) => {
                 const ghData = await fetchRepoData(p.repo);
-                return { ...p, updatedAt: ghData?.updatedAt || null, tech: ghData?.tech?.length ? ghData.tech : p.tech, demoUrl: ghData?.demoUrl || null };
+                return { ...p, updatedAt: ghData?.updatedAt || null, tech: ghData?.tech?.length ? ghData.tech : p.tech, demoUrl: ghData?.demoUrl || p.demoUrl || null };
             }));
             updatedProjects.sort((a, b) => { if (!a.updatedAt) return 1; if (!b.updatedAt) return -1; return new Date(b.updatedAt) - new Date(a.updatedAt); });
             localStorage.setItem(CACHE_KEY, JSON.stringify({ data: updatedProjects, timestamp: Date.now() }));

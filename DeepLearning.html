@@ -788,12 +788,12 @@
     <script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
-        const CACHE_KEY = 'deeplearning_projects_cache_v2';
+        const CACHE_KEY = 'deeplearning_projects_cache_v3';
         const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
         
         // Static fallback data (shows instantly)
         const staticProjects = [
-            { repo: 'distributed-training-models', title: 'Distributed LLM Training System', description: 'Production-ready distributed training achieving 3.50x speedup with 87.5% parallel efficiency across 4 GPUs using PyTorch DDP and NCCL.', tech: ['PyTorch', 'CUDA', 'NCCL', 'Python'] },
+            { repo: 'distributed-training-models', title: 'Distributed LLM Training System', description: 'Production-ready distributed training achieving 3.50x speedup with 87.5% parallel efficiency across 4 GPUs using PyTorch DDP and NCCL.', tech: ['PyTorch', 'CUDA', 'NCCL', 'Python'], demoUrl: 'https://distributed-training-models.streamlit.app' },
             { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'CUDA kernel optimization for transformer attention → Achieved 12.3× throughput improvement. Benchmarked Vanilla, SDPA, FlashAttention-2, xFormers.', tech: ['Python', 'PyTorch', 'CUDA', 'C++'] },
             { repo: 'gpu-optimization-mistral', title: 'GPU Optimization & Profiling', description: 'Deep optimization for Mistral-7B inference → 2.8× speedup, 4× memory reduction. Custom C++/CUDA fused kernels, INT4-NF4 quantization.', tech: ['C++', 'CUDA', 'PyTorch', 'TensorRT'] },
             { repo: 'quantization-speculative-decoding-benchmark', title: 'Quantization & Speculative Decoding', description: 'Comprehensive benchmarking of model compression techniques → GPTQ, AWQ, speculative decoding for faster LLM inference.', tech: ['Python', 'PyTorch', 'Transformers', 'CUDA'] },

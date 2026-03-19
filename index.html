@@ -1060,7 +1060,7 @@
                     <!-- 1: CUDA Neuron Attention -->
                     <div class="project-item">
                         <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc, achieving 3.7x speedup (45ms to 12ms, 1.8K to 6.7K tokens/sec).</p>
+                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding — 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline (TorchScript trace, neuronx-cc compile, profiling) achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
                         <div class="project-links">
                             <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-link code" target="_blank">
@@ -1074,7 +1074,7 @@
                     <!-- 2: LLM Fine-Tuning SFT Production -->
                     <div class="project-item">
                         <div class="project-header"><h3 class="project-title">Production LLM Fine-Tuning: Qwen-7B SFT</h3><span class="project-impact">LLM / GenAI</span></div>
-                        <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8), training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
+                        <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8, alpha=16) on UltraFeedback, training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
                         <div class="project-links">
                             <a href="https://github.com/saitejasrivilli/LLM_FineTuning_SFT_Production" class="project-link code" target="_blank">
@@ -1087,9 +1087,9 @@
 
                     <!-- 3: Attention Optimization -->
                     <div class="project-item">
-                        <div class="project-header"><h3 class="project-title">Attention Mechanism Benchmarking</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">Systematic benchmarking of 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers) with batch-size auto-tuner and GPU memory profiler. FlashAttention-2 achieves 2.8x throughput improvement and 65% memory reduction over vanilla baseline.</p>
-                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">CUDA</span><span class="tech-tag">xFormers</span></div>
+                        <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization Suite</h3><span class="project-impact">Deep Learning</span></div>
+                        <p class="project-description">Benchmarking framework comparing 4 attention implementations on NVIDIA L4 (seq len 1024, batch 32): FlashAttention-2 achieves 12.3x throughput (573K to 6.03M tok/s) and 99.7% memory reduction (12,582 MB to 38 MB) vs vanilla. Includes batch-size auto-tuner using binary search and ONNX/TensorRT export benchmarks. Key finding: algorithm-level optimization (FlashAttention) outperforms hardware-level optimization (TensorRT) by 6x for attention operations.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">ONNX Runtime</span><span class="tech-tag">CUDA</span></div>
                         <div class="project-links">
                             <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-link code" target="_blank">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -1100,15 +1100,15 @@
 
                     <!-- 4: AI Agent -->
                     <div class="project-item">
-                        <div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent</h3><span class="project-impact">GenAI</span></div>
-                        <p class="project-description">Agent that auto-selects the optimal reasoning strategy per query. Implements 4 research papers: Chain-of-Thought, Tree-of-Thoughts, ReAct (tool-using), and Multi-Agent collaboration. Built with Groq LLM, deployed live on HuggingFace Spaces.</p>
-                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">LangChain</span><span class="tech-tag">HuggingFace</span></div>
+                        <div class="project-header"><h3 class="project-title">Advanced AI Agent System</h3><span class="project-impact">GenAI</span></div>
+                        <p class="project-description">Multi-strategy reasoning system implementing 4 research papers: Chain-of-Thought with self-consistency voting (3 independent paths), Tree-of-Thoughts with beam search (width=3, depth=3), ReAct with real-time web search via Tavily API and ChromaDB vector memory, and Multi-Agent collaboration (Planner, Worker, Critic). LLM-based auto-classifier routes each query to the optimal strategy. Rate-limited (10/min, 100/day), with real-time streaming. Built with Groq LLM, deployed on HuggingFace Spaces.</p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">Tavily</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div>
                         <div class="project-links">
                             <a href="https://github.com/saitejasrivilli/ai-agent" class="project-link code" target="_blank">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 GitHub
                             </a>
-                            <a href="https://huggingface.co/spaces/saitejasrivilli/ai-agent" class="project-link demo" target="_blank">🚀 Live Demo</a>
+                            <a href="https://huggingface.co/spaces/SaiTejaSrivilli/ai-agent-system" class="project-link demo" target="_blank">🚀 Live Demo</a>
                         </div>
                     </div>
 

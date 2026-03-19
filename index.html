@@ -342,9 +342,6 @@
         .auto-theme-indicator.visible { opacity: 1; }
         .auto-theme-indicator::before { content: '🕐 '; }
         
-        /* Open to Work Banner */
-        .open-to-work-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(90deg, var(--accent-green), #059669); color: white; text-align: center; padding: 0.6rem; font-size: 0.85rem; font-weight: 500; }
-        .open-to-work-banner a { color: white; text-decoration: underline; margin-left: 0.5rem; }
         
         /* Animations */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -509,11 +506,10 @@
         .skill-icon:hover { transform: scale(1.2) rotate(5deg); }
         .skill-icon img { width: 40px; height: 40px; object-fit: contain; }
         
-        /* Projects - Glassmorphism Cards */
+        /* Projects */
         #projects { position: relative; }
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; transition: all 0.3s ease; text-decoration: none; display: flex; flex-direction: column; color: inherit; background: rgba(var(--bg-secondary-rgb, 248, 249, 250), 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        [data-theme="dark"] .project-item { background: rgba(30, 41, 59, 0.6); }
+        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; transition: all 0.3s ease; text-decoration: none; display: flex; flex-direction: column; color: var(--text-primary); background: var(--bg-primary); }
         .project-item:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-5px); }
         [data-theme="dark"] .project-item:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
         .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -789,11 +785,6 @@
         })();
     </script>
 
-    <!-- Open to Work Banner -->
-    <div class="open-to-work-banner">
-        🚀 Open to ML Engineer, Deep Learning, LLM/GenAI, and Backend SDE roles
-        <a href="#contact">Contact Me</a>
-    </div>
     
     <!-- Dark Mode Toggle -->
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme (follows system preference)">
@@ -928,7 +919,7 @@
             <div class="timeline-item">
                 <div class="timeline-logo" style="background: #e8f4ff; color: #0057a8; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;">Q.ai</div>
                 <div class="timeline-content">
-                    <h3 class="timeline-company">Qure.ai Technologies</h3>
+                    <h3 class="timeline-company">Qure.ai Technologies <span class="healthcare-tag">🏥 Healthcare AI</span></h3>
                     <p class="timeline-role">AI Solutions Engineer Intern</p>
                     <p class="timeline-date">Mar 2026 - May 2026 • New York, NY (Remote)</p>
                     <p class="timeline-description">Configured LLMs for protocol-specific clinical workflows, orchestrating radiologist report parsing and EMR data extraction across EPIC/FHIR-integrated hospital systems including Medstar, Mount Sinai, and UFL. Deployed and maintained AI inference endpoints supporting 6+ live health system sites under real-time US time zone SLAs. Prepared HIPAA-aligned technical documentation including DPIAs, security questionnaires, and EPIC bidirectional integration guides for clinical AI deployment.</p>
@@ -942,7 +933,7 @@
             <div class="timeline-item">
                 <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="dentalscan-logo.png" alt="DentalScan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" onerror="this.parentElement.innerHTML='DS'; this.parentElement.style.background='#10b981'; this.parentElement.style.color='white';"></div>
                 <div class="timeline-content">
-                    <h3 class="timeline-company">ReplyQuickAI (DentalScan) <span class="healthcare-tag">🏥 Healthcare AI</span></h3>
+                    <h3 class="timeline-company">ReplyQuickAI (DentalScan) <span class="healthcare-tag">🏥 Healthcare ML</span></h3>
                     <p class="timeline-role">Machine Learning Engineer Intern</p>
                     <p class="timeline-date">Dec 2025 - Feb 2026 • United States</p>
                     <p class="timeline-description">Built computer vision pipelines for intra-oral image analysis across 6+ clinical categories (gingivitis staging, plaque detection, recession classification) on a 50K+ labeled dataset. Engineered automated retraining pipeline on AWS SageMaker incorporating dentist-corrected labels, improving model accuracy iteratively across production inference endpoints.</p>
@@ -958,7 +949,7 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant</p>
                     <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
-                    <p class="timeline-description">Built TopGPT, a full-stack LLM application fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Also contributed to CTMap, an LLM-enabled path planning system for mmWave 6G networks — accepted at <strong>IEEE ICC 2026</strong> — fine-tuning LLMs on Dijkstra-generated paths with real-time OpenStreetMap + Sionna 6G integration.</p>
+                    <p class="timeline-description">Built TopGPT, a full-stack LLM application fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Also contributed to CTMap, an LLM-enabled path planning system for mmWave 6G networks (accepted at <strong>IEEE ICC 2026</strong>), fine-tuning LLMs on Dijkstra-generated paths with real-time OpenStreetMap + Sionna 6G integration.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">PyTorch</span><span class="tech-pill">RAG</span><span class="tech-pill">Pinecone</span><span class="tech-pill">AWS</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">Sionna</span>
                     </div>
@@ -970,7 +961,7 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Teaching Assistant</p>
                     <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
-                    <p class="timeline-description">Supported graduate courses in Numerical Methods for 50+ students, assisting with algorithmic problem solving, optimization, and computational modeling. Concurrently developed CTMap — an LLM-enabled 6G path planning system accepted at <strong>IEEE ICC 2026</strong> — fine-tuning LLMs on Dijkstra-generated coordinate paths and applying them to Sionna wireless network simulation outputs.</p>
+                    <p class="timeline-description">Supported graduate courses in Numerical Methods for 50+ students, assisting with algorithmic problem solving, optimization, and computational modeling. Concurrently developed CTMap, an LLM-enabled 6G path planning system accepted at <strong>IEEE ICC 2026</strong>, fine-tuning LLMs on Dijkstra-generated coordinate paths and applying them to Sionna wireless network simulation outputs.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">Python</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">OpenStreetMap</span><span class="tech-pill">Sionna 6G</span><span class="tech-pill">Dijkstra</span>
                     </div>
@@ -1064,47 +1055,43 @@
             </a>
 
             <div id="projects-container">
-                <!-- Static fallback cards shown immediately; loadProjects() replaces with GitHub-enriched versions -->
                 <div class="projects-grid">
 
-                    <a href="https://github.com/saitejasrivilli/TopGPT" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">TopGPT</h3><span class="project-impact">LLM / RAG</span></div>
-                        <p class="project-description">Full-stack LLM app fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Built JavaScript front-end, REST backend, and end-to-end inference pipeline from scratch.</p>
-                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Pinecone</span><span class="tech-tag">AWS</span><span class="tech-tag">JavaScript</span></div>
-                    </a>
-
-                    <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">Benchmarking suite comparing Vanilla, SDPA, FlashAttention-2, and xFormers across batch sizes. Achieves 2.8x throughput improvement and 65% memory reduction with FlashAttention-2. GPU memory profiling and latency breakdown included.</p>
-                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">CUDA</span><span class="tech-tag">Python</span></div>
-                    </a>
-
-                    <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">GPU Optimization — Mistral-7B</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">2.8x inference speedup on Mistral-7B using INT4-NF4 quantization, CUDA kernel profiling, and PyTorch optimizations. Full GPU memory and throughput analysis.</p>
-                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">CUDA</span><span class="tech-tag">Quantization</span></div>
-                    </a>
-
-                    <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent</h3><span class="project-impact">GenAI</span></div>
-                        <p class="project-description">AI Agent that auto-selects optimal reasoning strategy per task. Implements Chain-of-Thought, Tree-of-Thoughts, ReAct, and Multi-Agent collaboration. Deployed on HuggingFace Spaces with Groq LLM backend.
-                        </p>
-                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">HuggingFace</span></div>
+                    <!-- 1: CUDA Neuron Attention — hardware-level, rarest skill -->
+                    <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
+                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc, achieving 3.7x speedup (45ms to 12ms, 1.8K to 6.7K tokens/sec). Live REST API on HuggingFace Spaces.</p>
+                        <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
                         <div class="project-links">
-                            <a href="https://huggingface.co/spaces/saitejasrivilli/ai-agent" class="project-link demo" target="_blank" onclick="event.stopPropagation()">🚀 Live Demo</a>
+                            <a href="https://huggingface.co/spaces/saiteja/neuron-llm-api/docs" class="project-link demo" target="_blank" onclick="event.stopPropagation()">🚀 Live API</a>
                         </div>
                     </a>
 
-                    <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">LLM Inference</span></div>
-                        <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face across concurrent request loads. Analyzes batching strategies, KV cache behavior, and token generation latency at scale.</p>
-                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">HuggingFace</span></div>
+                    <!-- 2: LLM Fine-Tuning SFT Production — strong numbers, deployed model -->
+                    <a href="https://github.com/saitejasrivilli/LLM_FineTuning_SFT_Production" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Production LLM Fine-Tuning: Qwen-7B SFT</h3><span class="project-impact">LLM / GenAI</span></div>
+                        <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8), training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization. Achieved 17% training loss reduction (1.412 → 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
+                        <div class="project-links">
+                            <a href="https://huggingface.co/SaiTejaSrivilli/qwen-7b-sft-merged" class="project-link demo" target="_blank" onclick="event.stopPropagation()">🤗 Model on HF Hub</a>
+                        </div>
                     </a>
 
-                    <a href="https://github.com/saitejasrivilli/fleet-telemetry-monitor" class="project-item" target="_blank">
-                        <div class="project-header"><h3 class="project-title">Fleet Telemetry Monitor</h3><span class="project-impact">Backend</span></div>
-                        <p class="project-description">Go-based CLI for ingesting vehicle telemetry (GPS, speed, diagnostics). Stores 10,000+ data points in SQLite with sub-100ms queries. C++ parser achieves 5x faster parsing than Python baseline.</p>
-                        <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">C++</span><span class="tech-tag">Docker</span><span class="tech-tag">REST</span></div>
+                    <!-- 3: Attention Optimization — benchmark numbers, GPU depth -->
+                    <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Attention Mechanism Benchmarking</h3><span class="project-impact">Deep Learning</span></div>
+                        <p class="project-description">Systematic benchmarking of 4 attention implementations (Vanilla, SDPA, FlashAttention-2, xFormers) with batch-size auto-tuner and GPU memory profiler. FlashAttention-2 achieves 2.8x throughput improvement and 65% memory reduction over vanilla baseline.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">CUDA</span><span class="tech-tag">xFormers</span></div>
+                    </a>
+
+                    <!-- 4: AI Agent — live demo, multi-paper, broadest appeal -->
+                    <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent</h3><span class="project-impact">GenAI</span></div>
+                        <p class="project-description">Agent that auto-selects the optimal reasoning strategy per query. Implements 4 research papers: Chain-of-Thought, Tree-of-Thoughts, ReAct (tool-using), and Multi-Agent collaboration. Built with Groq LLM, deployed live on HuggingFace Spaces.</p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">LangChain</span><span class="tech-tag">HuggingFace</span></div>
+                        <div class="project-links">
+                            <a href="https://huggingface.co/spaces/saitejasrivilli/ai-agent" class="project-link demo" target="_blank" onclick="event.stopPropagation()">🚀 Live Demo</a>
+                        </div>
                     </a>
 
                 </div>
@@ -1294,12 +1281,10 @@
          * GitHub last-updated enrichment — adds "Updated X" dates to existing project cards
          */
         const projectRepos = [
-            'TopGPT',
+            'cuda-neuron-attention',
+            'LLM_FineTuning_SFT_Production',
             'attention-optimization',
-            'gpu-optimization-mistral',
-            'ai-agent',
-            'vllm-throughput-benchmark',
-            'fleet-telemetry-monitor'
+            'ai-agent'
         ];
 
         async function enrichProjectDates() {

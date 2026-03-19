@@ -14,14 +14,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="description" content="ML Engineer specializing in Deep Learning, LLMs, GPU Optimization, and Production ML Systems. Published researcher at IEEE ICC 2026.">
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX'); // Replace with your GA4 ID
-    </script>
+    <!-- Google Analytics: replace G-XXXXXXXXXX with your real GA4 ID to enable -->
     
     <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -237,6 +230,7 @@
         .scroll-indicator, .project-item, .timeline-item, .cert-item, 
         .donut-segment, .focus-label, .skill-item, .course-tag,
         .education-card, .project-link, .role-card,
+        .publication-card,
         .open-to-work-banner a {
             pointer-events: auto !important;
         }
@@ -587,9 +581,36 @@
         .form-status.success { display: block; background: #d1fae5; color: #065f46; }
         .form-status.error { display: block; background: #fee2e2; color: #991b1b; }
         
+        /* Publication card */
+        .publication-card { display: flex; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; margin-bottom: 1rem; text-decoration: none; color: inherit; }
+        .publication-card:hover { border-color: var(--accent); transform: translateX(5px); }
+        .pub-badge { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70px; gap: 0.35rem; }
+        .pub-venue { font-size: 0.7rem; font-weight: 700; color: white; background: var(--accent); padding: 0.25rem 0.5rem; border-radius: 6px; text-align: center; line-height: 1.2; }
+        .pub-year { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
+        .pub-content { flex: 1; }
+        .pub-title { font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.35rem; line-height: 1.4; }
+        .pub-authors { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.35rem; }
+        .pub-abstract { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+        .pub-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .pub-link { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease; }
+        .pub-link.arxiv { background: rgba(185, 28, 28, 0.1); color: #b91c1c; border: 1px solid rgba(185, 28, 28, 0.2); }
+        .pub-link.arxiv:hover { background: #b91c1c; color: white; }
+        .pub-link.ieee { background: rgba(37, 99, 235, 0.1); color: var(--accent); border: 1px solid rgba(37, 99, 235, 0.2); }
+        .pub-link.ieee:hover { background: var(--accent); color: white; }
+
+        /* Healthcare AI tag + tech pills on timeline */
+        .healthcare-tag { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.55rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; font-size: 0.75rem; color: var(--accent-green); font-weight: 500; margin-left: 0.5rem; vertical-align: middle; }
+        .tech-stack-line { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+        .tech-pill { padding: 0.15rem 0.55rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
+
+        /* GitHub contribution graph */
+        .github-contrib { margin: 2rem 0 1rem; text-align: center; }
+        .github-contrib img { border-radius: 12px; max-width: 100%; border: 1px solid var(--border-color); }
+
         /* Footer */
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
         footer p { font-size: 0.85rem; color: var(--text-secondary); }
+        .footer-updated { font-size: 0.78rem; color: var(--text-secondary); opacity: 0.6; margin-top: 0.35rem; }
 
         
         /* Responsive */
@@ -794,7 +815,7 @@
         <p class="hero-subtitle animate-fade-in-up delay-3" id="typewriter-text"></p>
         <script>
             (function() {
-                const text = "ML & Deep Learning Research Engineer @ DentalScan & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS";
+                const text = "AI/ML Engineer @ Qure.ai & UTA | GPU Optimization & LLM Inference | IEEE ICC 2026 | PyTorch, CUDA, C++, vLLM, AWS";
                 const element = document.getElementById('typewriter-text');
                 if (!element) return;
                 let charIndex = 0;
@@ -902,22 +923,45 @@
     <section class="section" id="experience">
         <div class="container">
             <h2 class="section-title">Experience</h2>
+
+            <!-- CHANGE 1: Qure.ai - new entry, most recent first -->
+            <div class="timeline-item">
+                <div class="timeline-logo" style="background: #e8f4ff; color: #0057a8; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;">Q.ai</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-company">Qure.ai Technologies</h3>
+                    <p class="timeline-role">AI Solutions Engineer Intern</p>
+                    <p class="timeline-date">Mar 2026 - May 2026 • New York, NY (Remote)</p>
+                    <p class="timeline-description">Configured LLMs for protocol-specific clinical workflows, orchestrating radiologist report parsing and EMR data extraction across EPIC/FHIR-integrated hospital systems including Medstar, Mount Sinai, and UFL. Deployed and maintained AI inference endpoints supporting 6+ live health system sites under real-time US time zone SLAs. Prepared HIPAA-aligned technical documentation including DPIAs, security questionnaires, and EPIC bidirectional integration guides for clinical AI deployment.</p>
+                    <div class="tech-stack-line">
+                        <span class="tech-pill">Python</span><span class="tech-pill">LLMs</span><span class="tech-pill">EPIC/FHIR</span><span class="tech-pill">AWS</span><span class="tech-pill">Clinical AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHANGE 2: DentalScan - updated dates and description -->
             <div class="timeline-item">
                 <div class="timeline-logo" style="background: #fff; padding: 0; overflow: hidden;"><img src="dentalscan-logo.png" alt="DentalScan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" onerror="this.parentElement.innerHTML='DS'; this.parentElement.style.background='#10b981'; this.parentElement.style.color='white';"></div>
                 <div class="timeline-content">
-                    <h3 class="timeline-company">ReplyQuickAI (DentalScan)</h3>
+                    <h3 class="timeline-company">ReplyQuickAI (DentalScan) <span class="healthcare-tag">🏥 Healthcare AI</span></h3>
                     <p class="timeline-role">Machine Learning Engineer Intern</p>
-                    <p class="timeline-date">Dec 2025 - Present • United States</p>
-                    <p class="timeline-description">Building computer vision pipelines for medical imaging. Training supervised models for intra-oral image analysis across clinical categories. Deploying ML inference endpoints on AWS SageMaker.</p>
+                    <p class="timeline-date">Dec 2025 - Feb 2026 • United States</p>
+                    <p class="timeline-description">Built computer vision pipelines for intra-oral image analysis across 6+ clinical categories (gingivitis staging, plaque detection, recession classification) on a 50K+ labeled dataset. Engineered automated retraining pipeline on AWS SageMaker incorporating dentist-corrected labels, improving model accuracy iteratively across production inference endpoints.</p>
+                    <div class="tech-stack-line">
+                        <span class="tech-pill">PyTorch</span><span class="tech-pill">CNNs</span><span class="tech-pill">AWS SageMaker</span><span class="tech-pill">Computer Vision</span><span class="tech-pill">Python</span>
+                    </div>
                 </div>
             </div>
+
             <div class="timeline-item">
                 <div class="timeline-logo" style="background: #0064b1; color: white;">UTA</div>
                 <div class="timeline-content">
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant</p>
                     <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
-                    <p class="timeline-description">Leading ML systems work on CTMap, an LLM-enabled connectivity-aware path planning system for mmWave networks, accepted at IEEE ICC 2026. Designing end-to-end LLM inference pipelines and fine-tuning models in PyTorch.</p>
+                    <p class="timeline-description">Built TopGPT, a full-stack LLM application fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Also contributed to CTMap, an LLM-enabled path planning system for mmWave 6G networks — accepted at <strong>IEEE ICC 2026</strong> — fine-tuning LLMs on Dijkstra-generated paths with real-time OpenStreetMap + Sionna 6G integration.</p>
+                    <div class="tech-stack-line">
+                        <span class="tech-pill">PyTorch</span><span class="tech-pill">RAG</span><span class="tech-pill">Pinecone</span><span class="tech-pill">AWS</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">Sionna</span>
+                    </div>
                 </div>
             </div>
             <div class="timeline-item">
@@ -926,7 +970,10 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Teaching Assistant</p>
                     <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
-                    <p class="timeline-description">Supported graduate courses in Numerical Methods, assisting students with algorithmic problem solving, optimization, and computational modeling.</p>
+                    <p class="timeline-description">Supported graduate courses in Numerical Methods for 50+ students, assisting with algorithmic problem solving, optimization, and computational modeling. Concurrently developed CTMap — an LLM-enabled 6G path planning system accepted at <strong>IEEE ICC 2026</strong> — fine-tuning LLMs on Dijkstra-generated coordinate paths and applying them to Sionna wireless network simulation outputs.</p>
+                    <div class="tech-stack-line">
+                        <span class="tech-pill">Python</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">OpenStreetMap</span><span class="tech-pill">Sionna 6G</span><span class="tech-pill">Dijkstra</span>
+                    </div>
                 </div>
             </div>
             <div class="timeline-item">
@@ -935,7 +982,10 @@
                     <h3 class="timeline-company">Tata Consultancy Services</h3>
                     <p class="timeline-role">Senior Software Engineer → Software Engineer</p>
                     <p class="timeline-date">Jun 2019 - May 2023 • 4 years • Chennai</p>
-                    <p class="timeline-description">Designed and owned Java-based distributed data processing services across production systems. Led system design and architecture for data-intensive services. Built fault-tolerant backend services with high availability.</p>
+                    <p class="timeline-description">Designed and owned Java-based distributed data processing services handling millions of records daily across production systems serving 10+ enterprise clients. Led system design and architecture reviews for data-intensive microservices. Built fault-tolerant backend pipelines with high availability and reduced processing latency by 40% through service refactoring.</p>
+                    <div class="tech-stack-line">
+                        <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Microservices</span><span class="tech-pill">SQL</span><span class="tech-pill">REST APIs</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -996,35 +1046,69 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
 
-            <a href="https://github.com/saitejasrivilli/movie-recommender-demo" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Movie Recommender Demo</h3><span class="project-impact">ML</span></div>
-                <p class="project-description">Production-ready movie recommender implementing 4 collaborative filtering algorithms (SVD, CF, ALS) with 0.96 RMSE on MovieLens dataset, deployed as interactive Gradio demo</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
+            <!-- Publication highlight card -->
+            <a href="https://arxiv.org/html/2601.00110v1" class="publication-card" target="_blank">
+                <div class="pub-badge">
+                    <span class="pub-venue">IEEE ICC 2026</span>
+                    <span class="pub-year">2026</span>
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">CTMap: LLM-Enabled Connectivity-Aware Path Planning for mmWave 6G Networks</p>
+                    <p class="pub-authors">Sai Teja Srivillibhutturu et al. • IEEE International Conference on Communications 2026</p>
+                    <p class="pub-abstract">Fine-tuned LLMs on Dijkstra-generated coordinate paths from OpenStreetMap, applied to Sionna 6G wireless simulation outputs to produce real-time optimal paths for mmWave connectivity-aware routing.</p>
+                    <div class="pub-links">
+                        <span class="pub-link arxiv">📄 arXiv</span>
+                        <span class="pub-link ieee">🔗 IEEE ICC 2026</span>
+                    </div>
+                </div>
             </a>
 
-            <a href="https://github.com/saitejasrivilli/fleet-telemetry-monitor" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Fleet Telemetry Monitor</h3><span class="project-impact">Cloud</span></div>
-                <p class="project-description">Go-based CLI tool for ingesting vehicle telemetry data (GPS, speed, diagnostics). Stores 10,000+ data points in SQLite with sub-100ms queries. Includes C++ parser achieving 5x faster parsing than Python. REST API, Docker, and live dashboard included.</p>
-                <div class="project-tech"><span class="tech-tag">Go</span></div>
-            </a>
+            <div id="projects-container">
+                <!-- Static fallback cards shown immediately; loadProjects() replaces with GitHub-enriched versions -->
+                <div class="projects-grid">
 
-            <a href="https://github.com/saitejasrivilli/multi-lora-rag-assistant" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Multi-LoRA RAG Assistant</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">Implementing LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) research paper</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+                    <a href="https://github.com/saitejasrivilli/TopGPT" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">TopGPT</h3><span class="project-impact">LLM / RAG</span></div>
+                        <p class="project-description">Full-stack LLM app fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Built JavaScript front-end, REST backend, and end-to-end inference pipeline from scratch.</p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Pinecone</span><span class="tech-tag">AWS</span><span class="tech-tag">JavaScript</span></div>
+                    </a>
 
-            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">AI Agent</h3><span class="project-impact">GenAI</span></div>
-                <p class="project-description">AI Agent that auto-selects the best reasoning strategy for any task. Implements 4 research papers: Chain-of-Thought (step-by-step math), Tree-of-Thoughts (creative exploration), ReAct (tool-using research), and Multi-Agent (collaborative problem-solving). Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                <div class="project-tech"><span class="tech-tag">Python</span></div>
-            </a>
+                    <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
+                        <p class="project-description">Benchmarking suite comparing Vanilla, SDPA, FlashAttention-2, and xFormers across batch sizes. Achieves 2.8x throughput improvement and 65% memory reduction with FlashAttention-2. GPU memory profiling and latency breakdown included.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">CUDA</span><span class="tech-tag">Python</span></div>
+                    </a>
 
-            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-item" target="_blank">
-                <div class="project-header"><h3 class="project-title">Attention Optimization</h3><span class="project-impact">Deep Learning</span></div>
-                <p class="project-description">Comprehensive benchmarking suite comparing 4 transformer attention  implementations (Vanilla, SDPA, FlashAttention-2, xFormers). Features  batch-size auto-tuner, GPU memory profiling, and latency analysis.  Achieves 2.8x throughput improvement and 65% memory reduction with  FlashAttention-2.</p>
-                <div class="project-tech"><span class="tech-tag">Jupyter Notebook</span></div>
-            </a>
+                    <a href="https://github.com/saitejasrivilli/gpu-optimization-mistral" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">GPU Optimization — Mistral-7B</h3><span class="project-impact">Deep Learning</span></div>
+                        <p class="project-description">2.8x inference speedup on Mistral-7B using INT4-NF4 quantization, CUDA kernel profiling, and PyTorch optimizations. Full GPU memory and throughput analysis.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">CUDA</span><span class="tech-tag">Quantization</span></div>
+                    </a>
+
+                    <a href="https://github.com/saitejasrivilli/ai-agent" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Multi-Strategy AI Agent</h3><span class="project-impact">GenAI</span></div>
+                        <p class="project-description">AI Agent that auto-selects optimal reasoning strategy per task. Implements Chain-of-Thought, Tree-of-Thoughts, ReAct, and Multi-Agent collaboration. Deployed on HuggingFace Spaces with Groq LLM backend.
+                        </p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">HuggingFace</span></div>
+                        <div class="project-links">
+                            <a href="https://huggingface.co/spaces/saitejasrivilli/ai-agent" class="project-link demo" target="_blank" onclick="event.stopPropagation()">🚀 Live Demo</a>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/saitejasrivilli/vllm-throughput-benchmark" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">vLLM Throughput Benchmark</h3><span class="project-impact">LLM Inference</span></div>
+                        <p class="project-description">Benchmarked LLM inference throughput using vLLM vs Hugging Face across concurrent request loads. Analyzes batching strategies, KV cache behavior, and token generation latency at scale.</p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">vLLM</span><span class="tech-tag">HuggingFace</span></div>
+                    </a>
+
+                    <a href="https://github.com/saitejasrivilli/fleet-telemetry-monitor" class="project-item" target="_blank">
+                        <div class="project-header"><h3 class="project-title">Fleet Telemetry Monitor</h3><span class="project-impact">Backend</span></div>
+                        <p class="project-description">Go-based CLI for ingesting vehicle telemetry (GPS, speed, diagnostics). Stores 10,000+ data points in SQLite with sub-100ms queries. C++ parser achieves 5x faster parsing than Python baseline.</p>
+                        <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">C++</span><span class="tech-tag">Docker</span><span class="tech-tag">REST</span></div>
+                    </a>
+
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1105,6 +1189,9 @@
                 <div class="form-status" id="formStatus"></div>
             </form>
             
+            <div class="github-contrib">
+                <img src="https://ghchart.rshah.org/2563eb/saitejasrivilli" alt="GitHub contribution graph" loading="lazy">
+            </div>
             <p style="color: var(--text-secondary); margin: 2rem 0 1rem; font-size: 0.9rem;">Or reach me directly:</p>
             <div class="contact-links">
                 <a href="/cdn-cgi/l/email-protection#f98a98908d9c9398d78a8b908f9595909b918c8d8d8c8b8cb99e94989095d79a9694" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
@@ -1116,7 +1203,13 @@
         </div>
     </section>
 
-    <footer><p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p></footer>
+    <footer>
+        <p>© 2026 Sai Teja Srivillibhutturu. Built with passion for ML & AI.</p>
+        <p class="footer-updated" id="footer-updated"></p>
+        <script>
+            document.getElementById('footer-updated').textContent = 'Last updated ' + new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        </script>
+    </footer>
     
     <!-- Contact Form Handler -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1198,84 +1291,43 @@
         });
         
         /**
-         * GitHub Projects - Fetch and Sort by Last Updated with Auto Tech Stack
+         * GitHub last-updated enrichment — adds "Updated X" dates to existing project cards
          */
-        const featuredProjects = [
-            { repo: 'attention-optimization', title: 'Attention Mechanism Optimization', description: 'Built attention benchmarking framework comparing Vanilla, SDPA, FlashAttention-2, xFormers. Achieved 2.8x throughput improvement and 65% memory reduction.', impact: 'Deep Learning' },
-            { repo: 'gpu-optimization-mistral', title: 'GPU Optimization for Mistral-7B', description: 'GPU Optimization System achieving 2.8x speedup using PyTorch quantization, CUDA kernel optimization, and GPU profiling with INT4-NF4 quantization.', impact: 'Deep Learning' },
-            { repo: 'ai-agent', title: 'Multi-Strategy AI Agent', description: 'AI Agent that auto-selects optimal reasoning strategy. Implements Chain-of-Thought, Tree-of-Thoughts, ReAct, and Multi-Agent collaboration.', impact: 'GenAI' },
-            { repo: 'vllm-throughput-benchmark', title: 'vLLM Throughput Benchmark', description: 'Benchmarked LLM inference throughput using vLLM vs Hugging Face, focusing on batching, KV cache behavior, and scalability under concurrent requests.', impact: 'LLM Inference' },
-            { repo: 'DistributedKVStore', title: 'Distributed KV Store', description: 'High-performance distributed key-value store with replication, partitioning, and consensus protocols for fault tolerance.', impact: 'Backend' }
+        const projectRepos = [
+            'TopGPT',
+            'attention-optimization',
+            'gpu-optimization-mistral',
+            'ai-agent',
+            'vllm-throughput-benchmark',
+            'fleet-telemetry-monitor'
         ];
-        
-        async function fetchGitHubRepoInfo(repoName) {
-            try {
-                const [repoRes, langRes] = await Promise.all([
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${repoName}`),
-                    fetch(`https://api.github.com/repos/saitejasrivilli/${repoName}/languages`)
-                ]);
-                const repoData = repoRes.ok ? await repoRes.json() : null;
-                const langData = langRes.ok ? await langRes.json() : {};
-                return { repoData, langData };
-            } catch (error) {
-                console.log(`Could not fetch ${repoName}:`, error);
+
+        async function enrichProjectDates() {
+            for (const repo of projectRepos) {
+                try {
+                    const res = await fetch(`https://api.github.com/repos/saitejasrivilli/${repo}`);
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    const updated = new Date(data.updated_at);
+                    const dateStr = updated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    // Find the matching card by its GitHub href
+                    const card = document.querySelector(`a[href*="${repo}"].project-item`);
+                    if (card) {
+                        const existing = card.querySelector('.project-updated');
+                        if (!existing) {
+                            const p = document.createElement('p');
+                            p.className = 'project-updated';
+                            p.style.cssText = 'margin-top: 0.75rem; text-align: right;';
+                            p.textContent = '📅 Updated ' + dateStr;
+                            card.appendChild(p);
+                        }
+                    }
+                } catch(e) { /* silently skip on rate limit */ }
             }
-            return { repoData: null, langData: {} };
         }
-        
-        function getTechStack(langData, topics = []) {
-            // Get top languages by bytes (max 4)
-            const langs = Object.entries(langData)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 4)
-                .map(([lang]) => lang);
-            // Combine with topics, remove duplicates
-            const allTech = [...new Set([...langs, ...topics.slice(0, 3)])];
-            return allTech.slice(0, 5); // Max 5 tags
-        }
-        
-        async function loadProjects() {
-            const container = document.getElementById('projects-container');
-            if (!container) return;
-            
-            const repoPromises = featuredProjects.map(async (project) => {
-                const { repoData, langData } = await fetchGitHubRepoInfo(project.repo);
-                const topics = repoData?.topics || [];
-                const tech = getTechStack(langData, topics);
-                return {
-                    ...project,
-                    updatedAt: repoData ? new Date(repoData.updated_at) : new Date(0),
-                    url: `https://github.com/saitejasrivilli/${project.repo}`,
-                    tech: tech.length > 0 ? tech : ['Code']
-                };
-            });
-            
-            const projectsWithDates = await Promise.all(repoPromises);
-            projectsWithDates.sort((a, b) => b.updatedAt - a.updatedAt);
-            
-            container.innerHTML = `<div class="projects-grid">${projectsWithDates.map(project => {
-                const dateStr = project.updatedAt.getTime() > 0 
-                    ? `Updated ${project.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
-                    : '';
-                
-                return `
-                    <div class="project-item">
-                        <h3 class="project-title">${project.title}</h3>
-                        <p class="project-description">${project.description}</p>
-                        <div class="project-tech">${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-                        <div class="project-links">
-                            <a href="${project.url}" class="project-link code" target="_blank">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                Code
-                            </a>
-                        </div>
-                        ${dateStr ? `<p class="project-updated" style="margin-top: 0.75rem; text-align: right;">📅 ${dateStr}</p>` : ''}
-                    </div>
-                `;
-            }).join('')}</div>`;
-            
-            container.querySelectorAll('.project-item').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-       
+
+        enrichProjectDates();
+    </script>
+
+</body>
+</html>

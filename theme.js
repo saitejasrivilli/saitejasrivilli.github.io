@@ -1,142 +1,135 @@
 /**
- * Theme Management - System Preference Based
- * Automatically detects and syncs theme with device/browser settings
- * Works on both desktop and mobile
+ * Automatic Theme Switcher - Dark mode 6 PM to 6 AM, Light mode 6 AM to 6 PM
  */
 
-(function() {
-    // Get theme based on system preference
-    function getSystemTheme() {
-        // Check if matchMedia is supported
-        if (window.matchMedia) {
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-            if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                return 'light';
-            }
-        }
-        // Default to light if no preference detected
+function getDayNightMode() {
+    const now = new Date();
+    const hour = now.getHours();
+    
+    // Dark mode: 6 PM (18:00) to 6 AM (06:00)
+    // Light mode: 6 AM (06:00) to 6 PM (18:00)
+    if (hour >= 18 || hour < 6) {
+        return 'dark';
+    } else {
         return 'light';
     }
+}
+
+function applyTheme(forcedMode = null) {
+    const mode = forcedMode || getDayNightMode();
+    const root = document.documentElement;
     
-    // Apply theme immediately to prevent flash
-    function applyTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        const manualOverride = localStorage.getItem('themeManualOverride');
-        
-        let theme;
-        if (manualOverride === 'true' && savedTheme) {
-            // Use saved preference if manually set
-            theme = savedTheme;
-        } else {
-            // Clear any stale manual override and use system preference
-            localStorage.removeItem('themeManualOverride');
-            localStorage.removeItem('theme');
-            theme = getSystemTheme();
-        }
-        
-        document.documentElement.setAttribute('data-theme', theme);
-        return theme;
+    // Remove both classes first
+    root.classList.remove('light-mode', 'dark-mode');
+    
+    if (mode === 'light') {
+        root.classList.add('light-mode');
+        document.body.style.background = '#ffffff';
+        document.body.style.color = '#1a1a1a';
+    } else {
+        root.classList.add('dark-mode');
+        document.body.style.background = '#0a0a0a';
+        document.body.style.color = '#e5e5e5';
     }
     
-    // Apply theme immediately (before DOM loads)
-    const currentTheme = applyTheme();
-    
-    // Listen for system theme changes
-    if (window.matchMedia) {
-        const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        // Use the appropriate listener method (addEventListener for modern browsers, addListener for older)
-        const listener = function(e) {
-            // Only auto-switch if no manual override
-            if (localStorage.getItem('themeManualOverride') !== 'true') {
-                const newTheme = e.matches ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                updateThemeIcon(newTheme);
-            }
-        };
-        
-        if (darkModeQuery.addEventListener) {
-            darkModeQuery.addEventListener('change', listener);
-        } else if (darkModeQuery.addListener) {
-            // Fallback for older browsers (Safari < 14)
-            darkModeQuery.addListener(listener);
-        }
+    // Store the preference
+    if (forcedMode) {
+        localStorage.setItem('themePreference', forcedMode);
     }
     
-    // Update theme icon
-    function updateThemeIcon(theme) {
-        const icon = document.querySelector('.theme-icon');
-        if (icon) {
-            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
+    updateThemeVariables(mode);
+}
+
+function updateThemeVariables(mode) {
+    const root = document.documentElement;
+    
+    if (mode === 'light') {
+        root.style.setProperty('--bg-primary', '#ffffff');
+        root.style.setProperty('--bg-secondary', '#f8f8f8');
+        root.style.setProperty('--bg-tertiary', '#f0f0f0');
+        root.style.setProperty('--text-primary', '#1a1a1a');
+        root.style.setProperty('--text-secondary', '#666666');
+        root.style.setProperty('--border-color', '#e0e0e0');
+        root.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.1)');
+        root.style.setProperty('--card-bg', '#ffffff');
+        root.style.setProperty('--hover-bg', '#f5f5f5');
+    } else {
+        root.style.setProperty('--bg-primary', '#0a0a0a');
+        root.style.setProperty('--bg-secondary', '#1a1a1a');
+        root.style.setProperty('--bg-tertiary', '#252525');
+        root.style.setProperty('--text-primary', '#e5e5e5');
+        root.style.setProperty('--text-secondary', '#b0b0b0');
+        root.style.setProperty('--border-color', '#333333');
+        root.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+        root.style.setProperty('--card-bg', '#1a1a1a');
+        root.style.setProperty('--hover-bg', '#252525');
     }
+}
+
+function toggleThemeManually() {
+    const currentMode = document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light';
+    const newMode = currentMode === 'dark' ? 'light' : 'dark';
     
-    // Toggle theme function (called by button)
-    window.toggleTheme = function() {
-        const html = document.documentElement;
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        localStorage.setItem('themeManualOverride', 'true');
-        updateThemeIcon(newTheme);
-        
-        // Show toast notification
-        showThemeToast(newTheme);
-    };
+    applyTheme(newMode);
+    localStorage.setItem('themeManualOverride', 'true');
+    localStorage.setItem('themeOverrideMode', newMode);
     
-    // Reset to system preference
-    window.resetToSystemTheme = function() {
-        localStorage.removeItem('theme');
-        localStorage.removeItem('themeManualOverride');
-        const theme = getSystemTheme();
-        document.documentElement.setAttribute('data-theme', theme);
-        updateThemeIcon(theme);
-    };
-    
-    // Show toast notification
-    function showThemeToast(theme) {
-        const existingToast = document.querySelector('.theme-toast');
-        if (existingToast) existingToast.remove();
-        
-        const toast = document.createElement('div');
-        toast.className = 'theme-toast';
-        toast.innerHTML = theme === 'dark' 
-            ? '🌙 Dark mode enabled' 
-            : '☀️ Light mode enabled';
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 80px;
-            right: 2rem;
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            padding: 0.75rem 1.25rem;
-            border-radius: 16px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            z-index: 1001;
-            animation: fadeInUp 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-        `;
-        document.body.appendChild(toast);
+    // Show indicator
+    showThemeIndicator(newMode);
+}
+
+function showThemeIndicator(mode) {
+    const indicator = document.getElementById('theme-indicator');
+    if (indicator) {
+        const text = mode === 'dark' ? '🌙 Manual Dark Mode' : '☀️ Manual Light Mode';
+        indicator.textContent = text;
+        indicator.style.display = 'block';
         
         setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
+            indicator.style.display = 'none';
         }, 2000);
     }
+}
+
+// Initialize theme when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user has manually overridden the theme
+    const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+    const overrideMode = localStorage.getItem('themeOverrideMode');
     
-    // Update icon when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            updateThemeIcon(document.documentElement.getAttribute('data-theme'));
-        });
+    if (hasOverride && overrideMode) {
+        applyTheme(overrideMode);
     } else {
-        updateThemeIcon(currentTheme);
+        applyTheme();
     }
-})();
+});
+
+// Apply theme immediately on script load (before DOMContentLoaded)
+const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+const overrideMode = localStorage.getItem('themeOverrideMode');
+
+if (hasOverride && overrideMode) {
+    applyTheme(overrideMode);
+} else {
+    applyTheme();
+}
+
+// Check and update theme every minute for auto-switching (only if no manual override)
+setInterval(() => {
+    const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+    if (!hasOverride) {
+        applyTheme();
+    }
+}, 60000);
+
+// Reset manual override at 6 AM and 6 PM
+setInterval(() => {
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    if ((hour === 6 || hour === 18) && minute === 0) {
+        localStorage.removeItem('themeManualOverride');
+        localStorage.removeItem('themeOverrideMode');
+        applyTheme();
+    }
+}, 60000);

@@ -160,7 +160,8 @@
         });
     </script>
     <style>
-        :root {
+        /* Light Mode (6 AM - 6 PM) */
+        :root, html.light-mode {
             --bg-primary: #ffffff;
             --bg-secondary: #f8f9fa;
             --text-primary: #1a1a2e;
@@ -170,19 +171,9 @@
             --border-color: #e5e7eb;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        /* Auto dark mode when system prefers dark (before JS loads) */
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
-                --bg-primary: #0f172a;
-                --bg-secondary: #1e293b;
-                --text-primary: #f1f5f9;
-                --text-secondary: #94a3b8;
-                --border-color: #334155;
-                --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            }
-        }
-        /* JS-controlled dark mode */
-        [data-theme="dark"] {
+        
+        /* Dark Mode (6 PM - 6 AM) */
+        html.dark-mode {
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --text-primary: #f1f5f9;
@@ -190,6 +181,7 @@
             --border-color: #334155;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
@@ -627,6 +619,10 @@
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+    <div class="auto-theme-indicator" id="themeIndicator"></div>
+    
     <!-- Fluid Marble Gradient Background - WebGL Fluid Simulation -->
     <!-- CSS Fallback for environments without WebGL -->
     <div class="fluid-fallback" id="fluid-fallback">
@@ -1252,11 +1248,105 @@
     </script>
 
     <script>
+        /**
+         * Time-Based Theme System
+         * Light Mode: 6 AM - 6 PM
+         * Dark Mode: 6 PM - 6 AM
+         */
         
-        // Check and update theme every minute for auto-switching
+        // Determine theme based on current time
+        function getDayNightMode() {
+            const now = new Date();
+            const hour = now.getHours();
+            
+            // Dark mode: 6 PM (18:00) to 6 AM (06:00)
+            // Light mode: 6 AM (06:00) to 6 PM (18:00)
+            if (hour >= 18 || hour < 6) {
+                return 'dark';
+            } else {
+                return 'light';
+            }
+        }
+        
+        // Apply theme to the HTML element
+        function applyTheme(forcedMode = null) {
+            const mode = forcedMode || getDayNightMode();
+            const root = document.documentElement;
+            
+            // Remove both classes
+            root.classList.remove('light-mode', 'dark-mode');
+            
+            // Add the appropriate class
+            root.classList.add(mode === 'light' ? 'light-mode' : 'dark-mode');
+            
+            // Update toggle button
+            const toggleBtn = document.getElementById('themeToggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = mode === 'dark' ? '☀️' : '🌙';
+                toggleBtn.title = mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            }
+            
+            // Store preference
+            if (forcedMode) {
+                localStorage.setItem('themeManualOverride', 'true');
+                localStorage.setItem('themeOverrideMode', forcedMode);
+            }
+        }
+        
+        // Toggle theme manually
+        function toggleThemeManually() {
+            const currentMode = document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light';
+            const newMode = currentMode === 'dark' ? 'light' : 'dark';
+            applyTheme(newMode);
+            showThemeIndicator(newMode);
+        }
+        
+        // Show theme change indicator
+        function showThemeIndicator(mode) {
+            const indicator = document.getElementById('themeIndicator');
+            if (indicator) {
+                const text = mode === 'dark' ? '🌙 Dark Mode (Manual)' : '☀️ Light Mode (Manual)';
+                indicator.textContent = text;
+                indicator.classList.add('visible');
+                
+                setTimeout(() => {
+                    indicator.classList.remove('visible');
+                }, 2000);
+            }
+        }
+        
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user has manually overridden the theme
+            const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+            const overrideMode = localStorage.getItem('themeOverrideMode');
+            
+            if (hasOverride && overrideMode) {
+                applyTheme(overrideMode);
+            } else {
+                applyTheme();
+            }
+            
+            // Add event listener to theme toggle button
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleThemeManually);
+            }
+        });
+        
+        // Apply theme immediately (before DOM loads)
+        const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+        const overrideMode = localStorage.getItem('themeOverrideMode');
+        if (hasOverride && overrideMode) {
+            applyTheme(overrideMode);
+        } else {
+            applyTheme();
+        }
+        
+        // Check and update theme every minute for auto-switching (only if no manual override)
         setInterval(() => {
-            const manualOverride = localStorage.getItem('themeManualOverride');
-            if (manualOverride !== 'true') {
+            const hasOverride = localStorage.getItem('themeManualOverride') === 'true';
+            if (!hasOverride) {
                 applyTheme();
             }
         }, 60000);
@@ -1268,8 +1358,8 @@
             const minute = now.getMinutes();
             if ((hour === 6 || hour === 18) && minute === 0) {
                 localStorage.removeItem('themeManualOverride');
+                localStorage.removeItem('themeOverrideMode');
                 applyTheme();
-                showAutoIndicator();
             }
         }, 60000);
         

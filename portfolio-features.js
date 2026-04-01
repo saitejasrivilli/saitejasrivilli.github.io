@@ -570,14 +570,15 @@ class PatternAIChatbot {
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 999;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        z-index: 9999 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease;
+        pointer-events: auto !important;
       }
 
       #chatbot-button:hover {
         transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       }
 
       #chatbot-window {

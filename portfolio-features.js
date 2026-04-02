@@ -188,211 +188,9 @@ initializeSkillMatcher();
 
 
 /**
- * FEATURE 2: GITHUB ACTIVITY STREAM
- * Fetch and display real-time GitHub activity
+ * FEATURE 2: REMOVED
+ * (GitHub Activity removed per user request)
  */
-
-const GITHUB_USERNAME = 'saitejasrivilli';
-
-async function initializeGitHubActivity() {
-  try {
-    // Fetch recent repos
-    const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=10`);
-    const repos = await reposResponse.json();
-
-    // Fetch GitHub stats
-    const userResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
-    const userData = await userResponse.json();
-
-    // Create activity display
-    createActivityDisplay(repos, userData);
-  } catch (error) {
-    console.error('Failed to fetch GitHub data:', error);
-  }
-}
-
-function createActivityDisplay(repos, userData) {
-  // Add activity section after projects if it doesn't exist
-  let activitySection = document.getElementById('github-activity-section');
-  
-  if (!activitySection) {
-    const projectsSection = document.getElementById('projects');
-    activitySection = document.createElement('div');
-    activitySection.id = 'github-activity-section';
-    activitySection.className = 'section';
-    activitySection.innerHTML = `
-      <div class="container">
-        <h2 class="section-title">GitHub Activity</h2>
-        <div style="max-width: 900px; margin: 0 auto;">
-          <div class="activity-stats">
-            <div class="stat-card">
-              <div class="stat-number">${userData.public_repos}</div>
-              <div class="stat-label">Public Repos</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">${userData.followers}</div>
-              <div class="stat-label">Followers</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">${userData.following}</div>
-              <div class="stat-label">Following</div>
-            </div>
-          </div>
-          <div class="recent-activity" id="activity-feed"></div>
-        </div>
-      </div>
-    `;
-    projectsSection.parentNode.insertBefore(activitySection, projectsSection.nextSibling);
-  }
-
-  // Populate activity feed
-  const feedContainer = document.getElementById('activity-feed');
-  feedContainer.innerHTML = '';
-
-  repos.slice(0, 5).forEach(repo => {
-    const updatedDate = new Date(repo.updated_at);
-    const now = new Date();
-    const diffHours = Math.floor((now - updatedDate) / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffHours / 24);
-    
-    let timeAgo = '';
-    if (diffHours < 1) timeAgo = 'Just now';
-    else if (diffHours < 24) timeAgo = `${diffHours}h ago`;
-    else if (diffDays < 7) timeAgo = `${diffDays}d ago`;
-    else timeAgo = updatedDate.toLocaleDateString();
-
-    const card = document.createElement('div');
-    card.className = 'activity-card';
-    card.innerHTML = `
-      <div class="activity-header">
-        <h3 class="activity-repo">${repo.name}</h3>
-        <span class="activity-time">⏰ ${timeAgo}</span>
-      </div>
-      <p class="activity-description">${repo.description || 'No description'}</p>
-      <div class="activity-meta">
-        <span class="activity-lang">💻 ${repo.language || 'N/A'}</span>
-        <span class="activity-stars">⭐ ${repo.stargazers_count}</span>
-        <a href="${repo.html_url}" target="_blank" class="activity-link">View on GitHub →</a>
-      </div>
-    `;
-    feedContainer.appendChild(card);
-  });
-}
-
-// GitHub Activity Styles
-const githubActivityStyles = `
-  .activity-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-  
-  .stat-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-  }
-  
-  .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--card-shadow);
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-  }
-  
-  .stat-label {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .recent-activity {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .activity-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-  }
-  
-  .activity-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
-  }
-  
-  .activity-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-  }
-  
-  .activity-repo {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  
-  .activity-time {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    background: var(--bg-secondary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-  }
-  
-  .activity-description {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-  }
-  
-  .activity-meta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  
-  .activity-lang,
-  .activity-stars {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-  
-  .activity-link {
-    margin-left: auto;
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-  
-  .activity-link:hover {
-    gap: 0.5rem;
-  }
-`;
-
-const ghStyleSheet = document.createElement('style');
-ghStyleSheet.textContent = githubActivityStyles;
-document.head.appendChild(ghStyleSheet);
-
-initializeGitHubActivity();
 
 
 /**
@@ -556,29 +354,34 @@ class PatternAIChatbot {
   addStyles() {
     const styles = `
       #chatbot-button {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 2px solid var(--accent);
-        background: var(--accent);
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-        pointer-events: auto !important;
+        position: fixed !important;
+        bottom: 2rem !important;
+        right: 2rem !important;
+        width: 70px !important;
+        height: 70px !important;
+        border-radius: 50% !important;
+        background: #2563eb !important;
+        color: white !important;
+        font-size: 2rem !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 99999 !important;
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.8) !important;
+        border: 3px solid white !important;
+        transition: all 0.3s ease !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
       #chatbot-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        transform: scale(1.15) !important;
+        box-shadow: 0 12px 32px rgba(37, 99, 235, 1) !important;
+      }
+
+      #chatbot-button:active {
+        transform: scale(0.95) !important;
       }
 
       #chatbot-window {
@@ -766,7 +569,18 @@ class PatternAIChatbot {
   }
 }
 
-// Initialize chatbot when page loads
+// Initialize chatbot when page loads - SIMPLE & DIRECT
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('🤖 Initializing chatbot...');
   new PatternAIChatbot();
+  console.log('✅ Chatbot initialized');
 });
+
+// Also initialize immediately (don't wait for DOM)
+console.log('Chatbot script loading...');
+setTimeout(() => {
+  if (document.body) {
+    new PatternAIChatbot();
+    console.log('✅ Chatbot created immediately');
+  }
+}, 100);

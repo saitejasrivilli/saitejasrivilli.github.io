@@ -1,7 +1,10 @@
-// SIMPLE CHATBOT - GUARANTEED TO WORK
-console.log('🤖 Portfolio features loading...');
+/**
+ * INTERACTIVE PROJECT EXPLORER
+ * Shows projects dynamically with filtering, searching, and detailed views
+ */
 
-// Wait for DOM to be ready
+console.log('🔧 Portfolio features loading...');
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initAll);
 } else {
@@ -9,198 +12,212 @@ if (document.readyState === 'loading') {
 }
 
 function initAll() {
-  console.log('✅ DOM ready - initializing features');
-  initSkillMatcher();
-  initChatbot();
+  console.log('✅ Initializing interactive features...');
+  initProjectExplorer();
 }
 
 // ============================================
-// FEATURE 1: SKILL-PROJECT MATCHER
+// PROJECT EXPLORER - INTERACTIVE UI
 // ============================================
 
-function initSkillMatcher() {
-  console.log('🔗 Initializing skill matcher...');
-  
-  const skillProjectMap = {
-    'CUDA C++': ['cuda-neuron-attention', 'attention-optimization'],
-    'PyTorch': ['cuda-neuron-attention', 'LLM_FineTuning_SFT_Production', 'attention-optimization', 'ai-agent'],
-    'AWS Inferentia': ['cuda-neuron-attention'],
-    'LoRA / PEFT': ['LLM_FineTuning_SFT_Production'],
-    'QLoRA': ['LLM_FineTuning_SFT_Production'],
-    'TRL': ['LLM_FineTuning_SFT_Production'],
-    'HuggingFace': ['LLM_FineTuning_SFT_Production', 'ai-agent'],
-    'FlashAttention-2': ['attention-optimization'],
-    'Python': ['ai-agent'],
-  };
+function initProjectExplorer() {
+  console.log('🔍 Initializing project explorer...');
 
-  // Add click listeners to tech tags
-  document.querySelectorAll('.tech-tag').forEach(tag => {
-    tag.style.cursor = 'pointer';
-    tag.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const skill = this.textContent.trim();
-      highlightProjects(skill, skillProjectMap);
-    });
-  });
-
-  // Reset on outside click
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.tech-tag')) {
-      resetProjects();
-    }
-  });
-
-  console.log('✅ Skill matcher ready');
-}
-
-function highlightProjects(skill, map) {
-  const matching = map[skill] || [];
-  
-  document.querySelectorAll('.project-item').forEach(item => {
-    let isMatch = false;
-    matching.forEach(repo => {
-      if (item.innerHTML.includes(repo)) {
-        isMatch = true;
-      }
-    });
-    
-    item.style.opacity = isMatch ? '1' : '0.4';
-  });
-}
-
-function resetProjects() {
-  document.querySelectorAll('.project-item').forEach(item => {
-    item.style.opacity = '1';
-  });
-}
-
-// ============================================
-// FEATURE 2: SIMPLE CHATBOT
-// ============================================
-
-function initChatbot() {
-  console.log('💬 Initializing chatbot...');
-
-  // Create button
-  const btn = document.createElement('div');
-  btn.id = 'chat-btn';
-  btn.innerHTML = '💬';
-  btn.style.cssText = `
+  // Create explorer widget
+  const explorer = document.createElement('div');
+  explorer.id = 'project-explorer';
+  explorer.style.cssText = `
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    width: 80px;
-    height: 80px;
-    background: #2563eb;
-    color: white;
-    border: 4px solid white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    cursor: pointer;
-    z-index: 99999;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.9);
-    transition: all 0.3s;
-  `;
-
-  btn.onmouseover = () => {
-    btn.style.transform = 'scale(1.15)';
-  };
-
-  btn.onmouseout = () => {
-    btn.style.transform = 'scale(1)';
-  };
-
-  // Create window
-  const win = document.createElement('div');
-  win.id = 'chat-win';
-  win.style.cssText = `
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 420px;
-    height: 600px;
+    width: 400px;
+    max-height: 700px;
     background: white;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    display: none;
+    border: 2px solid #2563eb;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(37, 99, 235, 0.2);
+    display: flex;
     flex-direction: column;
     z-index: 99999;
     font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
   `;
 
-  win.innerHTML = `
-    <div style="padding: 1rem; background: #2563eb; color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 10px 10px 0 0;">
-      <strong>💬 Ask Me Anything</strong>
-      <div style="cursor: pointer; font-size: 1.5rem;" onclick="document.getElementById('chat-win').style.display='none'; document.getElementById('chat-btn').style.display='flex';">✕</div>
+  explorer.innerHTML = `
+    <!-- Header -->
+    <div style="padding: 1.25rem; background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; border-radius: 14px 14px 0 0; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.5rem;">🚀</span>
+        <div>
+          <div style="font-weight: bold; font-size: 1.1rem;">My Projects</div>
+          <div style="font-size: 0.8rem; opacity: 0.9;">Click to explore</div>
+        </div>
+      </div>
+      <button onclick="toggleExplorer()" style="background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; font-size: 1.25rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">✕</button>
     </div>
-    <div id="msgs" style="flex: 1; overflow-y: auto; padding: 1rem; background: #f9f9f9; display: flex; flex-direction: column; gap: 0.75rem;">
-      <div style="background: #e3f2fd; padding: 0.75rem 1rem; border-radius: 8px; color: #1a1a2e; max-width: 90%;">
-        👋 Hi! Ask me about projects, skills, or experience!
+
+    <!-- Search & Filter -->
+    <div style="padding: 1rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb;">
+      <input type="text" id="proj-search" placeholder="Search projects..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-family: Arial; font-size: 0.9rem;">
+      
+      <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
+        <button class="filter-btn active" onclick="filterProjects('all')" style="padding: 0.4rem 0.8rem; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 500;">All</button>
+        <button class="filter-btn" onclick="filterProjects('deep')" style="padding: 0.4rem 0.8rem; background: #f0f0f0; color: #333; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">Deep Learning</button>
+        <button class="filter-btn" onclick="filterProjects('llm')" style="padding: 0.4rem 0.8rem; background: #f0f0f0; color: #333; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">LLM/GenAI</button>
       </div>
     </div>
-    <div style="padding: 1rem; display: flex; gap: 0.5rem; border-top: 1px solid #ddd;">
-      <input id="inp" type="text" placeholder="Type question..." style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-family: Arial;">
-      <button onclick="sendChat()" style="background: #2563eb; color: white; border: none; padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;">Send</button>
+
+    <!-- Projects List -->
+    <div id="projects-list" style="flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+      <div style="text-align: center; padding: 2rem 1rem; color: #999;">Loading projects...</div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding: 1rem; border-top: 1px solid #e5e7eb; background: #f9fafb; text-align: center;">
+      <a href="#projects" style="color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">View all projects →</a>
     </div>
   `;
 
-  btn.onclick = () => {
-    win.style.display = 'flex';
-    btn.style.display = 'none';
-    document.getElementById('inp').focus();
-  };
+  document.body.appendChild(explorer);
 
-  document.body.appendChild(btn);
-  document.body.appendChild(win);
+  // Load projects from page
+  loadProjects();
 
-  // Allow Enter key
-  document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && document.getElementById('inp') === document.activeElement) {
-      sendChat();
-    }
+  // Setup search
+  document.getElementById('proj-search').addEventListener('input', (e) => {
+    filterProjectsList(e.target.value);
   });
 
-  console.log('✅ Chatbot ready');
+  console.log('✅ Project explorer ready');
 }
 
-function sendChat() {
-  const inp = document.getElementById('inp');
-  const msgs = document.getElementById('msgs');
-  const q = inp.value.toLowerCase();
+function loadProjects() {
+  const projectsList = document.getElementById('projects-list');
+  const projects = [];
 
-  if (!q.trim()) return;
+  // Extract projects from page
+  document.querySelectorAll('.project-item').forEach(item => {
+    const title = item.querySelector('.project-title')?.textContent || 'Untitled';
+    const desc = item.querySelector('.project-description')?.textContent || '';
+    const impact = item.querySelector('.project-impact')?.textContent || 'Project';
+    const tags = Array.from(item.querySelectorAll('.tech-tag')).map(t => t.textContent);
+    const links = Array.from(item.querySelectorAll('.project-link'));
+    
+    let githubUrl = '';
+    let liveUrl = '';
+    
+    links.forEach(link => {
+      if (link.classList.contains('code')) {
+        githubUrl = link.href;
+      } else if (link.classList.contains('demo')) {
+        liveUrl = link.href;
+      }
+    });
 
-  // Add user message
-  const umsg = document.createElement('div');
-  umsg.style.cssText = 'background: #2563eb; color: white; padding: 0.75rem 1rem; border-radius: 8px; max-width: 90%; align-self: flex-end; word-wrap: break-word;';
-  umsg.textContent = inp.value;
-  msgs.appendChild(umsg);
-  inp.value = '';
+    projects.push({
+      title,
+      desc: desc.substring(0, 100) + '...',
+      impact,
+      tags,
+      github: githubUrl,
+      live: liveUrl,
+      impactType: impact.toLowerCase().replace(' / ', '')
+    });
+  });
 
-  // Get response
-  let resp = 'I\'m an AI Solutions Engineer specializing in Deep Learning & LLMs.';
-  if (q.includes('project')) resp = 'I\'ve built CUDA Attention Kernel, LLM Fine-tuning (Qwen-7B), Attention Optimization, and AI Agent System. All use PyTorch and GPU optimization.';
-  if (q.includes('skill')) resp = 'Python, PyTorch, CUDA, C++, Deep Learning, LLMs, LoRA, FastAPI, Kubernetes, AWS, HuggingFace, and more!';
-  if (q.includes('experience')) resp = 'AI Solutions Engineer at Qure.ai, GRA at UTA (TopGPT), ML Engineer at DentalScan, Senior SWE at TCS.';
-  if (q.includes('education')) resp = 'MS Computer Science from UT Arlington (GPA 4.0, May 2025), B.Tech from Andhra University.';
-  if (q.includes('research')) resp = 'IEEE ICC 2026 Publication: CTMap - LLM-Enabled Path Planning for mmWave 6G Networks.';
-  if (q.includes('contact')) resp = 'Email: saiteja.srivllibhutturu@gmail.com, LinkedIn: saitejasrivillibhutturu, GitHub: saitejasrivilli';
-  if (q.includes('hi') || q.includes('hello')) resp = '👋 Hello! How can I help?';
+  // Store globally
+  window.allProjects = projects;
 
-  // Add bot response
-  setTimeout(() => {
-    const bmsg = document.createElement('div');
-    bmsg.style.cssText = 'background: #e3f2fd; color: #1a1a2e; padding: 0.75rem 1rem; border-radius: 8px; max-width: 90%; word-wrap: break-word;';
-    bmsg.textContent = resp;
-    msgs.appendChild(bmsg);
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 300);
-
-  msgs.scrollTop = msgs.scrollHeight;
+  // Display first 4
+  displayProjects(projects.slice(0, 4));
 }
+
+function displayProjects(projects) {
+  const list = document.getElementById('projects-list');
+  
+  if (projects.length === 0) {
+    list.innerHTML = '<div style="text-align: center; padding: 2rem; color: #999;">No projects found</div>';
+    return;
+  }
+
+  list.innerHTML = projects.map((p, i) => `
+    <div class="project-card" style="
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 4px solid #2563eb;
+    " onmouseover="this.style.boxShadow='0 8px 16px rgba(37,99,235,0.15)'" onmouseout="this.style.boxShadow='none'" onclick="expandProject(${i})">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+        <h4 style="margin: 0; font-size: 0.95rem; color: #1a1a2e; font-weight: 600; flex: 1;">${p.title}</h4>
+        <span style="background: #e3f2fd; color: #2563eb; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; margin-left: 0.5rem;">${p.impact}</span>
+      </div>
+      
+      <p style="margin: 0.5rem 0; font-size: 0.8rem; color: #666; line-height: 1.4;">${p.desc}</p>
+      
+      <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem;">
+        ${p.tags.slice(0, 3).map(tag => `<span style="background: #2563eb; color: white; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.7rem;">${tag}</span>`).join('')}
+        ${p.tags.length > 3 ? `<span style="background: #f0f0f0; color: #666; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.7rem;">+${p.tags.length - 3}</span>` : ''}
+      </div>
+      
+      <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+        ${p.github ? `<a href="${p.github}" target="_blank" style="font-size: 0.8rem; color: #2563eb; text-decoration: none; font-weight: 500;">🔗 Code</a>` : ''}
+        ${p.live ? `<a href="${p.live}" target="_blank" style="font-size: 0.8rem; color: #10b981; text-decoration: none; font-weight: 500;">🚀 Live</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProjects(type) {
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.style.background = btn.style.background === 'rgb(37, 99, 235)' ? '#f0f0f0' : '#f0f0f0';
+    btn.style.color = '#333';
+  });
+  event.target.style.background = '#2563eb';
+  event.target.style.color = 'white';
+
+  // Filter and display
+  let filtered = window.allProjects;
+  if (type === 'deep') {
+    filtered = window.allProjects.filter(p => p.impact.includes('Deep'));
+  } else if (type === 'llm') {
+    filtered = window.allProjects.filter(p => p.impact.includes('LLM') || p.impact.includes('GenAI'));
+  }
+
+  displayProjects(filtered);
+}
+
+function filterProjectsList(query) {
+  const filtered = window.allProjects.filter(p => 
+    p.title.toLowerCase().includes(query.toLowerCase()) ||
+    p.desc.toLowerCase().includes(query.toLowerCase()) ||
+    p.tags.some(t => t.toLowerCase().includes(query.toLowerCase()))
+  );
+
+  displayProjects(filtered);
+}
+
+function expandProject(index) {
+  const p = window.allProjects[index];
+  const allTags = p.tags.join(', ');
+  
+  alert(`${p.title}\n\n${p.desc}\n\nTech: ${allTags}`);
+}
+
+function toggleExplorer() {
+  const explorer = document.getElementById('project-explorer');
+  explorer.style.display = explorer.style.display === 'none' ? 'flex' : 'none';
+}
+
+// Add close on outside click
+document.addEventListener('click', (e) => {
+  const explorer = document.getElementById('project-explorer');
+  if (!explorer.contains(e.target) && e.target.id !== 'project-explorer') {
+    // Keep open - optional to remove this line if you want click-to-close
+  }
+});
 
 console.log('✅ Portfolio features loaded!');

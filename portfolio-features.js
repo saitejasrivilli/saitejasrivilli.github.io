@@ -1,6 +1,6 @@
 /**
  * FEATURE 1: SKILL-PROJECT MATCHER
- * Click a skill to highlight all projects that use it
+ * Click a skill tag to highlight all projects that use it
  */
 
 const skillProjectMap = {
@@ -22,13 +22,6 @@ const skillProjectMap = {
   'Tavily': ['ai-agent'],
   'ChromaDB': ['ai-agent'],
   'Gradio': ['ai-agent'],
-};
-
-const projectTechMap = {
-  'cuda-neuron-attention': ['CUDA C++', 'PyTorch', 'AWS Inferentia', 'pybind11', 'FastAPI'],
-  'LLM_FineTuning_SFT_Production': ['PyTorch', 'LoRA / PEFT', 'QLoRA', 'TRL', 'HuggingFace'],
-  'attention-optimization': ['PyTorch', 'FlashAttention-2', 'xFormers', 'ONNX Runtime', 'CUDA'],
-  'ai-agent': ['Python', 'Groq', 'Tavily', 'ChromaDB', 'Gradio', 'HuggingFace'],
 };
 
 function initializeSkillMatcher() {
@@ -76,7 +69,6 @@ function highlightProjectsBySkill(skill) {
 
     if (isMatch) {
       item.classList.add('highlighted');
-      // Draw connection line effect
       item.style.borderLeft = '4px solid var(--accent)';
       item.style.paddingLeft = 'calc(1rem + 4px)';
     } else {
@@ -179,7 +171,6 @@ const skillMatcherStyles = `
   }
 `;
 
-// Inject styles
 const styleSheet = document.createElement('style');
 styleSheet.textContent = skillMatcherStyles;
 document.head.appendChild(styleSheet);
@@ -188,399 +179,160 @@ initializeSkillMatcher();
 
 
 /**
- * FEATURE 2: REMOVED
- * (GitHub Activity removed per user request)
+ * FEATURE 3: SIMPLE PATTERN-BASED AI CHATBOT
+ * Works with inline styles - NO CSS DEPENDENCIES
  */
 
+// Create the chatbot button immediately
+const chatButton = document.createElement('button');
+chatButton.id = 'chatbot-button-simple';
+chatButton.innerHTML = '💬';
+chatButton.style.cssText = `
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  font-size: 2.5rem;
+  border: 4px solid white;
+  cursor: pointer;
+  z-index: 99999;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+`;
 
-/**
- * FEATURE 3: PATTERN-BASED AI CHATBOT
- * No API needed - works offline with pattern matching
- * Similar to the LLM GenAI page implementation
- */
+chatButton.onmouseover = () => {
+  chatButton.style.transform = 'scale(1.2)';
+  chatButton.style.boxShadow = '0 12px 32px rgba(37, 99, 235, 1)';
+};
 
-class PatternAIChatbot {
-  constructor() {
-    this.conversationHistory = [];
-    this.isOpen = false;
-    this.aiKnowledge = this.initializeKnowledge();
-    this.createWidget();
-    this.addStyles();
+chatButton.onmouseout = () => {
+  chatButton.style.transform = 'scale(1)';
+  chatButton.style.boxShadow = '0 8px 24px rgba(37, 99, 235, 0.9)';
+};
+
+chatButton.onclick = () => {
+  if (chatWindow.style.display === 'flex') {
+    chatWindow.style.display = 'none';
+    chatButton.style.display = 'flex';
+  } else {
+    chatWindow.style.display = 'flex';
+    chatButton.style.display = 'none';
   }
+};
 
-  initializeKnowledge() {
-    return {
-      projects: "I've built several cool projects:<br><br>⚡ <strong>CUDA Attention Kernel + AWS Neuron</strong> - 5.64x faster than PyTorch, deployed on AWS Inferentia<br>📚 <strong>Production LLM Fine-Tuning</strong> - Qwen-7B SFT with LoRA, achieved 17% training loss reduction<br>🎯 <strong>Attention Optimization Suite</strong> - FlashAttention-2 benchmarks showing 12.3x throughput improvement<br>🤖 <strong>Advanced AI Agent System</strong> - Multi-strategy reasoning (CoT, ToT, ReAct) with web search<br><br>Check the Featured Projects section for more details!",
-      
-      skills: "My tech stack includes:<br><br>🔷 <strong>Deep Learning:</strong> PyTorch, TensorFlow, CUDA, FlashAttention-2<br>🔷 <strong>LLMs & GenAI:</strong> Hugging Face, LoRA, QLoRA, vLLM, LangChain<br>🔷 <strong>GPU Optimization:</strong> CUDA C++, AWS Inferentia, TensorRT, ONNX<br>🔷 <strong>Infrastructure:</strong> Kubernetes, Docker, FastAPI, AWS<br>🔷 <strong>Languages:</strong> Python, C++, Java, Go<br>🔷 <strong>Tools:</strong> Git, MLflow, Weights & Biases, Gradio",
-      
-      experience: "My experience:<br><br>🎓 <strong>AI Solutions Engineer Intern @ Qure.ai</strong> (Mar 2026-Present)<br>→ LLM configuration for clinical protocol automation<br>→ EPIC/FHIR integrations with Mount Sinai & Medstar<br>→ Pipeline orchestration redesign<br><br>📊 <strong>Graduate Research Assistant @ UTA</strong> (Jun 2025-Present)<br>→ TopGPT project - Full-stack LLM/RAG platform<br><br>💼 <strong>ML Engineer Intern @ DentalScan/ReplyQuickAI</strong> (Dec 2025-Feb 2026)<br>→ CNN-based CV pipelines on dental images<br>→ AWS (S3, EC2, SageMaker) & MLflow workflows<br><br>🏢 <strong>Senior Software Engineer @ TCS</strong> (Jun 2019-May 2023)<br>→ Java-based backend systems & infrastructure",
-      
-      education: "My education:<br><br>🎓 <strong>MS Computer Science</strong> - UT Arlington (May 2025)<br>→ GPA: 4.0/4.0 (Perfect!)<br>→ Specialization in Deep Learning & LLMs<br>→ IEEE ICC 2026 Publication: CTMap<br><br>🎓 <strong>B.Tech Computer Science</strong> - Andhra University<br>→ Strong foundation in algorithms & systems",
-      
-      research: "My research work:<br><br>📝 <strong>IEEE ICC 2026 Publication</strong><br>→ Title: CTMap - LLM-Enabled Connectivity-Aware Path Planning for mmWave 6G Networks<br>→ arXiv: 2601.00110<br>→ Fine-tuned LLMs on Dijkstra-generated paths from OpenStreetMap<br>→ Achieved 12.3× throughput and 4× memory reduction<br><br>📊 <strong>In Progress:</strong> Equity-Aware Congestion Pricing with Multi-Agent RL<br>📊 <strong>In Progress:</strong> TopGPT - Cross-Encoder Enhanced RAG for Telecom",
-      
-      resume: "Quick highlights:<br><br>💼 <strong>Current Roles:</strong><br>→ AI Solutions Engineer @ Qure.ai<br>→ GRA @ UT Arlington<br><br>🎓 <strong>Education:</strong><br>→ MS CS @ UT Arlington (GPA 4.0, May 2025)<br>→ B.Tech @ Andhra University<br><br>🏆 <strong>Key Skills:</strong><br>→ Deep Learning, LLMs, GPU Optimization<br>→ CUDA, PyTorch, FastAPI, Kubernetes, AWS<br><br>📝 <strong>Publication:</strong><br>→ IEEE ICC 2026 - CTMap paper<br><br>💡 <strong>Interests:</strong> Chess, Sudoku, Constraint-based reasoning, LLM inference optimization",
-      
-      contact: "Let's connect! 📬<br><br>📧 <strong>Email:</strong> saiteja.srivllibhutturu@gmail.com<br>💼 <strong>LinkedIn:</strong> linkedin.com/in/saitejasrivillibhutturu<br>💻 <strong>GitHub:</strong> github.com/saitejasrivilli<br>📄 <strong>Google Scholar:</strong> scholar.google.com/citations?user=StKZohYAAAAJ<br><br>I'm open to ML Engineering, LLM Engineer, and Applied Scientist roles!",
-      
-      default: "👋 Hi! I'm Sai Teja, an AI Solutions Engineer specializing in Deep Learning & LLMs.<br><br>Ask me about:<br>• <strong>projects</strong> - My work<br>• <strong>skills</strong> - Tech stack<br>• <strong>experience</strong> - Work history<br>• <strong>education</strong> - Background<br>• <strong>research</strong> - Publications<br>• <strong>resume</strong> - Quick overview<br>• <strong>contact</strong> - How to reach me"
-    };
-  }
+// Create the chat window
+const chatWindow = document.createElement('div');
+chatWindow.id = 'chatbot-window-simple';
+chatWindow.style.cssText = `
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 420px;
+  height: 600px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 99999;
+  font-family: Arial, sans-serif;
+`;
 
-  createWidget() {
-    // Create chatbot button
-    const chatButton = document.createElement('button');
-    chatButton.id = 'chatbot-button';
-    chatButton.innerHTML = '💬';
-    chatButton.title = 'Chat with me';
-    chatButton.addEventListener('click', () => this.toggleChat());
-    document.body.appendChild(chatButton);
+chatWindow.innerHTML = `
+  <div style="padding: 1rem; border-bottom: 2px solid #ddd; background: #2563eb; color: white; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center;">
+    <span style="font-weight: bold; font-size: 1.1rem;">💬 Ask Me Anything</span>
+    <button id="close-btn" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✕</button>
+  </div>
+  <div id="chat-messages-simple" style="flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; background: #f9f9f9;">
+    <div style="background: #e3f2fd; padding: 0.75rem 1rem; border-radius: 8px; max-width: 90%; color: #1a1a2e;">
+      👋 Hi! Ask me about my projects, skills, experience, or anything else!
+    </div>
+  </div>
+  <div style="padding: 1rem; border-top: 1px solid #ddd; display: flex; gap: 0.5rem;">
+    <input type="text" id="chat-input-simple" placeholder="Type your question..." style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-family: Arial; font-size: 0.9rem;">
+    <button id="send-btn-simple" style="background: #2563eb; color: white; border: none; padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;">Send</button>
+  </div>
+`;
 
-    // Create chat window
-    const chatWindow = document.createElement('div');
-    chatWindow.id = 'chatbot-window';
-    chatWindow.innerHTML = `
-      <div class="chat-header">
-        <div class="chat-title">💬 Ask Me Anything</div>
-        <button id="chat-close" class="chat-close">✕</button>
-      </div>
-      <div id="chat-messages" class="chat-messages"></div>
-      <div class="chat-input-area">
-        <input 
-          type="text" 
-          id="chat-input" 
-          placeholder="Ask about projects, skills, experience..." 
-          class="chat-input"
-        >
-        <button id="chat-send" class="chat-send">Send</button>
-      </div>
-      <div class="chat-footer">Instant responses • No API needed</div>
-    `;
-    document.body.appendChild(chatWindow);
+document.body.appendChild(chatButton);
+document.body.appendChild(chatWindow);
 
-    // Event listeners
-    document.getElementById('chat-close').addEventListener('click', () => this.toggleChat());
-    document.getElementById('chat-send').addEventListener('click', () => this.sendMessage());
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') this.sendMessage();
-    });
+// Close button handler
+document.getElementById('close-btn').onclick = () => {
+  chatWindow.style.display = 'none';
+  chatButton.style.display = 'flex';
+};
 
-    // Show welcome message
-    this.addMessage('assistant', '👋 Hi! Ask me about my projects, skills, experience, research, or how to contact me!');
-  }
+// Knowledge base
+const knowledge = {
+  projects: "I've built: CUDA Attention Kernel, LLM Fine-Tuning (Qwen-7B), Attention Optimization Suite, Advanced AI Agent System. All use PyTorch, GPU optimization, and production-grade deployment.",
+  
+  skills: "Deep Learning (PyTorch, TensorFlow), LLMs (LoRA, QLoRA, Hugging Face), GPU Optimization (CUDA, TensorRT), Infrastructure (Kubernetes, Docker, FastAPI), AWS (S3, EC2, SageMaker), Languages: Python, C++, Java, Go",
+  
+  experience: "AI Solutions Engineer Intern at Qure.ai (current) - LLM for clinical automation. GRA at UTA - TopGPT project. ML Engineer at DentalScan/ReplyQuickAI - CV/AWS. Senior SWE at TCS - Java backend/infrastructure.",
+  
+  education: "MS Computer Science from UT Arlington (GPA 4.0, May 2025). B.Tech Computer Science from Andhra University.",
+  
+  research: "IEEE ICC 2026 Publication: CTMap - LLM-Enabled Connectivity-Aware Path Planning for mmWave 6G Networks. arXiv:2601.00110. Achieved 12.3× throughput and 4× memory reduction.",
+  
+  contact: "Email: saiteja.srivllibhutturu@gmail.com. LinkedIn: linkedin.com/in/saitejasrivillibhutturu. GitHub: github.com/saitejasrivilli",
+  
+  default: "I'm an AI Solutions Engineer specializing in Deep Learning and LLMs. Ask me about projects, skills, experience, education, research, or contact info!"
+};
 
-  toggleChat() {
-    this.isOpen = !this.isOpen;
-    const chatWindow = document.getElementById('chatbot-window');
-    const chatButton = document.getElementById('chatbot-button');
-    
-    if (this.isOpen) {
-      chatWindow.classList.add('open');
-      chatButton.style.display = 'none';
-      document.getElementById('chat-input').focus();
-    } else {
-      chatWindow.classList.remove('open');
-      chatButton.style.display = 'flex';
-    }
-  }
-
-  sendMessage() {
-    const input = document.getElementById('chat-input');
-    const userMessage = input.value.trim();
-    
-    if (!userMessage) return;
-
-    // Add user message
-    this.addMessage('user', userMessage);
-    input.value = '';
-
-    // Show typing indicator
-    this.addMessage('assistant', '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>');
-
-    // Process after short delay
-    setTimeout(() => {
-      this.removeTypingIndicator();
-      const response = this.getResponse(userMessage);
-      this.addMessage('assistant', response);
-    }, 800);
-  }
-
-  getResponse(query) {
-    const lowerQuery = query.toLowerCase();
-
-    if (lowerQuery.includes('project') || lowerQuery.includes('build') || lowerQuery.includes('built') || lowerQuery.includes('work')) {
-      return this.aiKnowledge.projects;
-    } else if (lowerQuery.includes('skill') || lowerQuery.includes('tech') || lowerQuery.includes('stack') || lowerQuery.includes('tool') || lowerQuery.includes('framework')) {
-      return this.aiKnowledge.skills;
-    } else if (lowerQuery.includes('experience') || lowerQuery.includes('job') || lowerQuery.includes('intern') || lowerQuery.includes('company') || lowerQuery.includes('work')) {
-      return this.aiKnowledge.experience;
-    } else if (lowerQuery.includes('education') || lowerQuery.includes('degree') || lowerQuery.includes('university') || lowerQuery.includes('gpa') || lowerQuery.includes('study')) {
-      return this.aiKnowledge.education;
-    } else if (lowerQuery.includes('research') || lowerQuery.includes('paper') || lowerQuery.includes('publication') || lowerQuery.includes('ieee') || lowerQuery.includes('icc')) {
-      return this.aiKnowledge.research;
-    } else if (lowerQuery.includes('resume') || lowerQuery.includes('cv') || lowerQuery.includes('background') || lowerQuery.includes('overview') || lowerQuery.includes('summary') || lowerQuery.includes('about')) {
-      return this.aiKnowledge.resume;
-    } else if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('hire') || lowerQuery.includes('reach') || lowerQuery.includes('connect') || lowerQuery.includes('linkedin')) {
-      return this.aiKnowledge.contact;
-    } else if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey') || lowerQuery.includes('hey')) {
-      return "👋 Hello! I'm Sai Teja's assistant. Ask me about <strong>projects</strong>, <strong>skills</strong>, <strong>experience</strong>, <strong>research</strong>, or <strong>contact</strong>!";
-    } else if (lowerQuery.includes('gpu') || lowerQuery.includes('cuda') || lowerQuery.includes('optimization') || lowerQuery.includes('performance')) {
-      return this.aiKnowledge.skills;
-    } else if (lowerQuery.includes('llm') || lowerQuery.includes('genai') || lowerQuery.includes('ai') || lowerQuery.includes('model')) {
-      return this.aiKnowledge.projects;
-    } else {
-      return this.aiKnowledge.default;
-    }
-  }
-
-  addMessage(role, content) {
-    const messagesContainer = document.getElementById('chat-messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message chat-${role}`;
-    messageDiv.innerHTML = content;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  }
-
-  removeTypingIndicator() {
-    const messages = document.getElementById('chat-messages');
-    const lastMessage = messages.lastChild;
-    if (lastMessage && lastMessage.querySelector('.typing-indicator')) {
-      messages.removeChild(lastMessage);
-    }
-  }
-
-  addStyles() {
-    const styles = `
-      #chatbot-button {
-        position: fixed !important;
-        bottom: 2rem !important;
-        right: 2rem !important;
-        width: 70px !important;
-        height: 70px !important;
-        border-radius: 50% !important;
-        background: #2563eb !important;
-        color: white !important;
-        font-size: 2rem !important;
-        cursor: pointer !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        z-index: 99999 !important;
-        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.8) !important;
-        border: 3px solid white !important;
-        transition: all 0.3s ease !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      #chatbot-button:hover {
-        transform: scale(1.15) !important;
-        box-shadow: 0 12px 32px rgba(37, 99, 235, 1) !important;
-      }
-
-      #chatbot-button:active {
-        transform: scale(0.95) !important;
-      }
-
-      #chatbot-window {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 400px;
-        height: 600px;
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        display: flex;
-        flex-direction: column;
-        z-index: 1000;
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-      }
-
-      #chatbot-window.open {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
-      }
-
-      .chat-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
-        background: var(--bg-secondary);
-        border-radius: 12px 12px 0 0;
-      }
-
-      .chat-title {
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-
-      .chat-close {
-        background: none;
-        border: none;
-        color: var(--text-secondary);
-        font-size: 1.25rem;
-        cursor: pointer;
-        transition: color 0.2s;
-      }
-
-      .chat-close:hover {
-        color: var(--text-primary);
-      }
-
-      .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .chat-message {
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        max-width: 90%;
-        word-wrap: break-word;
-        animation: slideUp 0.3s ease;
-        line-height: 1.5;
-      }
-
-      .chat-user {
-        background: var(--accent);
-        color: white;
-        align-self: flex-end;
-        border-radius: 8px 0 8px 8px;
-      }
-
-      .chat-assistant {
-        background: var(--bg-secondary);
-        color: var(--text-primary);
-        align-self: flex-start;
-        border-radius: 0 8px 8px 8px;
-      }
-
-      .typing-indicator {
-        display: flex;
-        gap: 4px;
-        align-items: center;
-      }
-
-      .typing-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--text-secondary);
-        animation: typing 1.4s infinite;
-      }
-
-      .typing-dot:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-
-      .typing-dot:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes typing {
-        0%, 60%, 100% { opacity: 0.5; transform: translateY(0); }
-        30% { opacity: 1; transform: translateY(-10px); }
-      }
-
-      .chat-input-area {
-        display: flex;
-        gap: 0.5rem;
-        padding: 1rem;
-        border-top: 1px solid var(--border-color);
-      }
-
-      .chat-input {
-        flex: 1;
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        padding: 0.75rem;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        font-family: inherit;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-
-      .chat-input:focus {
-        border-color: var(--accent);
-      }
-
-      .chat-send {
-        background: var(--accent);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 0.75rem 1rem;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s;
-      }
-
-      .chat-send:hover {
-        opacity: 0.9;
-      }
-
-      .chat-footer {
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        text-align: center;
-        border-top: 1px solid var(--border-color);
-      }
-
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @media (max-width: 600px) {
-        #chatbot-window {
-          width: calc(100vw - 2rem);
-          height: 70vh;
-          bottom: 1rem;
-          right: 1rem;
-        }
-      }
-    `;
-
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-  }
+// Chat handler
+function handleChat() {
+  const input = document.getElementById('chat-input-simple');
+  const messagesDiv = document.getElementById('chat-messages-simple');
+  const question = input.value.trim().toLowerCase();
+  
+  if (!question) return;
+  
+  // Add user message
+  const userMsg = document.createElement('div');
+  userMsg.style.cssText = 'background: #2563eb; color: white; padding: 0.75rem 1rem; border-radius: 8px; max-width: 90%; align-self: flex-end; word-wrap: break-word;';
+  userMsg.textContent = input.value;
+  messagesDiv.appendChild(userMsg);
+  
+  input.value = '';
+  
+  // Get response
+  let response = knowledge.default;
+  if (question.includes('project')) response = knowledge.projects;
+  else if (question.includes('skill') || question.includes('tech')) response = knowledge.skills;
+  else if (question.includes('experience') || question.includes('work')) response = knowledge.experience;
+  else if (question.includes('education') || question.includes('degree')) response = knowledge.education;
+  else if (question.includes('research') || question.includes('paper')) response = knowledge.research;
+  else if (question.includes('contact') || question.includes('email') || question.includes('hire')) response = knowledge.contact;
+  else if (question.includes('hello') || question.includes('hi')) response = "👋 Hello! How can I help?";
+  
+  // Add bot response
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.style.cssText = 'background: #e3f2fd; color: #1a1a2e; padding: 0.75rem 1rem; border-radius: 8px; max-width: 90%; word-wrap: break-word;';
+    botMsg.textContent = response;
+    messagesDiv.appendChild(botMsg);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }, 300);
+  
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-// Initialize chatbot when page loads - SIMPLE & DIRECT
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🤖 Initializing chatbot...');
-  new PatternAIChatbot();
-  console.log('✅ Chatbot initialized');
-});
+// Send button handler
+document.getElementById('send-btn-simple').onclick = handleChat;
 
-// Also initialize immediately (don't wait for DOM)
-console.log('Chatbot script loading...');
-setTimeout(() => {
-  if (document.body) {
-    new PatternAIChatbot();
-    console.log('✅ Chatbot created immediately');
-  }
-}, 100);
+// Enter key handler
+document.getElementById('chat-input-simple').onkeypress = (e) => {
+  if (e.key === 'Enter') handleChat();
+};
+
+console.log('✅ Chatbot loaded and visible!');
+console.log('✅ Skill matcher loaded!');

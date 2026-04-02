@@ -1,14 +1,12 @@
 /**
- * ULTIMATE AGENTIC PORTFOLIO EXPLORER
- * - Animated data fetching with step-by-step progress
- * - Staggered card reveal animation
- * - 3D flip card hover effects
- * - Interactive timeline for experience
- * - Dynamic skill cloud
- * - Ultra-professional, very agentic feel
+ * ULTIMATE AGENTIC PORTFOLIO EXPLORER - IMPROVED
+ * - Show relevant experience with projects
+ * - Better card layouts
+ * - Fixed animations and staggering
+ * - Smart content matching
  */
 
-console.log('🚀 ULTIMATE Portfolio Explorer Loading...');
+console.log('🚀 ULTIMATE Portfolio Explorer v2 Loading...');
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initPortfolioUI);
@@ -17,7 +15,7 @@ if (document.readyState === 'loading') {
 }
 
 function initPortfolioUI() {
-  console.log('✅ Initializing ultimate explorer...');
+  console.log('✅ Initializing ultimate explorer v2...');
   
   let insertPoint = document.querySelector('section') || document.body;
   
@@ -31,7 +29,7 @@ function initPortfolioUI() {
   `;
 
   const inner = document.createElement('div');
-  inner.style.cssText = `max-width: 1000px; margin: 0 auto;`;
+  inner.style.cssText = `max-width: 1100px; margin: 0 auto;`;
 
   const response = document.createElement('div');
   response.id = 'response-area';
@@ -148,7 +146,7 @@ function showAnimatedLoading(category) {
   const response = document.getElementById('response-area');
   const steps = [
     { emoji: '🔍', text: 'Searching portfolio...' },
-    { emoji: '📦', text: `Found ${getCategoryItemCount(category)} results` },
+    { emoji: '📦', text: `Found relevant content` },
     { emoji: '⚙️', text: 'Processing metadata...' },
     { emoji: '📊', text: 'Building visualization...' },
     { emoji: '✅', text: 'Ready!' }
@@ -188,65 +186,84 @@ function showAnimatedLoading(category) {
   response.innerHTML = html;
 }
 
-function getCategoryItemCount(category) {
-  const counts = { projects: 4, skills: 4, experience: 4, research: 1, contact: 4 };
-  return counts[category] || 4;
-}
+// Create project cards with relevant experience
+function createProjectsWithExperience() {
+  const projects = [
+    {
+      name: "CUDA Attention Kernel + AWS Neuron",
+      desc: "Custom CUDA C++ attention with pybind11 PyTorch binding. 5.64x faster than PyTorch. GPT-2 on AWS Inferentia achieving 3.7x speedup.",
+      tech: ["CUDA C++", "PyTorch", "AWS Inferentia", "pybind11", "FastAPI"],
+      impact: "5.64x faster",
+      relatedExp: "Deep learning optimization, GPU acceleration"
+    },
+    {
+      name: "Production LLM Fine-Tuning: Qwen-7B",
+      desc: "LoRA fine-tuning on UltraFeedback with QLoRA 4-bit quantization. 17% loss reduction in 30 min on T4.",
+      tech: ["PyTorch", "LoRA/PEFT", "QLoRA", "TRL", "HuggingFace"],
+      impact: "17% loss reduction",
+      relatedExp: "LLM fine-tuning, Qure.ai clinical work"
+    },
+    {
+      name: "Attention Optimization Suite",
+      desc: "FlashAttention-2 benchmarking on NVIDIA L4. 12.3x throughput and 99.7% memory reduction vs vanilla.",
+      tech: ["PyTorch", "FlashAttention-2", "xFormers", "ONNX", "CUDA"],
+      impact: "12.3x throughput",
+      relatedExp: "GPU optimization, inference speedup"
+    },
+    {
+      name: "Advanced AI Agent System",
+      desc: "Chain-of-Thought, Tree-of-Thoughts, ReAct with real-time web search and multi-agent collaboration.",
+      tech: ["Python", "Groq", "Tavily", "ChromaDB", "Gradio"],
+      impact: "Multi-agent",
+      relatedExp: "UTA TopGPT RAG pipeline, agentic systems"
+    }
+  ];
 
-// Staggered card reveal
-function createProjectCards(items) {
-  let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">`;
+  let html = `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">💼 My Projects & Relevant Experience</h2>`;
   
-  items.forEach((item, i) => {
+  html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">`;
+  
+  projects.forEach((proj, i) => {
     html += `
-      <div class="flip-card-${i}" style="
-        perspective: 1000px;
+      <div class="project-exp-${i}" style="
         opacity: 0;
         animation: slideUp 0.5s ease forwards;
         animation-delay: ${1800 + i * 150}ms;
       ">
+        <!-- Project Card -->
         <div style="
-          position: relative;
-          width: 100%;
-          height: 100%;
-          transition: transform 0.6s;
-          transform-style: preserve-3d;
-        " onmouseover="this.style.transform='rotateY(180deg)'" onmouseout="this.style.transform='rotateY(0deg)'">
-          
-          <!-- Front -->
-          <div style="
-            position: absolute;
-            width: 100%;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
-            border: 2px solid #d0deff;
-            border-radius: 12px;
-            padding: 1.75rem;
-            backface-visibility: hidden;
-          ">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <h3 style="margin: 0; color: #2563eb; font-size: 1.05rem; flex: 1;">${item.name}</h3>
-              <span style="background: #2563eb; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; margin-left: 0.5rem;">${item.impact}</span>
-            </div>
-            <p style="margin: 0.75rem 0 0 0; color: #666; font-size: 0.85rem; line-height: 1.5;">Click to see details →</p>
+          perspective: 1000px;
+          background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
+          border: 2px solid #d0deff;
+          border-radius: 16px;
+          padding: 1.75rem;
+          margin-bottom: 1rem;
+          transition: all 0.3s;
+          cursor: pointer;
+        " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(37,99,235,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+            <h3 style="margin: 0; color: #2563eb; font-size: 1.05rem; flex: 1; font-weight: 600;">${proj.name}</h3>
+            <span style="background: #2563eb; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; margin-left: 0.5rem;">${proj.impact}</span>
           </div>
           
-          <!-- Back -->
-          <div style="
-            position: absolute;
-            width: 100%;
-            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
-            border: 2px solid #2563eb;
-            border-radius: 12px;
-            padding: 1.75rem;
-            backface-visibility: hidden;
-            transform: rotateY(180deg);
-          ">
-            <p style="margin: 0; color: #333; font-size: 0.9rem; line-height: 1.6;">${item.desc}</p>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;">
-              ${item.tech.slice(0, 3).map(t => `<span style="background: #2563eb; color: white; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.8rem;">${t}</span>`).join('')}
-              ${item.tech.length > 3 ? `<span style="background: #f0f0f0; color: #666; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.8rem;">+${item.tech.length - 3}</span>` : ''}
-            </div>
+          <p style="margin: 0.75rem 0 0 0; color: #333; font-size: 0.9rem; line-height: 1.6;">${proj.desc}</p>
+          
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;">
+            ${proj.tech.map(t => `<span style="background: #2563eb; color: white; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500;">${t}</span>`).join('')}
           </div>
+        </div>
+        
+        <!-- Related Experience -->
+        <div style="
+          background: linear-gradient(135deg, #f0f9f4 0%, #f0faf8 100%);
+          border: 2px solid #d0f0e0;
+          border-left: 4px solid #10b981;
+          border-radius: 12px;
+          padding: 1.25rem;
+          transition: all 0.3s;
+        " onmouseover="this.style.boxShadow='0 8px 24px rgba(16, 185, 129, 0.15)'" onmouseout="this.style.boxShadow='none'">
+          <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">🔗 RELEVANT EXPERIENCE</div>
+          <p style="margin: 0; color: #333; font-size: 0.9rem; line-height: 1.5;">${proj.relatedExp}</p>
         </div>
       </div>
     `;
@@ -256,9 +273,51 @@ function createProjectCards(items) {
   return html;
 }
 
-// Interactive timeline
-function createExperienceTimeline(items) {
-  let html = `<div style="position: relative; padding: 2rem 0;">`;
+// Create skill categories
+function createSkillCategories() {
+  const categories = [
+    { name: "🤖 AI/ML", items: ["PyTorch", "TensorFlow", "CUDA", "LLMs", "LoRA/PEFT", "QLoRA", "RAG", "Quantization"] },
+    { name: "🔧 Infrastructure", items: ["Kubernetes", "Docker", "FastAPI", "AWS", "PostgreSQL", "Redis", "Airflow"] },
+    { name: "💻 Languages", items: ["Python", "C++", "Java", "Go", "SQL"] },
+    { name: "📚 Specializations", items: ["GPU Optimization", "LLM Inference", "Computer Vision", "Distributed Systems"] }
+  ];
+  
+  let html = `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">🛠️ Technical Skills</h2>`;
+  html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">`;
+  
+  categories.forEach((cat, i) => {
+    html += `
+      <div class="skill-category-${i}" style="
+        background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
+        border: 2px solid #d0deff;
+        border-radius: 12px;
+        padding: 1.75rem;
+        opacity: 0;
+        animation: slideUp 0.5s ease forwards;
+        animation-delay: ${1800 + i * 150}ms;
+        transition: all 0.3s;
+      " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(37,99,235,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+        <h3 style="margin: 0 0 1rem 0; color: #2563eb; font-size: 1.05rem; font-weight: 600;">${cat.name}</h3>
+        <p style="margin: 0; color: #333; line-height: 1.8; font-size: 0.9rem;">${cat.items.join(' • ')}</p>
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  return html;
+}
+
+// Interactive timeline for experience
+function createExperienceTimeline() {
+  const items = [
+    { company: "Qure.ai", role: "AI Solutions Engineer", period: "Mar 2026 - Present", desc: "Clinical LLM configuration, EPIC/FHIR integration, real-time inference deployment.", highlight: "🏥 Current" },
+    { company: "UTA", role: "Graduate Research Assistant", period: "Jun 2025 - Present", desc: "TopGPT RAG pipeline on 1000+ papers. CTMap: LLM-enabled 6G path planning (IEEE ICC 2026).", highlight: "📊 Research" },
+    { company: "DentalScan", role: "ML Engineer", period: "Dec 2025 - Feb 2026", desc: "Computer vision for dental images, CNN on 50K+ dataset, AWS SageMaker automation.", highlight: "🏥 Healthcare" },
+    { company: "TCS", role: "Senior Software Engineer", period: "Jun 2019 - May 2023", desc: "Java microservices, distributed systems, 10+ enterprise clients.", highlight: "💼 Backend" }
+  ];
+
+  let html = `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">🎯 Work Experience</h2>`;
+  html += `<div style="position: relative; padding: 2rem 0;">`;
   
   items.forEach((item, i) => {
     const isActive = i === 0;
@@ -270,14 +329,7 @@ function createExperienceTimeline(items) {
         animation: slideUp 0.5s ease forwards;
         animation-delay: ${1800 + i * 150}ms;
       ">
-        <!-- Timeline dot -->
-        <div style="
-          position: relative;
-          width: 40px;
-          display: flex;
-          justify-content: center;
-          padding-top: 5px;
-        ">
+        <div style="position: relative; width: 40px; display: flex; justify-content: center; padding-top: 5px;">
           <div style="
             width: 16px;
             height: 16px;
@@ -290,18 +342,8 @@ function createExperienceTimeline(items) {
           " onmouseover="this.style.transform='scale(1.5)'; this.style.background='#10b981'" onmouseout="this.style.transform='scale(1)'; this.style.background='${isActive ? '#10b981' : '#d0f0e0'}'"></div>
         </div>
         
-        <!-- Timeline line -->
-        <div style="
-          position: absolute;
-          left: 20px;
-          top: 40px;
-          bottom: -30px;
-          width: 2px;
-          background: linear-gradient(180deg, #10b981 0%, #d0f0e0 100%);
-          ${i === items.length - 1 ? 'display: none;' : ''}
-        "></div>
+        <div style="position: absolute; left: 20px; top: 40px; bottom: -30px; width: 2px; background: linear-gradient(180deg, #10b981 0%, #d0f0e0 100%); ${i === items.length - 1 ? 'display: none;' : ''}"></div>
         
-        <!-- Content -->
         <div style="
           margin-left: 2rem;
           background: linear-gradient(135deg, #f0f9f4 0%, #f0faf8 100%);
@@ -329,38 +371,61 @@ function createExperienceTimeline(items) {
   return html;
 }
 
-// Dynamic skill cloud
-function createSkillCloud(categories) {
-  let html = `<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 2rem 0;">`;
+// Research section
+function createResearch() {
+  return `
+    <h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">📚 Research & Publications</h2>
+    <div class="research-item" style="
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards;
+      animation-delay: 1800ms;
+    ">
+      <div style="background: linear-gradient(135deg, #fef8e6 0%, #fff9ed 100%); border: 2px solid #fdd835; border-radius: 12px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+          <h3 style="margin: 0; color: #f59e0b; font-size: 1.1rem; font-weight: 600;">CTMap: LLM-Enabled 6G Path Planning</h3>
+          <span style="background: #f59e0b; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">🏆 IEEE ICC 2026</span>
+        </div>
+        <p style="margin: 1rem 0 0 0; color: #333; font-size: 0.9rem; line-height: 1.6;">Fine-tuned LLMs on Dijkstra paths from OpenStreetMap. Applied to Sionna 6G wireless simulation. 12.3× throughput, 4× memory reduction.</p>
+        <div style="margin-top: 1.25rem; display: flex; gap: 1rem;">
+          <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">📄 arXiv</a>
+          <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">📚 Scholar</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Contact section
+function createContact() {
+  const links = [
+    { icon: "📧", type: "Email", value: "saiteja.srivllibhutturu@gmail.com", url: "mailto:saiteja.srivllibhutturu@gmail.com" },
+    { icon: "💼", type: "LinkedIn", value: "saitejasrivillibhutturu", url: "https://linkedin.com/in/saitejasrivillibhutturu" },
+    { icon: "💻", type: "GitHub", value: "saitejasrivilli", url: "https://github.com/saitejasrivilli" },
+    { icon: "📚", type: "Scholar", value: "Publications", url: "https://scholar.google.com/citations?user=StKZohYAAAAJ" }
+  ];
+
+  let html = `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">📞 Contact & Links</h2>`;
+  html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">`;
   
-  const allSkills = [];
-  categories.forEach(cat => {
-    cat.items.forEach(skill => allSkills.push(skill));
-  });
-  
-  // Shuffle and assign random sizes
-  allSkills.sort(() => Math.random() - 0.5).slice(0, 20).forEach((skill, i) => {
-    const sizes = ['0.85rem', '0.95rem', '1.1rem', '1.25rem', '1.05rem'];
-    const size = sizes[Math.floor(Math.random() * sizes.length)];
-    const colors = ['#2563eb', '#3b82f6', '#1e40af', '#1d4ed8'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    
+  links.forEach((item, i) => {
     html += `
-      <div class="skill-${i}" style="
-        background: ${color};
-        color: white;
-        padding: 0.6rem 1.2rem;
-        border-radius: 20px;
-        font-size: ${size};
-        font-weight: 500;
-        cursor: pointer;
+      <a href="${item.url}" target="_blank" class="contact-${i}" style="
+        background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
+        border: 2px solid #d0deff;
+        border-radius: 12px;
+        padding: 1.75rem;
+        text-decoration: none;
         transition: all 0.3s;
+        display: block;
+        text-align: center;
         opacity: 0;
         animation: slideUp 0.5s ease forwards;
-        animation-delay: ${1800 + i * 80}ms;
-      " onmouseover="this.style.transform='scale(1.2)'; this.style.background='#ea580c'" onmouseout="this.style.transform='scale(1)'; this.style.background='${color}'">
-        ${skill}
-      </div>
+        animation-delay: ${1800 + i * 150}ms;
+      " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 24px rgba(37,99,235,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">${item.icon}</div>
+        <div style="color: #2563eb; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem;">${item.type}</div>
+        <div style="color: #333; font-size: 0.85rem; word-break: break-all;">${item.value}</div>
+      </a>
     `;
   });
   
@@ -368,125 +433,29 @@ function createSkillCloud(categories) {
   return html;
 }
 
-// Portfolio data
 const portfolioData = {
   projects: {
-    keywords: ['project', 'build', 'created', 'developed', 'cuda', 'llm', 'qwen', 'attention', 'agent'],
+    keywords: ['project', 'build', 'created', 'cuda', 'llm', 'qwen', 'attention', 'agent'],
     title: "💼 My Projects",
-    items: [
-      {
-        name: "CUDA Attention Kernel + AWS Neuron",
-        desc: "Custom CUDA C++ scaled-dot-product attention with pybind11 PyTorch binding. 5.64x faster than PyTorch at N=32. GPT-2 on AWS Inferentia achieving 3.7x speedup (45ms→12ms, 1,800→6,700 tokens/sec). Deployed as FastAPI REST endpoint.",
-        tech: ["CUDA C++", "PyTorch", "AWS Inferentia", "pybind11", "FastAPI", "HuggingFace Spaces"],
-        impact: "5.64x faster"
-      },
-      {
-        name: "Production LLM Fine-Tuning: Qwen-7B",
-        desc: "Supervised fine-tuning with LoRA (r=8, alpha=16) on UltraFeedback. Training only 0.5% parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. 17% loss reduction (1.412→1.176) in 30 min on T4 GPU. 0.855 BERTScore.",
-        tech: ["PyTorch", "LoRA/PEFT", "QLoRA", "TRL", "HuggingFace", "Transformers"],
-        impact: "17% loss reduction"
-      },
-      {
-        name: "Attention Optimization Suite",
-        desc: "Benchmarking framework on NVIDIA L4. FlashAttention-2 achieves 12.3x throughput improvement (573K→6.03M tok/s) and 99.7% memory reduction (12,582MB→38MB) vs vanilla attention. Includes batch auto-tuner and ONNX/TensorRT exports.",
-        tech: ["PyTorch", "FlashAttention-2", "xFormers", "ONNX Runtime", "TensorRT", "CUDA"],
-        impact: "12.3x throughput"
-      },
-      {
-        name: "Advanced AI Agent System",
-        desc: "Multi-strategy reasoning: Chain-of-Thought with self-consistency voting (3 paths), Tree-of-Thoughts (beam=3, depth=3), ReAct with real-time Tavily web search, Multi-agent collaboration. Auto-classifier routes queries optimally. Rate-limited 10/min.",
-        tech: ["Python", "Groq", "Tavily", "ChromaDB", "Gradio", "OpenAI Gym"],
-        impact: "Multi-agent"
-      }
-    ]
+    render: createProjectsWithExperience
   },
-
   skills: {
-    keywords: ['skill', 'tech', 'technology', 'stack', 'know', 'experienced', 'language'],
+    keywords: ['skill', 'tech', 'technology', 'stack', 'know', 'language'],
     title: "🛠️ Technical Skills",
-    categories: [
-      { name: "🤖 AI/ML", items: ["PyTorch", "TensorFlow", "CUDA", "LLMs", "LoRA/PEFT", "QLoRA", "RAG", "Quantization", "Fine-tuning", "FlashAttention", "vLLM"] },
-      { name: "🔧 Infrastructure", items: ["Kubernetes", "Docker", "FastAPI", "AWS (S3, EC2, SageMaker)", "PostgreSQL", "Redis", "Airflow", "MLflow", "Spark"] },
-      { name: "💻 Languages", items: ["Python", "C++", "Java", "Go", "SQL"] },
-      { name: "📚 Specializations", items: ["GPU Optimization", "LLM Inference", "Model Compression", "Computer Vision", "Distributed Systems"] }
-    ]
+    render: createSkillCategories
   },
-
   experience: {
-    keywords: ['experience', 'work', 'job', 'intern', 'company', 'role', 'worked', 'qure', 'uta', 'tcs'],
+    keywords: ['experience', 'work', 'job', 'intern', 'company', 'role', 'qure', 'uta', 'tcs'],
     title: "🎯 Work Experience",
-    items: [
-      { company: "Qure.ai", role: "AI Solutions Engineer", period: "Mar 2026 - Present", desc: "Configured LLMs for protocol-specific clinical workflows. Orchestrating radiologist report parsing & EMR extraction across EPIC/FHIR systems (Medstar, Mount Sinai). Real-time inference on 6+ health systems.", highlight: "🏥 Current" },
-      { company: "UTA", role: "Graduate Research Assistant", period: "Jun 2025 - Present", desc: "TopGPT: Full-stack LLM + RAG on 1000+ research papers. CTMap: LLM-enabled 6G path planning for mmWave networks (IEEE ICC 2026). Fine-tuning LLMs on Dijkstra paths with Sionna integration.", highlight: "📊 Research" },
-      { company: "DentalScan/ReplyQuickAI", role: "ML Engineer", period: "Dec 2025 - Feb 2026", desc: "Computer vision pipelines for intra-oral image analysis (6+ clinical categories). CNN on 50K+ labeled dataset. Automated AWS SageMaker retraining incorporating dentist-corrected labels.", highlight: "🏥 Healthcare" },
-      { company: "TCS", role: "Senior Software Engineer", period: "Jun 2019 - May 2023 (4 years)", desc: "Java-based distributed microservices handling millions of records daily. Owned system design for 10+ enterprise financial clients. 40% latency reduction through service refactoring.", highlight: "💼 Backend" }
-    ]
+    render: createExperienceTimeline
   },
-
   research: {
-    keywords: ['research', 'paper', 'publication', 'ieee', 'scholar', 'published'],
-    title: "📚 Research & Publications",
-    render: () => {
-      return `
-        <div class="research-item" style="
-          opacity: 0;
-          animation: slideUp 0.5s ease forwards;
-          animation-delay: 1800ms;
-        ">
-          <div style="background: linear-gradient(135deg, #fef8e6 0%, #fff9ed 100%); border: 2px solid #fdd835; border-radius: 12px; padding: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <h3 style="margin: 0; color: #f59e0b; font-size: 1.1rem;">CTMap: LLM-Enabled Connectivity-Aware Path Planning</h3>
-              <span style="background: #f59e0b; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; white-space: nowrap;">🏆 IEEE ICC 2026</span>
-            </div>
-            <p style="margin: 0; color: #666; font-weight: 500; font-size: 0.9rem;">LLM-enabled path planning for mmWave 6G networks</p>
-            <p style="margin: 1rem 0 0 0; color: #333; font-size: 0.9rem; line-height: 1.6;">Fine-tuned LLMs on Dijkstra-generated paths from OpenStreetMap. Applied to Sionna 6G wireless simulation. Achieves 12.3× throughput and 4× memory reduction.</p>
-            <div style="margin-top: 1.25rem; display: flex; gap: 1rem;">
-              <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">📄 arXiv</a>
-              <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">📚 Scholar</a>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+    keywords: ['research', 'paper', 'publication', 'ieee', 'scholar'],
+    render: createResearch
   },
-
   contact: {
-    keywords: ['contact', 'reach', 'email', 'linkedin', 'github', 'connect'],
-    title: "📞 Contact & Links",
-    items: [
-      { icon: "📧", type: "Email", value: "saiteja.srivllibhutturu@gmail.com", url: "mailto:saiteja.srivllibhutturu@gmail.com" },
-      { icon: "💼", type: "LinkedIn", value: "saitejasrivillibhutturu", url: "https://linkedin.com/in/saitejasrivillibhutturu" },
-      { icon: "💻", type: "GitHub", value: "saitejasrivilli", url: "https://github.com/saitejasrivilli" },
-      { icon: "📚", type: "Scholar", value: "Publications", url: "https://scholar.google.com/citations?user=StKZohYAAAAJ" }
-    ],
-    render: function() {
-      let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">`;
-      
-      this.items.forEach((item, i) => {
-        html += `
-          <a href="${item.url}" target="_blank" class="contact-${i}" style="
-            background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
-            border: 2px solid #d0deff;
-            border-radius: 12px;
-            padding: 1.75rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: block;
-            text-align: center;
-            opacity: 0;
-            animation: slideUp 0.5s ease forwards;
-            animation-delay: ${1800 + i * 150}ms;
-          " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 24px rgba(37,99,235,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-            <div style="font-size: 2rem; margin-bottom: 0.75rem;">${item.icon}</div>
-            <div style="color: #2563eb; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem;">${item.type}</div>
-            <div style="color: #333; font-size: 0.85rem; word-break: break-all;">${item.value}</div>
-          </a>
-        `;
-      });
-      
-      html += `</div>`;
-      return html;
-    }
+    keywords: ['contact', 'reach', 'email', 'linkedin', 'github'],
+    render: createContact
   }
 };
 
@@ -529,38 +498,7 @@ function displayResults(category) {
     }
   </style>`;
   
-  html += `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">${data.title}</h2>`;
-  
-  if (category === 'projects') {
-    html += createProjectCards(data.items);
-  } else if (category === 'skills') {
-    html += `<div style="margin-bottom: 1.5rem;">`;
-    data.categories.forEach((cat, i) => {
-      html += `
-        <div class="skill-category-${i}" style="
-          background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
-          border: 2px solid #d0deff;
-          border-radius: 12px;
-          padding: 1.75rem;
-          margin-bottom: 1.25rem;
-          opacity: 0;
-          animation: slideUp 0.5s ease forwards;
-          animation-delay: ${1800 + i * 200}ms;
-        ">
-          <h3 style="margin: 0 0 1rem 0; color: #2563eb; font-size: 1.05rem;">${cat.name}</h3>
-          <p style="margin: 0; color: #333; line-height: 1.8; font-size: 0.9rem;">${cat.items.join(' • ')}</p>
-        </div>
-      `;
-    });
-    html += `</div>`;
-    html += createSkillCloud(data.categories);
-  } else if (category === 'experience') {
-    html += createExperienceTimeline(data.items);
-  } else if (category === 'research') {
-    html += data.render();
-  } else if (category === 'contact') {
-    html += data.render();
-  }
+  html += data.render();
   
   response.innerHTML = html;
   response.style.opacity = '0';
@@ -568,4 +506,4 @@ function displayResults(category) {
   setTimeout(() => response.style.opacity = '1', 10);
 }
 
-console.log('✅ ULTIMATE portfolio explorer fully loaded!');
+console.log('✅ ULTIMATE portfolio explorer v2 fully loaded!');

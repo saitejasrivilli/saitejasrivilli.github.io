@@ -210,9 +210,9 @@
         .fluid-fallback.hidden { display: none; }
         
         /* Content layer - visible but passes mouse events through to canvas */
-        body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
+        body > *:not(#fluid-canvas):not(.fluid-fallback):not(#particle-canvas):not(script):not(.cursor-trail) {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             pointer-events: none;
         }
         
@@ -322,7 +322,7 @@
         [data-theme="dark"] .fluid-blob { opacity: 0.4; }
         
         
-        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 11; }
         
         /* Dark Mode Toggle - Mobile Friendly */
         .theme-toggle { position: fixed; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); -webkit-tap-highlight-color: transparent; touch-action: manipulation; top: 1.5rem; right: 2rem; }
@@ -349,12 +349,12 @@
         .delay-5 { animation-delay: 0.5s; }
         
         /* Hero */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
-        .hero > * { position: relative; z-index: 1; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 1.25rem 2rem 3rem; position: relative; overflow: hidden; z-index: 10; }
+        .hero > * { position: relative; z-index: 11; pointer-events: auto !important; }
         .profile-container { 
             width: 160px; 
             height: 160px; 
-            margin-bottom: 2rem; 
+            margin-bottom: 0.5rem;
             position: relative;
         }
         .profile-container::before {
@@ -413,15 +413,15 @@
                 0 0 40px rgba(130, 60, 255, 0.15);
         }
         .profile-fallback { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.1; }
-        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; }
         
         /* Status Badge */
-        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
+        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
         .status-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 2s infinite; }
         
         /* Resume Button - Prominent */
-        .resume-btn-hero { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent), #1d4ed8); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; margin-bottom: 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+        .resume-btn-hero { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent), #1d4ed8); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; margin-bottom: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .resume-btn-hero:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
         .resume-btn-hero svg { width: 20px; height: 20px; }
         
@@ -591,7 +591,7 @@
         .pub-link.ieee:hover { background: var(--accent); color: white; }
 
         /* Healthcare AI tag + tech pills on timeline */
-        .healthcare-tag { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.55rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; font-size: 0.75rem; color: var(--accent-green); font-weight: 500; margin-left: 0.5rem; vertical-align: middle; }
+        .healthcare-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.7rem; background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.45); border-radius: 12px; font-size: 0.78rem; color: #059669; font-weight: 600; margin-left: 0.5rem; vertical-align: middle; box-shadow: 0 0 8px rgba(16,185,129,0.15); }
         .tech-stack-line { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
         .tech-pill { padding: 0.15rem 0.55rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
 
@@ -732,7 +732,7 @@
         /* ── PARTICLE CANVAS ── */
         #particle-canvas {
             position: fixed; top:0; left:0; width:100%; height:100%;
-            z-index: 0; pointer-events: none; opacity: 0.28;
+            z-index: 1; pointer-events: none; opacity: 0.75;
         }
 
         /* ── GLITCH HERO H1 ── */
@@ -792,6 +792,214 @@
             transition: width 0.7s ease;
         }
         .section-title.visible::after { width: 48px; }
+
+
+        /* ── TERMINAL HERO ── */
+        .terminal-box {
+            background: rgba(15,15,25,0.92);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem 1.25rem;
+            max-width: 620px;
+            width: 100%;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px);
+            margin: 0.75rem auto 1.5rem;
+            position: relative;
+        }
+        .terminal-bar {
+            display: flex; align-items: center; gap: 0.4rem;
+            margin-bottom: 1rem; padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .t-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .t-dot.r { background: #ff5f57; }
+        .t-dot.y { background: #ffbd2e; }
+        .t-dot.g { background: #28ca41; }
+        .t-title { flex: 1; text-align: center; font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+        .t-line { color: rgba(255,255,255,0.75); margin: 0; white-space: pre-wrap; word-break: break-word; }
+        .t-line .t-prompt { color: #28ca41; }
+        .t-line .t-cmd   { color: #79c0ff; }
+        .t-line .t-string{ color: #a5d6ff; }
+        .t-line .t-key   { color: #ff9f43; }
+        .t-line .t-val   { color: #c3e88d; }
+        .t-line .t-comment{color: rgba(255,255,255,0.3); font-style: italic;}
+        .t-line .t-err   { color: #ff6b6b; }
+        .t-line .t-ok    { color: #28ca41; }
+        .t-cursor { display: inline-block; width: 8px; height: 1em; background: #28ca41; animation: blink-cur 1s step-end infinite; vertical-align: text-bottom; margin-left: 2px; }
+        @keyframes blink-cur { 0%,100%{opacity:1} 50%{opacity:0} }
+        html.light-mode .terminal-box { background: rgba(20,22,35,0.93); }
+
+        /* ── 3D TILT CARDS ── */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        .tilt-card .glare-layer {
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+        .tilt-card:hover .glare-layer { opacity: 1; }
+
+        /* ── STATS BAND ── */
+        .stats-band {
+            padding: 3.5rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-band-inner {
+            display: flex; justify-content: center;
+            flex-wrap: wrap; gap: 2rem 4rem;
+            max-width: 900px; margin: 0 auto; padding: 0 2rem;
+            position: relative; z-index: 1;
+        }
+        .stat-item { text-align: center; }
+        .stat-item .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 800; line-height: 1;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            display: block;
+        }
+        .stat-item .stat-suffix {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; font-weight: 700;
+        }
+        .stat-item .stat-desc {
+            font-size: 0.82rem; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            margin-top: 0.3rem; display: block;
+        }
+        .stats-band::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── MORPHING CURSOR ── */
+        #custom-cursor {
+            position: fixed; pointer-events: none; z-index: 99999;
+            width: 24px; height: 24px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.2s ease, height 0.2s ease, border-radius 0.2s ease,
+                        background 0.2s ease, border-color 0.2s ease, opacity 0.3s ease;
+            mix-blend-mode: normal;
+        }
+        #custom-cursor.on-link {
+            width: 44px; height: 44px;
+            background: rgba(37,99,235,0.12);
+            border-color: #8b5cf6;
+        }
+        #custom-cursor.on-btn {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            background: rgba(37,99,235,0.1);
+            border-color: var(--accent);
+        }
+        #custom-cursor.clicking {
+            width: 16px; height: 16px;
+            background: rgba(37,99,235,0.3);
+        }
+        body { cursor: none; }
+        a, button, .role-card, .project-item, .skill-item { cursor: none; }
+
+        /* ── SCROLL-REACTIVE PARTICLES (handled in JS) ── */
+
+        /* ── AI CHAT WIDGET ── */
+        #ai-chat-btn {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 5000;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #8b5cf6);
+            border: none; cursor: none; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 20px rgba(37,99,235,0.45);
+            transition: all 0.3s ease;
+        }
+        #ai-chat-btn:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,99,235,0.6); }
+        #ai-chat-btn .chat-pulse {
+            position: absolute; inset: -4px; border-radius: 50%;
+            border: 2px solid rgba(37,99,235,0.4);
+            animation: chat-ring 2s ease-out infinite;
+        }
+        @keyframes chat-ring { 0%{transform:scale(1);opacity:0.7} 100%{transform:scale(1.5);opacity:0} }
+
+        #ai-chat-panel {
+            position: fixed; bottom: 6rem; right: 2rem; z-index: 4999;
+            width: 360px; max-height: 520px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            display: none; flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+        }
+        #ai-chat-panel.open { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .chat-header {
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, #2563eb, #8b5cf6);
+            color: white; display: flex; align-items: center; gap: 0.75rem;
+        }
+        .chat-header-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+        }
+        .chat-header h4 { font-size: 0.95rem; font-weight: 600; margin: 0; }
+        .chat-header p  { font-size: 0.72rem; opacity: 0.8; margin: 0; }
+        .chat-header-close { margin-left: auto; background: none; border: none; color: white; font-size: 1.2rem; cursor: none; opacity: 0.7; }
+        .chat-header-close:hover { opacity: 1; }
+        .chat-messages {
+            flex: 1; overflow-y: auto; padding: 1rem;
+            display: flex; flex-direction: column; gap: 0.75rem;
+            max-height: 340px;
+        }
+        .chat-msg { max-width: 85%; padding: 0.6rem 0.9rem; border-radius: 14px; font-size: 0.88rem; line-height: 1.55; }
+        .chat-msg.bot { background: var(--bg-secondary); color: var(--text-primary); align-self: flex-start; border-radius: 4px 14px 14px 14px; }
+        .chat-msg.user { background: linear-gradient(135deg, #2563eb, #8b5cf6); color: white; align-self: flex-end; border-radius: 14px 4px 14px 14px; }
+        .chat-msg.typing { background: var(--bg-secondary); align-self: flex-start; }
+        .typing-dots span { display: inline-block; width: 6px; height: 6px; background: var(--text-secondary); border-radius: 50%; margin: 0 2px; animation: typing-dot 1.2s ease-in-out infinite; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing-dot { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-5px);opacity:1} }
+        .chat-suggestions { padding: 0 1rem 0.75rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .chat-suggestion { padding: 0.3rem 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.75rem; cursor: none; transition: all 0.2s; color: var(--text-primary); }
+        .chat-suggestion:hover { border-color: var(--accent); color: var(--accent); background: rgba(37,99,235,0.06); }
+        .chat-input-row { padding: 0.75rem 1rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem; }
+        .chat-input-row input {
+            flex: 1; padding: 0.55rem 0.85rem;
+            border: 1px solid var(--border-color); border-radius: 20px;
+            background: var(--bg-secondary); color: var(--text-primary);
+            font-size: 0.85rem; font-family: inherit;
+            outline: none; cursor: text;
+        }
+        .chat-input-row input:focus { border-color: var(--accent); }
+        .chat-send-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #8b5cf6);
+            border: none; color: white; cursor: none;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; transition: all 0.2s;
+        }
+        .chat-send-btn:hover { transform: scale(1.1); }
 
     </style>
 </head>
@@ -985,8 +1193,14 @@
         </div>
         
         <h1 class="animate-fade-in-up delay-2"><span class="glitch-wrap" data-text="Sai TejaSrivillibhutturu">Sai Teja<br>Srivillibhutturu</span></h1>
-        <p class="hero-subtitle animate-fade-in-up delay-3" id="typewriter-text"></p>
-<!-- typewriter handled by enhanced script -->
+
+        <div class="terminal-box animate-fade-in-up delay-3" id="terminal-box" style="opacity:0">
+            <div class="terminal-bar">
+                <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+                <span class="t-title">sai_teja — bash — 80×24</span>
+            </div>
+            <div id="terminal-output"></div>
+        </div>
         
         <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1007,8 +1221,8 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <p>LLM Engineer and researcher specializing in fine-tuning, agentic systems, and GPU-optimized inference. MS in Computer Science from UT Arlington (May 2025).</p>
-                <p>I build and optimize LLM systems, from SFT pipelines and LoRA fine-tuning to CUDA kernels, FlashAttention, and production inference infrastructure. My core interest is applying LLM reasoning to hard physical domains like 6G wireless networks.</p>
+                <p>LLM Engineer and researcher specializing in fine-tuning, agentic systems, and GPU-optimized inference, with applied work in Healthcare AI. MS in Computer Science from UT Arlington (May 2025).</p>
+                <p>I build and optimize LLM systems, from SFT pipelines and LoRA fine-tuning to CUDA kernels and production inference infrastructure. I apply this across two domains: 6G wireless networks (2× IEEE published) and Healthcare AI, where I have deployed clinical LLMs across EPIC/FHIR-integrated hospital systems.</p>
                 <p>2× IEEE published researcher: <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE ICC 2026</strong></a> and <a href="https://ieee.atyponrex.com/journal/oj-coms" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE OJ-COMS 2026</strong></a>, on LLM-enabled path planning and digital twin guided AI for 6G wireless networks.</p>
             </div>
         </div>
@@ -1023,62 +1237,95 @@
                 <div class="skills-track">
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
-                    <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
                     <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔧</span><span>LoRA / PEFT</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">⚡</span><span>vLLM</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔗</span><span>LangChain</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📚</span><span>RAG</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🧠</span><span>LLM Agents</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">💬</span><span>TRL / SFT</span></div>
+                    <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">⚡</span><span>FlashAttention</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
                     <div class="skill-item"><img src="https://avatars.githubusercontent.com/u/73354024?s=200&v=4" alt="Sionna"><span>Sionna (6G)</span></div>
                     <div class="skill-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/OpenStreetMap_logo.svg/240px-OpenStreetMap_logo.svg.png" alt="OpenStreetMap"><span>OpenStreetMap</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s"><span>Kubernetes</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
                     <!-- Duplicate for seamless loop -->
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
-                    <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
                     <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔧</span><span>LoRA / PEFT</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">⚡</span><span>vLLM</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔗</span><span>LangChain</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📚</span><span>RAG</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🧠</span><span>LLM Agents</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">💬</span><span>TRL / SFT</span></div>
+                    <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">⚡</span><span>FlashAttention</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
                     <div class="skill-item"><img src="https://avatars.githubusercontent.com/u/73354024?s=200&v=4" alt="Sionna"><span>Sionna (6G)</span></div>
                     <div class="skill-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/OpenStreetMap_logo.svg/240px-OpenStreetMap_logo.svg.png" alt="OpenStreetMap"><span>OpenStreetMap</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s"><span>Kubernetes</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
                 </div>
             </div>
             <div class="skills-marquee reverse">
                 <div class="skills-track">
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🗄️</span><span>Pinecone</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🗃️</span><span>ChromaDB</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔍</span><span>Tavily</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🤖</span><span>Groq</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🎛️</span><span>Gradio</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🏥</span><span>FHIR / EPIC</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🩻</span><span>Medical Imaging</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔒</span><span>HIPAA</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🫁</span><span>DICOM</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📦</span><span>Spring Boot</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"><span>MongoDB</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"><span>Airflow</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"><span>Spark</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📐</span><span>ONNX / TensorRT</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"><span>Flask</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"><span>NumPy</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
                     <!-- Duplicate for seamless loop -->
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🗄️</span><span>Pinecone</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🗃️</span><span>ChromaDB</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔍</span><span>Tavily</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🤖</span><span>Groq</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🎛️</span><span>Gradio</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🏥</span><span>FHIR / EPIC</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🩻</span><span>Medical Imaging</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🔒</span><span>HIPAA</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">🫁</span><span>DICOM</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📦</span><span>Spring Boot</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"><span>MongoDB</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow"><span>Airflow</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Spark"><span>Spark</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
+                    <div class="skill-item"><span style="font-size:1.1rem">📐</span><span>ONNX / TensorRT</span></div>
                     <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"><span>Flask</span></div>
-                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"><span>NumPy</span></div>
+                    <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
                 </div>
             </div>
         </div>
     </section>
+
+
+    <!-- Stats Band -->
 
     <section class="section" id="experience">
         <div class="container">
@@ -1242,7 +1489,7 @@
                 <div class="projects-grid">
 
                     <!-- 1: CUDA Neuron Attention -->
-                    <div class="project-item">
+                    <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
                         <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding — 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline (TorchScript trace, neuronx-cc compile, profiling) achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
@@ -1256,7 +1503,7 @@
                     </div>
 
                     <!-- 2: LLM Fine-Tuning SFT Production -->
-                    <div class="project-item">
+                    <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Production LLM Fine-Tuning: Qwen-7B SFT</h3><span class="project-impact">LLM / GenAI</span></div>
                         <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8, alpha=16) on UltraFeedback, training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
@@ -1270,7 +1517,7 @@
                     </div>
 
                     <!-- 3: Attention Optimization -->
-                    <div class="project-item">
+                    <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization Suite</h3><span class="project-impact">Deep Learning</span></div>
                         <p class="project-description">Benchmarking framework comparing 4 attention implementations on NVIDIA L4 (seq len 1024, batch 32): FlashAttention-2 achieves 12.3x throughput (573K to 6.03M tok/s) and 99.7% memory reduction (12,582 MB to 38 MB) vs vanilla. Includes batch-size auto-tuner using binary search and ONNX/TensorRT export benchmarks. Key finding: algorithm-level optimization (FlashAttention) outperforms hardware-level optimization (TensorRT) by 6x for attention operations.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">ONNX Runtime</span><span class="tech-tag">CUDA</span></div>
@@ -1283,7 +1530,7 @@
                     </div>
 
                     <!-- 4: AI Agent -->
-                    <div class="project-item">
+                    <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Advanced AI Agent System</h3><span class="project-impact">GenAI</span></div>
                         <p class="project-description">Multi-strategy reasoning system implementing 4 research papers: Chain-of-Thought with self-consistency voting (3 independent paths), Tree-of-Thoughts with beam search (width=3, depth=3), ReAct with real-time web search via Tavily API and ChromaDB vector memory, and Multi-Agent collaboration (Planner, Worker, Critic). LLM-based auto-classifier routes each query to the optimal strategy. Rate-limited (10/min, 100/day), with real-time streaming. Built with Groq LLM, deployed on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">Tavily</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div>
@@ -1315,41 +1562,47 @@
         <div class="container">
             <h2 class="section-title">Explore My Work By Role</h2>
             <div class="roles-grid">
-                <a href="DeepLearning.html" class="role-card">
+                <a href="DeepLearning.html" class="role-card tilt-card">
                     <div class="role-icon">🧠</div>
                     <h3 class="role-title">Deep Learning Engineer</h3>
                     <p class="role-description">GPU optimization, CUDA kernels, FlashAttention, quantization techniques.</p>
                     <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
-                <a href="LLMGenAI.html" class="role-card">
+                <a href="LLMGenAI.html" class="role-card tilt-card">
                     <div class="role-icon">🤖</div>
                     <h3 class="role-title">LLM/GenAI Engineer</h3>
                     <p class="role-description">LLM fine-tuning, RAG pipelines, multi-agent systems, vLLM inference.</p>
                     <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
-                <a href="MLEngineer.html" class="role-card">
+                <a href="MLEngineer.html" class="role-card tilt-card">
                     <div class="role-icon">⚙️</div>
                     <h3 class="role-title">ML Engineer</h3>
                     <p class="role-description">Production ML systems, MLOps, model serving, Airflow pipelines.</p>
                     <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
-                <a href="BackendSDE.html" class="role-card">
+                <a href="BackendSDE.html" class="role-card tilt-card">
                     <div class="role-icon">💻</div>
                     <h3 class="role-title">Backend SDE</h3>
                     <p class="role-description">Distributed systems, Java services, high-throughput APIs, databases.</p>
                     <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
-                <a href="CloudData.html" class="role-card">
+                <a href="CloudData.html" class="role-card tilt-card">
                     <div class="role-icon">☁️</div>
                     <h3 class="role-title">Cloud & Data Engineer</h3>
                     <p class="role-description">AWS infrastructure, data pipelines, Spark, Kafka, ETL workflows.</p>
                     <span class="role-link">View Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
-                <a href="Research.html" class="role-card">
+                <a href="Research.html" class="role-card tilt-card">
                     <div class="role-icon">📚</div>
                     <h3 class="role-title">Research</h3>
                     <p class="role-description">2× IEEE published — LLM fine-tuning for 6G path planning, digital twin simulations, mmWave connectivity AI.</p>
                     <span class="role-link">View Publications <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a href="Healthcare.html" class="role-card tilt-card" style="border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.04);">
+                    <div class="role-icon">🏥</div>
+                    <h3 class="role-title">Healthcare AI</h3>
+                    <p class="role-description">Clinical LLMs, medical imaging CV, EPIC/FHIR integration, HIPAA-aligned AI deployment across live hospital systems.</p>
+                    <span class="role-link" style="color: #059669;">View Work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
             </div>
         </div>
@@ -1358,7 +1611,7 @@
     <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
-            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, ML Research, Deep Learning, and AI systems roles — especially at the intersection of language models and real-world physical systems.</p>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, Healthcare AI, ML Research, and Deep Learning roles — applying language models to real clinical and physical systems.</p>
             
             <!-- Contact Form -->
             <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
@@ -1656,61 +1909,176 @@
         animate();
     })();
 
-    /* ── PARTICLE NETWORK ── */
+    /* ── COMBINED BACKGROUND: AI + TELECOM + HEALTHCARE ── */
     (function(){
         const canvas = document.getElementById('particle-canvas');
         if(!canvas) return;
         const ctx = canvas.getContext('2d');
-        let W, H, particles=[];
-        const N = 55, CONN_DIST = 140;
+        let W, H;
+        let t = 0; // global time tick
 
-        function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+        function resize(){
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
         resize();
         window.addEventListener('resize', resize, {passive:true});
 
-        const isDark = ()=> document.documentElement.classList.contains('dark-mode');
+        const isDark = () => document.documentElement.classList.contains('dark-mode');
 
-        for(let i=0;i<N;i++) particles.push({
+        /* ── AI: Neural network nodes ── */
+        const AI_N = 42, AI_DIST = 150;
+        const aiNodes = [];
+        for(let i=0;i<AI_N;i++) aiNodes.push({
             x: Math.random()*window.innerWidth,
             y: Math.random()*window.innerHeight,
-            vx: (Math.random()-0.5)*0.4,
-            vy: (Math.random()-0.5)*0.4,
-            r: 1.5 + Math.random()*2
+            vx: (Math.random()-0.5)*0.35,
+            vy: (Math.random()-0.5)*0.35,
+            r: 2 + Math.random()*2,
+            pulse: Math.random()*Math.PI*2  // phase offset for pulsing
         });
+
+        /* ── TELECOM: Sine wave signals traveling across screen ── */
+        const TELECOM_WAVES = 4;
+        const telecomWaves = [];
+        for(let i=0;i<TELECOM_WAVES;i++) telecomWaves.push({
+            y: (i+1) * (window.innerHeight / (TELECOM_WAVES+1)),
+            speed: 0.6 + Math.random()*0.5,
+            freq: 0.018 + Math.random()*0.012,
+            amp: 18 + Math.random()*22,
+            phase: Math.random()*Math.PI*2,
+            opacity: 0.18 + Math.random()*0.14
+        });
+
+        /* ── HEALTHCARE: ECG heartbeat line ── */
+        const ecg = {
+            x: 0,          // current draw head x
+            speed: 1.8,    // px per frame
+            history: [],   // {x, y} trail
+            maxLen: 320,
+            baseY: 0,      // set in draw
+        };
+        // Pre-build one full ECG cycle (P-QRS-T shape)
+        function ecgSample(phase) {
+            const p = ((phase % 1) + 1) % 1; // 0..1
+            if(p < 0.10) return Math.sin(p/0.10 * Math.PI) * 6;          // P wave
+            if(p < 0.30) return 0;
+            if(p < 0.34) return -Math.sin((p-0.30)/0.04 * Math.PI) * 8;  // Q dip
+            if(p < 0.38) return Math.sin((p-0.34)/0.04 * Math.PI) * 55;  // R spike
+            if(p < 0.42) return -Math.sin((p-0.38)/0.04 * Math.PI) * 12; // S dip
+            if(p < 0.60) return 0;
+            if(p < 0.85) return Math.sin((p-0.60)/0.25 * Math.PI) * 10;  // T wave
+            return 0;
+        }
+        let ecgPhase = 0;
 
         function draw(){
             ctx.clearRect(0,0,W,H);
             const dark = isDark();
-            const nodeColor = dark ? 'rgba(148,163,184,' : 'rgba(37,99,235,';
-            const lineColor = dark ? 'rgba(100,120,200,' : 'rgba(37,99,235,';
+            const boost = window.__particleBoost || 0;
+            t++;
 
-            particles.forEach(p=>{
-                p.x += p.vx; p.y += p.vy;
+            /* ── Draw AI neural network ── */
+            const aiNode   = dark ? 'rgba(99,130,255,' : 'rgba(37,99,235,';
+            const aiLine   = dark ? 'rgba(80,110,230,' : 'rgba(37,99,235,';
+
+            aiNodes.forEach(p=>{
+                p.x += p.vx * (1 + boost);
+                p.y += p.vy * (1 + boost);
                 if(p.x<0||p.x>W) p.vx*=-1;
                 if(p.y<0||p.y>H) p.vy*=-1;
             });
 
-            for(let i=0;i<N;i++){
-                for(let j=i+1;j<N;j++){
-                    const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+            for(let i=0;i<AI_N;i++){
+                for(let j=i+1;j<AI_N;j++){
+                    const dx=aiNodes[i].x-aiNodes[j].x, dy=aiNodes[i].y-aiNodes[j].y;
                     const dist=Math.sqrt(dx*dx+dy*dy);
-                    if(dist<CONN_DIST){
-                        const alpha=(1-dist/CONN_DIST)*0.5;
+                    if(dist<AI_DIST){
+                        const alpha=(1-dist/AI_DIST)*0.55;
                         ctx.beginPath();
-                        ctx.strokeStyle=lineColor+alpha+')';
-                        ctx.lineWidth=0.8;
-                        ctx.moveTo(particles[i].x,particles[i].y);
-                        ctx.lineTo(particles[j].x,particles[j].y);
+                        ctx.strokeStyle=aiLine+alpha+')';
+                        ctx.lineWidth=0.7;
+                        ctx.moveTo(aiNodes[i].x,aiNodes[i].y);
+                        ctx.lineTo(aiNodes[j].x,aiNodes[j].y);
                         ctx.stroke();
                     }
                 }
             }
-            particles.forEach(p=>{
+            aiNodes.forEach(p=>{
+                // Pulsing glow ring
+                const pulse = 0.55 + Math.sin(t*0.04 + p.pulse)*0.25;
+                ctx.beginPath();
+                ctx.arc(p.x,p.y,p.r+2,0,Math.PI*2);
+                ctx.fillStyle=aiNode+(pulse*0.18)+')';
+                ctx.fill();
+                // Core dot
                 ctx.beginPath();
                 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-                ctx.fillStyle=nodeColor+'0.7)';
+                ctx.fillStyle=aiNode+'0.75)';
                 ctx.fill();
             });
+
+            /* ── Draw TELECOM sine waves ── */
+            const telecomColor = dark ? 'rgba(6,182,212,' : 'rgba(6,182,212,'; // cyan
+            telecomWaves.forEach(w=>{
+                w.phase += w.speed * 0.022 * (1 + boost*0.3);
+                ctx.beginPath();
+                ctx.strokeStyle = telecomColor + w.opacity + ')';
+                ctx.lineWidth = 1.2;
+                for(let x=0; x<=W; x+=3){
+                    const y = w.y + Math.sin(x * w.freq + w.phase) * w.amp;
+                    x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+                }
+                ctx.stroke();
+
+                // Draw small traveling "signal packet" dot on the wave
+                const packetX = ((t * w.speed * 2) % (W + 60)) - 30;
+                const packetY = w.y + Math.sin(packetX * w.freq + w.phase) * w.amp;
+                ctx.beginPath();
+                ctx.arc(packetX, packetY, 3, 0, Math.PI*2);
+                ctx.fillStyle = telecomColor + '0.85)';
+                ctx.fill();
+                // glow
+                ctx.beginPath();
+                ctx.arc(packetX, packetY, 7, 0, Math.PI*2);
+                ctx.fillStyle = telecomColor + '0.15)';
+                ctx.fill();
+            });
+
+            /* ── Draw HEALTHCARE ECG ── */
+            const ecgColor = dark ? 'rgba(16,185,129,' : 'rgba(5,150,105,'; // emerald green
+            ecg.baseY = H * 0.88;
+            ecgPhase += ecg.speed / 120; // cycle speed
+            const newY = ecg.baseY + ecgSample(ecgPhase) * -1;
+            ecg.history.push({x: ecg.x, y: newY});
+            if(ecg.history.length > ecg.maxLen) ecg.history.shift();
+            ecg.x += ecg.speed;
+            if(ecg.x > W + 50) { ecg.x = 0; ecg.history = []; }
+
+            if(ecg.history.length > 1){
+                // Draw fading trail
+                for(let i=1; i<ecg.history.length; i++){
+                    const alpha = (i / ecg.history.length) * 0.7;
+                    ctx.beginPath();
+                    ctx.strokeStyle = ecgColor + alpha + ')';
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(ecg.history[i-1].x, ecg.history[i-1].y);
+                    ctx.lineTo(ecg.history[i].x,   ecg.history[i].y);
+                    ctx.stroke();
+                }
+                // Bright tip dot
+                const tip = ecg.history[ecg.history.length-1];
+                ctx.beginPath();
+                ctx.arc(tip.x, tip.y, 3, 0, Math.PI*2);
+                ctx.fillStyle = ecgColor + '1)';
+                ctx.fill();
+                // Glow
+                ctx.beginPath();
+                ctx.arc(tip.x, tip.y, 8, 0, Math.PI*2);
+                ctx.fillStyle = ecgColor + '0.15)';
+                ctx.fill();
+            }
+
             requestAnimationFrame(draw);
         }
         draw();
@@ -1784,7 +2152,13 @@
     (function(){
         const el = document.getElementById('typewriter-text');
         if(!el) return;
-        const text = "LLM Engineer & Researcher | Fine-Tuning · Agents · 6G Telecom AI | 2× IEEE Published (ICC 2026 · OJ-COMS 2026) | PyTorch, CUDA, Hugging Face, Sionna";
+        const phrases = [
+            "LLM Engineer & Researcher | Fine-Tuning · Agents · 6G Telecom AI | 2× IEEE Published",
+            "Healthcare AI Engineer | Clinical LLMs · Radiology AI · EPIC/FHIR · Medical Imaging",
+            "ML Systems | PyTorch · CUDA · Hugging Face · Sionna · AWS · vLLM",
+        ];
+        let phraseIdx = 0;
+        const text = phrases[0]; // initial phrase shown by typewriter
         const glitchChars = '▓░█▒╬╫╪┼╣╠║═╔╗╚╝';
         let charIndex = 0;
 
@@ -1810,7 +2184,358 @@
         setTimeout(typeChar, 700);
 
         // Override the inline script — neutralize original
+        // Cycle phrases
+        function startPhrase(idx) {
+            el.textContent = '';
+            charIndex = 0;
+            const t = phrases[idx % phrases.length];
+            function type() {
+                if (charIndex < t.length) {
+                    if (Math.random() < 0.07 && charIndex > 3) {
+                        const g = glitchChars[Math.floor(Math.random()*glitchChars.length)];
+                        el.textContent = t.slice(0,charIndex) + g;
+                        setTimeout(()=>{ el.textContent = t.slice(0,charIndex); charIndex++; el.textContent += t.charAt(charIndex-1); setTimeout(type,28); },55);
+                    } else { el.textContent += t.charAt(charIndex); charIndex++; setTimeout(type,28); }
+                } else {
+                    setTimeout(()=>{ 
+                        // fade out then next phrase
+                        let opacity = 1;
+                        const fade = setInterval(()=>{ opacity -= 0.08; el.style.opacity = opacity; if(opacity<=0){ clearInterval(fade); el.style.opacity=1; startPhrase(idx+1); }},40);
+                    }, 2800);
+                }
+            }
+            type();
+        }
+        setTimeout(()=>startPhrase(0), 700);
         window.__typewriterDone = true;
+    })();
+    </script>
+
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- AI Chat Widget -->
+    <button id="ai-chat-btn" title="Ask me anything about Sai Teja">
+        <div class="chat-pulse"></div>
+        🤖
+    </button>
+    <div id="ai-chat-panel">
+        <div class="chat-header">
+            <div class="chat-header-avatar">🤖</div>
+            <div>
+                <h4>Ask Sai Teja's AI</h4>
+                <p>Powered by Claude · Ask anything about my work</p>
+            </div>
+            <button class="chat-header-close" id="chat-close">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg bot">Hi! I'm Sai Teja's AI assistant. Ask me about his experience, projects, publications, or skills. 👋</div>
+        </div>
+        <div class="chat-suggestions" id="chat-suggestions">
+            <span class="chat-suggestion">What are his IEEE publications?</span>
+            <span class="chat-suggestion">Healthcare AI experience?</span>
+            <span class="chat-suggestion">LLM fine-tuning projects?</span>
+            <span class="chat-suggestion">What roles is he open to?</span>
+        </div>
+        <div class="chat-input-row">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
+            <button class="chat-send-btn" id="chat-send">➤</button>
+        </div>
+    </div>
+
+
+    <script>
+    /* ── TERMINAL ANIMATION ── */
+    (function(){
+        const box = document.getElementById('terminal-box');
+        const out = document.getElementById('terminal-output');
+        if(!box || !out) return;
+
+        const lines = [
+            { delay: 300,  html: '<span class="t-prompt">~</span> <span class="t-cmd">python3</span> sai_teja.py', type: true },
+            { delay: 750,  html: '<span class="t-comment"># ── Profile ──────────────────────────────</span>', type: false },
+            { delay: 1000, html: '<span class="t-key">name</span>  = <span class="t-string">"Sai Teja Srivillibhutturu"</span>', type: false },
+            { delay: 1360, html: '<span class="t-comment"># ── Experience ──────────────────────────</span>', type: false },
+            { delay: 1540, html: '<span class="t-key">exp</span> = [', type: false },
+            { delay: 1700, html: '  { <span class="t-key">co</span>: <span class="t-string">"Qure.ai"</span>,       <span class="t-key">role</span>: <span class="t-string">"AI Solutions Eng"</span>,  <span class="t-key">yr</span>: <span class="t-val">2026</span> }, <span class="t-comment"># Clinical LLMs, 6+ hospitals</span>', type: false },
+            { delay: 1880, html: '  { <span class="t-key">co</span>: <span class="t-string">"DentalScan"</span>,    <span class="t-key">role</span>: <span class="t-string">"ML Eng Intern"</span>,      <span class="t-key">yr</span>: <span class="t-val">2025</span> }, <span class="t-comment"># 50K+ medical images</span>', type: false },
+            { delay: 2060, html: '  { <span class="t-key">co</span>: <span class="t-string">"UTA Research"</span>, <span class="t-key">role</span>: <span class="t-string">"Grad Research Asst"</span>, <span class="t-key">yr</span>: <span class="t-val">2025</span> }, <span class="t-comment"># 2× IEEE published</span>', type: false },
+            { delay: 2240, html: '  { <span class="t-key">co</span>: <span class="t-string">"UTA Teaching"</span>, <span class="t-key">role</span>: <span class="t-string">"Grad Teaching Asst"</span>, <span class="t-key">yr</span>: <span class="t-val">2024</span> }, <span class="t-comment"># 50+ students</span>', type: false },
+            { delay: 2420, html: '  { <span class="t-key">co</span>: <span class="t-string">"TCS"</span>,          <span class="t-key">role</span>: <span class="t-string">"Sr Software Eng"</span>,    <span class="t-key">yr</span>: <span class="t-val">2019</span> }, <span class="t-comment"># 4 yrs, 10+ clients</span>', type: false },
+            { delay: 2580, html: ']', type: false },
+            { delay: 2750, html: '<span class="t-comment"># ── Publications ────────────────────────</span>', type: false },
+            { delay: 2900, html: '<span class="t-key">papers</span>= [<span class="t-string">"IEEE OJ-COMS 2026"</span>, <span class="t-string">"IEEE ICC 2026"</span>]', type: false },
+            { delay: 3100, html: '<span class="t-comment"># ── Stack ───────────────────────────────</span>', type: false },
+            { delay: 3250, html: '<span class="t-key">stack</span> = [<span class="t-string">"PyTorch"</span>, <span class="t-string">"CUDA"</span>, <span class="t-string">"HuggingFace"</span>, <span class="t-string">"EPIC/FHIR"</span>, <span class="t-string">"Sionna"</span>, <span class="t-string">"AWS"</span>]', type: false },
+            { delay: 3500, html: '<span class="t-comment"># ── Status ──────────────────────────────</span>', type: false },
+            { delay: 3700, html: '<span class="t-ok">✓ Open to: LLM Eng · Healthcare AI · ML Research · Deep Learning</span>', type: false },
+        ];
+
+        // Fade in box
+        setTimeout(()=>{ box.style.opacity='1'; box.style.transition='opacity 0.5s'; }, 300);
+
+        let cursor = document.createElement('span');
+        cursor.className = 't-cursor';
+
+        lines.forEach(({delay, html: lineHtml, type}) => {
+            setTimeout(()=>{
+                if(cursor.parentNode) cursor.parentNode.removeChild(cursor);
+                const p = document.createElement('p');
+                p.className = 't-line';
+                if(type) {
+                    p.innerHTML = '<span class="t-prompt">❯</span> ';
+                    out.appendChild(p);
+                    p.appendChild(cursor);
+                    const fullHtml = lineHtml.replace('<span class="t-prompt">~</span> ', '');
+                    let i = 0;
+                    const plain = p.querySelector('.t-prompt').nextSibling;
+                    const temp = document.createElement('span');
+                    temp.innerHTML = fullHtml;
+                    const text = temp.textContent;
+                    function typeIt(){
+                        if(i <= text.length){
+                            // Build typed portion of the html
+                            p.innerHTML = '<span class="t-prompt">❯</span> ' + fullHtml.replace(/(>)[^<]*/g, (m,g) => {
+                                // just show chars up to i
+                                return m;
+                            });
+                            // simpler: just type plain text then replace with rich html at end
+                            const typed = text.slice(0,i);
+                            if(i < text.length){ p.innerHTML = '<span class="t-prompt">❯</span> ' + typed; p.appendChild(cursor); }
+                            else { p.innerHTML = '<span class="t-prompt">❯</span> ' + fullHtml; p.appendChild(cursor); }
+                            i++;
+                            setTimeout(typeIt, 38);
+                        }
+                    }
+                    typeIt();
+                } else {
+                    p.innerHTML = lineHtml;
+                    out.appendChild(p);
+                    p.appendChild(cursor);
+                }
+                // scroll terminal
+                out.scrollTop = out.scrollHeight;
+            }, delay);
+        });
+    })();
+
+    /* ── 3D TILT CARDS ── */
+    (function(){
+        if(window.matchMedia('(pointer: coarse)').matches) return;
+        // Add glare layer to all tilt cards
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            const glare = document.createElement('div');
+            glare.className = 'glare-layer';
+            card.style.position = 'relative';
+            card.appendChild(glare);
+        });
+
+        function applyTilt(card, e) {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width  - 0.5;
+            const y = (e.clientY - r.top)  / r.height - 0.5;
+            const tiltX = y * -12;
+            const tiltY = x *  12;
+            card.style.transform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.03,1.03,1.03)`;
+            card.style.boxShadow = `${-tiltY*2}px ${tiltX*2}px 40px rgba(37,99,235,0.18)`;
+            // move glare
+            const glare = card.querySelector('.glare-layer');
+            if(glare) {
+                const gx = (x + 0.5) * 100;
+                const gy = (y + 0.5) * 100;
+                glare.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.22) 0%, transparent 65%)`;
+                glare.style.opacity = '1';
+            }
+        }
+        function resetTilt(card) {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+            const glare = card.querySelector('.glare-layer');
+            if(glare) glare.style.opacity = '0';
+        }
+
+        document.addEventListener('mousemove', e => {
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                const r = card.getBoundingClientRect();
+                if(e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+                    applyTilt(card, e);
+                } else {
+                    resetTilt(card);
+                }
+            });
+        }, {passive:true});
+        document.querySelectorAll('.tilt-card').forEach(c => c.addEventListener('mouseleave', () => resetTilt(c)));
+    })();
+
+    /* ── STATS BAND COUNTERS ── */
+    (function(){
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(!entry.isIntersecting) return;
+                entry.target.querySelectorAll('.stat-num').forEach(el => {
+                    const target = parseFloat(el.getAttribute('data-count'));
+                    const dec    = parseInt(el.getAttribute('data-dec') || '0');
+                    const dur    = 1400;
+                    const start  = performance.now();
+                    function tick(now) {
+                        const p = Math.min((now - start) / dur, 1);
+                        const ease = 1 - Math.pow(1 - p, 3);
+                        el.textContent = (target * ease).toFixed(dec);
+                        if(p < 1) requestAnimationFrame(tick);
+                        else el.textContent = target.toFixed(dec);
+                    }
+                    requestAnimationFrame(tick);
+                });
+                obs.unobserve(entry.target);
+            });
+        }, {threshold: 0.4});
+        const band = document.querySelector('.stats-band');
+        if(band) obs.observe(band);
+    })();
+
+    /* ── CUSTOM MORPHING CURSOR ── */
+    (function(){
+        if(window.matchMedia('(pointer: coarse)').matches) return;
+        const cur = document.getElementById('custom-cursor');
+        if(!cur) return;
+        let mx = -100, my = -100, cx = -100, cy = -100;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, {passive:true});
+        function animCursor() {
+            cx += (mx - cx) * 0.18;
+            cy += (my - cy) * 0.18;
+            cur.style.left = cx + 'px';
+            cur.style.top  = cy + 'px';
+            requestAnimationFrame(animCursor);
+        }
+        animCursor();
+        document.addEventListener('mousedown', () => cur.classList.add('clicking'));
+        document.addEventListener('mouseup',   () => cur.classList.remove('clicking'));
+        document.querySelectorAll('a, .role-card, .publication-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('on-link'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('on-link'));
+        });
+        document.querySelectorAll('button, .btn, .resume-btn-hero').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('on-btn'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('on-btn'));
+        });
+        document.addEventListener('mouseleave', () => cur.style.opacity = '0');
+        document.addEventListener('mouseenter', () => cur.style.opacity = '1');
+    })();
+
+    /* ── PARTICLES REACT TO SCROLL ── */
+    (function(){
+        let scrollV = 0, lastScroll = 0;
+        const canvas = document.getElementById('particle-canvas');
+        if(!canvas) return;
+        window.addEventListener('scroll', () => {
+            const s = window.scrollY;
+            scrollV = Math.abs(s - lastScroll);
+            lastScroll = s;
+            // boost particle speed temporarily
+            window.__particleBoost = Math.min(scrollV / 8, 4);
+            setTimeout(() => { window.__particleBoost = 0; }, 300);
+        }, {passive:true});
+    })();
+
+    /* ── AI CHAT WIDGET ── */
+    (function(){
+        const btn     = document.getElementById('ai-chat-btn');
+        const panel   = document.getElementById('ai-chat-panel');
+        const closeBtn= document.getElementById('chat-close');
+        const messages= document.getElementById('chat-messages');
+        const input   = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('chat-send');
+        const suggs   = document.getElementById('chat-suggestions');
+        if(!btn || !panel) return;
+
+        const RESUME_CONTEXT = `You are an AI assistant for Sai Teja Srivillibhutturu's portfolio website. Answer questions about him based on this information:
+
+NAME: Sai Teja Srivillibhutturu
+EDUCATION: MS Computer Science & Engineering, UT Arlington, GPA 4.0/4.0, May 2025. BS Computer Science, Andhra University, 8.2/10, 2019.
+CURRENT STATUS: Open to LLM Engineering, Healthcare AI, ML Research, Deep Learning roles.
+
+EXPERIENCE:
+- AI Solutions Engineer Intern @ Qure.ai (Mar-May 2026, Remote NY): Deployed clinical LLMs for radiology report parsing and EMR extraction across EPIC/FHIR-integrated hospital systems (Medstar, Mount Sinai, UFL). Supported 6+ live hospital sites. HIPAA-aligned documentation.
+- ML Engineer Intern @ ReplyQuickAI/DentalScan (Dec 2025-Feb 2026): Built CV pipelines for intra-oral image analysis (6+ categories, 50K+ images). AWS SageMaker retraining pipeline with active learning.
+- Graduate Research Assistant @ UTA (Jun 2025-present): LLM fine-tuning for 6G wireless path planning. 2 IEEE publications.
+- Graduate Teaching Assistant @ UTA (Aug 2024-May 2025): Numerical Methods for 50+ students.
+- Senior Software Engineer @ TCS (Jun 2019-May 2023, 4 years): Java distributed systems, 10+ enterprise clients, 40% latency reduction.
+
+PUBLICATIONS:
+1. "Digital Twin-Guided AI Path Planning for Connectivity-Aware Mobility" - IEEE OJ-COMS 2026 (Journal)
+2. "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks" - IEEE ICC 2026 (Conference, CQRM Workshop). arXiv: 2601.00110
+
+PROJECTS:
+- CUDA Attention Kernel + AWS Neuron SDK: 5.64x speedup, custom CUDA C++ attention kernel, GPT-2 on AWS Inferentia 3.7x speedup
+- Production LLM Fine-Tuning (Qwen-7B SFT): LoRA r=8, QLoRA 4-bit, 17% loss reduction, deployed to HuggingFace Hub
+- Attention Optimization Suite: FlashAttention-2 12.3x throughput, 99.7% memory reduction vs vanilla
+- Advanced AI Agent: Chain-of-Thought, Tree-of-Thoughts, ReAct with web search, Multi-Agent collaboration
+
+CERTIFICATIONS: UC Berkeley EECS Advanced LLM Agents (Jul 2025), AWS Data Engineer Associate, Microsoft Fabric Data Engineer, Oracle GenAI Professional.
+
+SKILLS: Python, PyTorch, CUDA, C++, Hugging Face, LLM fine-tuning, LoRA/PEFT, vLLM, FlashAttention, EPIC/FHIR, Medical Imaging, HIPAA, Sionna 6G, OpenStreetMap, AWS, Docker, FastAPI, Java, Go.
+
+Keep answers concise (2-4 sentences), friendly, and professional. If asked something not in the context, say you don't have that specific info but suggest checking the portfolio or contacting Sai Teja directly.`;
+
+        btn.addEventListener('click', () => { panel.classList.toggle('open'); if(panel.classList.contains('open')) input.focus(); });
+        closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+        // Suggestion clicks
+        suggs.addEventListener('click', e => {
+            const s = e.target.closest('.chat-suggestion');
+            if(s) { input.value = s.textContent; sendMessage(); }
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+        input.addEventListener('keydown', e => { if(e.key === 'Enter') sendMessage(); });
+
+        function addMsg(text, role) {
+            const div = document.createElement('div');
+            div.className = 'chat-msg ' + role;
+            div.textContent = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+            return div;
+        }
+
+        function addTyping() {
+            const div = document.createElement('div');
+            div.className = 'chat-msg typing';
+            div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+            return div;
+        }
+
+        async function sendMessage() {
+            const q = input.value.trim();
+            if(!q) return;
+            input.value = '';
+            suggs.style.display = 'none';
+            addMsg(q, 'user');
+            const typing = addTyping();
+
+            try {
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 300,
+                        system: RESUME_CONTEXT,
+                        messages: [{ role: 'user', content: q }]
+                    })
+                });
+                const data = await res.json();
+                typing.remove();
+                const answer = data.content?.[0]?.text || "Sorry, I couldn't get a response right now.";
+                addMsg(answer, 'bot');
+            } catch(e) {
+                typing.remove();
+                addMsg("Hmm, something went wrong. Try reaching out directly via the contact section!", 'bot');
+            }
+        }
     })();
     </script>
 

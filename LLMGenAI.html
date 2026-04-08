@@ -23,7 +23,7 @@
     <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #ffffff;
@@ -48,15 +48,17 @@
         }
         /* JS-controlled dark mode */
         [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --bg-primary: #080c14;
+            --bg-secondary: #0f1520;
+            --text-primary: #e8edf5;
+            --text-secondary: #7a8494;
+            --accent: #f59e0b;
+            --border-color: rgba(255,255,255,0.07);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.4);
+            --card-bg: rgba(15,21,32,0.85);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
         /* Fluid Canvas - Full screen background */
         #fluid-canvas {
@@ -351,8 +353,8 @@
             right: 0;
             z-index: 100;
             padding: 1rem 2rem;
-            background: var(--bg-primary);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
         }
         .nav-content {
@@ -390,14 +392,15 @@
             padding: 0.5rem 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 50px;
+            border-radius: 6px;
             margin-bottom: 1.5rem;
             font-size: 0.9rem;
         }
         .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem,5vw,3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
@@ -427,7 +430,7 @@
             padding: 0.5rem 0.5rem 0.5rem 1.5rem;
             background: var(--bg-primary);
             border: 2px solid var(--border-color);
-            border-radius: 50px;
+            border-radius: 6px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
@@ -486,7 +489,7 @@
             padding: 0.6rem 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 50px;
+            border-radius: 6px;
             text-decoration: none;
             color: var(--text-primary);
             font-size: 0.85rem;
@@ -511,7 +514,7 @@
             padding: 1.5rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 6px;
             display: none;
             animation: fadeInUp 0.4s ease;
         }
@@ -529,7 +532,7 @@
         .ai-response-avatar {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -576,9 +579,10 @@
             border-top: 1px solid var(--border-color);
         }
         .section-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Syne', sans-serif;
             font-size: 1.75rem;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
             text-align: center;
         }
@@ -625,7 +629,7 @@
             padding: 0.5rem 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 50px;
+            border-radius: 6px;
             white-space: nowrap;
             transition: all 0.3s ease;
         }
@@ -655,7 +659,7 @@
         .filter-btn {
             padding: 0.5rem 1.25rem;
             border: 1px solid var(--border-color);
-            border-radius: 50px;
+            border-radius: 6px;
             background: var(--bg-primary);
             color: var(--text-secondary);
             font-size: 0.85rem;
@@ -677,16 +681,16 @@
         .project-item {
             padding: 0;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
-            background: rgba(248, 249, 250, 0.6);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
             transition: all 0.3s ease;
             overflow: hidden;
         }
         [data-theme="dark"] .project-item {
-            background: rgba(30, 41, 59, 0.6);
+            background: var(--card-bg);
         }
         .project-item:hover {
             border-color: var(--accent);
@@ -712,7 +716,7 @@
             font-weight: 600;
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Syne', sans-serif;
         }
         .project-description {
             font-size: 0.85rem;
@@ -734,7 +738,7 @@
         .tech-tag {
             padding: 0.25rem 0.75rem;
             background: var(--bg-secondary);
-            border-radius: 20px;
+            border-radius: 4px;
             font-size: 0.7rem;
             color: var(--text-secondary);
             font-family: monospace;
@@ -810,7 +814,7 @@
             display: block;
             padding: 2rem;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 6px;
             background: var(--bg-primary);
             text-decoration: none;
             color: inherit;
@@ -843,7 +847,7 @@
             margin-bottom: 1.5rem;
             padding: 1.5rem;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 6px;
             background: var(--bg-primary);
             transition: all 0.3s ease;
         }
@@ -876,9 +880,11 @@
             text-align: center;
         }
         .cta-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Syne', sans-serif;
             font-size: 1.75rem;
+            font-weight: 800;
             margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
         .cta-description {
             color: var(--text-secondary);
@@ -892,7 +898,7 @@
         }
         .btn {
             padding: 0.75rem 1.5rem;
-            border-radius: 50px;
+            border-radius: 6px;
             font-weight: 500;
             font-size: 0.9rem;
             text-decoration: none;
@@ -912,6 +918,8 @@
             background: var(--accent);
             color: white;
             border-color: var(--accent);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
         }
         footer {
             padding: 2rem;
@@ -920,8 +928,9 @@
             margin-top: 4rem;
         }
         footer p {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
+            font-family: 'DM Mono', monospace;
         }
 
         
@@ -941,6 +950,91 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Stats Band */
+        .stats-band { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem 3.5rem; padding: 2.5rem 2rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .stat-item { text-align: center; }
+        .stat-val { display: block; font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
+        .stat-label { display: block; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+        /* About block */
+        .about-block { max-width: 720px; margin: 0 auto; color: var(--text-secondary); font-size: 0.97rem; line-height: 1.9; text-align: center; }
+        .about-block strong { color: var(--text-primary); font-weight: 600; }
+
+        /* Experience */
+        .experience-item { margin-bottom: 1.25rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); backdrop-filter: blur(8px); transition: all 0.25s ease; }
+        .experience-item:hover { border-color: var(--accent); transform: translateX(4px); }
+        .experience-company { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+        .experience-role { color: var(--accent); font-size: 0.88rem; font-weight: 500; margin-bottom: 0.2rem; }
+        .experience-date { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'DM Mono', monospace; }
+        .experience-description { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; }
+
+        /* Cert items */
+        .cert-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; padding: 1.1rem 1.25rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); backdrop-filter: blur(8px); transition: all 0.25s ease; }
+        .cert-item:hover { border-color: var(--accent); transform: translateX(4px); }
+        .cert-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+        .cert-content p { font-size: 0.82rem; color: var(--text-secondary); }
+
+        /* Hero stats */
+        .hero-description { font-size: 1rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 2rem; line-height: 1.8; font-family: 'DM Sans', sans-serif; }
+        .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem,5vw,3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; letter-spacing: -0.03em; }
+        .section-title { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .section-title::after { content: ''; display: block; width: 36px; height: 3px; background: var(--accent); margin: 0.65rem auto 1.75rem; border-radius: 2px; }
+        .cta-title { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .skill-item { border-radius: 6px !important; }
+        .skill-item span { font-family: 'DM Sans', sans-serif; }
+        .project-title { font-family: 'Syne', sans-serif !important; font-weight: 700 !important; letter-spacing: -0.01em; }
+        .role-badge { border-radius: 6px !important; }
+        .btn { border-radius: 6px !important; }
+        .leetcode-card { border-radius: 6px !important; }
+
+
+        /* ── CUSTOM CURSOR ── */
+        #custom-cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease, height 0.15s ease,
+                        background 0.15s ease, border-color 0.15s ease,
+                        border-radius 0.15s ease;
+            will-change: left, top;
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 5px; height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            will-change: left, top;
+            transition: opacity 0.2s;
+        }
+        #custom-cursor.on-link {
+            width: 36px; height: 36px;
+            background: rgba(37,99,235,0.1);
+            border-color: var(--accent);
+        }
+        #custom-cursor.on-btn {
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            background: rgba(37,99,235,0.08);
+        }
+        #custom-cursor.clicking {
+            width: 14px; height: 14px;
+            background: rgba(37,99,235,0.25);
+        }
+        body { cursor: none !important; }
+        a, button, input, textarea, select,
+        .btn, .skill-item, .project-item,
+        .role-card, .cert-item, .experience-item,
+        .publication-card, .timeline-item,
+        .back-link, .theme-toggle { cursor: none !important; }
+
     </style>
 </head>
 <body>
@@ -958,11 +1052,10 @@
     
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
     
-        <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">LLM/GenAI Engineer</span></div></nav>
+        <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">LLM / GenAI Engineer</span></div></nav>
 
     <section class="hero">
         <div class="container">
-            <p class="hero-greeting animate-fade-in-up">Hey, I'm Sai Teja 👋</p>
             <!-- Cute Eyes that follow mouse -->
             <div class="cute-eyes" id="cuteEyes">
                 <div class="eye">
@@ -976,8 +1069,8 @@
                     </div>
                 </div>
             </div>
-            <h1 class="animate-fade-in-up delay-1">LLM/GenAI Engineer</h1>
-            <p class="hero-subtitle animate-fade-in-up delay-2">Building intelligent AI systems with LLMs, RAG pipelines, and multi-agent architectures.</p>
+            <h1 class="animate-fade-in-up delay-1">LLM Engineering & Agentic AI Systems</h1>
+            <p class="hero-description animate-fade-in-up delay-2">Fine-tuning transformers, building multi-agent pipelines, and shipping production RAG systems. From LoRA adapters to agentic reasoning chains, I build LLM systems that actually work in the real world.</p>
 
             <div class="ai-input-container animate-fade-in-up delay-3">
                 <div class="ai-input-wrapper">
@@ -988,13 +1081,7 @@
                 </div>
             </div>
 
-            <div class="quick-actions animate-fade-in-up delay-3">
-                <a href="#about" class="quick-action"><span class="quick-action-icon">😊</span><span class="quick-action-label">About Me</span></a>
-                <a href="#projects" class="quick-action"><span class="quick-action-icon">💼</span><span class="quick-action-label">Projects</span></a>
-                <a href="#skills" class="quick-action"><span class="quick-action-icon">📚</span><span class="quick-action-label">Skills</span></a>
-                <a href="#experience" class="quick-action"><span class="quick-action-icon">🎯</span><span class="quick-action-label">Experience</span></a>
-                <a href="#contact" class="quick-action"><span class="quick-action-icon">🔑</span><span class="quick-action-label">Contact</span></a>
-            </div>
+            
 
             <div class="ai-response" id="aiResponse">
                 <div class="ai-response-header">
@@ -1020,22 +1107,20 @@
         <div class="container"><h2 class="section-title">Technical Skills</h2></div>
         <div class="skills-marquee">
             <div class="skills-track">
-                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"><span>Hugging Face</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
-                <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Pinecone / Vector DB"><span>Pinecone / Vector DB</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
-                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace"><span>Hugging Face</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"><span>Hugging Face</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
-                <div class="skill-item"><img src="https://img.icons8.com/color/48/nvidia.png" alt="CUDA"><span>CUDA</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Neo4j"><span>Neo4j</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
-                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neo4j/neo4j-original.svg" alt="Pinecone / Vector DB"><span>Pinecone / Vector DB</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"><span>FastAPI</span></div>
                 <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS"><span>AWS</span></div>
+                <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
             </div>
         </div>
     </section>
@@ -1048,9 +1133,9 @@
             <!-- Project Filters -->
             <div class="project-filters">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="agent">🤖 Agents</button>
-                <button class="filter-btn" data-filter="rag">📚 RAG</button>
-                <button class="filter-btn" data-filter="safety">🛡️ Safety</button>
+                <button class="filter-btn" data-filter="agent">Agents</button>
+                <button class="filter-btn" data-filter="rag">RAG</button>
+                <button class="filter-btn" data-filter="safety">🛡Safety</button>
                 <button class="filter-btn" data-filter="production">🚀 Production</button>
             </div>
             
@@ -1069,22 +1154,22 @@
     <section class="section" id="certifications">
         <div class="container">
             <h2 class="section-title">Certifications</h2>
-            <div class="cert-item"><span class="cert-icon">🎓</span><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
-            <div class="cert-item"><span class="cert-icon">🔴</span><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
+            <div class="cert-item"><div class="cert-content"><h4>Advanced Large Language Model Agents</h4><p>UC Berkeley EECS • Jul 2025</p></div></div>
+            <div class="cert-item"><div class="cert-content"><h4>Oracle GenAI Professional</h4><p>Oracle Cloud • Jun 2024 - Jun 2026</p></div></div>
         </div>
     </section>
 
     <section class="cta-section" id="contact">
         <div class="container">
             <h2 class="cta-title">Building with LLMs?</h2>
-            <p class="cta-description">Let's discuss how I can help create intelligent AI applications.</p>
-            <div class="cta-buttons"><a href="mailto:saiteja.srivllibhutturu@gmail.com" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
+            <p class="cta-description">Fine-tuning, RAG, agents, or clinical LLM deployment. Let's build something that works.</p>
+            <div class="cta-buttons"><a href="/cdn-cgi/l/email-protection#5f2c3e362b3a353e712c2d36293333363d372a2b2b2a2d2a1f38323e3633713c3032" class="btn btn-primary">Get In Touch</a><a href="https://github.com/saitejasrivilli" class="btn" target="_blank">View GitHub</a><a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="btn" target="_blank">Resume</a></div>
         </div>
     </section>
 
-    <footer><p>© 2026 Sai Teja Srivillibhutturu. LLM/GenAI Engineer.</p></footer>
+    <footer><p>© 2026 Sai Teja Srivillibhutturu · LLM / GenAI Engineer</p></footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Hybrid loading: Instant static + background GitHub updates with README parsing
         const GITHUB_USER = 'saitejasrivilli';
         const CACHE_KEY = 'llmgenai_projects_cache_v4';
@@ -1483,10 +1568,4 @@
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length > 0) {
-                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-        })();
-    </script>
-</body>
-</html>
+        

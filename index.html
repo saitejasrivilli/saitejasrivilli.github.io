@@ -714,15 +714,7 @@
         }
         @keyframes progress-shine { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
 
-        /* ── CURSOR TRAIL ── */
-        .cursor-trail {
-            position: fixed; border-radius: 50%;
-            pointer-events: none; z-index: 9998;
-            transform: translate(-50%,-50%);
-            mix-blend-mode: screen;
-            transition: opacity 0.5s ease;
-        }
-
+        
         /* ── ST MONOGRAM ── */
         .st-logo {
             position: fixed; top: 1.2rem; left: 2rem; z-index: 1000;
@@ -923,7 +915,7 @@
             width: 16px; height: 16px;
             background: rgba(37,99,235,0.3);
         }
-        body { cursor: none; }
+        body { cursor: none !important; }
         a, button, .role-card, .project-item, .skill-item { cursor: none; }
 
         /* ── SCROLL-REACTIVE PARTICLES (handled in JS) ── */
@@ -1889,54 +1881,7 @@
         }, {passive:true});
     })();
 
-    /* ── CURSOR TRAIL ── */
-    (function(){
-        if(window.matchMedia('(pointer: coarse)').matches) return; // skip on touch
-        const colors = ['#2563eb','#8b5cf6','#10b981','#f59e0b','#06b6d4'];
-        const trails = [];
-        const N = 12;
-        for(let i=0;i<N;i++){
-            const d = document.createElement('div');
-            d.className = 'cursor-trail';
-            const size = 6 + (N-i)*1.5;
-            d.style.cssText = `width:${size}px;height:${size}px;background:${colors[i%colors.length]};opacity:${0.7-(i/N)*0.55}`;
-            document.body.appendChild(d);
-            trails.push({el:d,x:0,y:0});
-        }
-        let mx=0,my=0;
-        document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;},{passive:true});
-        function animate(){
-            let px=mx,py=my;
-            trails.forEach((t,i)=>{
-                const lag = 1 - i*0.06;
-                t.x += (px - t.x) * (0.22 - i*0.012);
-                t.y += (py - t.y) * (0.22 - i*0.012);
-                t.el.style.left = t.x + 'px';
-                t.el.style.top  = t.y + 'px';
-                px = t.x; py = t.y;
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    })();
-
-    /* ── COMBINED BACKGROUND: AI + TELECOM + HEALTHCARE ── */
-    (function(){
-        const canvas = document.getElementById('particle-canvas');
-        if(!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let W, H;
-        let t = 0; // global time tick
-
-        function resize(){
-            W = canvas.width  = window.innerWidth;
-            H = canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize, {passive:true});
-
-        const isDark = () => document.documentElement.classList.contains('dark-mode');
-
+    
         /* ── AI: Neural network nodes ── */
         const AI_N = 42, AI_DIST = 150;
         const aiNodes = [];
@@ -2224,7 +2169,6 @@
 
 
     <!-- Custom Cursor -->
-    <div id="custom-cursor"></div>
 
     <!-- AI Chat Widget -->
     <button id="ai-chat-btn" title="Ask me anything about Sai Teja">
@@ -2405,51 +2349,54 @@
         if(band) obs.observe(band);
     })();
 
-    /* ── CUSTOM MORPHING CURSOR ── */
-    (function(){
-        if(window.matchMedia('(pointer: coarse)').matches) return;
-        const cur = document.getElementById('custom-cursor');
-        if(!cur) return;
-        let mx = -100, my = -100, cx = -100, cy = -100;
-        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, {passive:true});
-        function animCursor() {
-            cx += (mx - cx) * 0.18;
-            cy += (my - cy) * 0.18;
-            cur.style.left = cx + 'px';
-            cur.style.top  = cy + 'px';
-            requestAnimationFrame(animCursor);
+    
+        /* ── CUSTOM CURSOR ── */
+        #custom-cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease, height 0.15s ease,
+                        background 0.15s ease, border-color 0.15s ease,
+                        border-radius 0.15s ease;
+            will-change: left, top;
         }
-        animCursor();
-        document.addEventListener('mousedown', () => cur.classList.add('clicking'));
-        document.addEventListener('mouseup',   () => cur.classList.remove('clicking'));
-        document.querySelectorAll('a, .role-card, .publication-card').forEach(el => {
-            el.addEventListener('mouseenter', () => cur.classList.add('on-link'));
-            el.addEventListener('mouseleave', () => cur.classList.remove('on-link'));
-        });
-        document.querySelectorAll('button, .btn, .resume-btn-hero').forEach(el => {
-            el.addEventListener('mouseenter', () => cur.classList.add('on-btn'));
-            el.addEventListener('mouseleave', () => cur.classList.remove('on-btn'));
-        });
-        document.addEventListener('mouseleave', () => cur.style.opacity = '0');
-        document.addEventListener('mouseenter', () => cur.style.opacity = '1');
-    })();
+        #cursor-dot {
+            position: fixed;
+            width: 5px; height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            will-change: left, top;
+            transition: opacity 0.2s;
+        }
+        #custom-cursor.on-link {
+            width: 36px; height: 36px;
+            background: rgba(37,99,235,0.1);
+            border-color: var(--accent);
+        }
+        #custom-cursor.on-btn {
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            background: rgba(37,99,235,0.08);
+        }
+        #custom-cursor.clicking {
+            width: 14px; height: 14px;
+            background: rgba(37,99,235,0.25);
+        }
+        body { cursor: none !important; }
+        a, button, input, textarea, select,
+        .btn, .skill-item, .project-item,
+        .role-card, .cert-item, .experience-item,
+        .publication-card, .timeline-item,
+        .back-link, .theme-toggle { cursor: none !important; }
 
-    /* ── PARTICLES REACT TO SCROLL ── */
-    (function(){
-        let scrollV = 0, lastScroll = 0;
-        const canvas = document.getElementById('particle-canvas');
-        if(!canvas) return;
-        window.addEventListener('scroll', () => {
-            const s = window.scrollY;
-            scrollV = Math.abs(s - lastScroll);
-            lastScroll = s;
-            // boost particle speed temporarily
-            window.__particleBoost = Math.min(scrollV / 8, 4);
-            setTimeout(() => { window.__particleBoost = 0; }, 300);
-        }, {passive:true});
-    })();
-
-    /* ── AI CHAT WIDGET ── */
+        /* ── AI CHAT WIDGET ── */
     (function(){
         const btn     = document.getElementById('ai-chat-btn');
         const panel   = document.getElementById('ai-chat-panel');
@@ -2547,6 +2494,63 @@ Keep answers concise (2-4 sentences), friendly, and professional. If asked somet
                 addMsg("Hmm, something went wrong. Try reaching out directly via the contact section!", 'bot');
             }
         }
+    })();
+    </script>
+
+
+    <div id="custom-cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <script>
+    /* ── CURSOR ── */
+    (function(){
+        if(window.matchMedia('(pointer: coarse)').matches) return;
+        const ring = document.getElementById('custom-cursor');
+        const dot  = document.getElementById('cursor-dot');
+        if(!ring || !dot) return;
+
+        let mx = window.innerWidth/2, my = window.innerHeight/2;
+        let rx = mx, ry = my;
+
+        // Dot follows instantly
+        document.addEventListener('mousemove', function(e){
+            mx = e.clientX; my = e.clientY;
+            dot.style.left = mx + 'px';
+            dot.style.top  = my + 'px';
+        }, {passive: true});
+
+        // Ring follows with slight lag
+        function animRing(){
+            rx += (mx - rx) * 0.14;
+            ry += (my - ry) * 0.14;
+            ring.style.left = rx + 'px';
+            ring.style.top  = ry + 'px';
+            requestAnimationFrame(animRing);
+        }
+        animRing();
+
+        // Set initial position immediately on first move
+        document.addEventListener('mousemove', function init(e){
+            rx = e.clientX; ry = e.clientY;
+            ring.style.left = rx + 'px';
+            ring.style.top  = ry + 'px';
+            document.removeEventListener('mousemove', init);
+        }, {passive: true, once: true});
+
+        document.addEventListener('mousedown', () => ring.classList.add('clicking'));
+        document.addEventListener('mouseup',   () => ring.classList.remove('clicking'));
+
+        document.addEventListener('mouseleave', () => { ring.style.opacity='0'; dot.style.opacity='0'; });
+        document.addEventListener('mouseenter', () => { ring.style.opacity='1'; dot.style.opacity='1'; });
+
+        document.querySelectorAll('a, .role-card, .publication-card, .back-link').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('on-link'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('on-link'));
+        });
+        document.querySelectorAll('button, .btn, .resume-btn-hero, .theme-toggle').forEach(el => {
+            el.addEventListener('mouseenter', () => { ring.classList.remove('on-link'); ring.classList.add('on-btn'); });
+            el.addEventListener('mouseleave', () => ring.classList.remove('on-btn'));
+        });
     })();
     </script>
 

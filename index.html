@@ -1041,7 +1041,7 @@
             }
             
             // Check current theme for initial background color
-            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
             
             // Initialize fluid simulation - bright pastel colors
             WebGLFluid(canvas, {
@@ -1142,7 +1142,7 @@
             
             // Theme change observer - reinitialize fluid with new background
             const themeObserver = new MutationObserver(function() {
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const isDark = document.documentElement.classList.contains('dark-mode');
                 // Reinitialize with correct background color
                 WebGLFluid(canvas, {
                     IMMEDIATE: false,
@@ -1168,7 +1168,7 @@
                     SUNRAYS: false,
                 });
             });
-            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
             
             // Hide fallback when WebGL works
             if (fallback) fallback.classList.add('hidden');
@@ -1176,10 +1176,6 @@
     </script>
 
     
-    <!-- Dark Mode Toggle -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme (follows system preference)">
-        <span class="theme-icon">🌙</span>
-    </button>
 
     <section class="hero">
         <div class="profile-container animate-fade-in-up">

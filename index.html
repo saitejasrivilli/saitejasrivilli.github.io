@@ -7,7 +7,7 @@
     
     <!-- Open Graph Meta Tags for LinkedIn/Social Sharing -->
     <meta property="og:title" content="Sai Teja Srivillibhutturu | ML & Deep Learning Engineer">
-    <meta property="og:description" content="ML Engineer specializing in LLM Fine-Tuning, Deep Learning, GPU Optimization, and 6G Telecom AI. MS CS from UT Arlington. 2× IEEE Published — ICC 2026 & OJ-COMS 2026.">
+    <meta property="og:description" content="ML Engineer specializing in LLM Fine-Tuning, Deep Learning, GPU Optimization, and 6G Telecom AI. MS CS from UT Arlington. 2x IEEE Published: ICC 2026 and OJ-COMS 2026.">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/saitejasrivilli">
     <meta property="og:url" content="https://saitejasrivilli.github.io">
     <meta property="og:type" content="website">
@@ -19,7 +19,7 @@
     <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
         // Focus Areas Interactive Chart - Works on both mobile and desktop
         const focusData = {
@@ -160,30 +160,42 @@
         });
     </script>
     <style>
-        /* Light Mode (6 AM - 6 PM) */
+        /* Light Mode */
         :root, html.light-mode {
             --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --text-primary: #1a1a2e;
-            --text-secondary: #6b7280;
-            --accent: #2563eb;
-            --accent-green: #10b981;
-            --border-color: #e5e7eb;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --bg-secondary: #f4f6fb;
+            --text-primary: #0f1117;
+            --text-secondary: #5c6474;
+            --accent: #0066ff;
+            --accent-2: #06b6d4;
+            --accent-green: #059669;
+            --border-color: #e2e6f0;
+            --card-bg: rgba(255,255,255,0.82);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
+            --font-display: "Syne", sans-serif;
+            --font-body: "DM Sans", sans-serif;
+            --font-mono: "DM Mono", monospace;
         }
         
-        /* Dark Mode (6 PM - 6 AM) */
+        /* Dark Mode */
         html.dark-mode {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --bg-primary: #080c14;
+            --bg-secondary: #0f1520;
+            --text-primary: #e8edf5;
+            --text-secondary: #7a8494;
+            --accent: #3b82f6;
+            --accent-2: #06b6d4;
+            --accent-green: #10b981;
+            --border-color: rgba(255,255,255,0.07);
+            --card-bg: rgba(15,21,32,0.85);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.4);
+            --font-display: "Syne", sans-serif;
+            --font-body: "DM Sans", sans-serif;
+            --font-mono: "DM Mono", monospace;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        body { font-family: var(--font-body), -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
         /* Fluid Canvas - Full screen background - receives mouse/touch events */
         #fluid-canvas {
@@ -352,9 +364,9 @@
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 1.25rem 2rem 3rem; position: relative; overflow: hidden; z-index: 10; }
         .hero > * { position: relative; z-index: 11; pointer-events: auto !important; }
         .profile-container { 
-            width: 160px; 
-            height: 160px; 
-            margin-bottom: 0.5rem;
+            width: 130px; 
+            height: 130px; 
+            margin-bottom: 1rem;
             position: relative;
         }
         .profile-container::before {
@@ -380,8 +392,8 @@
             50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
         }
         .profile-image { 
-            width: 160px; 
-            height: 160px; 
+            width: 130px; 
+            height: 130px; 
             border-radius: 50%; 
             object-fit: cover; 
             border: 3px solid rgba(255, 255, 255, 0.8);
@@ -412,34 +424,34 @@
                 0 2px 8px rgba(0, 0, 0, 0.3),
                 0 0 40px rgba(130, 60, 255, 0.15);
         }
-        .profile-fallback { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; line-height: 1.1; }
-        .hero-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; }
+        .profile-fallback { width: 96px; height: 96px; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 8px 30px rgba(0,0,0,0.12); animation: float 3s ease-in-out infinite; background: linear-gradient(135deg, var(--accent), #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; font-family: 'Playfair Display', serif; position: absolute; top: 0; left: 0; }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem,5vw,3.8rem); font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.03em; line-height: 1.05; }
+        .hero-subtitle { font-size: 0.85rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1rem; line-height: 1.8; padding: 0 1rem; min-height: 3.6em; font-family: var(--font-mono); letter-spacing: 0.02em; }
         
         /* Status Badge */
-        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 50px; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--accent-green); font-weight: 500; }
+        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.78rem; color: var(--accent-green); font-weight: 600; font-family: var(--font-mono); letter-spacing: 0.04em; }
         .status-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 2s infinite; }
         
         /* Resume Button - Prominent */
-        .resume-btn-hero { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent), #1d4ed8); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; margin-bottom: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
-        .resume-btn-hero:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); }
+        .resume-btn-hero { display: inline-flex; align-items: center; gap: 0.65rem; padding: 0.85rem 1.85rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; transition: all 0.3s ease; font-family: var(--font-display); box-shadow: 0 4px 16px rgba(0,102,255,0.3); }
+        .resume-btn-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,102,255,0.4); }
         .resume-btn-hero svg { width: 20px; height: 20px; }
         
-        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--bg-primary); }
-        .btn:hover { border-color: var(--text-primary); background: var(--text-primary); color: var(--bg-primary); }
+        .hero-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 0.65rem 1.35rem; border-radius: 50px; font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.25s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--card-bg); font-family: var(--font-display); }
+        .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border: 1.5px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; animation: float 2s ease-in-out infinite; }
         .scroll-indicator svg { width: 16px; height: 16px; color: var(--text-secondary); }
         
         /* Sections */
-        .section { padding: 5rem 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-primary); text-align: center; }
-        html.light-mode .section-title { color: #000000; font-weight: 900; }
+        .section { padding: 4.5rem 0; border-top: 1px solid var(--border-color); }
+        .section-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-primary); letter-spacing: -0.02em; text-align: center; }
+        html.light-mode .section-title { color: var(--text-primary); font-weight: 800; }
         html.dark-mode .section-title { color: #f1f5f9; font-weight: 800; }
         .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent); margin: 0.75rem auto 2rem; }
         
         /* About */
-        .about-content { color: var(--text-secondary); font-size: 1rem; line-height: 1.9; max-width: 700px; margin: 0 auto; text-align: center; }
+        .about-content { color: var(--text-secondary); font-size: 0.97rem; line-height: 1.9; max-width: 680px; margin: 0 auto; text-align: center; }
         .about-content p { margin-bottom: 1rem; }
         
         /* Timeline */
@@ -447,7 +459,7 @@
         .timeline-item:hover { transform: translateX(5px); border-color: var(--accent); }
         .timeline-logo { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.75rem; }
         .timeline-content { flex: 1; }
-        .timeline-company { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .timeline-company { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.25rem; font-family: var(--font-display); }
         .timeline-role { color: var(--text-secondary); margin-bottom: 0.25rem; }
         .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
         .timeline-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
@@ -467,7 +479,7 @@
         .education-specialization strong { color: var(--accent); }
         .education-date { font-size: 0.85rem; color: var(--text-secondary); }
         .education-gpa { text-align: right; flex-shrink: 0; }
-        .gpa-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--accent); }
+        .gpa-value { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
         .gpa-scale { font-size: 0.9rem; color: var(--text-secondary); }
         .education-summary { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-primary); border-radius: 8px; border-left: 3px solid var(--accent); }
         .education-conclusion { font-size: 0.85rem; color: var(--text-secondary); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
@@ -487,10 +499,10 @@
         .skills-marquee.reverse .skills-track { animation-direction: reverse; }
         .skills-track { display: flex; gap: 3rem; animation: marquee 60s linear infinite; width: max-content; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; white-space: nowrap; transition: all 0.3s ease; }
-        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
+        .skill-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0.9rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 3px; white-space: nowrap; transition: all 0.2s ease; }
+        .skill-item:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 0 var(--accent); }
         .skill-item img { width: 24px; height: 24px; object-fit: contain; }
-        .skill-item span { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+        .skill-item span { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); font-family: var(--font-display); }
         
         /* Skills */
         .skills-category { margin-bottom: 2.5rem; }
@@ -503,11 +515,11 @@
         /* Projects */
         #projects { position: relative; }
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .project-item { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 16px; transition: all 0.3s ease; text-decoration: none; display: flex; flex-direction: column; color: var(--text-primary); background: var(--bg-primary); }
-        .project-item:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-5px); }
+        .project-item { padding: 1.75rem; border: 1px solid var(--border-color); border-radius: 4px; transition: all 0.25s ease; text-decoration: none; display: flex; flex-direction: column; color: var(--text-primary); background: var(--card-bg); }
+        .project-item:hover { border-color: var(--accent); box-shadow: 0 12px 36px rgba(0,0,0,0.12), 0 0 0 1px var(--accent); transform: translateY(-4px); }
         [data-theme="dark"] .project-item:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
         .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
-        .project-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); font-family: 'Playfair Display', serif; }
+        .project-title { font-weight: 700; font-size: 1rem; color: var(--text-primary); font-family: var(--font-display); letter-spacing: -0.01em; }
         .project-tech-inline { display: flex; flex-wrap: wrap; gap: 0.35rem; }
         .tech-tag-inline { padding: 0.15rem 0.5rem; background: var(--accent); color: white; border-radius: 12px; font-size: 0.7rem; font-weight: 500; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
@@ -529,28 +541,28 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         
         /* Certifications */
-        .cert-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
-        .cert-item:hover { transform: translateX(5px); }
+        .cert-item { display: flex; gap: 1rem; margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 4px; transition: all 0.2s ease; background: var(--card-bg); }
+        .cert-item:hover { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
         .cert-image { width: 80px; height: 80px; border-radius: 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; padding: 0.75rem; flex-shrink: 0; }
         .cert-content h4 { font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.25rem; }
         .cert-content p { font-size: 0.9rem; color: var(--text-secondary); }
         
         /* Role Cards */
         .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .role-card { padding: 1.75rem; border: 1px solid var(--border-color); border-radius: 16px; text-decoration: none; color: inherit; transition: all 0.3s ease; background: var(--bg-primary); }
-        .role-card:hover { border-color: var(--accent); box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15); transform: translateY(-5px); }
+        .role-card { padding: 1.75rem; border: 1px solid var(--border-color); border-radius: 4px; text-decoration: none; color: inherit; transition: all 0.25s ease; background: var(--card-bg); }
+        .role-card:hover { border-color: var(--accent); box-shadow: 0 12px 36px rgba(0,0,0,0.1), 0 0 0 1px var(--accent); transform: translateY(-4px); }
         .role-icon { font-size: 2rem; margin-bottom: 1rem; }
-        .role-title { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .role-title { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.5rem; font-family: var(--font-display); letter-spacing: -0.01em; }
         .role-description { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
         .role-link { font-size: 0.9rem; color: var(--accent); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
         .role-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
         .role-card:hover .role-link svg { transform: translateX(5px); }
         
         /* Contact Section */
-        .contact-section { padding: 5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
+        .contact-section { padding: 4.5rem 0; border-top: 1px solid var(--border-color); text-align: center; }
         .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
-        .contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: 50px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; transition: all 0.3s ease; background: var(--bg-primary); }
-        .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; transform: translateY(-2px); }
+        .contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 1.5px solid var(--border-color); border-radius: 50px; text-decoration: none; color: var(--text-primary); font-size: 0.88rem; transition: all 0.25s ease; background: var(--card-bg); font-family: var(--font-display); font-weight: 500; }
+        .contact-link:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .contact-link svg { width: 18px; height: 18px; }
         
         /* GitHub Stats Widget */
@@ -574,8 +586,8 @@
         .form-status.error { display: block; background: #fee2e2; color: #991b1b; }
         
         /* Publication card */
-        .publication-card { display: flex; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-primary); transition: all 0.3s ease; margin-bottom: 1rem; text-decoration: none; color: inherit; }
-        .publication-card:hover { border-color: var(--accent); transform: translateX(5px); }
+        .publication-card { display: flex; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--card-bg); transition: all 0.25s ease; margin-bottom: 1rem; text-decoration: none; color: inherit; }
+        .publication-card:hover { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
         .pub-badge { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70px; gap: 0.35rem; }
         .pub-venue { font-size: 0.7rem; font-weight: 700; color: white; background: var(--accent); padding: 0.25rem 0.5rem; border-radius: 6px; text-align: center; line-height: 1.2; }
         .pub-year { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
@@ -593,7 +605,7 @@
         /* Healthcare AI tag + tech pills on timeline */
         .healthcare-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.7rem; background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.45); border-radius: 12px; font-size: 0.78rem; color: #059669; font-weight: 600; margin-left: 0.5rem; vertical-align: middle; box-shadow: 0 0 8px rgba(16,185,129,0.15); }
         .tech-stack-line { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
-        .tech-pill { padding: 0.15rem 0.55rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
+        .tech-pill { padding: 0.18rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.74rem; color: var(--text-secondary); font-family: var(--font-mono); }
 
         /* GitHub contribution graph */
         .github-contrib { margin: 2rem 0 1rem; text-align: center; }
@@ -601,7 +613,7 @@
 
         /* Footer */
         footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border-color); }
-        footer p { font-size: 0.85rem; color: var(--text-secondary); }
+        footer p { font-size: 0.75rem; color: var(--text-secondary); font-family: var(--font-mono); }
         .footer-updated { font-size: 0.78rem; color: var(--text-secondary); opacity: 0.6; margin-top: 0.35rem; }
 
         
@@ -784,21 +796,21 @@
 
         /* ── SECTION TITLE UNDERLINE ANIMATE ── */
         .section-title::after {
-            content: ''; display: block;
-            width: 0; height: 3px;
-            background: linear-gradient(90deg, var(--accent), #8b5cf6);
-            margin: 0.6rem auto 2rem;
+            content: '';
+            display: block;
+            width: 36px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0.6rem auto 1.5rem;
             border-radius: 2px;
-            transition: width 0.7s ease;
         }
-        .section-title.visible::after { width: 48px; }
 
 
         /* ── TERMINAL HERO ── */
         .terminal-box {
             background: rgba(15,15,25,0.92);
             border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 1.25rem 1.5rem 1.25rem;
             max-width: 620px;
             width: 100%;
@@ -1361,7 +1373,7 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant</p>
                     <p class="timeline-date">Jun 2025 - Present • Arlington, TX</p>
-                    <p class="timeline-description">Built TopGPT, a full-stack LLM application fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Led CTMap — an LLM fine-tuning pipeline for mmWave 6G path planning — resulting in two accepted IEEE publications: <strong>IEEE ICC 2026</strong> (conference) and <strong>IEEE OJ-COMS 2026</strong> (journal). Built SFT pipelines encoding Sionna channel maps and OpenStreetMap graphs into transformer-readable formats.</p>
+                    <p class="timeline-description">Built TopGPT, a full-stack LLM application fine-tuned on 3+ textbooks with RAG over 1,000+ research paper chunks stored in Pinecone on AWS. Led CTMap, an LLM fine-tuning pipeline for mmWave 6G path planning, resulting in two accepted IEEE publications: <strong>IEEE ICC 2026</strong> (conference) and <strong>IEEE OJ-COMS 2026</strong> (journal). Built SFT pipelines encoding Sionna channel maps and OpenStreetMap graphs into transformer-readable formats.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">PyTorch</span><span class="tech-pill">RAG</span><span class="tech-pill">Pinecone</span><span class="tech-pill">AWS</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">Sionna</span>
                     </div>
@@ -1487,7 +1499,7 @@
                     <!-- 1: CUDA Neuron Attention -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding — 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline (TorchScript trace, neuronx-cc compile, profiling) achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
+                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
                         <div class="project-links">
                             <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-link code" target="_blank">
@@ -1591,7 +1603,7 @@
                 <a href="Research.html" class="role-card tilt-card">
                     <div class="role-icon">📚</div>
                     <h3 class="role-title">Research</h3>
-                    <p class="role-description">2× IEEE published — LLM fine-tuning for 6G path planning, digital twin simulations, mmWave connectivity AI.</p>
+                    <p class="role-description">2x IEEE published. LLM fine-tuning for 6G path planning, digital twin simulations, mmWave connectivity AI.</p>
                     <span class="role-link">View Publications <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
                 <a href="Healthcare.html" class="role-card tilt-card" style="border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.04);">
@@ -1607,7 +1619,7 @@
     <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
-            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, Healthcare AI, ML Research, and Deep Learning roles — applying language models to real clinical and physical systems.</p>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, Healthcare AI, ML Research, and Deep Learning roles, applying language models to real clinical and physical systems.</p>
             
             <!-- Contact Form -->
             <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
@@ -1826,7 +1838,7 @@
         });
         
         /**
-         * GitHub last-updated enrichment — adds "Updated X" dates to existing project cards
+         * GitHub last-updated enrichment, adds "Updated X" dates to existing project cards
          */
         const projectRepos = [
             'cuda-neuron-attention',
@@ -2179,7 +2191,7 @@
         }
         setTimeout(typeChar, 700);
 
-        // Override the inline script — neutralize original
+        // Override the inline script, neutralize original
         // Cycle phrases
         function startPhrase(idx) {
             el.textContent = '';

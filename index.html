@@ -2287,10 +2287,10 @@
             </div>
         </div>
         <div class="chat-suggestions" id="chat-suggestions">
+            <span class="chat-suggestion">💼 Work experience?</span>
             <span class="chat-suggestion">📄 IEEE publications?</span>
-            <span class="chat-suggestion">🏥 Healthcare AI work?</span>
-            <span class="chat-suggestion">🔧 LLM fine-tuning?</span>
-            <span class="chat-suggestion">💼 Open roles?</span>
+            <span class="chat-suggestion">⚡ CUDA projects?</span>
+            <span class="chat-suggestion">📬 Contact info?</span>
         </div>
         <div class="chat-input-row">
             <input type="text" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
@@ -2518,34 +2518,45 @@
         const suggs   = document.getElementById('chat-suggestions');
         if(!btn || !panel) return;
 
-        const RESUME_CONTEXT = `You are an AI assistant for Sai Teja Srivillibhutturu's portfolio website. Answer questions about him based on this information:
+        // Local knowledge base — works without any API key
+        const KB = {
+            experience: {
+                keys: ['experience','work','job','intern','company','role','qure','uta','tcs','dental','employment','career'],
+                answer: "Sai Teja has 5+ years across AI/ML and software engineering:\n\n🏥 AI Solutions Engineer @ Qure.ai (Mar–May 2026) — Clinical LLMs for radiology, EPIC/FHIR across 6+ hospitals\n🦷 ML Engineer @ DentalScan (Dec 2025–Feb 2026) — CV pipelines for 50K+ dental images on AWS SageMaker\n🔬 Graduate Research Asst @ UTA (Jun 2025–present) — LLM fine-tuning for 6G, 2× IEEE published\n🏫 Teaching Asst @ UTA (Aug 2024–May 2025) — Numerical Methods for 50+ students\n💼 Senior SWE @ TCS (2019–2023) — Java distributed systems, 10+ enterprise clients, 40% latency reduction"
+            },
+            projects: {
+                keys: ['project','build','built','cuda','llm','qwen','attention','agent','fine-tun','finetun','gpu'],
+                answer: "Sai Teja's key projects:\n\n⚡ CUDA Attention Kernel + AWS Neuron — Custom CUDA C++ kernel, 5.64× speedup; GPT-2 on AWS Inferentia 3.7×\n🤖 Production LLM Fine-Tuning (Qwen-7B) — LoRA r=8, QLoRA 4-bit, 17% loss reduction, deployed to HuggingFace Hub\n🔦 Attention Optimization Suite — FlashAttention-2: 12.3× throughput, 99.7% memory reduction vs vanilla\n🕵️ Advanced AI Agent — Chain-of-Thought, Tree-of-Thoughts, ReAct with web search & multi-agent"
+            },
+            publications: {
+                keys: ['paper','publication','ieee','research','arxiv','scholar','journal','ctmap','6g','publish','latest paper'],
+                answer: "Sai Teja has 2 IEEE publications in 2026:\n\n📄 \"CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks\" — IEEE ICC 2026 (CQRM Workshop). arXiv: 2601.00110\n📘 \"Digital Twin-Guided AI Path Planning for Connectivity-Aware Mobility\" — IEEE OJ-COMS 2026 (Journal)\n\nBoth cover LLM fine-tuning for 6G wireless using Sionna & OpenStreetMap."
+            },
+            skills: {
+                keys: ['skill','tech','stack','language','know','python','pytorch','cuda','tool','framework'],
+                answer: "Sai Teja's technical stack:\n\n🤖 AI/ML — PyTorch, CUDA C++, HuggingFace, LoRA/PEFT, QLoRA, vLLM, FlashAttention, RAG\n🏥 Healthcare AI — EPIC/FHIR, Medical Imaging, HIPAA compliance\n☁️ Cloud/MLOps — AWS (SageMaker, Inferentia), Docker, FastAPI, Airflow\n💻 Languages — Python, C++, Java, Go, SQL\n📡 Research — Sionna 6G, OpenStreetMap, LLM fine-tuning"
+            },
+            education: {
+                keys: ['education','degree','university','gpa','uta','study','graduate','ms','bachelor','andhra'],
+                answer: "Sai Teja's academic background:\n\n🎓 MS Computer Science & Engineering — UT Arlington, GPA 4.0/4.0, May 2025\n🎓 BS Computer Science — Andhra University, 8.2/10, 2019\n\nCertifications: UC Berkeley EECS Advanced LLM Agents, AWS Data Engineer Associate, Microsoft Fabric Data Engineer, Oracle GenAI Professional."
+            },
+            contact: {
+                keys: ['contact','email','linkedin','github','reach','hire','connect'],
+                answer: "You can reach Sai Teja via:\n\n📧 Email: saiteja.srivllibhutturu@gmail.com\n💼 LinkedIn: linkedin.com/in/saitejasrivillibhutturu\n💻 GitHub: github.com/saitejasrivilli\n📚 Google Scholar: Sai Teja Srivillibhutturu\n\nHe's open to LLM Engineering, Healthcare AI, ML Research, and Deep Learning roles!"
+            },
+            roles: {
+                keys: ['open','role','hiring','position','looking','opportunity','llm engineer','healthcare','deep learning','ml research'],
+                answer: "Sai Teja is currently open to:\n\n🤖 LLM Engineering\n🏥 Healthcare AI\n🔬 ML Research\n🧠 Deep Learning Engineering\n\nHe brings hands-on clinical LLM deployment, GPU optimization, IEEE-published research, and 4+ years of production engineering."
+            }
+        };
 
-NAME: Sai Teja Srivillibhutturu
-EDUCATION: MS Computer Science & Engineering, UT Arlington, GPA 4.0/4.0, May 2025. BS Computer Science, Andhra University, 8.2/10, 2019.
-CURRENT STATUS: Open to LLM Engineering, Healthcare AI, ML Research, Deep Learning roles.
-
-EXPERIENCE:
-- AI Solutions Engineer Intern @ Qure.ai (Mar-May 2026, Remote NY): Deployed clinical LLMs for radiology report parsing and EMR extraction across EPIC/FHIR-integrated hospital systems (Medstar, Mount Sinai, UFL). Supported 6+ live hospital sites. HIPAA-aligned documentation.
-- ML Engineer Intern @ ReplyQuickAI/DentalScan (Dec 2025-Feb 2026): Built CV pipelines for intra-oral image analysis (6+ categories, 50K+ images). AWS SageMaker retraining pipeline with active learning.
-- Graduate Research Assistant @ UTA (Jun 2025-present): LLM fine-tuning for 6G wireless path planning. 2 IEEE publications.
-- Graduate Teaching Assistant @ UTA (Aug 2024-May 2025): Numerical Methods for 50+ students.
-- Senior Software Engineer @ TCS (Jun 2019-May 2023, 4 years): Java distributed systems, 10+ enterprise clients, 40% latency reduction.
-
-PUBLICATIONS:
-1. "Digital Twin-Guided AI Path Planning for Connectivity-Aware Mobility" - IEEE OJ-COMS 2026 (Journal)
-2. "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks" - IEEE ICC 2026 (Conference, CQRM Workshop). arXiv: 2601.00110
-
-PROJECTS:
-- CUDA Attention Kernel + AWS Neuron SDK: 5.64x speedup, custom CUDA C++ attention kernel, GPT-2 on AWS Inferentia 3.7x speedup
-- Production LLM Fine-Tuning (Qwen-7B SFT): LoRA r=8, QLoRA 4-bit, 17% loss reduction, deployed to HuggingFace Hub
-- Attention Optimization Suite: FlashAttention-2 12.3x throughput, 99.7% memory reduction vs vanilla
-- Advanced AI Agent: Chain-of-Thought, Tree-of-Thoughts, ReAct with web search, Multi-Agent collaboration
-
-CERTIFICATIONS: UC Berkeley EECS Advanced LLM Agents (Jul 2025), AWS Data Engineer Associate, Microsoft Fabric Data Engineer, Oracle GenAI Professional.
-
-SKILLS: Python, PyTorch, CUDA, C++, Hugging Face, LLM fine-tuning, LoRA/PEFT, vLLM, FlashAttention, EPIC/FHIR, Medical Imaging, HIPAA, Sionna 6G, OpenStreetMap, AWS, Docker, FastAPI, Java, Go.
-
-Keep answers concise (2-4 sentences), friendly, and professional. If asked something not in the context, say you don't have that specific info but suggest checking the portfolio or contacting Sai Teja directly.`;
+        function getAnswer(q) {
+            q = q.toLowerCase();
+            for (const [, data] of Object.entries(KB)) {
+                if (data.keys.some(k => q.includes(k))) return data.answer;
+            }
+            return "I can answer questions about Sai Teja's experience, projects, publications, skills, education, or how to contact him. What would you like to know? 😊";
+        }
 
         btn.addEventListener('click', () => { panel.classList.toggle('open'); if(panel.classList.contains('open')) input.focus(); });
         closeBtn.addEventListener('click', () => panel.classList.remove('open'));
@@ -2608,26 +2619,13 @@ Keep answers concise (2-4 sentences), friendly, and professional. If asked somet
             addMsg(q, 'user');
             const typing = addTyping();
 
-            try {
-                const res = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 300,
-                        system: RESUME_CONTEXT,
-                        messages: [{ role: 'user', content: q }]
-                    })
-                });
-                const data = await res.json();
+            // Simulate a short thinking delay, then answer locally
+            setTimeout(() => {
                 typing.remove();
-                const answer = data.content?.[0]?.text || "Sorry, I couldn't get a response right now.";
-                addMsg(answer, 'bot');
-            } catch(e) {
-                typing.remove();
-                addMsg("Hmm, something went wrong. Try reaching out directly via the contact section!", 'bot');
-            }
+                addMsg(getAnswer(q), 'bot');
+            }, 600);
         }
+
     })();
     }); // DOMContentLoaded
     </script>

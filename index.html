@@ -222,7 +222,7 @@
         .fluid-fallback.hidden { display: none; }
         
         /* Content layer - visible but passes mouse events through to canvas */
-        body > *:not(#fluid-canvas):not(.fluid-fallback):not(#particle-canvas):not(script):not(.cursor-trail) {
+        body > *:not(#fluid-canvas):not(.fluid-fallback):not(#particle-canvas):not(script):not(.cursor-trail):not(#custom-cursor):not(#cursor-dot) {
             position: relative;
             z-index: 10;
             pointer-events: none;
@@ -254,7 +254,7 @@
             }
             
             /* Content layer - keep visible but no pointer events except on interactive elements */
-            body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
+            body > *:not(#fluid-canvas):not(.fluid-fallback):not(script):not(#custom-cursor):not(#cursor-dot) {
                 pointer-events: none;
             }
             

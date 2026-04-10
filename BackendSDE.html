@@ -22,27 +22,35 @@
     <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --text-primary: #1a1a2e;
-            --text-secondary: #6b7280;
+            --bg-secondary: #f4f6fb;
+            --text-primary: #0f1117;
+            --text-secondary: #5c6474;
             --accent: #6366f1;
-            --accent-green: #10b981;
-            --border-color: #e5e7eb;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --accent-2: #06b6d4;
+            --accent-green: #059669;
+            --border-color: #e2e6f0;
+            --card-bg: rgba(255,255,255,0.82);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
+            --font-display: "Syne", sans-serif;
+            --font-body: "DM Sans", sans-serif;
+            --font-mono: "DM Mono", monospace;
         }
-        /* Auto dark mode when system prefers dark (before JS loads) */
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
-                --bg-primary: #0f172a;
-                --bg-secondary: #1e293b;
-                --text-primary: #f1f5f9;
-                --text-secondary: #94a3b8;
-                --border-color: #334155;
-                --card-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                --bg-primary: #080c14;
+                --bg-secondary: #0f1520;
+                --text-primary: #e8edf5;
+                --text-secondary: #7a8494;
+                --accent: #6366f1;
+                --accent-2: #06b6d4;
+                --accent-green: #10b981;
+                --border-color: rgba(255,255,255,0.07);
+                --card-bg: rgba(15,21,32,0.85);
+                --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.4);
             }
         }
         /* JS-controlled dark mode */
@@ -52,12 +60,14 @@
             --text-primary: #e8edf5;
             --text-secondary: #7a8494;
             --accent: #6366f1;
+            --accent-2: #06b6d4;
+            --accent-green: #10b981;
             --border-color: rgba(255,255,255,0.07);
-            --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.4);
             --card-bg: rgba(15,21,32,0.85);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.4);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        body { font-family: var(--font-body), -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
         
         /* Fluid Canvas - Full screen background */
         #fluid-canvas {
@@ -84,9 +94,9 @@
         .fluid-fallback.hidden { display: none; }
         
         /* Content layer - visible but passes mouse events through to canvas */
-        body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
+        body > *:not(#fluid-canvas):not(.fluid-fallback):not(#particle-canvas):not(script):not(.cursor-trail):not(#custom-cursor):not(#cursor-dot) {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             pointer-events: none;
         }
         
@@ -105,15 +115,6 @@
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
-            #fluid-canvas {
-                pointer-events: auto;
-                z-index: 1;
-            }
-            body > *:not(#fluid-canvas):not(.fluid-fallback):not(script) {
-                pointer-events: none;
-            }
-            a, button, input, select, textarea, 
-            .btn, .theme-toggle,
             .scroll-indicator, .project-item, .timeline-item, .cert-item, 
             .skill-item, nav, .back-link,
             .container, .section, .hero, h1, h2, h3, h4, p {
@@ -179,17 +180,18 @@
             75% { transform: translate(30px, 20px) scale(1.05); }
         }
         
-        [data-theme="dark"] .fluid-fallback {
-            background: linear-gradient(135deg, #0f172a 0%, #0f172a 100%);
-        }
+        [data-theme="dark"] .fluid-fallback { background: linear-gradient(135deg, #080c14 0%, #080c14 100%); }
         [data-theme="dark"] .fluid-blob { opacity: 0.4; }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 11; }
         
         /* Dark Mode Toggle - Mobile Friendly */
         .theme-toggle { position: fixed; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--border-color); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: all 0.3s ease; box-shadow: var(--card-shadow); -webkit-tap-highlight-color: transparent; touch-action: manipulation; top: 1.5rem; right: 2rem; }
         .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
         .theme-toggle:active { transform: scale(0.95); }
+        /* Auto Theme Indicator */
+        .auto-theme-indicator { position: fixed; top: 5rem; right: 2rem; z-index: 999; font-size: 0.75rem; color: var(--text-primary); background: var(--bg-secondary); padding: 0.4rem 0.75rem; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; border: 1px solid var(--border-color); box-shadow: var(--card-shadow); }
+        .auto-theme-indicator.visible { opacity: 1; }
         
         /* Animations */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -329,6 +331,7 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
         }
+        [data-theme="dark"] nav { background: rgba(8,12,20,0.85); }
         .nav-content {
             max-width: 900px;
             margin: 0 auto;
@@ -369,7 +372,7 @@
             font-size: 0.9rem;
         }
         .hero h1 {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--font-display);
             font-size: clamp(2rem,5vw,3rem);
             font-weight: 800;
             letter-spacing: -0.03em;
@@ -387,7 +390,7 @@
             border-top: 1px solid var(--border-color);
         }
         .section-title {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.75rem;
             font-weight: 800;
             letter-spacing: -0.02em;
@@ -484,7 +487,7 @@
             font-weight: 600;
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
-            font-family: 'Syne', sans-serif;
+            font-family: var(--font-display);
         }
         .project-description {
             font-size: 0.9rem;
@@ -637,7 +640,7 @@
             text-align: center;
         }
         .cta-title {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--font-display);
             font-size: 1.75rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -675,7 +678,7 @@
             background: var(--accent);
             color: white;
             border-color: var(--accent);
-            font-family: 'Syne', sans-serif;
+            font-family: var(--font-display);
             font-weight: 600;
         }
         footer {
@@ -687,7 +690,7 @@
         footer p {
             font-size: 0.78rem;
             color: var(--text-secondary);
-            font-family: 'DM Mono', monospace;
+            font-family: var(--font-mono);
         }
 
         
@@ -711,7 +714,7 @@
         /* Stats Band */
         .stats-band { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem 3.5rem; padding: 2.5rem 2rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
         .stat-item { text-align: center; }
-        .stat-val { display: block; font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
+        .stat-val { display: block; font-family: var(--font-display); font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
         .stat-label { display: block; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
 
         /* About block */
@@ -721,26 +724,26 @@
         /* Experience */
         .experience-item { margin-bottom: 1.25rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); backdrop-filter: blur(8px); transition: all 0.25s ease; }
         .experience-item:hover { border-color: var(--accent); transform: translateX(4px); }
-        .experience-company { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+        .experience-company { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
         .experience-role { color: var(--accent); font-size: 0.88rem; font-weight: 500; margin-bottom: 0.2rem; }
-        .experience-date { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'DM Mono', monospace; }
+        .experience-date { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: var(--font-mono); }
         .experience-description { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; }
 
         /* Cert items */
         .cert-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; padding: 1.1rem 1.25rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); backdrop-filter: blur(8px); transition: all 0.25s ease; }
         .cert-item:hover { border-color: var(--accent); transform: translateX(4px); }
-        .cert-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+        .cert-content h4 { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
         .cert-content p { font-size: 0.82rem; color: var(--text-secondary); }
 
         /* Hero stats */
-        .hero-description { font-size: 1rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 2rem; line-height: 1.8; font-family: 'DM Sans', sans-serif; }
-        .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem,5vw,3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; letter-spacing: -0.03em; }
-        .section-title { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .hero-description { font-size: 1rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 2rem; line-height: 1.8; font-family: var(--font-body); }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(2rem,5vw,3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; letter-spacing: -0.03em; }
+        .section-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
         .section-title::after { content: ''; display: block; width: 36px; height: 3px; background: var(--accent); margin: 0.65rem auto 1.75rem; border-radius: 2px; }
-        .cta-title { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .cta-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.02em; }
         .skill-item { border-radius: 6px !important; }
-        .skill-item span { font-family: 'DM Sans', sans-serif; }
-        .project-title { font-family: 'Syne', sans-serif !important; font-weight: 700 !important; letter-spacing: -0.01em; }
+        .skill-item span { font-family: var(--font-body); }
+        .project-title { font-family: var(--font-display) !important; font-weight: 700 !important; letter-spacing: -0.01em; }
         .role-badge { border-radius: 6px !important; }
         .btn { border-radius: 6px !important; }
         .leetcode-card { border-radius: 6px !important; }
@@ -808,6 +811,7 @@
     <canvas id="fluid-canvas"></canvas>
 
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
+    <div class="auto-theme-indicator" id="themeIndicator"></div>
         <nav><div class="nav-content"><a href="index.html" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Portfolio</a><span class="nav-role">Backend Engineer</span></div></nav>
 
     <section class="hero"><div class="container">
@@ -1061,13 +1065,115 @@
         setTimeout(() => updateFromGitHub(), 100);
     </script>
     
+        <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3" crossorigin="anonymous"></script>
     <script>
-        // CSS-based fluid animation fallback
-        // WebGL not available, so CSS blobs will animate automatically
         (function() {
-            console.log('Using CSS blob animations');
+            const canvas = document.getElementById('fluid-canvas');
+            const fallback = document.getElementById('fluid-fallback');
+            
+            if (typeof WebGLFluid === 'undefined') {
+                console.error('WebGL Fluid library not loaded');
+                return;
+            }
+            
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                              (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 
+                               document.documentElement.getAttribute('data-theme') !== 'light');
+            
+            WebGLFluid(canvas, {
+                IMMEDIATE: false,
+                TRIGGER: 'hover',
+                AUTO: false,
+                SIM_RESOLUTION: 256,
+                DYE_RESOLUTION: 1024,
+                CAPTURE_RESOLUTION: 512,
+                DENSITY_DISSIPATION: 0.98,
+                VELOCITY_DISSIPATION: 0.6,
+                PRESSURE: 0.2,
+                PRESSURE_ITERATIONS: 20,
+                CURL: 12,
+                SPLAT_RADIUS: 0.18,
+                SPLAT_FORCE: 8000,
+                SHADING: false,
+                COLORFUL: true,
+                COLOR_UPDATE_SPEED: 30,
+                PAUSED: false,
+                BACK_COLOR: isDarkMode ? { r: 8, g: 12, b: 20 } : { r: 255, g: 255, b: 255 },
+                TRANSPARENT: false,
+                BLOOM: false,
+                SUNRAYS: false,
+            });
+            
+            // Forward document-level mouse events to canvas
+            document.addEventListener('mousemove', function(e) {
+                const canvasEvent = new PointerEvent('pointermove', {
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                    bubbles: true,
+                    cancelable: true,
+                    pointerType: 'mouse'
+                });
+                canvas.dispatchEvent(canvasEvent);
+            }, { passive: true });
+            
+            // Mobile touch handling
+            let touchStartX = 0, touchStartY = 0;
+            let isScrolling = false, hasAnimated = false, scrollTimeout = null;
+            
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    isScrolling = false;
+                    hasAnimated = false;
+                    if (scrollTimeout) { clearTimeout(scrollTimeout); scrollTimeout = null; }
+                }
+            }, { passive: true, capture: true });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - touchStartX);
+                    const deltaY = Math.abs(touch.clientY - touchStartY);
+                    if (!isScrolling && !hasAnimated && (deltaX > 5 || deltaY > 5)) {
+                        isScrolling = deltaY > (deltaX * 2);
+                    }
+                    if (!isScrolling || (deltaX < 3 && deltaY < 3)) {
+                        canvas.dispatchEvent(new PointerEvent('pointermove', {
+                            clientX: touch.clientX, clientY: touch.clientY,
+                            bubbles: true, cancelable: true, pointerType: 'touch'
+                        }));
+                        hasAnimated = true;
+                    }
+                }
+            }, { passive: true, capture: true });
+            
+            document.addEventListener('touchend', function(e) {
+                scrollTimeout = setTimeout(function() { isScrolling = false; hasAnimated = false; }, 100);
+            }, { passive: true, capture: true });
+            
+            // Theme change observer
+            const themeObserver = new MutationObserver(function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                              (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 
+                               document.documentElement.getAttribute('data-theme') !== 'light');
+                WebGLFluid(canvas, {
+                    IMMEDIATE: false, TRIGGER: 'hover', AUTO: false,
+                    SIM_RESOLUTION: 256, DYE_RESOLUTION: 1024, CAPTURE_RESOLUTION: 512,
+                    DENSITY_DISSIPATION: 0.98, VELOCITY_DISSIPATION: 0.6, PRESSURE: 0.2,
+                    PRESSURE_ITERATIONS: 20, CURL: 12, SPLAT_RADIUS: 0.18, SPLAT_FORCE: 8000,
+                    SHADING: false, COLORFUL: true, COLOR_UPDATE_SPEED: 30, PAUSED: false,
+                    BACK_COLOR: isDark ? { r: 8, g: 12, b: 20 } : { r: 255, g: 255, b: 255 },
+                    TRANSPARENT: false, BLOOM: false, SUNRAYS: false,
+                });
+            });
+            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+            
+            if (fallback) fallback.classList.add('hidden');
         })();
-        
+    </script>
+
+    <script>
         // Cute Eyes Mouse Tracking
         (function() {
             const pupilLeft = document.getElementById('pupilLeft');
@@ -1102,4 +1208,112 @@
             
             document.addEventListener('touchmove', function(e) {
                 if (e.touches.length > 0) {
+                    updateEyes(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            });
+        })();
+    </script>
+
+    <div id="custom-cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <script>
+    (function(){
+        if(window.matchMedia('(pointer: coarse)').matches) return;
+        const ring = document.getElementById('custom-cursor');
+        const dot  = document.getElementById('cursor-dot');
+        if(!ring || !dot) return;
+        let mx = window.innerWidth/2, my = window.innerHeight/2;
+        let rx = mx, ry = my, started = false;
+        document.addEventListener('mousemove', function(e){
+            mx = e.clientX; my = e.clientY;
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            if (!started) {
+                started = true;
+                ring.style.opacity = '1'; dot.style.opacity = '1';
+                rx = e.clientX; ry = e.clientY;
+                ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            }
+        }, {passive: true});
+        function animRing(){ rx += (mx-rx)*0.14; ry += (my-ry)*0.14; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); }
+        animRing();
+        document.addEventListener('mousedown', () => ring.classList.add('clicking'));
+        document.addEventListener('mouseup',   () => ring.classList.remove('clicking'));
+        document.addEventListener('mouseleave', () => { ring.style.opacity='0'; dot.style.opacity='0'; });
+        document.addEventListener('mouseenter', () => { if(started){ ring.style.opacity='1'; dot.style.opacity='1'; } });
+        document.querySelectorAll('a, .role-card, .publication-card, .back-link').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('on-link'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('on-link'));
+        });
+        document.querySelectorAll('button, .btn, .theme-toggle').forEach(el => {
+            el.addEventListener('mouseenter', () => { ring.classList.remove('on-link'); ring.classList.add('on-btn'); });
+            el.addEventListener('mouseleave', () => ring.classList.remove('on-btn'));
+        });
+    })();
+    </script>
+    <script>
+        /**
+         * Time-Based Theme System
+         * Light Mode: 6 AM - 6 PM | Dark Mode: 6 PM - 6 AM
+         */
+        function getDayNightMode() {
+            const hour = new Date().getHours();
+            return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+        }
         
+        function applyTheme(forcedMode) {
+            const mode = forcedMode || getDayNightMode();
+            document.documentElement.setAttribute('data-theme', mode);
+            const icon = document.querySelector('.theme-toggle .theme-icon');
+            if (icon) icon.textContent = mode === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
+            const btn = document.querySelector('.theme-toggle');
+            if (btn) btn.title = mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            if (forcedMode) {
+                localStorage.setItem('themeManualOverride', 'true');
+                localStorage.setItem('themeOverrideMode', forcedMode);
+            }
+        }
+        
+        // Override toggleTheme from theme.js
+        function toggleTheme() {
+            const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = cur === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            const ind = document.getElementById('themeIndicator');
+            if (ind) {
+                ind.textContent = next === 'dark' ? '\uD83C\uDF19 Dark Mode (Manual)' : '\u2600\uFE0F Light Mode (Manual)';
+                ind.classList.add('visible');
+                setTimeout(() => ind.classList.remove('visible'), 2000);
+            }
+        }
+        
+        // Init immediately to prevent flash
+        (function() {
+            const hasOvr = localStorage.getItem('themeManualOverride') === 'true';
+            const ovrMode = localStorage.getItem('themeOverrideMode');
+            applyTheme((hasOvr && ovrMode) ? ovrMode : null);
+        })();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasOvr = localStorage.getItem('themeManualOverride') === 'true';
+            const ovrMode = localStorage.getItem('themeOverrideMode');
+            applyTheme((hasOvr && ovrMode) ? ovrMode : null);
+        });
+        
+        // Auto-switch every minute
+        setInterval(() => {
+            if (localStorage.getItem('themeManualOverride') !== 'true') applyTheme();
+        }, 60000);
+        
+        // Reset override at 6 AM and 6 PM
+        setInterval(() => {
+            const now = new Date();
+            if ((now.getHours() === 6 || now.getHours() === 18) && now.getMinutes() === 0) {
+                localStorage.removeItem('themeManualOverride');
+                localStorage.removeItem('themeOverrideMode');
+                applyTheme();
+            }
+        }, 60000);
+    </script>
+</body>
+</html>

@@ -2550,6 +2550,79 @@
             }
         };
 
+        // ── RATE LIMITER ──────────────────────────────────────────────
+        // Client-side rate limit using localStorage (fingerprinted per browser).
+        // Since this is a static page with no backend, localStorage is the
+        // standard approach — equivalent to IP-based limiting per device.
+        const RL = {
+            KEY:        'chat_rl',
+            MAX:        10,       // max messages per window (5–10 range)
+            WINDOW_MS:  60 * 60 * 1000, // 1 hour window
+            WARN_AT:    3,        // show warning when this many remain
+
+            _load() {
+                try {
+                    const raw = localStorage.getItem(this.KEY);
+                    if (!raw) return { count: 0, windowStart: Date.now() };
+                    return JSON.parse(raw);
+                } catch { return { count: 0, windowStart: Date.now() }; }
+            },
+
+            _save(state) {
+                try { localStorage.setItem(this.KEY, JSON.stringify(state)); } catch {}
+            },
+
+            // Returns { allowed, remaining, resetInMin }
+            check() {
+                let state = this._load();
+                const now = Date.now();
+
+                // Reset window if expired
+                if (now - state.windowStart >= this.WINDOW_MS) {
+                    state = { count: 0, windowStart: now };
+                    this._save(state);
+                }
+
+                const remaining = this.MAX - state.count;
+                const resetInMin = Math.ceil((this.WINDOW_MS - (now - state.windowStart)) / 60000);
+
+                if (remaining <= 0) {
+                    return { allowed: false, remaining: 0, resetInMin };
+                }
+
+                // Consume one
+                state.count++;
+                this._save(state);
+                return { allowed: true, remaining: this.MAX - state.count, resetInMin };
+            },
+
+            // Show remaining badge in chat header
+            updateBadge(remaining) {
+                let badge = document.getElementById('rl-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.id = 'rl-badge';
+                    badge.style.cssText = `
+                        font-size: 0.68rem; padding: 0.18rem 0.5rem;
+                        border-radius: 10px; font-weight: 600;
+                        background: rgba(255,255,255,0.18);
+                        color: white; margin-left: 0.25rem;
+                        transition: background 0.3s;
+                    `;
+                    const headerInfo = document.querySelector('.chat-header-info p');
+                    if (headerInfo) headerInfo.appendChild(badge);
+                }
+                if (remaining <= 3) {
+                    badge.style.background = 'rgba(239,68,68,0.7)';
+                    badge.textContent = remaining + ' left';
+                } else if (remaining <= this.WARN_AT - this.MAX + this.MAX) {
+                    badge.style.background = 'rgba(255,255,255,0.18)';
+                    badge.textContent = remaining + ' left';
+                }
+            }
+        };
+        // ─────────────────────────────────────────────────────────────
+
         function getAnswer(q) {
             q = q.toLowerCase();
             for (const [, data] of Object.entries(KB)) {
@@ -2558,7 +2631,18 @@
             return "I can answer questions about Sai Teja's experience, projects, publications, skills, education, or how to contact him. What would you like to know? 😊";
         }
 
-        btn.addEventListener('click', () => { panel.classList.toggle('open'); if(panel.classList.contains('open')) input.focus(); });
+        btn.addEventListener('click', () => {
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
+                input.focus();
+                // Show remaining messages badge on open
+                const rl = RL._load();
+                const now = Date.now();
+                const expired = now - rl.windowStart >= RL.WINDOW_MS;
+                const remaining = expired ? RL.MAX : Math.max(0, RL.MAX - rl.count);
+                if (remaining < RL.MAX) RL.updateBadge(remaining);
+            }
+        });
         closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
         // Suggestion clicks
@@ -2614,15 +2698,39 @@
         async function sendMessage() {
             const q = input.value.trim();
             if(!q) return;
+
+            // ── Rate limit check ──
+            const rl = RL.check();
+            if (!rl.allowed) {
+                addMsg(
+                    "⏱️ You've reached the limit of " + RL.MAX + " messages per hour. " +
+                    "Please try again in " + rl.resetInMin + " minute" + (rl.resetInMin !== 1 ? "s" : "") + ". " +
+                    "You can also reach Sai Teja directly at saiteja.srivllibhutturu@gmail.com",
+                    'bot'
+                );
+                return;
+            }
+
             input.value = '';
             suggs.style.display = 'none';
             addMsg(q, 'user');
             const typing = addTyping();
 
-            // Simulate a short thinking delay, then answer locally
+            // Update badge after sending
+            RL.updateBadge(rl.remaining);
+
+            // Short thinking delay then answer locally
             setTimeout(() => {
                 typing.remove();
                 addMsg(getAnswer(q), 'bot');
+                // Warn when getting low
+                if (rl.remaining <= 3 && rl.remaining > 0) {
+                    setTimeout(() => addMsg(
+                        "⚠️ Heads up — you have " + rl.remaining + " message" +
+                        (rl.remaining !== 1 ? "s" : "") + " left this hour.",
+                        'bot'
+                    ), 400);
+                }
             }, 600);
         }
 

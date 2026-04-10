@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security Headers (via meta where server headers aren't available) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+    <!-- Clickjacking: prevent embedding in iframes -->
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <!-- CSP: restrict script/style sources, block inline eval -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' cdn.jsdelivr.net fonts.googleapis.com 'unsafe-inline'; style-src 'self' fonts.googleapis.com fonts.gstatic.com 'unsafe-inline'; font-src 'self' fonts.gstatic.com data:; img-src 'self' data: https: blob: cdn.jsdelivr.net avatars.githubusercontent.com; connect-src 'self' api.anthropic.com formspree.io api.github.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self';">
     <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
     
     <!-- Open Graph Meta Tags for LinkedIn/Social Sharing -->
@@ -1123,7 +1132,10 @@
     </div>
     
     <canvas id="fluid-canvas"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+    <!-- SRI TODO: replace integrity hash after running:
+         curl -s https://cdn.jsdelivr.net/npm/webgl-fluid@0.3 | openssl dgst -sha384 -binary | openssl base64 -A
+         then add: integrity="sha384-HASH" crossorigin="anonymous" -->
+    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3" crossorigin="anonymous"></script>
     <script>
         (function() {
             const canvas = document.getElementById('fluid-canvas');
@@ -1287,7 +1299,7 @@
             <div id="terminal-output"></div>
         </div>
         
-        <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank">
+        <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download Resume
         </a>
@@ -1308,7 +1320,7 @@
             <div class="about-content">
                 <p>LLM Engineer and researcher specializing in fine-tuning, agentic systems, and GPU-optimized inference, with applied work in Healthcare AI. MS in Computer Science from UT Arlington (May 2025).</p>
                 <p>I build and optimize LLM systems, from SFT pipelines and LoRA fine-tuning to CUDA kernels and production inference infrastructure. I apply this across two domains: 6G wireless networks (2× IEEE published) and Healthcare AI, where I have deployed clinical LLMs across EPIC/FHIR-integrated hospital systems.</p>
-                <p>2× IEEE published researcher: <a href="https://arxiv.org/html/2601.00110v1" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE ICC 2026</strong></a> and <a href="https://ieee.atyponrex.com/journal/oj-coms" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE OJ-COMS 2026</strong></a>, on LLM-enabled path planning and digital twin guided AI for 6G wireless networks.</p>
+                <p>2× IEEE published researcher: <a href="https://arxiv.org/html/2601.00110v1" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE ICC 2026</strong></a> and <a href="https://ieee.atyponrex.com/journal/oj-coms" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 600;"><strong>IEEE OJ-COMS 2026</strong></a>, on LLM-enabled path planning and digital twin guided AI for 6G wireless networks.</p>
             </div>
         </div>
     </section>
@@ -1558,7 +1570,7 @@
             <h2 class="section-title">Featured Projects</h2>
 
             <!-- Publication highlight card -->
-            <a href="https://ieee.atyponrex.com/journal/oj-coms" class="publication-card" target="_blank">
+            <a href="https://ieee.atyponrex.com/journal/oj-coms" class="publication-card" target="_blank" rel="noopener noreferrer">
                 <div class="pub-badge">
                     <span class="pub-venue">IEEE OJ-COMS</span>
                     <span class="pub-year">2026</span>
@@ -1573,7 +1585,7 @@
                 </div>
             </a>
 
-            <a href="https://arxiv.org/html/2601.00110v1" class="publication-card" target="_blank">
+            <a href="https://arxiv.org/html/2601.00110v1" class="publication-card" target="_blank" rel="noopener noreferrer">
                 <div class="pub-badge">
                     <span class="pub-venue">IEEE ICC 2026</span>
                     <span class="pub-year">2026</span>
@@ -1598,11 +1610,11 @@
                         <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
                         <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-link code" target="_blank">
+                            <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-link code" target="_blank" rel="noopener noreferrer">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 GitHub
                             </a>
-                            <a href="https://huggingface.co/spaces/saiteja/neuron-llm-api/docs" class="project-link demo" target="_blank">Live API</a>
+                            <a href="https://huggingface.co/spaces/saiteja/neuron-llm-api/docs" class="project-link demo" target="_blank" rel="noopener noreferrer">Live API</a>
                         </div>
                     </div>
 
@@ -1612,11 +1624,11 @@
                         <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8, alpha=16) on UltraFeedback, training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
                         <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/LLM_FineTuning_SFT_Production" class="project-link code" target="_blank">
+                            <a href="https://github.com/saitejasrivilli/LLM_FineTuning_SFT_Production" class="project-link code" target="_blank" rel="noopener noreferrer">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 GitHub
                             </a>
-                            <a href="https://huggingface.co/SaiTejaSrivilli/qwen-7b-sft-merged" class="project-link demo" target="_blank">Model on HF Hub</a>
+                            <a href="https://huggingface.co/SaiTejaSrivilli/qwen-7b-sft-merged" class="project-link demo" target="_blank" rel="noopener noreferrer">Model on HF Hub</a>
                         </div>
                     </div>
 
@@ -1626,7 +1638,7 @@
                         <p class="project-description">Benchmarking framework comparing 4 attention implementations on NVIDIA L4 (seq len 1024, batch 32): FlashAttention-2 achieves 12.3x throughput (573K to 6.03M tok/s) and 99.7% memory reduction (12,582 MB to 38 MB) vs vanilla. Includes batch-size auto-tuner using binary search and ONNX/TensorRT export benchmarks. Key finding: algorithm-level optimization (FlashAttention) outperforms hardware-level optimization (TensorRT) by 6x for attention operations.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">ONNX Runtime</span><span class="tech-tag">CUDA</span></div>
                         <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-link code" target="_blank">
+                            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-link code" target="_blank" rel="noopener noreferrer">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 GitHub
                             </a>
@@ -1639,11 +1651,11 @@
                         <p class="project-description">Multi-strategy reasoning system implementing 4 research papers: Chain-of-Thought with self-consistency voting (3 independent paths), Tree-of-Thoughts with beam search (width=3, depth=3), ReAct with real-time web search via Tavily API and ChromaDB vector memory, and Multi-Agent collaboration (Planner, Worker, Critic). LLM-based auto-classifier routes each query to the optimal strategy. Rate-limited (10/min, 100/day), with real-time streaming. Built with Groq LLM, deployed on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">Tavily</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div>
                         <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-link code" target="_blank">
+                            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-link code" target="_blank" rel="noopener noreferrer">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 GitHub
                             </a>
-                            <a href="https://huggingface.co/spaces/SaiTejaSrivilli/ai-agent-system" class="project-link demo" target="_blank">Live Demo</a>
+                            <a href="https://huggingface.co/spaces/SaiTejaSrivilli/ai-agent-system" class="project-link demo" target="_blank" rel="noopener noreferrer">Live Demo</a>
                         </div>
                     </div>
 
@@ -1706,18 +1718,24 @@
             <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, Healthcare AI, ML Research, and Deep Learning roles, applying language models to real clinical and physical systems.</p>
             
             <!-- Contact Form -->
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" autocomplete="on">
+                <!-- Honeypot: hidden from humans, bots fill it — if filled, reject silently -->
+                <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+                    <input type="text" name="website" id="hp-field" tabindex="-1" autocomplete="off" value="">
+                </div>
+                <!-- Timing trap: set on page load, bots submit too fast (<2s) -->
+                <input type="hidden" id="form-load-time" name="_loadtime" value="">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Your name">
+                    <input type="text" id="name" name="name" required placeholder="Your name" maxlength="100" pattern="[^<>'&quot;]{1,100}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <input type="email" id="email" name="email" required placeholder="your@email.com" maxlength="254">
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="Tell me about your opportunity or project..."></textarea>
+                    <textarea id="message" name="message" required placeholder="Tell me about your opportunity or project..." maxlength="2000"></textarea>
                 </div>
                 <button type="submit" class="form-submit">Send Message</button>
                 <div class="form-status" id="formStatus"></div>
@@ -1729,10 +1747,10 @@
             <p style="color: var(--text-secondary); margin: 2rem 0 1rem; font-size: 0.9rem;">Or reach me directly:</p>
             <div class="contact-links">
                 <a href="/cdn-cgi/l/email-protection#6c1f0d051809060d421f1e051a050000050e04191818191e192c0b010d0500420f0301" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
-                <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
-                <a href="https://github.com/saitejasrivilli" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
-                <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>Scholar</a>
-                <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="contact-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Resume</a>
+                <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" class="contact-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+                <a href="https://github.com/saitejasrivilli" class="contact-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
+                <a href="https://scholar.google.com/citations?user=StKZohYAAAAJ" class="contact-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>Scholar</a>
+                <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="contact-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Resume</a>
             </div>
         </div>
     </section>
@@ -1750,11 +1768,37 @@
     
     <!-- Contact Form Handler -->
     <script>
+        // Set form load timestamp (for timing trap)
+        (function() {
+            const ts = document.getElementById('form-load-time');
+            if (ts) ts.value = Date.now();
+        })();
+
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const form = e.target;
             const status = document.getElementById('formStatus');
             const submitBtn = form.querySelector('.form-submit');
+
+            // ── Bot detection ──────────────────────────────────────
+            // 1. Honeypot check: real users leave this blank
+            const hp = document.getElementById('hp-field');
+            if (hp && hp.value !== '') {
+                // Silently pretend success — don't alert the bot
+                status.className = 'form-status success';
+                status.textContent = '✓ Message sent!';
+                form.reset();
+                return;
+            }
+            // 2. Timing check: bots submit in <2 seconds
+            const loadTime = parseInt(document.getElementById('form-load-time')?.value || '0');
+            if (loadTime && (Date.now() - loadTime) < 2000) {
+                status.className = 'form-status success';
+                status.textContent = '✓ Message sent!';
+                form.reset();
+                return;
+            }
+            // ───────────────────────────────────────────────────────
 
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -1773,7 +1817,7 @@
                 });
 
                 if (response.ok) {
-                    status.innerHTML = '✓ <strong>Message sent!</strong> I\'ll reply within 1&ndash;2 business days.';
+                    status.textContent = '✓ Message sent! I\'ll reply within 1–2 business days.';
                     status.className = 'form-status success';
                     form.reset();
                 } else {
@@ -2560,16 +2604,55 @@
             WINDOW_MS:  60 * 60 * 1000, // 1 hour window
             WARN_AT:    3,        // show warning when this many remain
 
+            // Fingerprint: combines localStorage + sessionStorage + cookie
+            // Bypassing all three simultaneously is much harder than just clearing one
+            _fp() {
+                const ua = (navigator.userAgent + screen.width + screen.height + navigator.language).slice(0, 64);
+                let h = 0;
+                for (let i = 0; i < ua.length; i++) { h = ((h << 5) - h) + ua.charCodeAt(i); h |= 0; }
+                return 'rl_' + Math.abs(h).toString(36);
+            },
+
             _load() {
                 try {
-                    const raw = localStorage.getItem(this.KEY);
-                    if (!raw) return { count: 0, windowStart: Date.now() };
-                    return JSON.parse(raw);
+                    const fp = this._fp();
+                    // Try localStorage first
+                    const lsRaw = localStorage.getItem(this.KEY);
+                    // Also check sessionStorage as secondary signal
+                    const ssRaw = sessionStorage.getItem(this.KEY + '_ss');
+                    // Use cookie as tertiary signal
+                    const cookieMatch = document.cookie.match(/chat_rl_fp=([^;]+)/);
+                    const cookieVal = cookieMatch ? cookieMatch[1] : null;
+
+                    let state = null;
+                    if (lsRaw) {
+                        try { state = JSON.parse(lsRaw); } catch {}
+                    }
+                    if (!state) { state = { count: 0, windowStart: Date.now(), fp }; }
+
+                    // If fingerprint matches a blocked session in cookie, restore count
+                    if (cookieVal) {
+                        try {
+                            const cs = JSON.parse(decodeURIComponent(cookieVal));
+                            if (cs.fp === fp && cs.count > (state.count || 0)) {
+                                state.count = cs.count;
+                                state.windowStart = cs.windowStart || state.windowStart;
+                            }
+                        } catch {}
+                    }
+                    return state;
                 } catch { return { count: 0, windowStart: Date.now() }; }
             },
 
             _save(state) {
-                try { localStorage.setItem(this.KEY, JSON.stringify(state)); } catch {}
+                try {
+                    state.fp = this._fp();
+                    localStorage.setItem(this.KEY, JSON.stringify(state));
+                    sessionStorage.setItem(this.KEY + '_ss', JSON.stringify(state));
+                    // Cookie persists even if localStorage is cleared (1 hour expiry)
+                    const exp = new Date(state.windowStart + this.WINDOW_MS).toUTCString();
+                    document.cookie = 'chat_rl_fp=' + encodeURIComponent(JSON.stringify(state)) + '; expires=' + exp + '; SameSite=Strict; path=/';
+                } catch {}
             },
 
             // Returns { allowed, remaining, resetInMin }
@@ -2623,8 +2706,17 @@
         };
         // ─────────────────────────────────────────────────────────────
 
+        // Sanitize user input: strip tags, limit length, trim
+        function sanitize(str) {
+            return String(str)
+                .replace(/<[^>]*>/g, '')       // strip HTML tags
+                .replace(/[<>"'`]/g, '')        // strip dangerous chars
+                .slice(0, 500)                  // max 500 chars
+                .trim();
+        }
+
         function getAnswer(q) {
-            q = q.toLowerCase();
+            q = sanitize(q).toLowerCase();
             for (const [, data] of Object.entries(KB)) {
                 if (data.keys.some(k => q.includes(k))) return data.answer;
             }
@@ -2696,7 +2788,7 @@
         }
 
         async function sendMessage() {
-            const q = input.value.trim();
+            const q = sanitize(input.value.trim());
             if(!q) return;
 
             // ── Rate limit check ──

@@ -938,7 +938,8 @@
             { repo: 'rtb-bidding-system', title: 'Real-Time Bidding System', description: 'High-performance RTB system → Sub-10ms latency bidding engine, real-time auction processing, and distributed caching layer.', tech: ['Go', 'Redis', 'Kafka', 'PostgreSQL', 'Docker'], demoUrl: 'https://rtb-bidding-system.streamlit.app/' },
             { repo: 'containerized-microservices-demo', title: 'Containerized Microservices', description: 'Full microservices architecture demo → Docker containerization, Kubernetes orchestration, service mesh, and API gateway patterns.', tech: ['Docker', 'Kubernetes', 'Go', 'REST API', 'Nginx'] },
             { repo: 'fleet-telemetry-monitor', title: 'Fleet Telemetry Monitor', description: 'Real-time fleet monitoring system → High-throughput telemetry ingestion, time-series storage, and alerting pipeline.', tech: ['Go', 'InfluxDB', 'Kafka', 'Grafana', 'Docker'] },
-            { repo: 'go-event-inges', title: 'Go Event Ingestion Service', description: 'High-throughput event ingestion backend → Async processing, message queues, rate limiting, and fault-tolerant data pipelines.', tech: ['Go', 'Kafka', 'Redis', 'PostgreSQL', 'Docker'] }
+            { repo: 'go-event-inges', title: 'Go Event Ingestion Service', description: 'High-throughput event ingestion backend → Async processing, message queues, rate limiting, and fault-tolerant data pipelines.', tech: ['Go', 'Kafka', 'Redis', 'PostgreSQL', 'Docker'] },
+            { repo: 'distributed-rate-limiter', title: 'Distributed Rate Limiter', description: 'Production-grade distributed rate limiter with three algorithms (sliding window, fixed window, token bucket), atomic Redis Lua scripts, 12 security hardening measures, and a live interactive dashboard.', tech: ['Python', 'FastAPI', 'Redis', 'Lua', 'Docker'], demoUrl: 'https://distributed-rate-limiter-orm2.onrender.com' }
         ];
 
         // Render projects to DOM
@@ -1060,107 +1061,11 @@
         setTimeout(() => updateFromGitHub(), 100);
     </script>
     
-    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
     <script>
+        // CSS-based fluid animation fallback
+        // WebGL not available, so CSS blobs will animate automatically
         (function() {
-            const canvas = document.getElementById('fluid-canvas');
-            const fallback = document.getElementById('fluid-fallback');
-            
-            if (typeof WebGLFluid === 'undefined') {
-                console.error('WebGL Fluid library not loaded');
-                return;
-            }
-            
-            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
-            
-            WebGLFluid(canvas, {
-                IMMEDIATE: false,
-                TRIGGER: 'hover',
-                AUTO: false,
-                SIM_RESOLUTION: 256,
-                DYE_RESOLUTION: 1024,
-                CAPTURE_RESOLUTION: 512,
-                DENSITY_DISSIPATION: 0.98,
-                VELOCITY_DISSIPATION: 0.6,
-                PRESSURE: 0.2,
-                PRESSURE_ITERATIONS: 20,
-                CURL: 12,
-                SPLAT_RADIUS: 0.18,
-                SPLAT_FORCE: 8000,
-                SHADING: false,
-                COLORFUL: true,
-                COLOR_UPDATE_SPEED: 30,
-                PAUSED: false,
-                BACK_COLOR: isDarkMode ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
-                TRANSPARENT: false,
-                BLOOM: false,
-                SUNRAYS: false,
-            });
-            
-            document.addEventListener('mousemove', function(e) {
-                const canvasEvent = new PointerEvent('pointermove', {
-                    clientX: e.clientX,
-                    clientY: e.clientY,
-                    bubbles: true,
-                    cancelable: true,
-                    pointerType: 'mouse'
-                });
-                canvas.dispatchEvent(canvasEvent);
-            }, { passive: true });
-            
-            let touchStartX = 0, touchStartY = 0, isScrolling = false, hasAnimated = false, scrollTimeout = null;
-            
-            document.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 1) {
-                    const touch = e.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    isScrolling = false;
-                    hasAnimated = false;
-                    if (scrollTimeout) { clearTimeout(scrollTimeout); scrollTimeout = null; }
-                }
-            }, { passive: true, capture: true });
-            
-            document.addEventListener('touchmove', function(e) {
-                if (e.touches.length === 1) {
-                    const touch = e.touches[0];
-                    const deltaX = Math.abs(touch.clientX - touchStartX);
-                    const deltaY = Math.abs(touch.clientY - touchStartY);
-                    if (!isScrolling && !hasAnimated && (deltaX > 5 || deltaY > 5)) {
-                        isScrolling = deltaY > (deltaX * 2);
-                    }
-                    if (!isScrolling || (deltaX < 3 && deltaY < 3)) {
-                        const canvasEvent = new PointerEvent('pointermove', {
-                            clientX: touch.clientX,
-                            clientY: touch.clientY,
-                            bubbles: true,
-                            cancelable: true,
-                            pointerType: 'touch'
-                        });
-                        canvas.dispatchEvent(canvasEvent);
-                        hasAnimated = true;
-                    }
-                }
-            }, { passive: true, capture: true });
-            
-            document.addEventListener('touchend', function(e) {
-                scrollTimeout = setTimeout(function() { isScrolling = false; hasAnimated = false; }, 100);
-            }, { passive: true, capture: true });
-            
-            const themeObserver = new MutationObserver(function() {
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                WebGLFluid(canvas, {
-                    IMMEDIATE: false, TRIGGER: 'hover', AUTO: false, SIM_RESOLUTION: 256, DYE_RESOLUTION: 1024,
-                    CAPTURE_RESOLUTION: 512, DENSITY_DISSIPATION: 0.98, VELOCITY_DISSIPATION: 0.6, PRESSURE: 0.2,
-                    PRESSURE_ITERATIONS: 20, CURL: 12, SPLAT_RADIUS: 0.18, SPLAT_FORCE: 8000, SHADING: false,
-                    COLORFUL: true, COLOR_UPDATE_SPEED: 30, PAUSED: false,
-                    BACK_COLOR: isDark ? { r: 15, g: 23, b: 42 } : { r: 255, g: 255, b: 255 },
-                    TRANSPARENT: false, BLOOM: false, SUNRAYS: false,
-                });
-            });
-            themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-            
-            if (fallback) fallback.classList.add('hidden');
+            console.log('Using CSS blob animations');
         })();
         
         // Cute Eyes Mouse Tracking

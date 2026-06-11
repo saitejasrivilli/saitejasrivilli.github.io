@@ -24,8 +24,9 @@
     <meta name="description" content="ML Engineer specializing in LLM Fine-Tuning, Deep Learning, GPU Optimization, and Production ML Systems. Published researcher at IEEE ICC 2026 & IEEE OJ-COMS 2026.">
     
     <!-- Google Analytics: replace G-XXXXXXXXXX with your real GA4 ID to enable -->
-    
+
     <script src="theme.js"></script>
+    <script src="github-projects-dynamic.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -453,6 +454,45 @@
         .hero-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
         .btn { padding: 0.65rem 1.35rem; border-radius: 50px; font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.25s ease; border: 1.5px solid var(--border-color); color: var(--text-primary); background: var(--card-bg); font-family: var(--font-display); }
         .btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
+
+        /* Hero Updates */
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+
+        .hero-metrics {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .metric-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-badge .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: var(--font-display);
+        }
+
+        .metric-badge .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border: 1.5px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; animation: float 2s ease-in-out infinite; }
         .scroll-indicator svg { width: 16px; height: 16px; color: var(--text-secondary); }
         
@@ -536,6 +576,39 @@
         .project-tech-inline { display: flex; flex-wrap: wrap; gap: 0.35rem; }
         .tech-tag-inline { padding: 0.15rem 0.5rem; background: var(--accent); color: white; border-radius: 12px; font-size: 0.7rem; font-weight: 500; }
         .project-impact { background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 500; }
+
+        /* Project Metrics */
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .project-metrics .metric {
+            text-align: center;
+        }
+
+        .project-metrics .value {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: var(--font-display);
+        }
+
+        .project-metrics .label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .project-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; flex-grow: 1; }
         .project-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color); }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -547,7 +620,90 @@
         .project-link.code:hover { border-color: var(--text-primary); }
         .project-link.demo { background: var(--accent); color: white; border: none; }
         .project-link.demo:hover { opacity: 0.9; transform: translateY(-2px); }
-        
+
+        /* Repos Grid */
+        .repos-compact-grid .project-card-compact {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .repos-compact-grid .project-card-compact:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .repos-compact-grid h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .repos-compact-grid h4 a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .repos-compact-grid h4 a:hover {
+            text-decoration: underline;
+        }
+
+        .repos-compact-grid .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .repos-compact-grid .meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0.75rem 0;
+        }
+
+        .repos-compact-grid .stars, .repos-compact-grid .lang, .repos-compact-grid .updated {
+            white-space: nowrap;
+        }
+
+        .repos-compact-grid .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .repos-compact-grid .topic {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--accent);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .refresh-repos-btn {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .refresh-repos-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
         /* Projects Loading State */
         .projects-loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
         .projects-loading .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
@@ -1290,8 +1446,24 @@
         </div>
         
         <h1 class="animate-fade-in-up delay-2"><span class="glitch-wrap" data-text="Sai TejaSrivillibhutturu">Sai Teja<br>Srivillibhutturu</span></h1>
+        <p class="hero-subtitle animate-fade-in-up delay-2">GPU Systems & Inference Optimization | LLM Production Systems | Published ML Research</p>
 
-        <div class="terminal-box animate-fade-in-up delay-3" id="terminal-box" style="opacity:0">
+        <div class="hero-metrics animate-fade-in-up delay-3">
+            <div class="metric-badge">
+                <span class="number">8+</span>
+                <span class="label">Production Deployments</span>
+            </div>
+            <div class="metric-badge">
+                <span class="number">2</span>
+                <span class="label">IEEE Published</span>
+            </div>
+            <div class="metric-badge">
+                <span class="number">110+</span>
+                <span class="label">Projects</span>
+            </div>
+        </div>
+
+        <div class="terminal-box animate-fade-in-up delay-4" id="terminal-box" style="opacity:0">
             <div class="terminal-bar">
                 <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
                 <span class="t-title">sai_teja — bash — 80×24</span>
@@ -1299,12 +1471,12 @@
             <div id="terminal-output"></div>
         </div>
         
-        <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-4" target="_blank" rel="noopener noreferrer">
+        <a href="SaiTejaSrivillibhutturu_Resume_GitHub.pdf" class="resume-btn-hero animate-fade-in-up delay-5" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download Resume
         </a>
-        
-        <div class="hero-buttons animate-fade-in-up delay-5">
+
+        <div class="hero-buttons animate-fade-in-up delay-6">
             <a href="#experience" class="btn">Experience</a>
             <a href="#projects" class="btn">Projects</a>
             <a href="#contact" class="btn">Contact</a>
@@ -1509,6 +1681,20 @@
                     <!-- 0: Attention Kernel Benchmark -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Attention Kernel Compiler Benchmark</h3><span class="project-impact">Inference Optimization</span></div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="value">12.3×</span>
+                                <span class="label">Throughput gain</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">99.7%</span>
+                                <span class="label">Memory reduction</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">573K→6.03M</span>
+                                <span class="label">tok/s (4× A30)</span>
+                            </div>
+                        </div>
                         <p class="project-description">Production-grade benchmark comparing custom Triton attention kernels against FlashAttention-2 (CUDA) across both vLLM and SGLang inference engines under real concurrent load (1-32 concurrent users). Measures TTFT, token throughput, P50/P95/P99 latency, and GPU SM utilization. Demonstrates 12.3× throughput gains (573K → 6.03M tok/s) and 99.7% memory reduction vs vanilla attention on NVIDIA L4. Real hardware measurements on 4× A30 with reproducible benchmarks.</p>
                         <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA</span><span class="tech-tag">vLLM</span><span class="tech-tag">SGLang</span><span class="tech-tag">PagedAttention</span></div>
                         <div class="project-links">
@@ -1522,6 +1708,20 @@
                     <!-- 0b: Flash Attention from Scratch -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Flash Attention + Kernels from Scratch</h3><span class="project-impact">Deep Learning Systems</span></div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="value">1.41×</span>
+                                <span class="label">RMSNorm speedup</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">105–120%</span>
+                                <span class="label">of cuBLAS (int8)</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">11/11</span>
+                                <span class="label">Tests passing</span>
+                            </div>
+                        </div>
                         <p class="project-description">High-performance GPU kernels written from scratch in Triton and CUDA C++: (1) Flash Attention forward pass with online softmax recurrence, O(N·D) HBM vs O(N²), supports causal masking. (2) int8 GEMM + fused dequantization using DP4A, achieving 105–120% of fp16 cuBLAS throughput. (3) Fused RMSNorm+Linear (1.41–1.48× speedup). Benchmarked on NVIDIA A30 with 11/11 correctness tests passing. Beats torch SDPA at seqlen≥512.</p>
                         <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">pybind11</span><span class="tech-tag">GPU Optimization</span></div>
                         <div class="project-links">
@@ -1535,6 +1735,20 @@
                     <!-- 0c: SGLang Speculative Decoding -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">SGLang Speculative Decoding</h3><span class="project-impact">Inference Optimization</span></div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="value">2.5–3.2×</span>
+                                <span class="label">Measured speedup</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">22/22</span>
+                                <span class="label">Unit tests pass</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">Lossless</span>
+                                <span class="label">Accept-reject verified</span>
+                            </div>
+                        </div>
                         <p class="project-description">Implemented lossless speculative decoding for SGLang on 4× NVIDIA A30 cluster. Custom draft/verify architecture with RadixAttention-safe provisional KV cache (insert/commit/evict operations). Accept-reject sampling verified mathematically lossless. Achieves 2.5–3.2× measured speedup on Llama-3-8B with TinyLlama-1.1B draft (K=4). Full unit test suite: 22/22 tests passing. Production-ready with real hardware measurements and reproducible benchmarks.</p>
                         <div class="project-tech"><span class="tech-tag">SGLang</span><span class="tech-tag">Speculative Decoding</span><span class="tech-tag">RadixAttention</span><span class="tech-tag">CUDA</span><span class="tech-tag">Inference</span></div>
                         <div class="project-links">
@@ -1548,6 +1762,20 @@
                     <!-- 1: CUDA Neuron Attention -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="value">5.64×</span>
+                                <span class="label">Faster vs PyTorch (N=32)</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">3.7×</span>
+                                <span class="label">Neuron speedup</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">45ms→12ms</span>
+                                <span class="label">Latency (GPT-2)</span>
+                            </div>
+                        </div>
                         <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
                         <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
                         <div class="project-links">
@@ -1562,6 +1790,20 @@
                     <!-- 2: LLM Fine-Tuning SFT Production -->
                     <div class="project-item tilt-card">
                         <div class="project-header"><h3 class="project-title">Production LLM Fine-Tuning: Qwen-7B SFT</h3><span class="project-impact">LLM / GenAI</span></div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="value">17%</span>
+                                <span class="label">Loss reduction</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">0.855</span>
+                                <span class="label">BERTScore</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">30min</span>
+                                <span class="label">Training (T4)</span>
+                            </div>
+                        </div>
                         <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8, alpha=16) on UltraFeedback, training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
                         <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
                         <div class="project-links">
@@ -1603,13 +1845,18 @@
                 </div>
             </div>
 
-            <!-- View All Repositories Link -->
+            <!-- View All Repos with Dynamic Loading -->
             <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    Explore 110+ projects and infrastructure work:
+                    Latest 15 repositories (auto-updated, 1hr cache):
                 </p>
+                <div id="all-repos-grid" class="repos-compact-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <p>Loading latest repos from GitHub...</p>
+                    </div>
+                </div>
                 <a href="https://github.com/saitejasrivilli?tab=repositories&sort=updated" target="_blank" rel="noopener noreferrer" class="btn" style="background: var(--accent); color: white; padding: 0.85rem 2rem; font-size: 1rem;">
-                    View All GitHub Repositories →
+                    View All 110+ Projects on GitHub →
                 </a>
             </div>
         </div>

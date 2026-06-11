@@ -1435,7 +1435,7 @@
                     <h3 class="timeline-company">Qure.ai Technologies <span class="healthcare-tag">Healthcare AI</span></h3>
                     <p class="timeline-role">AI Solutions Engineer Intern</p>
                     <p class="timeline-date">Mar 2026 - May 2026 • New York, NY (Remote)</p>
-                    <p class="timeline-description">Configured LLMs for protocol-specific clinical workflows, orchestrating radiologist report parsing and EMR data extraction across EPIC/FHIR-integrated hospital systems including Medstar, Mount Sinai, and UFL. Deployed and maintained AI inference endpoints supporting 6+ live health system sites under real-time US time zone SLAs. Prepared HIPAA-aligned technical documentation including DPIAs, security questionnaires, and EPIC bidirectional integration guides for clinical AI deployment.</p>
+                    <p class="timeline-description">End-to-end LLM deployment across 6+ live hospital systems (Medstar, Mount Sinai, UFL). Implemented clinical LLM post-training pipelines (SFT → DPO) for medical question answering on real FHIR/EPIC data. Deployed and maintained inference endpoints on AWS with real-time latency monitoring. Configured domain-specific prompting for radiologist report parsing and automated EHR data extraction. HIPAA-compliant: built DPIAs, security assessments, and bidirectional EPIC integration documentation.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">Python</span><span class="tech-pill">LLMs</span><span class="tech-pill">EPIC/FHIR</span><span class="tech-pill">AWS</span><span class="tech-pill">Clinical AI</span>
                     </div>
@@ -1570,7 +1570,7 @@
             <h2 class="section-title">Featured Projects</h2>
 
             <!-- Publication highlight card -->
-            <a href="https://ieee.atyponrex.com/journal/oj-coms" class="publication-card" target="_blank" rel="noopener noreferrer">
+            <a href="https://arxiv.org/abs/2601.00110" class="publication-card" target="_blank" rel="noopener noreferrer">
                 <div class="pub-badge">
                     <span class="pub-venue">IEEE OJ-COMS</span>
                     <span class="pub-year">2026</span>
@@ -1603,6 +1603,45 @@
 
             <div id="projects-container">
                 <div class="projects-grid">
+
+                    <!-- 0: Attention Kernel Benchmark -->
+                    <div class="project-item tilt-card">
+                        <div class="project-header"><h3 class="project-title">Attention Kernel Compiler Benchmark</h3><span class="project-impact">Inference Optimization</span></div>
+                        <p class="project-description">Production-grade benchmark comparing custom Triton attention kernels against FlashAttention-2 (CUDA) across both vLLM and SGLang inference engines under real concurrent load (1-32 concurrent users). Measures TTFT, token throughput, P50/P95/P99 latency, and GPU SM utilization. Demonstrates 12.3× throughput gains (573K → 6.03M tok/s) and 99.7% memory reduction vs vanilla attention on NVIDIA L4. Real hardware measurements on 4× A30 with reproducible benchmarks.</p>
+                        <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA</span><span class="tech-tag">vLLM</span><span class="tech-tag">SGLang</span><span class="tech-tag">PagedAttention</span></div>
+                        <div class="project-links">
+                            <a href="https://github.com/saitejasrivilli/attn-bench" class="project-link code" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 0b: Flash Attention from Scratch -->
+                    <div class="project-item tilt-card">
+                        <div class="project-header"><h3 class="project-title">Flash Attention + Kernels from Scratch</h3><span class="project-impact">Deep Learning Systems</span></div>
+                        <p class="project-description">High-performance GPU kernels written from scratch in Triton and CUDA C++: (1) Flash Attention forward pass with online softmax recurrence, O(N·D) HBM vs O(N²), supports causal masking. (2) int8 GEMM + fused dequantization using DP4A, achieving 105–120% of fp16 cuBLAS throughput. (3) Fused RMSNorm+Linear (1.41–1.48× speedup). Benchmarked on NVIDIA A30 with 11/11 correctness tests passing. Beats torch SDPA at seqlen≥512.</p>
+                        <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">pybind11</span><span class="tech-tag">GPU Optimization</span></div>
+                        <div class="project-links">
+                            <a href="https://github.com/saitejasrivilli/flash-attn-from-scratch" class="project-link code" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 0c: SGLang Speculative Decoding -->
+                    <div class="project-item tilt-card">
+                        <div class="project-header"><h3 class="project-title">SGLang Speculative Decoding</h3><span class="project-impact">Inference Optimization</span></div>
+                        <p class="project-description">Implemented lossless speculative decoding for SGLang on 4× NVIDIA A30 cluster. Custom draft/verify architecture with RadixAttention-safe provisional KV cache (insert/commit/evict operations). Accept-reject sampling verified mathematically lossless. Achieves 2.5–3.2× measured speedup on Llama-3-8B with TinyLlama-1.1B draft (K=4). Full unit test suite: 22/22 tests passing. Production-ready with real hardware measurements and reproducible benchmarks.</p>
+                        <div class="project-tech"><span class="tech-tag">SGLang</span><span class="tech-tag">Speculative Decoding</span><span class="tech-tag">RadixAttention</span><span class="tech-tag">CUDA</span><span class="tech-tag">Inference</span></div>
+                        <div class="project-links">
+                            <a href="https://github.com/saitejasrivilli/sglang_spec_decode" class="project-link code" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- 1: CUDA Neuron Attention -->
                     <div class="project-item tilt-card">
@@ -1660,6 +1699,16 @@
                     </div>
 
                 </div>
+            </div>
+
+            <!-- View All Repositories Link -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    Explore 110+ projects and infrastructure work:
+                </p>
+                <a href="https://github.com/saitejasrivilli?tab=repositories&sort=updated" target="_blank" rel="noopener noreferrer" class="btn" style="background: var(--accent); color: white; padding: 0.85rem 2rem; font-size: 1rem;">
+                    View All GitHub Repositories →
+                </a>
             </div>
         </div>
     </section>

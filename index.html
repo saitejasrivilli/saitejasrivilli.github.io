@@ -239,14 +239,7 @@
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
         
-        /* First-paint safety: keep the homepage content visible even if animations/scripts fail. */
-        .hero .animate-fade-in-up,
-        .hero .animate-fade-in,
-        .hero .terminal-box {
-            opacity: 1 !important;
-            animation: none !important;
-            visibility: visible !important;
-        }
+        /* Keep the hero animation effects enabled; terminal visibility is handled by its script. */
         #fluid-canvas { pointer-events: none; }
         @media (max-width: 768px) {
             #fluid-canvas { pointer-events: none !important; }

@@ -770,9 +770,6 @@
         .pub-link.arxiv:hover { background: #b91c1c; color: white; }
         .pub-link.ieee { background: rgba(37, 99, 235, 0.1); color: var(--accent); border: 1px solid rgba(37, 99, 235, 0.2); }
         .pub-link.ieee:hover { background: var(--accent); color: white; }
-
-        /* Healthcare AI tag + tech pills on timeline */
-        .healthcare-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.7rem; background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.45); border-radius: 12px; font-size: 0.78rem; color: #059669; font-weight: 600; margin-left: 0.5rem; vertical-align: middle; box-shadow: 0 0 8px rgba(16,185,129,0.15); }
         .tech-stack-line { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
         .tech-pill { padding: 0.18rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.74rem; color: var(--text-secondary); font-family: var(--font-mono); }
 
@@ -2087,28 +2084,6 @@
             opacity: 0.18 + Math.random()*0.14
         });
 
-        /* ── HEALTHCARE: ECG heartbeat line ── */
-        const ecg = {
-            x: 0,          // current draw head x
-            speed: 1.8,    // px per frame
-            history: [],   // {x, y} trail
-            maxLen: 320,
-            baseY: 0,      // set in draw
-        };
-        // Pre-build one full ECG cycle (P-QRS-T shape)
-        function ecgSample(phase) {
-            const p = ((phase % 1) + 1) % 1; // 0..1
-            if(p < 0.10) return Math.sin(p/0.10 * Math.PI) * 6;          // P wave
-            if(p < 0.30) return 0;
-            if(p < 0.34) return -Math.sin((p-0.30)/0.04 * Math.PI) * 8;  // Q dip
-            if(p < 0.38) return Math.sin((p-0.34)/0.04 * Math.PI) * 55;  // R spike
-            if(p < 0.42) return -Math.sin((p-0.38)/0.04 * Math.PI) * 12; // S dip
-            if(p < 0.60) return 0;
-            if(p < 0.85) return Math.sin((p-0.60)/0.25 * Math.PI) * 10;  // T wave
-            return 0;
-        }
-        let ecgPhase = 0;
-
         function draw(){
             ctx.clearRect(0,0,W,H);
             const dark = isDark();
@@ -2181,40 +2156,6 @@
                 ctx.fillStyle = telecomColor + '0.15)';
                 ctx.fill();
             });
-
-            /* ── Draw HEALTHCARE ECG ── */
-            const ecgColor = dark ? 'rgba(16,185,129,' : 'rgba(5,150,105,'; // emerald green
-            ecg.baseY = H * 0.88;
-            ecgPhase += ecg.speed / 120; // cycle speed
-            const newY = ecg.baseY + ecgSample(ecgPhase) * -1;
-            ecg.history.push({x: ecg.x, y: newY});
-            if(ecg.history.length > ecg.maxLen) ecg.history.shift();
-            ecg.x += ecg.speed;
-            if(ecg.x > W + 50) { ecg.x = 0; ecg.history = []; }
-
-            if(ecg.history.length > 1){
-                // Draw fading trail
-                for(let i=1; i<ecg.history.length; i++){
-                    const alpha = (i / ecg.history.length) * 0.7;
-                    ctx.beginPath();
-                    ctx.strokeStyle = ecgColor + alpha + ')';
-                    ctx.lineWidth = 1.5;
-                    ctx.moveTo(ecg.history[i-1].x, ecg.history[i-1].y);
-                    ctx.lineTo(ecg.history[i].x,   ecg.history[i].y);
-                    ctx.stroke();
-                }
-                // Bright tip dot
-                const tip = ecg.history[ecg.history.length-1];
-                ctx.beginPath();
-                ctx.arc(tip.x, tip.y, 3, 0, Math.PI*2);
-                ctx.fillStyle = ecgColor + '1)';
-                ctx.fill();
-                // Glow
-                ctx.beginPath();
-                ctx.arc(tip.x, tip.y, 8, 0, Math.PI*2);
-                ctx.fillStyle = ecgColor + '0.15)';
-                ctx.fill();
-            }
 
             requestAnimationFrame(draw);
         }
@@ -2291,7 +2232,6 @@
         if(!el) return;
         const phrases = [
             "LLM Engineer & Researcher | Fine-Tuning · Agents · 6G Telecom AI | 2× IEEE Published",
-            "Healthcare AI Engineer | Clinical LLMs · Radiology AI · EPIC/FHIR · Medical Imaging",
             "ML Systems | PyTorch · CUDA · Hugging Face · Sionna · AWS · vLLM",
         ];
         let phraseIdx = 0;
@@ -2407,7 +2347,7 @@
             { delay: 2750, html: '<span class="t-comment"># ── Publications ────────────────────────</span>', type: false },
             { delay: 2900, html: '<span class="t-key">papers</span>= [<span class="t-string">"IEEE OJ-COMS 2026"</span>, <span class="t-string">"IEEE ICC 2026"</span>]', type: false },
             { delay: 3100, html: '<span class="t-comment"># ── Stack ───────────────────────────────</span>', type: false },
-            { delay: 3250, html: '<span class="t-key">stack</span> = [<span class="t-string">"PyTorch"</span>, <span class="t-string">"CUDA"</span>, <span class="t-string">"HuggingFace"</span>, <span class="t-string">"EPIC/FHIR"</span>, <span class="t-string">"Sionna"</span>, <span class="t-string">"AWS"</span>]', type: false },
+            { delay: 3250, html: '<span class="t-key">stack</span> = [<span class="t-string">"PyTorch"</span>, <span class="t-string">"CUDA"</span>, <span class="t-string">"HuggingFace"</span>, <span class="t-string">"vLLM"</span>, <span class="t-string">"Sionna"</span>, <span class="t-string">"AWS"</span>]', type: false },
             { delay: 3500, html: '<span class="t-comment"># ── Status ──────────────────────────────</span>', type: false },
             { delay: 3700, html: '<span class="t-ok">✓ Open to: LLM Eng · ML Systems · Inference · ML Research</span>', type: false },
         ];
@@ -2618,7 +2558,7 @@
             },
             skills: {
                 keys: ['skill','tech','stack','language','know','python','pytorch','cuda','tool','framework'],
-                answer: "Sai Teja's technical stack:\n\n🤖 AI/ML — PyTorch, CUDA C++, HuggingFace, LoRA/PEFT, QLoRA, vLLM, FlashAttention, RAG\n🏥 Healthcare AI — EPIC/FHIR, Medical Imaging, HIPAA compliance\n☁️ Cloud/MLOps — AWS (SageMaker, Inferentia), Docker, FastAPI, Airflow\n💻 Languages — Python, C++, Java, Go, SQL\n📡 Research — Sionna 6G, OpenStreetMap, LLM fine-tuning"
+                answer: "Sai Teja's technical stack:\n\n🤖 AI/ML — PyTorch, CUDA C++, HuggingFace, LoRA/PEFT, QLoRA, vLLM, FlashAttention, RAG\n☁️ Cloud/MLOps — AWS (SageMaker, Inferentia), Docker, FastAPI, Airflow\n💻 Languages — Python, C++, Java, Go, SQL\n📡 Research — Sionna 6G, OpenStreetMap, LLM fine-tuning"
             },
             education: {
                 keys: ['education','degree','university','gpa','uta','study','graduate','ms','bachelor','andhra'],
@@ -2629,7 +2569,7 @@
                 answer: "You can reach Sai Teja via:\n\n📧 Email: saiteja.srivllibhutturu@gmail.com\n💼 LinkedIn: linkedin.com/in/saitejasrivillibhutturu\n💻 GitHub: github.com/saitejasrivilli\n📚 Google Scholar: Sai Teja Srivillibhutturu\n\nHe's open to LLM Engineering, ML Systems, ML Research, and Inference Optimization roles!"
             },
             roles: {
-                keys: ['open','role','hiring','position','looking','opportunity','llm engineer','healthcare','deep learning','ml research'],
+                keys: ['open','role','hiring','position','looking','opportunity','llm engineer','deep learning','ml research'],
                 answer: "Sai Teja is currently open to:\n\n🤖 LLM Engineering\n⚙️ ML Systems & Inference\n🔬 ML Research\n🧠 Deep Learning Engineering\n\nHe brings production ML/LLM engineering, GPU optimization, IEEE-published research, and 4+ years of production software engineering."
             }
         };

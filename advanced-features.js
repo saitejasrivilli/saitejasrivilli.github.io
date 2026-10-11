@@ -110,7 +110,7 @@ class AdvancedPortfolio {
             { area: 'GPU Optimization', pct: 90, color: '#0ea5e9' },
             { area: 'LLM Systems', pct: 85, color: '#f59e0b' },
             { area: 'Production ML', pct: 80, color: '#10b981' },
-            { area: 'Healthcare AI', pct: 75, color: '#ec4899' },
+            { area: 'Distributed Systems', pct: 75, color: '#ec4899' },
             { area: 'Research', pct: 70, color: '#06b6d4' }
           ].map(skill => `
             <div>

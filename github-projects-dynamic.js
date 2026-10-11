@@ -30,7 +30,12 @@ class GitHubProjectsFetcher {
     if (!raw) return null;
     try {
       const cached = JSON.parse(raw);
-      if (Array.isArray(cached.data) && Date.now() - cached.timestamp < this.cacheTTL) return cached.data;
+      if (Array.isArray(cached.data) && Date.now() - cached.timestamp < this.cacheTTL) {
+        return cached.data.map(repo => ({
+          ...repo,
+          updated: repo.updated ? new Date(repo.updated) : null
+        }));
+      }
     } catch (_) {}
     this.storageRemove(this.cacheKey);
     return null;

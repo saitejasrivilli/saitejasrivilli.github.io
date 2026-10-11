@@ -97,55 +97,7 @@ class AdvancedPortfolio {
     });
   }
 
-  // ============ 2. SKILLS CHART ============
-  addSkillsChart() {
-    const heroSection = document.querySelector('.hero');
-    if (!heroSection) return;
-
-    const skillsHTML = `
-      <div class="skills-chart-container" style="margin-top: 2rem; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid var(--border-color); max-width: 600px;">
-        <h3 style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Expertise Breakdown</h3>
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          ${[
-            { area: 'GPU Optimization', pct: 90, color: '#0ea5e9' },
-            { area: 'LLM Systems', pct: 85, color: '#f59e0b' },
-            { area: 'Production ML', pct: 80, color: '#10b981' },
-            { area: 'Distributed Systems', pct: 75, color: '#ec4899' },
-            { area: 'Research', pct: 70, color: '#06b6d4' }
-          ].map(skill => `
-            <div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 0.9rem; color: var(--text-primary); font-weight: 600;">${skill.area}</span>
-                <span style="font-size: 0.85rem; color: var(--text-secondary);">${skill.pct}%</span>
-              </div>
-              <div style="background: rgba(255,255,255,0.05); border-radius: 4px; height: 8px; overflow: hidden;">
-                <div style="
-                  height: 100%;
-                  width: ${skill.pct}%;
-                  background: ${skill.color};
-                  border-radius: 4px;
-                  transition: width 0.6s ease;
-                  animation: fillBar 0.8s ease forwards;
-                " data-percent="${skill.pct}"></div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-
-      <style>
-        @keyframes fillBar {
-          from { width: 0; }
-          to { width: var(--percent); }
-        }
-      </style>
-    `;
-
-    const metricsSection = heroSection.querySelector('.hero-metrics');
-    if (metricsSection) {
-      metricsSection.insertAdjacentHTML('afterend', skillsHTML);
-    }
-  }
+  // Skills are represented through linked projects and reproducible evidence, not subjective percentage ratings.
 
   // ============ 3. STACK EXPLAINERS ============
   addStackExplainers() {

@@ -12,11 +12,11 @@
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <!-- CSP: restrict script/style sources, block inline eval -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' cdn.jsdelivr.net fonts.googleapis.com 'unsafe-inline'; style-src 'self' fonts.googleapis.com fonts.gstatic.com 'unsafe-inline'; font-src 'self' fonts.gstatic.com data:; img-src 'self' data: https: blob: cdn.jsdelivr.net avatars.githubusercontent.com; connect-src 'self' api.anthropic.com formspree.io api.github.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self';">
-    <title>Sai Teja Srivillibhutturu | ML & Deep Learning Engineer</title>
+    <title>Sai Teja Srivillibhutturu | ML Systems & LLM Inference Engineer</title>
     
     <!-- Open Graph Meta Tags for LinkedIn/Social Sharing -->
-    <meta property="og:title" content="Sai Teja Srivillibhutturu | ML & Deep Learning Engineer">
-    <meta property="og:description" content="ML Engineer specializing in LLM fine-tuning, ML systems, GPU optimization, production inference, and wireless digital-twin research.">
+    <meta property="og:title" content="Sai Teja Srivillibhutturu | ML Systems & LLM Inference Engineer">
+    <meta property="og:description" content="ML systems and LLM inference engineer focused on GPU optimization, distributed training, inference serving, backend systems, and wireless digital-twin research.">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/saitejasrivilli">
     <meta property="og:url" content="https://saitejasrivilli.github.io">
     <meta property="og:type" content="website">
@@ -1487,178 +1487,79 @@
 
             <div id="projects-container">
                 <div class="projects-grid">
-
-                    <!-- 0: Attention Kernel Benchmark -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">Attention Kernel Compiler Benchmark</h3><span class="project-impact">Inference Optimization</span></div>
+                        <div class="project-header"><h3 class="project-title">Apple Silicon LLM Inference Server</h3><span class="project-impact">ML Systems</span></div>
                         <div class="project-metrics">
-                            <div class="metric">
-                                <span class="value">12.3×</span>
-                                <span class="label">Throughput gain</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">99.7%</span>
-                                <span class="label">Memory reduction</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">573K→6.03M</span>
-                                <span class="label">tok/s (4× A30)</span>
-                            </div>
+                            <div class="metric"><span class="value">~1.5×</span><span class="label">Continuous-batching throughput gain</span></div>
+                            <div class="metric"><span class="value">2</span><span class="label">Model architectures served</span></div>
+                            <div class="metric"><span class="value">Measured</span><span class="label">M-series Mac results</span></div>
                         </div>
-                        <p class="project-description">Production-grade benchmark comparing custom Triton attention kernels against FlashAttention-2 (CUDA) across both vLLM and SGLang inference engines under real concurrent load (1-32 concurrent users). Measures TTFT, token throughput, P50/P95/P99 latency, and GPU SM utilization. Demonstrates 12.3× throughput gains (573K → 6.03M tok/s) and 99.7% memory reduction vs vanilla attention on NVIDIA L4. Real hardware measurements on 4× A30 with reproducible benchmarks.</p>
-                        <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA</span><span class="tech-tag">vLLM</span><span class="tech-tag">SGLang</span><span class="tech-tag">PagedAttention</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/attn-bench" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                        </div>
+                        <p class="project-description">Built a continuous-batching LLM inference server for Apple Silicon using Metal/MPS, with paged KV cache, streaming, request cancellation, isolated model queues, Prometheus metrics, OpenTelemetry traces, and SLO alerting. Documents trade-offs honestly, including that naive weight-only quantization without a fused low-bit kernel was 5–9× slower in the measured setup.</p>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">PyTorch MPS</span><span class="tech-tag">Metal</span><span class="tech-tag">FastAPI</span><span class="tech-tag">OpenTelemetry</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/metal-inference-server" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a></div>
                     </div>
-
-                    <!-- 0b: Flash Attention from Scratch -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">Flash Attention + Kernels from Scratch</h3><span class="project-impact">Deep Learning Systems</span></div>
+                        <div class="project-header"><h3 class="project-title">LLMBoost: Compiler-Level Kernel Fusion</h3><span class="project-impact">Compiler Optimization</span></div>
                         <div class="project-metrics">
-                            <div class="metric">
-                                <span class="value">1.41×</span>
-                                <span class="label">RMSNorm speedup</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">105–120%</span>
-                                <span class="label">of cuBLAS (int8)</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">11/11</span>
-                                <span class="label">Tests passing</span>
-                            </div>
+                            <div class="metric"><span class="value">2.20×</span><span class="label">FP16 fused-kernel speedup</span></div>
+                            <div class="metric"><span class="value">1.55×</span><span class="label">BF16 speedup</span></div>
+                            <div class="metric"><span class="value">4× A30</span><span class="label">Benchmark cluster</span></div>
                         </div>
-                        <p class="project-description">High-performance GPU kernels written from scratch in Triton and CUDA C++: (1) Flash Attention forward pass with online softmax recurrence, O(N·D) HBM vs O(N²), supports causal masking. (2) int8 GEMM + fused dequantization using DP4A, achieving 105–120% of fp16 cuBLAS throughput. (3) Fused RMSNorm+Linear (1.41–1.48× speedup). Benchmarked on NVIDIA A30 with 11/11 correctness tests passing. Beats torch SDPA at seqlen≥512.</p>
-                        <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">pybind11</span><span class="tech-tag">GPU Optimization</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/flash-attn-from-scratch" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                        </div>
+                        <p class="project-description">Implemented an MLIR compiler pass that recognizes and fuses RMSNorm → Linear, reducing separate memory passes for the measured workload. Includes hardware/configuration details and numerical-error checks against an FP32 PyTorch reference.</p>
+                        <div class="project-tech"><span class="tech-tag">MLIR</span><span class="tech-tag">CUDA</span><span class="tech-tag">CUTLASS CuTe</span><span class="tech-tag">FP16/BF16</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/LLMBoost" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a></div>
                     </div>
-
-                    <!-- 0c: SGLang Speculative Decoding -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">SGLang Speculative Decoding</h3><span class="project-impact">Inference Optimization</span></div>
+                        <div class="project-header"><h3 class="project-title">Flash Attention & GPU Kernels from Scratch</h3><span class="project-impact">GPU Programming</span></div>
                         <div class="project-metrics">
-                            <div class="metric">
-                                <span class="value">2.5–3.2×</span>
-                                <span class="label">Measured speedup</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">22/22</span>
-                                <span class="label">Unit tests pass</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">Lossless</span>
-                                <span class="label">Accept-reject verified</span>
-                            </div>
+                            <div class="metric"><span class="value">3</span><span class="label">Kernel implementations</span></div>
+                            <div class="metric"><span class="value">A30</span><span class="label">Measured GPU</span></div>
+                            <div class="metric"><span class="value">Raw JSON</span><span class="label">Benchmark artifacts</span></div>
                         </div>
-                        <p class="project-description">Implemented lossless speculative decoding for SGLang on 4× NVIDIA A30 cluster. Custom draft/verify architecture with RadixAttention-safe provisional KV cache (insert/commit/evict operations). Accept-reject sampling verified mathematically lossless. Achieves 2.5–3.2× measured speedup on Llama-3-8B with TinyLlama-1.1B draft (K=4). Full unit test suite: 22/22 tests passing. Production-ready with real hardware measurements and reproducible benchmarks.</p>
-                        <div class="project-tech"><span class="tech-tag">SGLang</span><span class="tech-tag">Speculative Decoding</span><span class="tech-tag">RadixAttention</span><span class="tech-tag">CUDA</span><span class="tech-tag">Inference</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/sglang_spec_decode" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                        </div>
+                        <p class="project-description">Implemented Triton FlashAttention with online softmax, int8 GEMM with fused dequantization, and fused RMSNorm + Linear in CUDA C++. Publishes per-sequence-length comparisons with PyTorch SDPA rather than claiming a universal speedup; results vary by workload shape.</p>
+                        <div class="project-tech"><span class="tech-tag">Triton</span><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">pybind11</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/flash-attn-from-scratch" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a></div>
                     </div>
-
-                    <!-- 1: CUDA Neuron Attention -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">CUDA Attention Kernel + AWS Neuron SDK</h3><span class="project-impact">Deep Learning</span></div>
+                        <div class="project-header"><h3 class="project-title">Distributed LLM Pre-Training</h3><span class="project-impact">Distributed Training</span></div>
                         <div class="project-metrics">
-                            <div class="metric">
-                                <span class="value">5.64×</span>
-                                <span class="label">Faster vs PyTorch (N=32)</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">3.7×</span>
-                                <span class="label">Neuron speedup</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">45ms→12ms</span>
-                                <span class="label">Latency (GPT-2)</span>
-                            </div>
+                            <div class="metric"><span class="value">3.14×</span><span class="label">AMP throughput vs FP32</span></div>
+                            <div class="metric"><span class="value">Up to 21%</span><span class="label">Less GPU memory with FSDP</span></div>
+                            <div class="metric"><span class="value">1–4 GPUs</span><span class="label">DDP/FSDP comparisons</span></div>
                         </div>
-                        <p class="project-description">Two production-grade systems: (1) Custom CUDA C++ scaled-dot-product attention kernel with tiled QKᵀ, numerically stable softmax, and pybind11 PyTorch binding, 5.64x faster than PyTorch at N=32, correctness verified at max_diff &lt; 1e-7. (2) GPT-2 ported to AWS Inferentia via neuronx-cc 3-step pipeline achieving 3.7x speedup (45ms to 12ms, 1,800 to 6,700 tokens/sec). Deployed as FastAPI REST endpoint on HuggingFace Spaces.</p>
-                        <div class="project-tech"><span class="tech-tag">CUDA C++</span><span class="tech-tag">PyTorch</span><span class="tech-tag">AWS Inferentia</span><span class="tech-tag">pybind11</span><span class="tech-tag">FastAPI</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/cuda-neuron-attention" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                            <a href="https://huggingface.co/spaces/saiteja/neuron-llm-api/docs" class="project-link demo" target="_blank" rel="noopener noreferrer">Live API</a>
-                        </div>
+                        <p class="project-description">Benchmarked GPT-style training with PyTorch DDP, FSDP, mixed precision, and pipeline parallelism on NVIDIA A30 GPUs. Results are tied to documented configurations and compare throughput and per-GPU memory instead of treating distributed scaling as automatically linear.</p>
+                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">DDP</span><span class="tech-tag">FSDP</span><span class="tech-tag">NCCL</span><span class="tech-tag">Mixed Precision</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/distributed-training-models" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://distributed-training-models.streamlit.app/" class="project-link demo" target="_blank" rel="noopener noreferrer">Live Demo</a></div>
                     </div>
-
-                    <!-- 2: LLM Fine-Tuning SFT Production -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">Production LLM Fine-Tuning: Qwen-7B SFT</h3><span class="project-impact">LLM / GenAI</span></div>
+                        <div class="project-header"><h3 class="project-title">Distributed Search Engine in Rust</h3><span class="project-impact">Backend & Retrieval</span></div>
                         <div class="project-metrics">
-                            <div class="metric">
-                                <span class="value">17%</span>
-                                <span class="label">Loss reduction</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">0.855</span>
-                                <span class="label">BERTScore</span>
-                            </div>
-                            <div class="metric">
-                                <span class="value">30min</span>
-                                <span class="label">Training (T4)</span>
-                            </div>
+                            <div class="metric"><span class="value">1.55×</span><span class="label">Median postings speedup</span></div>
+                            <div class="metric"><span class="value">4.35×</span><span class="label">Median batch-query speedup</span></div>
+                            <div class="metric"><span class="value">82,360</span><span class="label">MS MARCO passages</span></div>
                         </div>
-                        <p class="project-description">Supervised fine-tuning of Qwen2.5-7B using LoRA (r=8, alpha=16) on UltraFeedback, training only 0.5% of parameters (35M of 7B) with QLoRA 4-bit quantization and FP16 mixed precision. Achieved 17% training loss reduction (1.412 to 1.176) and 0.855 BERTScore in 30 minutes on a T4 GPU. Model merged and deployed to HuggingFace Hub.</p>
-                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">LoRA / PEFT</span><span class="tech-tag">QLoRA</span><span class="tech-tag">TRL</span><span class="tech-tag">HuggingFace</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/LLM_FineTuning_SFT_Production" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                            <a href="https://huggingface.co/SaiTejaSrivilli/qwen-7b-sft-merged" class="project-link demo" target="_blank" rel="noopener noreferrer">Model on HF Hub</a>
-                        </div>
+                        <p class="project-description">Built tokenization, an inverted index, BM25 ranking, sharded concurrent query execution, and an HTTP control plane in Rust. Includes five-run benchmark summaries, raw results, design trade-offs, and a documented negative result for a parallelization strategy that was slower.</p>
+                        <div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">BM25</span><span class="tech-tag">Concurrency</span><span class="tech-tag">Sharding</span><span class="tech-tag">HTTP</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/search-engine-rs" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a></div>
                     </div>
-
-                    <!-- 3: Attention Optimization -->
                     <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">Attention Mechanism Optimization Suite</h3><span class="project-impact">Deep Learning</span></div>
-                        <p class="project-description">Benchmarking framework comparing 4 attention implementations on NVIDIA L4 (seq len 1024, batch 32): FlashAttention-2 achieves 12.3x throughput (573K to 6.03M tok/s) and 99.7% memory reduction (12,582 MB to 38 MB) vs vanilla. Includes batch-size auto-tuner using binary search and ONNX/TensorRT export benchmarks. Key finding: algorithm-level optimization (FlashAttention) outperforms hardware-level optimization (TensorRT) by 6x for attention operations.</p>
-                        <div class="project-tech"><span class="tech-tag">PyTorch</span><span class="tech-tag">FlashAttention-2</span><span class="tech-tag">xFormers</span><span class="tech-tag">ONNX Runtime</span><span class="tech-tag">CUDA</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/attention-optimization" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
+                        <div class="project-header"><h3 class="project-title">LedgerDB: Replicated Commit Log & Document Store</h3><span class="project-impact">Distributed Systems</span></div>
+                        <div class="project-metrics">
+                            <div class="metric"><span class="value">Raft</span><span class="label">Consensus</span></div>
+                            <div class="metric"><span class="value">TCP</span><span class="label">Real transport</span></div>
+                            <div class="metric"><span class="value">Fault injection</span><span class="label">Network recovery tests</span></div>
                         </div>
+                        <p class="project-description">Built a Go-based distributed commit log and document store with Raft consensus, MVCC, write-ahead logging, real TCP transport, MinIO integration, and network fault injection using iptables/tc netem. Benchmark outputs are committed as artifacts, and durability claims are scoped to the documented test scenarios.</p>
+                        <div class="project-tech"><span class="tech-tag">Go</span><span class="tech-tag">Raft</span><span class="tech-tag">MVCC</span><span class="tech-tag">WAL</span><span class="tech-tag">Fault Tolerance</span></div>
+                        <div class="project-links"><a href="https://github.com/saitejasrivilli/ledgerdb" class="project-link code" target="_blank" rel="noopener noreferrer">GitHub</a></div>
                     </div>
-
-                    <!-- 4: AI Agent -->
-                    <div class="project-item tilt-card">
-                        <div class="project-header"><h3 class="project-title">Advanced AI Agent System</h3><span class="project-impact">GenAI</span></div>
-                        <p class="project-description">Multi-strategy reasoning system implementing 4 research papers: Chain-of-Thought with self-consistency voting (3 independent paths), Tree-of-Thoughts with beam search (width=3, depth=3), ReAct with real-time web search via Tavily API and ChromaDB vector memory, and Multi-Agent collaboration (Planner, Worker, Critic). LLM-based auto-classifier routes each query to the optimal strategy. Rate-limited (10/min, 100/day), with real-time streaming. Built with Groq LLM, deployed on HuggingFace Spaces.</p>
-                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Groq</span><span class="tech-tag">Tavily</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gradio</span></div>
-                        <div class="project-links">
-                            <a href="https://github.com/saitejasrivilli/ai-agent" class="project-link code" target="_blank" rel="noopener noreferrer">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                GitHub
-                            </a>
-                            <a href="https://huggingface.co/spaces/SaiTejaSrivilli/ai-agent-system" class="project-link demo" target="_blank" rel="noopener noreferrer">Live Demo</a>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
             <!-- View All Repos with Dynamic Loading -->
             <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    Latest 15 repositories (auto-updated, 1hr cache):
+                    Recent public repositories (auto-updated when GitHub API is available):
                 </p>
                 <div id="all-repos-grid" class="repos-compact-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
                     <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-secondary);">
@@ -1682,7 +1583,7 @@
                     <h3 class="timeline-company">Oracle</h3>
                     <p class="timeline-role">Software Engineer, AI/ML</p>
                     <p class="timeline-date">Jun 2025 - Present • United States</p>
-                    <p class="timeline-description">Build production ML and LLM systems across data processing, retrieval and ranking, model evaluation, and inference services. Develop reusable PyTorch-based training and inference components, optimize serving workflows, and support deployment validation, monitoring, and reliable operation.</p>
+                    <p class="timeline-description">Engineer production ML/LLM systems across data processing, retrieval, ranking, model evaluation, and inference. Internal evaluation work reported a 21% retrieval-relevance improvement and 30% fewer hallucinations; model/task tuning improved measured accuracy from 78% to 86%, while a serving optimization reduced p95 latency from 1.2 s to 420 ms. Build reusable PyTorch components and support deployment validation, monitoring, versioning, and rollback.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">Python</span><span class="tech-pill">PyTorch</span><span class="tech-pill">LLMs</span><span class="tech-pill">Model Evaluation</span><span class="tech-pill">Inference Services</span><span class="tech-pill">Production ML</span>
                     </div>
@@ -1695,7 +1596,7 @@
                     <h3 class="timeline-company">The University of Texas at Arlington</h3>
                     <p class="timeline-role">Graduate Research Assistant &amp; Graduate Teaching Assistant</p>
                     <p class="timeline-date">Aug 2024 - May 2025 • Arlington, TX</p>
-                    <p class="timeline-description">Built TopGPT, an LLM application fine-tuned on 3+ textbooks with retrieval-augmented generation over 1,000+ research-paper chunks stored in Pinecone on AWS. Conducted CTMap and DTMAP research on LLM-enabled, connectivity-aware path planning for mmWave/6G using Dijkstra-generated paths, OpenStreetMap, digital twins, and NVIDIA Sionna; also contributed to DT-LAWN research. CTMap and DTMAP are documented in IEEE ICC 2026 and IEEE OJ-COMS 2026 publications. Supported Numerical Methods instruction for 50+ students using Python and MATLAB.</p>
+                    <p class="timeline-description">Built TopGPT, fine-tuned on 3+ textbooks and paired with RAG over 1,000+ research-paper chunks in Pinecone on AWS. Researched CTMap/DTMAP for LLM-enabled, connectivity-aware mmWave/6G path planning using Dijkstra-generated routes, OpenStreetMap, digital twins, and NVIDIA Sionna; contributed to research documented at IEEE ICC 2026 and IEEE OJ-COMS. Supported Numerical Methods instruction for 50+ students with Python and MATLAB.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">Python</span><span class="tech-pill">PyTorch</span><span class="tech-pill">LLM Fine-tuning</span><span class="tech-pill">RAG</span><span class="tech-pill">Pinecone</span><span class="tech-pill">AWS</span><span class="tech-pill">Sionna 6G</span><span class="tech-pill">OpenStreetMap</span><span class="tech-pill">Numerical Methods</span>
                     </div>
@@ -1708,7 +1609,7 @@
                     <h3 class="timeline-company">Tata Consultancy Services</h3>
                     <p class="timeline-role">Assistant System Engineer / Software Engineer</p>
                     <p class="timeline-date">Jun 2019 - May 2023 • 4 years • Chennai</p>
-                    <p class="timeline-description">Designed and owned Java-based distributed data processing services handling millions of records daily across production systems serving 10+ enterprise clients. Led system design and architecture reviews for data-intensive microservices. Built fault-tolerant backend pipelines with high availability and reduced processing latency by 40% through service refactoring.</p>
+                    <p class="timeline-description">Built and operated Java/Spring Boot services across development, staging, and production, scaling the service footprint from 20 to 50+ services. Resolved 20+ critical incidents and improved reported SLA compliance from 95% to 99.9%; backend capacity increased 40% while infrastructure overhead fell 20% through service, database, and connection-pool optimization. Conducted 100+ code reviews and mentored 5+ engineers.</p>
                     <div class="tech-stack-line">
                         <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Microservices</span><span class="tech-pill">SQL</span><span class="tech-pill">REST APIs</span>
                     </div>
@@ -1776,8 +1677,8 @@
 <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
-            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Open to LLM Engineering, ML Systems, Inference Optimization, and ML Research roles, applying language models to production software and physical systems.</p>
-            Or reach me directly:</p>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Focused on ML systems, LLM inference, GPU optimization, distributed systems, and applied research.</p>
+            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Or reach me directly:</p>
             <div class="contact-links">
                 <a href="/cdn-cgi/l/email-protection#6c1f0d051809060d421f1e051a050000050e04191818191e192c0b010d0500420f0301" class="contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
                 <a href="https://www.linkedin.com/in/saitejasrivillibhutturu/" class="contact-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
@@ -1796,10 +1697,7 @@
         </script>
     </footer>
     
-    <!-- Portfolio Features: Skill Matcher, GitHub Activity, ChatGPT Chatbot -->
-    <script src="portfolio-features.js"></script>
-
-    <!-- Interactive Features: Filtering, Copy Stack, Timeline Expand, Tech Cloud, Comparison -->
+        <!-- Interactive Features: Filtering, Copy Stack, Timeline Expand, Tech Cloud, Comparison -->
     <script src="interactive-features.js"></script>
 
     <!-- Advanced Features: Contact CTA, Skills Chart, Stack Explainers, GitHub Activity -->
@@ -2566,7 +2464,7 @@
             },
             contact: {
                 keys: ['contact','email','linkedin','github','reach','hire','connect'],
-                answer: "You can reach Sai Teja via:\n\n📧 Email: saiteja.srivllibhutturu@gmail.com\n💼 LinkedIn: linkedin.com/in/saitejasrivillibhutturu\n💻 GitHub: github.com/saitejasrivilli\n📚 Google Scholar: Sai Teja Srivillibhutturu\n\nHe's open to LLM Engineering, ML Systems, ML Research, and Inference Optimization roles!"
+                answer: "You can reach Sai Teja via:\n\n📧 Email: saiteja.srivillibhutturu@gmail.com\n💼 LinkedIn: linkedin.com/in/saitejasrivillibhutturu\n💻 GitHub: github.com/saitejasrivilli\n📚 Google Scholar: Sai Teja Srivillibhutturu\n\nHe's open to LLM Engineering, ML Systems, ML Research, and Inference Optimization roles!"
             },
             roles: {
                 keys: ['open','role','hiring','position','looking','opportunity','llm engineer','deep learning','ml research'],
@@ -2777,7 +2675,7 @@
                 addMsg(
                     "⏱️ You've reached the limit of " + RL.MAX + " messages per hour. " +
                     "Please try again in " + rl.resetInMin + " minute" + (rl.resetInMin !== 1 ? "s" : "") + ". " +
-                    "You can also reach Sai Teja directly at saiteja.srivllibhutturu@gmail.com",
+                    "You can also reach Sai Teja directly at saiteja.srivillibhutturu@gmail.com",
                     'bot'
                 );
                 return;

@@ -1,153 +1,146 @@
-// Dynamic GitHub Projects Fetcher
-// Caches for 1 hour. Non-blocking (loads in background, falls back to static data).
-
+// Public GitHub repository list. No visitor token or account setup is required.
 class GitHubProjectsFetcher {
   constructor(username = 'saitejasrivilli') {
     this.username = username;
-    this.cacheKey = `gh_projects_${username}`;
-    this.cacheTTL = 60 * 60 * 1000; // 1 hour
-    this.api = 'https://api.github.com/graphql';
-    this.token = this.getToken(); // Optional: GitHub token from localStorage for higher rate limits
+    this.cacheKey = `gh_projects_v2_${username}`;
+    this.cacheTTL = 3600000;
+    this.api = `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated&type=owner`;
+    this.fallback = [
+      { name: 'metal-inference-server', description: 'Continuous-batching LLM inference server for Apple Silicon with streaming, paged KV cache, and observability.', url: 'https://github.com/saitejasrivilli/metal-inference-server', language: 'Python', topics: ['LLM inference', 'Metal', 'MPS'] },
+      { name: 'LLMBoost', description: 'MLIR compiler pass for fusing RMSNorm and Linear operations in LLM inference.', url: 'https://github.com/saitejasrivilli/LLMBoost', language: 'C++', topics: ['MLIR', 'CUDA', 'compiler'] },
+      { name: 'flash-attn-from-scratch', description: 'Triton FlashAttention, int8 GEMM, and fused CUDA kernels with benchmark artifacts.', url: 'https://github.com/saitejasrivilli/flash-attn-from-scratch', language: 'Python', topics: ['Triton', 'CUDA', 'GPU'] },
+      { name: 'distributed-training-models', description: 'PyTorch DDP/FSDP, mixed precision, and pipeline-parallel training benchmarks.', url: 'https://github.com/saitejasrivilli/distributed-training-models', language: 'Python', topics: ['PyTorch', 'DDP', 'FSDP'] },
+      { name: 'search-engine-rs', description: 'Rust search engine with tokenization, inverted index, BM25, sharding, and query benchmarks.', url: 'https://github.com/saitejasrivilli/search-engine-rs', language: 'Rust', topics: ['BM25', 'search', 'Rust'] },
+      { name: 'ledgerdb', description: 'Go distributed commit log and document store with Raft, MVCC, and fault-injection tests.', url: 'https://github.com/saitejasrivilli/ledgerdb', language: 'Go', topics: ['Raft', 'MVCC', 'distributed systems'] }
+    ];
   }
 
-  getToken() {
-    // Users can set token in localStorage for 5k req/hr vs 60 req/hr
-    return localStorage.getItem('github_token') || null;
+  storageGet(key) {
+    try { return window.localStorage.getItem(key); } catch (_) { return null; }
   }
-
-  async fetch() {
-    // Check cache first
-    const cached = this.getCache();
-    if (cached) return cached;
-
-    try {
-      const data = await this.queryGitHub();
-      this.setCache(data);
-      return data;
-    } catch (err) {
-      console.warn('GitHub fetch failed, using fallback:', err.message);
-      return this.getFallback();
-    }
+  storageSet(key, value) {
+    try { window.localStorage.setItem(key, value); } catch (_) {}
   }
-
-  async queryGitHub() {
-    // GraphQL: top 15 repos by recent update, exclude forks, private, archived
-    const query = `
-      query($userName:String!) {
-        user(login: $userName) {
-          repositories(first: 15, orderBy: {field: UPDATED_AT, direction: DESC}, affiliations: [OWNER], isFork: false, isLocked: false) {
-            nodes {
-              name
-              description
-              url
-              updatedAt
-              pushedAt
-              stargazerCount
-              forkCount
-              primaryLanguage { name }
-              topics(first: 5) { nodes { name } }
-              isArchived
-            }
-          }
-        }
-      }
-    `;
-
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (this.token) headers['Authorization'] = `bearer ${this.token}`;
-
-    const response = await fetch(this.api, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        query,
-        variables: { userName: this.username }
-      })
-    });
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const json = await response.json();
-    if (json.errors) throw new Error(json.errors[0].message);
-
-    return json.data.user.repositories.nodes
-      .filter(repo => !repo.isArchived)
-      .map(repo => ({
-        name: repo.name,
-        description: repo.description || '',
-        url: repo.url,
-        stars: repo.stargazerCount,
-        forks: repo.forkCount,
-        language: repo.primaryLanguage?.name || '',
-        topics: repo.topics.nodes.map(t => t.name),
-        updated: new Date(repo.updatedAt),
-        pushed: new Date(repo.pushedAt)
-      }));
+  storageRemove(key) {
+    try { window.localStorage.removeItem(key); } catch (_) {}
   }
 
   getCache() {
-    const stored = localStorage.getItem(this.cacheKey);
-    if (!stored) return null;
+    const raw = this.storageGet(this.cacheKey);
+    if (!raw) return null;
+    try {
+      const cached = JSON.parse(raw);
+      if (Array.isArray(cached.data) && Date.now() - cached.timestamp < this.cacheTTL) return cached.data;
+    } catch (_) {}
+    this.storageRemove(this.cacheKey);
+    return null;
+  }
 
-    const { data, timestamp } = JSON.parse(stored);
-    if (Date.now() - timestamp > this.cacheTTL) {
-      localStorage.removeItem(this.cacheKey);
-      return null;
+  async fetch() {
+    const cached = this.getCache();
+    if (cached) return cached;
+    try {
+      const response = await window.fetch(this.api, { headers: { Accept: 'application/vnd.github+json' } });
+      if (!response.ok) throw new Error(`GitHub API HTTP ${response.status}`);
+      const repos = await response.json();
+      if (!Array.isArray(repos)) throw new Error('Unexpected repository response');
+      const items = repos
+        .filter(repo => !repo.fork && !repo.archived && !repo.private)
+        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+        .slice(0, 15)
+        .map(repo => ({
+          name: repo.name,
+          description: repo.description || 'Public repository',
+          url: repo.html_url,
+          stars: Number.isFinite(repo.stargazers_count) ? repo.stargazers_count : null,
+          language: repo.language || 'Repository',
+          topics: Array.isArray(repo.topics) ? repo.topics.slice(0, 5) : [],
+          updated: repo.updated_at ? new Date(repo.updated_at) : null
+        }));
+      const data = items.length ? items : this.fallback;
+      this.storageSet(this.cacheKey, JSON.stringify({ data, timestamp: Date.now() }));
+      return data;
+    } catch (error) {
+      console.warn('GitHub list unavailable; using curated projects.', error);
+      return this.fallback;
     }
-    return data;
   }
 
-  setCache(data) {
-    localStorage.setItem(this.cacheKey, JSON.stringify({
-      data,
-      timestamp: Date.now()
-    }));
-  }
+  render(repos, container) {
+    container.replaceChildren();
+    repos.forEach(repo => {
+      const card = document.createElement('article');
+      card.className = 'project-card-compact';
+      const heading = document.createElement('h4');
+      const link = document.createElement('a');
+      link.href = repo.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = repo.name;
+      heading.appendChild(link);
+      card.appendChild(heading);
 
-  getFallback() {
-    // Return empty — let page use static featured projects
-    return [];
-  }
+      const description = document.createElement('p');
+      description.className = 'desc';
+      const summary = String(repo.description || 'Public repository');
+      description.textContent = summary.length > 160 ? summary.slice(0, 157) + '…' : summary;
+      card.appendChild(description);
 
-  // Inject into "View All" link with metadata
-  static formatReposGrid(repos) {
-    if (!repos || repos.length === 0) return '';
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      if (Number.isFinite(repo.stars)) {
+        const stars = document.createElement('span');
+        stars.className = 'stars';
+        stars.textContent = `★ ${repo.stars}`;
+        meta.appendChild(stars);
+      }
+      const language = document.createElement('span');
+      language.className = 'lang';
+      language.textContent = repo.language || 'Repository';
+      meta.appendChild(language);
+      if (repo.updated instanceof Date && !Number.isNaN(repo.updated.valueOf())) {
+        const updated = document.createElement('span');
+        updated.className = 'updated';
+        updated.textContent = `Updated ${repo.updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}`;
+        meta.appendChild(updated);
+      }
+      card.appendChild(meta);
 
-    return repos.map(repo => `
-      <div class="project-card-compact">
-        <h4><a href="${repo.url}" target="_blank" rel="noopener">${repo.name}</a></h4>
-        <p class="desc">${repo.description.substring(0, 120)}${repo.description.length > 120 ? '...' : ''}</p>
-        <div class="meta">
-          <span class="stars">⭐ ${repo.stars}</span>
-          <span class="lang">${repo.language}</span>
-          <span class="updated">${repo.updated.toLocaleDateString()}</span>
-        </div>
-        <div class="topics">${repo.topics.map(t => `<span class="topic">${t}</span>`).join('')}</div>
-      </div>
-    `).join('');
+      if (Array.isArray(repo.topics) && repo.topics.length) {
+        const topics = document.createElement('div');
+        topics.className = 'topics';
+        repo.topics.slice(0, 5).forEach(topic => {
+          const tag = document.createElement('span');
+          tag.className = 'topic';
+          tag.textContent = topic;
+          topics.appendChild(tag);
+        });
+        card.appendChild(topics);
+      }
+      container.appendChild(card);
+    });
   }
 }
 
-// Auto-init on page load (non-blocking)
 document.addEventListener('DOMContentLoaded', async () => {
-  const fetcher = new GitHubProjectsFetcher('saitejasrivilli');
-
-  // Load in background, update "View All" section if element exists
-  fetcher.fetch().then(repos => {
-    const container = document.getElementById('all-repos-grid');
-    if (container && repos.length > 0) {
-      container.innerHTML = GitHubProjectsFetcher.formatReposGrid(repos);
-      // Add refresh button
-      const refreshBtn = document.createElement('button');
-      refreshBtn.className = 'refresh-repos-btn';
-      refreshBtn.textContent = '🔄 Refresh';
-      refreshBtn.onclick = () => {
-        localStorage.removeItem(`gh_projects_saitejasrivilli`);
-        location.reload();
-      };
-      container.parentElement.appendChild(refreshBtn);
-    }
-  });
+  const container = document.getElementById('all-repos-grid');
+  if (!container) return;
+  const fetcher = new GitHubProjectsFetcher();
+  const load = async () => {
+    const repos = await fetcher.fetch();
+    fetcher.render(repos, container);
+  };
+  await load();
+  const wrapper = container.parentElement;
+  if (wrapper && !wrapper.querySelector('.refresh-repos-btn')) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'refresh-repos-btn';
+    button.textContent = 'Refresh repository list';
+    button.addEventListener('click', async () => {
+      fetcher.storageRemove(fetcher.cacheKey);
+      await load();
+    });
+    wrapper.appendChild(button);
+  }
 });

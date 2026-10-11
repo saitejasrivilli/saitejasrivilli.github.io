@@ -1,5 +1,5 @@
 // Advanced Portfolio Features
-// Contact CTA, Skills Chart, Stack Explainers, GitHub Activity Feed
+// Contact CTA, contextual Stack Explainers, GitHub Activity Feed
 
 class AdvancedPortfolio {
   constructor() {
@@ -8,7 +8,7 @@ class AdvancedPortfolio {
 
   init() {
     this.addContactCTA();
-    this.addSkillsChart();
+    // Avoid subjective percentage-based proficiency ratings; linked projects provide concrete evidence.
     this.addStackExplainers();
     this.addGitHubActivityFeed();
   }
@@ -153,27 +153,27 @@ class AdvancedPortfolio {
       'Triton': 'Language-agnostic GPU kernels. Easier than CUDA, faster than cuBLAS.',
       'CUDA': 'Direct GPU control. Max performance for custom kernels.',
       'PyTorch': 'Flexibility + ecosystem. Standard for ML research & production.',
-      'vLLM': 'LLM inference optimization. PagedAttention cuts memory 4×.',
+      'vLLM': 'LLM inference engine with continuous batching and paged KV-cache management; performance depends on workload and configuration.',
       'SGLang': 'Fast LLM inference engine. RadixAttention + speculative decoding.',
-      'AWS Inferentia': 'Custom silicon. 5× cheaper than GPU for known workloads.',
-      'LoRA': 'Finetune 0.1% of params. Fast training, parameter-efficient.',
-      'QLoRA': 'LoRA + 4-bit quantization. Train on T4 with minimal memory loss.',
+      'AWS Inferentia': 'AWS accelerator for supported machine-learning inference workloads.',
+      'LoRA': 'Parameter-efficient fine-tuning that updates low-rank adapter weights instead of all model parameters.',
+      'QLoRA': 'Combines low-rank adapters with a quantized base model; quality and memory trade-offs depend on model and training setup.',
       'PEFT': 'Parameter-Efficient Fine-Tuning. Unified API for LoRA, prefix, adapters.',
-      'FlashAttention-2': 'IO-aware attention. 12× faster, 99% less memory vs vanilla.',
+      'FlashAttention-2': 'IO-aware exact attention that reduces high-bandwidth-memory traffic; speed and memory gains depend on sequence length, shape, and baseline.',
       'xFormers': 'Modular transformers. Mix-and-match attention variants.',
       'TRL': 'Transformer Reinforcement Learning. SFT, DPO, GRPO end-to-end.',
       'HuggingFace': 'Model hub + ecosystem. Standard for sharing & loading models.',
       'ONNX': 'Cross-platform model format. Deploy anywhere without framework lock-in.',
       'AWS SageMaker': 'Managed ML pipelines. Automated retraining + monitoring.',
-      'Pinecone': 'Vector DB for RAG. No setup, scales to billions of vectors.',
+      'Pinecone': 'Managed vector database commonly used for retrieval-augmented generation.',
       'ChromaDB': 'Local vector store. Lightweight for prototypes & fine-grained control.',
       'Tavily': 'Web search API for agents. Real-time info for LLM reasoning.',
       'Gradio': 'Quick UI for ML models. Share demos in seconds, no frontend skills needed.',
-      'Groq': 'Low-latency LLM inference. 500+ tok/sec on consumer hardware.',
+      'Groq': 'Inference platform using specialized hardware; throughput varies by model and serving configuration.',
       'FastAPI': 'Async Python web framework. Fast, type-safe, auto-docs.',
       'Sionna': '6G wireless simulator. Ray-tracing for digital twins.',
       'OpenStreetMap': 'Free map data. GPS coords + path planning for mobility systems.',
-      'Dijkstra': 'Shortest path algorithm. Guaranteed optimal, used for baseline comparisons.'
+      'Dijkstra': 'Shortest-path algorithm that finds an optimal route for graphs with non-negative edge weights.'
     };
 
     document.querySelectorAll('.tech-tag').forEach(tag => {

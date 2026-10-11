@@ -201,7 +201,7 @@ function createProjectsWithExperience() {
       desc: "LoRA fine-tuning on UltraFeedback with QLoRA 4-bit quantization. 17% loss reduction in 30 min on T4.",
       tech: ["PyTorch", "LoRA/PEFT", "QLoRA", "TRL", "HuggingFace"],
       impact: "17% loss reduction",
-      relatedExp: "LLM fine-tuning, Qure.ai clinical work"
+      relatedExp: "LLM fine-tuning and model evaluation"
     },
     {
       name: "Attention Optimization Suite",
@@ -310,10 +310,9 @@ function createSkillCategories() {
 // Interactive timeline for experience
 function createExperienceTimeline() {
   const items = [
-    { company: "Qure.ai", role: "AI Solutions Engineer", period: "Mar 2026 - Present", desc: "Clinical LLM configuration, EPIC/FHIR integration, real-time inference deployment.", highlight: "🏥 Current" },
-    { company: "UTA", role: "Graduate Research Assistant", period: "Jun 2025 - Present", desc: "TopGPT RAG pipeline on 1000+ papers. CTMap: LLM-enabled 6G path planning (IEEE ICC 2026).", highlight: "📊 Research" },
-    { company: "DentalScan", role: "ML Engineer", period: "Dec 2025 - Feb 2026", desc: "Computer vision for dental images, CNN on 50K+ dataset, AWS SageMaker automation.", highlight: "🏥 Healthcare" },
-    { company: "TCS", role: "Senior Software Engineer", period: "Jun 2019 - May 2023", desc: "Java microservices, distributed systems, 10+ enterprise clients.", highlight: "💼 Backend" }
+    { company: "Oracle", role: "Software Engineer, AI/ML", period: "Jun 2025 - Present", desc: "Production ML/LLM systems across data processing, retrieval, ranking, evaluation, PyTorch training, and inference services.", highlight: "⚙️ Production ML" },
+    { company: "UTA", role: "Graduate Research & Teaching Assistant", period: "Aug 2024 - May 2025", desc: "TopGPT fine-tuning and RAG; CTMap/DTMAP connectivity-aware 6G path planning; DT-LAWN research; IEEE ICC 2026 and IEEE OJ-COMS 2026 papers.", highlight: "📊 Research" },
+    { company: "TCS", role: "Assistant System Engineer / Software Engineer", period: "Jun 2019 - May 2023", desc: "Enterprise software, Java/SQL, Oracle EBS, distributed backend services, production support, and performance optimization.", highlight: "💼 Backend Systems" }
   ];
 
   let html = `<h2 style="margin: 0 0 2rem 0; color: #2563eb; font-size: 1.4rem; animation: slideUp 0.5s ease;">🎯 Work Experience</h2>`;

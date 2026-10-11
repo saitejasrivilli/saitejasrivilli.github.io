@@ -239,6 +239,19 @@
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
         
+        /* First-paint safety: keep the homepage content visible even if animations/scripts fail. */
+        .hero .animate-fade-in-up,
+        .hero .animate-fade-in,
+        .hero .terminal-box {
+            opacity: 1 !important;
+            animation: none !important;
+            visibility: visible !important;
+        }
+        #fluid-canvas { pointer-events: none; }
+        @media (max-width: 768px) {
+            #fluid-canvas { pointer-events: none !important; }
+        }
+
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 0.65rem 1.25rem 1.5rem; position: relative; overflow: hidden; z-index: 10; }
         .hero > * { position: relative; z-index: 11; pointer-events: auto !important; }
@@ -1317,7 +1330,7 @@
             </div>
         </div>
 
-        <div class="terminal-box animate-fade-in-up delay-4" id="terminal-box" style="opacity:0">
+        <div class="terminal-box animate-fade-in-up delay-4" id="terminal-box">
             <div class="terminal-bar">
                 <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
                 <span class="t-title">sai_teja — bash — 80×24</span>
